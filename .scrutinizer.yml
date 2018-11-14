@@ -21,9 +21,6 @@ checks:
         fix_doc_comments: true
 
 tools:
-    external_code_coverage:
-        timeout: 600
-        runs: 6
     php_loc: true
 
 build:
@@ -34,3 +31,12 @@ build:
             tests:
                 override:
                     - php-scrutinizer-run
+        coverage:
+            environment:
+                php: 7.2
+            tests:
+                override:
+                    - command: composer test
+                        coverage:
+                            file: build/clover.xml
+                            format: clover
