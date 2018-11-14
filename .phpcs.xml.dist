@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ruleset name="PasswordPolice">
+    <description>The coding standard of PasswordPolice package</description>
+
+    <!-- Show progress -->
+    <arg value="p"/>
+
+    <!-- Use PSR2 standard -->
+    <rule ref="PSR2"/>
+</ruleset>
