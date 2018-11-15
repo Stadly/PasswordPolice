@@ -23,7 +23,7 @@ final class Length implements RuleInterface
      * @param int $min Minimum password length.
      * @param int|null $max Maximum password length.
      */
-    public function __construct(int $min, ?int $max = null)
+    public function __construct(int $min = 8, ?int $max = null)
     {
         if ($min < 0) {
             throw new InvalidArgumentException('Min cannot be negative.');

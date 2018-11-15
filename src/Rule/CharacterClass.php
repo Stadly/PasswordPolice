@@ -29,7 +29,7 @@ class CharacterClass implements RuleInterface
      * @param int $min Minimum number of characters matching the rule.
      * @param int|null $max Maximum number of characters matching the rule.
      */
-    public function __construct(string $characters, int $min, ?int $max = null)
+    public function __construct(string $characters, int $min = 1, ?int $max = null)
     {
         if ($characters === '') {
             throw new InvalidArgumentException('At least one character must be specified.');

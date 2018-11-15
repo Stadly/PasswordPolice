@@ -23,7 +23,7 @@ final class UpperCase implements RuleInterface
      * @param int $min Minimum number of upper case letters.
      * @param int|null $max Maximum number of upper case letters.
      */
-    public function __construct(int $min, ?int $max = null)
+    public function __construct(int $min = 1, ?int $max = null)
     {
         if ($min < 0) {
             throw new InvalidArgumentException('Min cannot be negative.');

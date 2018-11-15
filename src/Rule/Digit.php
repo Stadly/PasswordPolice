@@ -12,7 +12,7 @@ final class Digit extends CharacterClass
      * @param int $min Minimum number of digits.
      * @param int|null $max Maximum number of digits.
      */
-    public function __construct(int $min, ?int $max = null)
+    public function __construct(int $min = 1, ?int $max = null)
     {
         parent::__construct('0123456789', $min, $max);
     }
