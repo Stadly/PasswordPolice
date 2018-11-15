@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
-use Stadly\PasswordPolice\Rule;
 use Symfony\Component\Translation\Translator;
 
-final class Length implements Rule
+final class Length implements RuleInterface
 {
     /**
      * @var int Minimum password length.
@@ -20,6 +19,10 @@ final class Length implements Rule
      */
     private $max;
 
+    /**
+     * @param int $min Minimum password length.
+     * @param int|null $max Maximum password length.
+     */
     public function __construct(int $min, ?int $max = null)
     {
         if ($min < 0) {
@@ -36,23 +39,32 @@ final class Length implements Rule
         $this->max = $max;
     }
 
+    /**
+     * @return int Minimum password length.
+     */
     public function getMin(): int
     {
         return $this->min;
     }
 
+    /**
+     * @return int|null Maximum password length.
+     */
     public function getMax(): ?int
     {
         return $this->max;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function test(string $password): bool
     {
-        if (mb_strlen($password) < $this->min) {
+        if ($this->getCount($password) < $this->min) {
             return false;
         }
 
-        if (null !== $this->max && $this->max < mb_strlen($password)) {
+        if (null !== $this->max && $this->max < $this->getCount($password)) {
             return false;
         }
 
@@ -60,7 +72,7 @@ final class Length implements Rule
     }
 
     /**
-     * @throws RuleException If the rule cannot be enforced.
+     * {@inheritDoc}
      */
     public function enforce(string $password, Translator $translator): void
     {
@@ -69,6 +81,9 @@ final class Length implements Rule
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getMessage(Translator $translator): string
     {
         if ($this->getMax() === null) {
@@ -105,5 +120,14 @@ final class Length implements Rule
             'There must be between %min% and %max% characters.',
             ['%min%' => $this->getMin(), '%max%' => $this->getMax()]
         );
+    }
+
+    /**
+     * @param string $password Password to count characters in.
+     * @return int Number of characters.
+     */
+    private function getCount(string $password): int
+    {
+        return mb_strlen($password);
     }
 }

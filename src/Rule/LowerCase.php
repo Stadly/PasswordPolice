@@ -5,21 +5,24 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
-use Stadly\PasswordPolice\Rule;
 use Symfony\Component\Translation\Translator;
 
-final class LowerCase implements Rule
+final class LowerCase implements RuleInterface
 {
     /**
-     * @var int Minimum number of lower case letters in password.
+     * @var int Minimum number of lower case letters.
      */
     private $min;
 
     /**
-     * @var int|null Maximum number of lower case letters in password.
+     * @var int|null Maximum number of lower case letters.
      */
     private $max;
 
+    /**
+     * @param int $min Minimum number of lower case letters.
+     * @param int|null $max Maximum number of lower case letters.
+     */
     public function __construct(int $min, ?int $max = null)
     {
         if ($min < 0) {
@@ -36,16 +39,25 @@ final class LowerCase implements Rule
         $this->max = $max;
     }
 
+    /**
+     * @return int Minimum number of lower case letters.
+     */
     public function getMin(): int
     {
         return $this->min;
     }
 
+    /**
+     * @return int|null Maximum number of lower case letters.
+     */
     public function getMax(): ?int
     {
         return $this->max;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function test(string $password): bool
     {
         if ($this->getCount($password) < $this->min) {
@@ -60,7 +72,7 @@ final class LowerCase implements Rule
     }
 
     /**
-     * @throws RuleException If the rule cannot be enforced.
+     * {@inheritDoc}
      */
     public function enforce(string $password, Translator $translator): void
     {
@@ -69,6 +81,9 @@ final class LowerCase implements Rule
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getMessage(Translator $translator): string
     {
         if ($this->getMax() === null) {
@@ -107,6 +122,10 @@ final class LowerCase implements Rule
         );
     }
 
+    /**
+     * @param string $password Password to count characters in.
+     * @return int Number of lower case characters.
+     */
     private function getCount(string $password): int
     {
         $upperCase = mb_strtoupper($password);
@@ -125,6 +144,10 @@ final class LowerCase implements Rule
         return $count;
     }
 
+    /**
+     * @param string $string String to split into individual characters.
+     * @return string[] Array of characters.
+     */
     private function splitString(string $string): array
     {
         $characters = preg_split('{}u', $string, -1, PREG_SPLIT_NO_EMPTY);

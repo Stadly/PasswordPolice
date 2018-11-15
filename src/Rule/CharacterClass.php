@@ -5,26 +5,30 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
-use Stadly\PasswordPolice\Rule;
 use Symfony\Component\Translation\Translator;
 
-class CharacterClass implements Rule
+class CharacterClass implements RuleInterface
 {
     /**
-     * @var string Characters matching the rule.
+     * @var string Characters matched by the rule.
      */
     private $characters;
 
     /**
-     * @var int Minimum number of characters matching the rule in password.
+     * @var int Minimum number of characters matching the rule.
      */
     private $min;
 
     /**
-     * @var int|null Maximum number of characters matching the rule in password.
+     * @var int|null Maximum number of characters matching the rule.
      */
     private $max;
 
+    /**
+     * @param string $characters Characters matched by the rule.
+     * @param int $min Minimum number of characters matching the rule.
+     * @param int|null $max Maximum number of characters matching the rule.
+     */
     public function __construct(string $characters, int $min, ?int $max = null)
     {
         if ($characters === '') {
@@ -45,21 +49,33 @@ class CharacterClass implements Rule
         $this->max = $max;
     }
 
+    /**
+     * @return string Characters matched by the rule.
+     */
     public function getCharacters(): string
     {
         return $this->characters;
     }
 
+    /**
+     * @return int Minimum number of characters matching the rule.
+     */
     public function getMin(): int
     {
         return $this->min;
     }
 
+    /**
+     * @return int|null Maximum number of characters matching the rule.
+     */
     public function getMax(): ?int
     {
         return $this->max;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function test(string $password): bool
     {
         if ($this->getCount($password) < $this->min) {
@@ -74,7 +90,7 @@ class CharacterClass implements Rule
     }
 
     /**
-     * @throws RuleException If the rule cannot be enforced.
+     * {@inheritDoc}
      */
     public function enforce(string $password, Translator $translator): void
     {
@@ -83,6 +99,9 @@ class CharacterClass implements Rule
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getMessage(Translator $translator): string
     {
         if ($this->getMax() === null) {
@@ -129,6 +148,10 @@ class CharacterClass implements Rule
         );
     }
 
+    /**
+     * @param string $password Password to count characters in.
+     * @return int Number of characters matching the rule.
+     */
     private function getCount(string $password): int
     {
         $escapedCharacters = preg_quote($this->characters);
