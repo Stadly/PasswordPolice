@@ -3,9 +3,10 @@
     "type": "library",
     "description": "Password policy enforcement made easy.",
     "keywords": [
-        "Stadly",
-        "Password",
-        "Policy"
+        "password",
+        "policy",
+        "security",
+        "password policy"
     ],
     "homepage": "https://github.com/Stadly/PasswordPolice",
     "license": "MIT",
