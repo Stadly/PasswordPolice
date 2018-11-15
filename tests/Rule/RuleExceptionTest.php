@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\RuleException
@@ -23,7 +21,8 @@ final class RuleExceptionTest extends TestCase
         $exception = new RuleException(new UpperCase(5), 'foo');
 
         // Force generation of code coverage
-        self::assertSame('foo', $exception->getMessage());
+        $exceptionConstruct = new RuleException(new UpperCase(5), 'foo');
+        self::assertEquals($exception, $exceptionConstruct);
     }
 
     /**
