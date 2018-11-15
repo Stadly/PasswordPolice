@@ -14,7 +14,7 @@ Password policy enforcement made easy.
 Via Composer
 
 ``` bash
-$ composer require Stadly/PasswordPolice
+$ composer require stadly/password-police
 ```
 
 ## Change log
