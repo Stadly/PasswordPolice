@@ -52,6 +52,30 @@ final class UpperCaseExceptionTest extends TestCase
     }
 
     /**
+     * @covers ::__construct
+     */
+    public function testCanConstructExceptionWithMaxConstraintEqualToZero(): void
+    {
+        $translator = new Translator('en_EN');
+        $exception = new UpperCaseException(new UpperCase(0, 0), 15, $translator);
+
+        // Force generation of code coverage
+        self::assertSame('There must be no upper case characters.', $exception->getMessage());
+    }
+
+    /**
+     * @covers ::__construct
+     */
+    public function testCanConstructExceptionWithMinConstraintEqualToMaxConstraint(): void
+    {
+        $translator = new Translator('en_EN');
+        $exception = new UpperCaseException(new UpperCase(3, 3), 15, $translator);
+
+        // Force generation of code coverage
+        self::assertSame('There must be exactly 3 upper case characters.', $exception->getMessage());
+    }
+
+    /**
      * @covers ::getCount
      */
     public function testCanGetCount(): void

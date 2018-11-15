@@ -74,6 +74,16 @@ final class UpperCaseTest extends TestCase
     /**
      * @covers ::__construct
      */
+    public function testCannotConstructUnconstrainedRule(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $rule = new UpperCase(0);
+    }
+
+    /**
+     * @covers ::__construct
+     */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
         $rule = new UpperCase(5, 5);

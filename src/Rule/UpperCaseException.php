@@ -36,11 +36,21 @@ final class UpperCaseException extends RuleException
                 'There must be at least %count% upper case characters.',
                 $rule->getMin()
             );
+        } elseif ($rule->getMax() === 0) {
+            $message = $translator->trans(
+                'There must be no upper case characters.'
+            );
         } elseif ($rule->getMin() === 0) {
             $message = $translator->transChoice(
                 'There must be at most one upper case character.|'.
                 'There must be at most %count% upper case characters.',
                 $rule->getMax()
+            );
+        } elseif ($rule->getMin() === $rule->getMax()) {
+            $message = $translator->transChoice(
+                'There must be exactly one upper case character.|'.
+                'There must be exactly %count% upper case characters.',
+                $rule->getMin()
             );
         } else {
             $message = $translator->trans(
