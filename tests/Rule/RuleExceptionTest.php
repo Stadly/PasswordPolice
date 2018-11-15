@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Stadly\PasswordPolice;
+namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Stadly\PasswordPolice\Rule\UpperCase;
 use Symfony\Component\Translation\Translator;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\RuleException
+ * @coversDefaultClass \Stadly\PasswordPolice\Rule\RuleException
  * @covers ::<protected>
  * @covers ::<private>
  */

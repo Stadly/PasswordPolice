@@ -7,7 +7,6 @@ namespace Stadly\PasswordPolice\Rule;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Translation\Translator;
-use Stadly\PasswordPolice\RuleException;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\Digit

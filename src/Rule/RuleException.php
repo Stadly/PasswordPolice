@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Stadly\PasswordPolice;
+namespace Stadly\PasswordPolice\Rule;
 
 use RuntimeException;
+use Stadly\PasswordPolice\Rule;
 use Symfony\Component\Translation\Translator;
 use Throwable;
 
@@ -19,9 +20,8 @@ class RuleException extends RuntimeException
     private $rule;
 
     /**
-     * Constructor.
-     *
      * @param Rule $rule Rule that could not be enforced.
+     * @param string $message Exception message.
      * @param Throwable $previous Previous exception, used for exception chaining.
      */
     public function __construct(Rule $rule, string $message, ?Throwable $previous = null)

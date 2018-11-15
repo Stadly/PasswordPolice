@@ -6,7 +6,6 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use Stadly\PasswordPolice\Rule;
-use Stadly\PasswordPolice\RuleException;
 use Symfony\Component\Translation\Translator;
 
 class CharacterClass implements Rule
