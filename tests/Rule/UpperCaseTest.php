@@ -179,7 +179,7 @@ final class UpperCaseTest extends TestCase
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
     {
         $rule = new UpperCase(1);
-        $translator = new Translator('en_EN');
+        $translator = new Translator('en_US');
 
         $rule->enforce('FOO', $translator);
 
@@ -194,7 +194,7 @@ final class UpperCaseTest extends TestCase
     public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
     {
         $rule = new UpperCase(1);
-        $translator = new Translator('en_EN');
+        $translator = new Translator('en_US');
 
         $this->expectException(UpperCaseException::class);
 

@@ -20,7 +20,7 @@ final class UpperCaseExceptionTest extends TestCase
      */
     public function testCanConstructExceptionWithMinConstraint(): void
     {
-        $translator = new Translator('en_EN');
+        $translator = new Translator('en_US');
         $exception = new UpperCaseException(new UpperCase(5), 3, $translator);
 
         // Force generation of code coverage
@@ -32,7 +32,7 @@ final class UpperCaseExceptionTest extends TestCase
      */
     public function testCanConstructExceptionWithMaxConstraint(): void
     {
-        $translator = new Translator('en_EN');
+        $translator = new Translator('en_US');
         $exception = new UpperCaseException(new UpperCase(0, 10), 15, $translator);
 
         // Force generation of code coverage
@@ -44,7 +44,7 @@ final class UpperCaseExceptionTest extends TestCase
      */
     public function testCanConstructExceptionWithBothMinAndMaxConstraint(): void
     {
-        $translator = new Translator('en_EN');
+        $translator = new Translator('en_US');
         $exception = new UpperCaseException(new UpperCase(5, 10), 15, $translator);
 
         // Force generation of code coverage
@@ -56,7 +56,7 @@ final class UpperCaseExceptionTest extends TestCase
      */
     public function testCanConstructExceptionWithMaxConstraintEqualToZero(): void
     {
-        $translator = new Translator('en_EN');
+        $translator = new Translator('en_US');
         $exception = new UpperCaseException(new UpperCase(0, 0), 15, $translator);
 
         // Force generation of code coverage
@@ -68,7 +68,7 @@ final class UpperCaseExceptionTest extends TestCase
      */
     public function testCanConstructExceptionWithMinConstraintEqualToMaxConstraint(): void
     {
-        $translator = new Translator('en_EN');
+        $translator = new Translator('en_US');
         $exception = new UpperCaseException(new UpperCase(3, 3), 15, $translator);
 
         // Force generation of code coverage
@@ -80,7 +80,7 @@ final class UpperCaseExceptionTest extends TestCase
      */
     public function testCanGetCount(): void
     {
-        $translator = new Translator('en_EN');
+        $translator = new Translator('en_US');
         $exception = new UpperCaseException(new UpperCase(5, 10), 15, $translator);
 
         self::assertSame(15, $exception->getCount());
