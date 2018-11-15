@@ -11,7 +11,7 @@ interface Rule
     public function test(string $password): bool;
 
     /**
-     * @param string $password Number of upper case characters.
+     * @param string $password Password that must adhere to the rule.
      * @param Translator $translator For translating messages.
      * @throws RuleException If the rule cannot be enforced.
      */
