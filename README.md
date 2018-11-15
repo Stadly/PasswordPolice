@@ -17,6 +17,34 @@ Via Composer
 $ composer require stadly/password-police
 ```
 
+## Usage
+
+``` php
+use Stadly\PasswordPolice\Policy;
+use Stadly\PasswordPolice\PolicyException;
+use Stadly\PasswordPolice\Rule\Digit as DigitRule;
+use Stadly\PasswordPolice\Rule\Length as LengthRule;
+use Stadly\PasswordPolice\Rule\LowerCase as LowerCaseRule;
+use Stadly\PasswordPolice\Rule\UpperCase as UpperCaseRule;
+use Symfony\Component\Translation\Translator;
+
+$policy = new Policy();
+$policy->addRules(new LengthRule(8));   // Passwords must be at least 8 characters long.
+$policy->addRules(new LowerCaseRule()); // Passwords must contain lower case letters.
+$policy->addRules(new UpperCaseRule()); // Passwords must contain upper case letters.
+$policy->addRules(new DigitRule());     // Passwords must contain digits.
+
+$translator = new Translator('en_US');
+
+try {
+    $policy->enforce('password', $translator);
+    // The password adheres to the policy.
+} catch (PolicyException $exception) {
+    // The password does not adhere to the policy.
+    // Use the exception to show an appropriate message to the user.
+}
+```
+
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
