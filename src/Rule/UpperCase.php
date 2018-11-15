@@ -6,6 +6,7 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use Stadly\PasswordPolice\Rule;
+use Stadly\PasswordPolice\RuleException;
 use Symfony\Component\Translation\Translator;
 
 final class UpperCase implements Rule
@@ -60,13 +61,51 @@ final class UpperCase implements Rule
     }
 
     /**
-     * @throws UpperCaseException If the rule cannot be enforced.
+     * @throws RuleException If the rule cannot be enforced.
      */
     public function enforce(string $password, Translator $translator): void
     {
         if (!$this->test($password)) {
-            throw new UpperCaseException($this, $this->getCount($password), $translator);
+            throw new RuleException($this, $this->getMessage($translator));
         }
+    }
+
+    public function getMessage(Translator $translator): string
+    {
+        if ($this->getMax() === null) {
+            return $translator->transChoice(
+                'There must be at least one upper case character.|'.
+                'There must be at least %count% upper case characters.',
+                $this->getMin()
+            );
+        }
+
+        if ($this->getMax() === 0) {
+            return $translator->trans(
+                'There must be no upper case characters.'
+            );
+        }
+
+        if ($this->getMin() === 0) {
+            return $translator->transChoice(
+                'There must be at most one upper case character.|'.
+                'There must be at most %count% upper case characters.',
+                $this->getMax()
+            );
+        }
+
+        if ($this->getMin() === $this->getMax()) {
+            return $translator->transChoice(
+                'There must be exactly one upper case character.|'.
+                'There must be exactly %count% upper case characters.',
+                $this->getMin()
+            );
+        }
+
+        return $translator->trans(
+            'There must be between %min% and %max% upper case characters.',
+            ['%min%' => $this->getMin(), '%max%' => $this->getMax()]
+        );
     }
 
     private function getCount(string $password): int

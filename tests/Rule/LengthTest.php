@@ -7,6 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Translation\Translator;
+use Stadly\PasswordPolice\RuleException;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\Length
@@ -96,7 +97,7 @@ final class LengthTest extends TestCase
     /**
      * @covers ::getMin
      */
-    public function testCanGetMin(): void
+    public function testCanGetMinConstraint(): void
     {
         $rule = new Length(5, 10);
 
@@ -106,7 +107,7 @@ final class LengthTest extends TestCase
     /**
      * @covers ::getMax
      */
-    public function testCanGetMax(): void
+    public function testCanGetMaxConstraint(): void
     {
         $rule = new Length(5, 10);
 
@@ -116,7 +117,7 @@ final class LengthTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testCanTestMinConstraintIsTrue(): void
+    public function testMinConstraintCanBeSatisfied(): void
     {
         $rule = new Length(2);
 
@@ -126,7 +127,7 @@ final class LengthTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testCanTestMinConstraintIsFalse(): void
+    public function testMinConstraintCanBeUnsatisfied(): void
     {
         $rule = new Length(2);
 
@@ -136,7 +137,7 @@ final class LengthTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testCanTestMaxConstraintIsTrue(): void
+    public function testMaxConstraintCanBeSatisfied(): void
     {
         $rule = new Length(0, 3);
 
@@ -146,7 +147,7 @@ final class LengthTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testCanTestMaxConstraintIsFalse(): void
+    public function testMaxConstraintCanBeUnsatisfied(): void
     {
         $rule = new Length(0, 3);
 
@@ -156,7 +157,7 @@ final class LengthTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testCanTestCountsUtf8AsOneCharacter(): void
+    public function testUtf8IsTreatedAsSingleCharacter(): void
     {
         $rule = new Length(2, 2);
 
@@ -186,8 +187,63 @@ final class LengthTest extends TestCase
         $rule = new Length(1);
         $translator = new Translator('en_US');
 
-        $this->expectException(LengthException::class);
+        $this->expectException(RuleException::class);
 
         $rule->enforce('', $translator);
+    }
+
+    /**
+     * @covers ::getMessage
+     */
+    public function testCanGetMessageForRuleWithMinConstraint(): void
+    {
+        $translator = new Translator('en_US');
+        $rule = new Length(5);
+
+        self::assertSame('There must be at least 5 characters.', $rule->getMessage($translator));
+    }
+
+    /**
+     * @covers ::getMessage
+     */
+    public function testCanGetMessageForRuleWithMaxConstraint(): void
+    {
+        $translator = new Translator('en_US');
+        $rule = new Length(0, 10);
+
+        self::assertSame('There must be at most 10 characters.', $rule->getMessage($translator));
+    }
+
+    /**
+     * @covers ::getMessage
+     */
+    public function testCanGetMessageForRuleWithBothMinAndMaxConstraint(): void
+    {
+        $translator = new Translator('en_US');
+        $rule = new Length(5, 10);
+
+        self::assertSame('There must be between 5 and 10 characters.', $rule->getMessage($translator));
+    }
+
+    /**
+     * @covers ::getMessage
+     */
+    public function testCanGetMessageForRuleWithMaxConstraintEqualToZero(): void
+    {
+        $translator = new Translator('en_US');
+        $rule = new Length(0, 0);
+
+        self::assertSame('There must be no characters.', $rule->getMessage($translator));
+    }
+
+    /**
+     * @covers ::getMessage
+     */
+    public function testCanGetMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
+    {
+        $translator = new Translator('en_US');
+        $rule = new Length(3, 3);
+
+        self::assertSame('There must be exactly 3 characters.', $rule->getMessage($translator));
     }
 }

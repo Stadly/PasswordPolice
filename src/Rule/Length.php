@@ -6,6 +6,7 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use Stadly\PasswordPolice\Rule;
+use Stadly\PasswordPolice\RuleException;
 use Symfony\Component\Translation\Translator;
 
 final class Length implements Rule
@@ -60,12 +61,50 @@ final class Length implements Rule
     }
 
     /**
-     * @throws LengthException If the rule cannot be enforced.
+     * @throws RuleException If the rule cannot be enforced.
      */
     public function enforce(string $password, Translator $translator): void
     {
         if (!$this->test($password)) {
-            throw new LengthException($this, mb_strlen($password), $translator);
+            throw new RuleException($this, $this->getMessage($translator));
         }
+    }
+
+    public function getMessage(Translator $translator): string
+    {
+        if ($this->getMax() === null) {
+            return $translator->transChoice(
+                'There must be at least one character.|'.
+                'There must be at least %count% characters.',
+                $this->getMin()
+            );
+        }
+
+        if ($this->getMax() === 0) {
+            return $translator->trans(
+                'There must be no characters.'
+            );
+        }
+
+        if ($this->getMin() === 0) {
+            return $translator->transChoice(
+                'There must be at most one character.|'.
+                'There must be at most %count% characters.',
+                $this->getMax()
+            );
+        }
+
+        if ($this->getMin() === $this->getMax()) {
+            return $translator->transChoice(
+                'There must be exactly one character.|'.
+                'There must be exactly %count% characters.',
+                $this->getMin()
+            );
+        }
+
+        return $translator->trans(
+            'There must be between %min% and %max% characters.',
+            ['%min%' => $this->getMin(), '%max%' => $this->getMax()]
+        );
     }
 }

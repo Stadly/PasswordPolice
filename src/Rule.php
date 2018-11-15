@@ -16,4 +16,6 @@ interface Rule
      * @throws RuleException If the rule cannot be enforced.
      */
     public function enforce(string $password, Translator $translator): void;
+
+    public function getMessage(Translator $translator): string;
 }
