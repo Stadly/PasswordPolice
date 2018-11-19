@@ -60,11 +60,13 @@ final class Length implements RuleInterface
      */
     public function test(string $password): bool
     {
-        if ($this->getCount($password) < $this->min) {
+        $count = $this->getCount($password);
+
+        if ($count < $this->min) {
             return false;
         }
 
-        if (null !== $this->max && $this->max < $this->getCount($password)) {
+        if (null !== $this->max && $this->max < $count) {
             return false;
         }
 
