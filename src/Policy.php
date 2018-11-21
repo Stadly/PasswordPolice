@@ -7,6 +7,7 @@ namespace Stadly\PasswordPolice;
 use Symfony\Component\Translation\Translator;
 use Stadly\PasswordPolice\Rule\RuleException;
 use Stadly\PasswordPolice\Rule\RuleInterface;
+use Stadly\PasswordPolice\Rule\TestException;
 
 final class Policy
 {
@@ -38,6 +39,7 @@ final class Policy
      *
      * @param string $password Password to check.
      * @return bool Whether the password adheres to the policy.
+     * @throws TestException If an error occurred while checking the password.
      */
     public function test(string $password): bool
     {
@@ -56,6 +58,7 @@ final class Policy
      * @param string $password Password that must adhere to the policy.
      * @param Translator $translator For translating messages.
      * @throws PolicyException If the password does not adhrere to the policy.
+     * @throws TestException If an error occurred while checking the password.
      */
     public function enforce(string $password, Translator $translator): void
     {
