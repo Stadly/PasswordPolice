@@ -23,16 +23,18 @@ $ composer require stadly/password-police
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\PolicyException;
 use Stadly\PasswordPolice\Rule\Digit as DigitRule;
+use Stadly\PasswordPolice\Rule\HaveIBeenPwned;
 use Stadly\PasswordPolice\Rule\Length as LengthRule;
 use Stadly\PasswordPolice\Rule\LowerCase as LowerCaseRule;
 use Stadly\PasswordPolice\Rule\UpperCase as UpperCaseRule;
 use Symfony\Component\Translation\Translator;
 
 $policy = new Policy();
-$policy->addRules(new LengthRule(8));   // Passwords must be at least 8 characters long.
-$policy->addRules(new LowerCaseRule()); // Passwords must contain lower case letters.
-$policy->addRules(new UpperCaseRule()); // Passwords must contain upper case letters.
-$policy->addRules(new DigitRule());     // Passwords must contain digits.
+$policy->addRules(new LengthRule(8));       // Passwords must be at least 8 characters long.
+$policy->addRules(new LowerCaseRule());     // Passwords must contain lower case letters.
+$policy->addRules(new UpperCaseRule());     // Passwords must contain upper case letters.
+$policy->addRules(new DigitRule());         // Passwords must contain digits.
+$policy->addRules(new HaveIBeenPwned());    // Passwords must not be exposed in data breaches.
 
 $translator = new Translator('en_US');
 
