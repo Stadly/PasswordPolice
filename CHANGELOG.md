@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.1.0...HEAD)
 
 ### Added
-- Nothing
+- Rule using the service [Have I Been Pwned?](https://haveibeenpwned.com) to check if the password has been exposed in data breaches.
 
 ### Changed
 - Nothing

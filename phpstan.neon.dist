@@ -6,6 +6,10 @@ parameters:
     reportUnusedCatchesOfUncheckedExceptions: true
     uncheckedExceptions:
       - LogicException
+    methodThrowTypeDeclarations:
+      Http\Factory\Discovery\HttpFactory:
+        requestFactory:
+          - RuntimeException
 
 includes:
   - vendor/phpstan/phpstan-strict-rules/rules.neon
