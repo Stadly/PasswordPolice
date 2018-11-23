@@ -28,12 +28,12 @@ final class HaveIBeenPwned implements RuleInterface
     private $max;
 
     /**
-     * @var ?ClientInterface HTTP client for sending requests.
+     * @var ClientInterface|null HTTP client for sending requests.
      */
     private $client;
 
     /**
-     * @var ?RequestFactoryInterface Request factory for generating HTTP requests.
+     * @var RequestFactoryInterface|null Request factory for generating HTTP requests.
      */
     private $requestFactory;
 

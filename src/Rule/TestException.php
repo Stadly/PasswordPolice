@@ -21,7 +21,7 @@ class TestException extends RuntimeException
     /**
      * @param RuleInterface $rule Rule that was tested when the error occurred.
      * @param string $message Exception message.
-     * @param Throwable $previous Previous exception, used for exception chaining.
+     * @param Throwable|null $previous Previous exception, used for exception chaining.
      */
     public function __construct(RuleInterface $rule, string $message, ?Throwable $previous = null)
     {

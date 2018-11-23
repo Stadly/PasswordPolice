@@ -27,7 +27,7 @@ final class PolicyException extends RuntimeException
     /**
      * @param Policy $policy Policy that could not be enforced.
      * @param RuleException[] $ruleExceptions Exceptions thrown by rules that could not be enforced.
-     * @param Throwable $previous Previous exception, used for exception chaining.
+     * @param Throwable|null $previous Previous exception, used for exception chaining.
      */
     public function __construct(Policy $policy, array $ruleExceptions, ?Throwable $previous = null)
     {
