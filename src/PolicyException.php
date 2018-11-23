@@ -6,7 +6,6 @@ namespace Stadly\PasswordPolice;
 
 use RuntimeException;
 use Stadly\PasswordPolice\Rule\RuleException;
-use Symfony\Component\Translation\Translator;
 use Throwable;
 
 /**

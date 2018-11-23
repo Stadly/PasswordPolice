@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use RuntimeException;
-use Symfony\Component\Translation\Translator;
 use Throwable;
 
 /**

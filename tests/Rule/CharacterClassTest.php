@@ -6,7 +6,6 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\CharacterClass
@@ -179,9 +178,8 @@ final class CharacterClassTest extends TestCase
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
     {
         $rule = new CharacterClass('$%&@!', 1);
-        $translator = new Translator('en_US');
 
-        $rule->enforce('&', $translator);
+        $rule->enforce('&');
 
         // Force generation of code coverage
         $ruleConstruct = new CharacterClass('$%&@!', 1);
@@ -194,11 +192,10 @@ final class CharacterClassTest extends TestCase
     public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
     {
         $rule = new CharacterClass('$%&@!', 1);
-        $translator = new Translator('en_US');
 
         $this->expectException(RuleException::class);
 
-        $rule->enforce('€', $translator);
+        $rule->enforce('€');
     }
 
     /**
@@ -206,10 +203,9 @@ final class CharacterClassTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMinConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new CharacterClass('$%&@!', 5);
 
-        self::assertSame('There must be at least 5 characters matching $%&@!.', $rule->getMessage($translator));
+        self::assertSame('There must be at least 5 characters matching $%&@!.', $rule->getMessage());
     }
 
     /**
@@ -217,10 +213,9 @@ final class CharacterClassTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMaxConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new CharacterClass('$%&@!', 0, 10);
 
-        self::assertSame('There must be at most 10 characters matching $%&@!.', $rule->getMessage($translator));
+        self::assertSame('There must be at most 10 characters matching $%&@!.', $rule->getMessage());
     }
 
     /**
@@ -228,10 +223,9 @@ final class CharacterClassTest extends TestCase
      */
     public function testCanGetMessageForRuleWithBothMinAndMaxConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new CharacterClass('$%&@!', 5, 10);
 
-        self::assertSame('There must be between 5 and 10 characters matching $%&@!.', $rule->getMessage($translator));
+        self::assertSame('There must be between 5 and 10 characters matching $%&@!.', $rule->getMessage());
     }
 
     /**
@@ -239,10 +233,9 @@ final class CharacterClassTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMaxConstraintEqualToZero(): void
     {
-        $translator = new Translator('en_US');
         $rule = new CharacterClass('$%&@!', 0, 0);
 
-        self::assertSame('There must be no characters matching $%&@!.', $rule->getMessage($translator));
+        self::assertSame('There must be no characters matching $%&@!.', $rule->getMessage());
     }
 
     /**
@@ -250,9 +243,8 @@ final class CharacterClassTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new CharacterClass('$%&@!', 3, 3);
 
-        self::assertSame('There must be exactly 3 characters matching $%&@!.', $rule->getMessage($translator));
+        self::assertSame('There must be exactly 3 characters matching $%&@!.', $rule->getMessage());
     }
 }

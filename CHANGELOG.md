@@ -7,10 +7,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.2.0...HEAD)
 
 ### Added
-- Nothing
+- Possibility to specify a translator to use for all translations.
+- If no translator is specified, a default translator is created automatically.
 
 ### Changed
-- Nothing
+- Translator no longer needs to be specified when enforcing rules.
 
 ### Fixed
 - Nothing

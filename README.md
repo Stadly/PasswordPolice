@@ -27,7 +27,6 @@ use Stadly\PasswordPolice\Rule\HaveIBeenPwned;
 use Stadly\PasswordPolice\Rule\Length as LengthRule;
 use Stadly\PasswordPolice\Rule\LowerCase as LowerCaseRule;
 use Stadly\PasswordPolice\Rule\UpperCase as UpperCaseRule;
-use Symfony\Component\Translation\Translator;
 
 $policy = new Policy();
 $policy->addRules(new LengthRule(8));       // Passwords must be at least 8 characters long.
@@ -36,10 +35,8 @@ $policy->addRules(new UpperCaseRule());     // Passwords must contain upper case
 $policy->addRules(new DigitRule());         // Passwords must contain digits.
 $policy->addRules(new HaveIBeenPwned());    // Passwords must not be exposed in data breaches.
 
-$translator = new Translator('en_US');
-
 try {
-    $policy->enforce('password', $translator);
+    $policy->enforce('password');
     // The password adheres to the policy.
 } catch (PolicyException $exception) {
     // The password does not adhere to the policy.

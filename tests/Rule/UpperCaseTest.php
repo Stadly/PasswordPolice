@@ -6,7 +6,6 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\UpperCase
@@ -179,9 +178,8 @@ final class UpperCaseTest extends TestCase
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
     {
         $rule = new UpperCase(1);
-        $translator = new Translator('en_US');
 
-        $rule->enforce('FOO', $translator);
+        $rule->enforce('FOO');
 
         // Force generation of code coverage
         $ruleConstruct = new UpperCase(1);
@@ -194,11 +192,10 @@ final class UpperCaseTest extends TestCase
     public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
     {
         $rule = new UpperCase(1);
-        $translator = new Translator('en_US');
 
         $this->expectException(RuleException::class);
 
-        $rule->enforce('foo', $translator);
+        $rule->enforce('foo');
     }
 
     /**
@@ -206,10 +203,9 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMinConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new UpperCase(5);
 
-        self::assertSame('There must be at least 5 upper case characters.', $rule->getMessage($translator));
+        self::assertSame('There must be at least 5 upper case characters.', $rule->getMessage());
     }
 
     /**
@@ -217,10 +213,9 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMaxConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new UpperCase(0, 10);
 
-        self::assertSame('There must be at most 10 upper case characters.', $rule->getMessage($translator));
+        self::assertSame('There must be at most 10 upper case characters.', $rule->getMessage());
     }
 
     /**
@@ -228,10 +223,9 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanGetMessageForRuleWithBothMinAndMaxConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new UpperCase(5, 10);
 
-        self::assertSame('There must be between 5 and 10 upper case characters.', $rule->getMessage($translator));
+        self::assertSame('There must be between 5 and 10 upper case characters.', $rule->getMessage());
     }
 
     /**
@@ -239,10 +233,9 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMaxConstraintEqualToZero(): void
     {
-        $translator = new Translator('en_US');
         $rule = new UpperCase(0, 0);
 
-        self::assertSame('There must be no upper case characters.', $rule->getMessage($translator));
+        self::assertSame('There must be no upper case characters.', $rule->getMessage());
     }
 
     /**
@@ -250,9 +243,8 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new UpperCase(3, 3);
 
-        self::assertSame('There must be exactly 3 upper case characters.', $rule->getMessage($translator));
+        self::assertSame('There must be exactly 3 upper case characters.', $rule->getMessage());
     }
 }

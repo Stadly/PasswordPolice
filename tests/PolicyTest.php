@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\Rule\Digit;
 use Stadly\PasswordPolice\Rule\Length;
 use Stadly\PasswordPolice\Rule\LowerCase;
-use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Policy
@@ -145,9 +145,8 @@ final class PolicyTest extends TestCase
     public function testEnforceDoesNotThrowExceptionWhenPolicyIsSatisfied(): void
     {
         $policy = new Policy();
-        $translator = new Translator('en_US');
 
-        $policy->enforce('foo', $translator);
+        $policy->enforce('foo');
 
         // Force generation of code coverage
         $policyConstruct = new Policy();
@@ -160,10 +159,35 @@ final class PolicyTest extends TestCase
     public function testEnforceThrowsExceptionWhenPolicyIsNotSatisfied(): void
     {
         $policy = new Policy(new Length(1));
-        $translator = new Translator('en_US');
 
         $this->expectException(PolicyException::class);
 
-        $policy->enforce('', $translator);
+        $policy->enforce('');
+    }
+
+    /**
+     * @covers ::setTranslator
+     * @covers ::getTranslator
+     */
+    public function testCanSetAndGetTranslator(): void
+    {
+        $translator = $this->createMock(TranslatorInterface::class);
+
+        Policy::setTranslator($translator);
+        self::assertSame($translator, Policy::getTranslator());
+        Policy::setTranslator(null);
+    }
+
+    /**
+     * @covers ::setTranslator
+     * @covers ::getTranslator
+     */
+    public function testCanGetWhenNoTranslatorIsSet(): void
+    {
+        $translator = $this->createMock(TranslatorInterface::class);
+        Policy::setTranslator($translator);
+        Policy::setTranslator(null);
+
+        self::assertNotSame($translator, Policy::getTranslator());
     }
 }

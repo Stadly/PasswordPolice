@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
-use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\HaveIBeenPwned
@@ -278,9 +277,8 @@ final class HaveIBeenPwnedTest extends TestCase
         $rule = new HaveIBeenPwned(2, null);
         $rule->setClient($client);
         $rule->setRequestFactory($requestFactory);
-        $translator = new Translator('en_US');
 
-        $rule->enforce('1397wpfk', $translator);
+        $rule->enforce('1397wpfk');
 
         // Force generation of code coverage
         $ruleConstruct = new HaveIBeenPwned(2, null);
@@ -295,11 +293,10 @@ final class HaveIBeenPwnedTest extends TestCase
     public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
     {
         $rule = new HaveIBeenPwned(3, null);
-        $translator = new Translator('en_US');
 
         $this->expectException(RuleException::class);
 
-        $rule->enforce('1397wpfk', $translator);
+        $rule->enforce('1397wpfk');
     }
 
     /**
@@ -307,10 +304,9 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMinConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new HaveIBeenPwned(5, null);
 
-        self::assertSame('Must appear at least 5 times in breaches.', $rule->getMessage($translator));
+        self::assertSame('Must appear at least 5 times in breaches.', $rule->getMessage());
     }
 
     /**
@@ -318,10 +314,9 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMaxConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new HaveIBeenPwned(0, 10);
 
-        self::assertSame('Must appear at most 10 times in breaches.', $rule->getMessage($translator));
+        self::assertSame('Must appear at most 10 times in breaches.', $rule->getMessage());
     }
 
     /**
@@ -329,10 +324,9 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanGetMessageForRuleWithBothMinAndMaxConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new HaveIBeenPwned(5, 10);
 
-        self::assertSame('Must appear between 5 and 10 times in breaches.', $rule->getMessage($translator));
+        self::assertSame('Must appear between 5 and 10 times in breaches.', $rule->getMessage());
     }
 
     /**
@@ -340,10 +334,9 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMaxConstraintEqualToZero(): void
     {
-        $translator = new Translator('en_US');
         $rule = new HaveIBeenPwned(0, 0);
 
-        self::assertSame('Must not appear in any breaches.', $rule->getMessage($translator));
+        self::assertSame('Must not appear in any breaches.', $rule->getMessage());
     }
 
     /**
@@ -351,9 +344,8 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new HaveIBeenPwned(3, 3);
 
-        self::assertSame('Must appear exactly 3 times in breaches.', $rule->getMessage($translator));
+        self::assertSame('Must appear exactly 3 times in breaches.', $rule->getMessage());
     }
 }

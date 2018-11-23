@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use Symfony\Component\Translation\Translator;
+use Stadly\PasswordPolice\Policy;
 
 final class Digit extends CharacterClass
 {
@@ -20,8 +20,10 @@ final class Digit extends CharacterClass
     /**
      * {@inheritDoc}
      */
-    public function getMessage(Translator $translator): string
+    public function getMessage(): string
     {
+        $translator = Policy::getTranslator();
+
         if ($this->getMax() === null) {
             return $translator->transChoice(
                 'There must be at least one digit.|'.

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
-use Symfony\Component\Translation\Translator;
+use Stadly\PasswordPolice\Policy;
 
 final class LowerCase implements RuleInterface
 {
@@ -80,21 +80,22 @@ final class LowerCase implements RuleInterface
      * Enforce that a password adheres to the rule.
      *
      * @param string $password Password that must adhere to the rule.
-     * @param Translator $translator For translating messages.
      * @throws RuleException If the password does not adhrere to the rule.
      */
-    public function enforce(string $password, Translator $translator): void
+    public function enforce(string $password): void
     {
         if (!$this->test($password)) {
-            throw new RuleException($this, $this->getMessage($translator));
+            throw new RuleException($this, $this->getMessage());
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getMessage(Translator $translator): string
+    public function getMessage(): string
     {
+        $translator = Policy::getTranslator();
+
         if ($this->getMax() === null) {
             return $translator->transChoice(
                 'There must be at least one lower case character.|'.

@@ -13,7 +13,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use RuntimeException;
-use Symfony\Component\Translation\Translator;
+use Stadly\PasswordPolice\Policy;
 
 final class HaveIBeenPwned implements RuleInterface
 {
@@ -140,18 +140,20 @@ final class HaveIBeenPwned implements RuleInterface
     /**
      * {@inheritDoc}
      */
-    public function enforce(string $password, Translator $translator): void
+    public function enforce(string $password): void
     {
         if (!$this->test($password)) {
-            throw new RuleException($this, $this->getMessage($translator));
+            throw new RuleException($this, $this->getMessage());
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getMessage(Translator $translator): string
+    public function getMessage(): string
     {
+        $translator = Policy::getTranslator();
+
         if ($this->getMax() === null) {
             return $translator->transChoice(
                 'Must appear at least once in breaches.|'.

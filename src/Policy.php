@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice;
 
-use Symfony\Component\Translation\Translator;
 use Stadly\PasswordPolice\Rule\RuleException;
 use Stadly\PasswordPolice\Rule\RuleInterface;
 use Stadly\PasswordPolice\Rule\TestException;
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 final class Policy
 {
@@ -15,6 +16,11 @@ final class Policy
      * @var RuleInterface[] Policy rules.
      */
     private $rules = [];
+
+    /**
+     * @var TranslatorInterface|null Translator for translating messages.
+     */
+    private static $translator;
 
     /**
      * @param RuleInterface... $rules Policy rules
@@ -56,17 +62,16 @@ final class Policy
      * Enforce that a password adheres to the policy.
      *
      * @param string $password Password that must adhere to the policy.
-     * @param Translator $translator For translating messages.
      * @throws PolicyException If the password does not adhrere to the policy.
      * @throws TestException If an error occurred while checking the password.
      */
-    public function enforce(string $password, Translator $translator): void
+    public function enforce(string $password): void
     {
         $exceptions = [];
 
         foreach ($this->rules as $rule) {
             try {
-                $rule->enforce($password, $translator);
+                $rule->enforce($password);
             } catch (RuleException $exception) {
                 $exceptions[] = $exception;
             }
@@ -75,5 +80,24 @@ final class Policy
         if ($exceptions !== []) {
             throw new PolicyException($this, $exceptions);
         }
+    }
+
+    /**
+     * @param TranslatorInterface|null $translator Translator for translating messages.
+     */
+    public static function setTranslator(?TranslatorInterface $translator): void
+    {
+        self::$translator = $translator;
+    }
+
+    /**
+     * @return TranslatorInterface Translator for translating messages.
+     */
+    public static function getTranslator(): TranslatorInterface
+    {
+        if (null === self::$translator) {
+            self::$translator = new Translator('en_US');
+        }
+        return self::$translator;
     }
 }

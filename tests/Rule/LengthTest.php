@@ -6,7 +6,6 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\Length
@@ -169,9 +168,8 @@ final class LengthTest extends TestCase
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
     {
         $rule = new Length(1);
-        $translator = new Translator('en_US');
 
-        $rule->enforce('foo', $translator);
+        $rule->enforce('foo');
 
         // Force generation of code coverage
         $ruleConstruct = new Length(1);
@@ -184,11 +182,10 @@ final class LengthTest extends TestCase
     public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
     {
         $rule = new Length(1);
-        $translator = new Translator('en_US');
 
         $this->expectException(RuleException::class);
 
-        $rule->enforce('', $translator);
+        $rule->enforce('');
     }
 
     /**
@@ -196,10 +193,9 @@ final class LengthTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMinConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new Length(5);
 
-        self::assertSame('There must be at least 5 characters.', $rule->getMessage($translator));
+        self::assertSame('There must be at least 5 characters.', $rule->getMessage());
     }
 
     /**
@@ -207,10 +203,9 @@ final class LengthTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMaxConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new Length(0, 10);
 
-        self::assertSame('There must be at most 10 characters.', $rule->getMessage($translator));
+        self::assertSame('There must be at most 10 characters.', $rule->getMessage());
     }
 
     /**
@@ -218,10 +213,9 @@ final class LengthTest extends TestCase
      */
     public function testCanGetMessageForRuleWithBothMinAndMaxConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new Length(5, 10);
 
-        self::assertSame('There must be between 5 and 10 characters.', $rule->getMessage($translator));
+        self::assertSame('There must be between 5 and 10 characters.', $rule->getMessage());
     }
 
     /**
@@ -229,10 +223,9 @@ final class LengthTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMaxConstraintEqualToZero(): void
     {
-        $translator = new Translator('en_US');
         $rule = new Length(0, 0);
 
-        self::assertSame('There must be no characters.', $rule->getMessage($translator));
+        self::assertSame('There must be no characters.', $rule->getMessage());
     }
 
     /**
@@ -240,9 +233,8 @@ final class LengthTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $translator = new Translator('en_US');
         $rule = new Length(3, 3);
 
-        self::assertSame('There must be exactly 3 characters.', $rule->getMessage($translator));
+        self::assertSame('There must be exactly 3 characters.', $rule->getMessage());
     }
 }
