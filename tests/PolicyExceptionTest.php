@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Stadly\PasswordPolice\Rule\Digit;
 use Stadly\PasswordPolice\Rule\RuleException;
+use Stadly\PasswordPolice\Rule\RuleInterface;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\PolicyException
@@ -16,14 +17,24 @@ use Stadly\PasswordPolice\Rule\RuleException;
 final class PolicyExceptionTest extends TestCase
 {
     /**
+     * @var RuleException
+     */
+    private $ruleException;
+
+    protected function setUp(): void
+    {
+        $this->ruleException = new RuleException($this->createMock(RuleInterface::class), 'foo');
+    }
+
+    /**
      * @covers ::__construct
      */
     public function testCanConstructException(): void
     {
-        $exception = new PolicyException(new Policy(), [new RuleException(new Digit(2), 'foo')]);
+        $exception = new PolicyException(new Policy(), [$this->ruleException]);
 
         // Force generation of code coverage
-        $exceptionConstruct = new PolicyException(new Policy(), [new RuleException(new Digit(2), 'foo')]);
+        $exceptionConstruct = new PolicyException(new Policy(), [$this->ruleException]);
         self::assertEquals($exception, $exceptionConstruct);
     }
 
@@ -33,7 +44,7 @@ final class PolicyExceptionTest extends TestCase
     public function testCanGetPolicy(): void
     {
         $policy = new Policy();
-        $exception = new PolicyException($policy, [new RuleException(new Digit(2), 'foo')]);
+        $exception = new PolicyException($policy, [$this->ruleException]);
 
         self::assertSame($policy, $exception->getPolicy());
     }
@@ -43,9 +54,8 @@ final class PolicyExceptionTest extends TestCase
      */
     public function testCanGetRuleExceptions(): void
     {
-        $ruleExceptions = [new RuleException(new Digit(2), 'foo')];
-        $exception = new PolicyException(new Policy(), $ruleExceptions);
+        $exception = new PolicyException(new Policy(), [$this->ruleException]);
 
-        self::assertSame($ruleExceptions, $exception->getRuleExceptions());
+        self::assertSame([$this->ruleException], $exception->getRuleExceptions());
     }
 }

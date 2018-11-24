@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Stadly\PasswordPolice\Rule\Digit;
-use Stadly\PasswordPolice\Rule\Length;
-use Stadly\PasswordPolice\Rule\LowerCase;
+use Stadly\PasswordPolice\Rule\RuleException;
+use Stadly\PasswordPolice\Rule\RuleInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -17,6 +17,34 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 final class PolicyTest extends TestCase
 {
+    /**
+     * @var MockObject&RuleInterface
+     */
+    private $satisfiedRule1;
+
+    /**
+     * @var MockObject&RuleInterface
+     */
+    private $satisfiedRule2;
+
+    /**
+     * @var MockObject&RuleInterface
+     */
+    private $unsatisfiedRule;
+
+    protected function setUp(): void
+    {
+        $this->satisfiedRule1 = $this->createMock(RuleInterface::class);
+        $this->satisfiedRule1->method('test')->willReturn(true);
+
+        $this->satisfiedRule2 = $this->createMock(RuleInterface::class);
+        $this->satisfiedRule2->method('test')->willReturn(true);
+
+        $ruleException = new RuleException($this->createMock(RuleInterface::class), 'foo');
+        $this->unsatisfiedRule = $this->createMock(RuleInterface::class);
+        $this->unsatisfiedRule->method('enforce')->willThrowException($ruleException);
+    }
+
     /**
      * @covers ::__construct
      */
@@ -34,10 +62,10 @@ final class PolicyTest extends TestCase
      */
     public function testCanConstructPolicyWithSingleRule(): void
     {
-        $policy = new Policy(new Length(1));
+        $policy = new Policy($this->satisfiedRule1);
 
         // Force generation of code coverage
-        $policyConstruct = new Policy(new Length(1));
+        $policyConstruct = new Policy($this->satisfiedRule1);
         self::assertEquals($policy, $policyConstruct);
     }
 
@@ -46,10 +74,10 @@ final class PolicyTest extends TestCase
      */
     public function testCanConstructPolicyWithMultipleRules(): void
     {
-        $policy = new Policy(new Length(1), new Digit(2));
+        $policy = new Policy($this->satisfiedRule1, $this->unsatisfiedRule);
 
         // Force generation of code coverage
-        $policyConstruct = new Policy(new Length(1), new Digit(2));
+        $policyConstruct = new Policy($this->satisfiedRule1, $this->unsatisfiedRule);
         self::assertEquals($policy, $policyConstruct);
     }
 
@@ -58,10 +86,10 @@ final class PolicyTest extends TestCase
      */
     public function testCanAddZeroRules(): void
     {
-        $policy = new Policy(new Length(1));
+        $policy = new Policy($this->satisfiedRule1);
         $policy->addRules();
 
-        $policyConstruct = new Policy(new Length(1));
+        $policyConstruct = new Policy($this->satisfiedRule1);
         self::assertEquals($policy, $policyConstruct);
     }
 
@@ -70,10 +98,10 @@ final class PolicyTest extends TestCase
      */
     public function testCanAddSingleRule(): void
     {
-        $policy = new Policy(new Length(1));
-        $policy->addRules(new Digit(2));
+        $policy = new Policy($this->satisfiedRule1);
+        $policy->addRules($this->unsatisfiedRule);
 
-        $policyConstruct = new Policy(new Length(1), new Digit(2));
+        $policyConstruct = new Policy($this->satisfiedRule1, $this->unsatisfiedRule);
         self::assertEquals($policy, $policyConstruct);
     }
 
@@ -82,10 +110,10 @@ final class PolicyTest extends TestCase
      */
     public function testCanAddMultipleRules(): void
     {
-        $policy = new Policy(new Length(1));
-        $policy->addRules(new Digit(2), new LowerCase(3));
+        $policy = new Policy($this->satisfiedRule1);
+        $policy->addRules($this->unsatisfiedRule, $this->satisfiedRule2);
 
-        $policyConstruct = new Policy(new Length(1), new Digit(2), new LowerCase(3));
+        $policyConstruct = new Policy($this->satisfiedRule1, $this->unsatisfiedRule, $this->satisfiedRule2);
         self::assertEquals($policy, $policyConstruct);
     }
 
@@ -104,7 +132,7 @@ final class PolicyTest extends TestCase
      */
     public function testPolicyWithSingleRuleCanBeSatisfied(): void
     {
-        $policy = new Policy(new Length(2));
+        $policy = new Policy($this->satisfiedRule1);
 
         self::assertTrue($policy->test('foo'));
     }
@@ -114,7 +142,7 @@ final class PolicyTest extends TestCase
      */
     public function testPolicyWithSingleRuleCanBeUnsatisfied(): void
     {
-        $policy = new Policy(new Length(4));
+        $policy = new Policy($this->unsatisfiedRule);
 
         self::assertFalse($policy->test('foo'));
     }
@@ -124,7 +152,7 @@ final class PolicyTest extends TestCase
      */
     public function testPolicyWithMultipleRulesCanBeSatisfied(): void
     {
-        $policy = new Policy(new Length(2), new Digit(2));
+        $policy = new Policy($this->satisfiedRule1, $this->satisfiedRule2);
 
         self::assertTrue($policy->test('foo 159'));
     }
@@ -134,7 +162,7 @@ final class PolicyTest extends TestCase
      */
     public function testPolicyWithMultipleRulesCanBeUnsatisfied(): void
     {
-        $policy = new Policy(new Length(2), new Digit(2));
+        $policy = new Policy($this->satisfiedRule1, $this->unsatisfiedRule);
 
         self::assertFalse($policy->test('foo 1'));
     }
@@ -144,12 +172,12 @@ final class PolicyTest extends TestCase
      */
     public function testEnforceDoesNotThrowExceptionWhenPolicyIsSatisfied(): void
     {
-        $policy = new Policy();
+        $policy = new Policy($this->satisfiedRule1);
 
         $policy->enforce('foo');
 
         // Force generation of code coverage
-        $policyConstruct = new Policy();
+        $policyConstruct = new Policy($this->satisfiedRule1);
         self::assertEquals($policy, $policyConstruct);
     }
 
@@ -158,7 +186,7 @@ final class PolicyTest extends TestCase
      */
     public function testEnforceThrowsExceptionWhenPolicyIsNotSatisfied(): void
     {
-        $policy = new Policy(new Length(1));
+        $policy = new Policy($this->unsatisfiedRule);
 
         $this->expectException(PolicyException::class);
 
