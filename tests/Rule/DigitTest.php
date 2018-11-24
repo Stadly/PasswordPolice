@@ -19,10 +19,10 @@ final class DigitTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new Digit(5);
+        $rule = new Digit(5, null);
 
         // Force generation of code coverage
-        $ruleConstruct = new Digit(5);
+        $ruleConstruct = new Digit(5, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -57,7 +57,7 @@ final class DigitTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new Digit(-10);
+        $rule = new Digit(-10, null);
     }
 
     /**
@@ -77,7 +77,7 @@ final class DigitTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new Digit(0);
+        $rule = new Digit(0, null);
     }
 
     /**
@@ -117,7 +117,7 @@ final class DigitTest extends TestCase
      */
     public function testMinConstraintCanBeSatisfied(): void
     {
-        $rule = new Digit(2);
+        $rule = new Digit(2, null);
 
         self::assertTrue($rule->test('FOO bar 059'));
     }
@@ -127,7 +127,7 @@ final class DigitTest extends TestCase
      */
     public function testMinConstraintCanBeUnsatisfied(): void
     {
-        $rule = new Digit(2);
+        $rule = new Digit(2, null);
 
         self::assertFalse($rule->test('FOO BAR 0'));
     }
@@ -157,12 +157,12 @@ final class DigitTest extends TestCase
      */
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
     {
-        $rule = new Digit(1);
+        $rule = new Digit(1, null);
 
         $rule->enforce('1');
 
         // Force generation of code coverage
-        $ruleConstruct = new Digit(1);
+        $ruleConstruct = new Digit(1, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -171,7 +171,7 @@ final class DigitTest extends TestCase
      */
     public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
     {
-        $rule = new Digit(1);
+        $rule = new Digit(1, null);
 
         $this->expectException(RuleException::class);
 
@@ -183,7 +183,7 @@ final class DigitTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMinConstraint(): void
     {
-        $rule = new Digit(5);
+        $rule = new Digit(5, null);
 
         self::assertSame('There must be at least 5 digits.', $rule->getMessage());
     }

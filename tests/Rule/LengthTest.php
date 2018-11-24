@@ -19,10 +19,10 @@ final class LengthTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new Length(5);
+        $rule = new Length(5, null);
 
         // Force generation of code coverage
-        $ruleConstruct = new Length(5);
+        $ruleConstruct = new Length(5, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -57,7 +57,7 @@ final class LengthTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new Length(-10);
+        $rule = new Length(-10, null);
     }
 
     /**
@@ -77,7 +77,7 @@ final class LengthTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new Length(0);
+        $rule = new Length(0, null);
     }
 
     /**
@@ -117,7 +117,7 @@ final class LengthTest extends TestCase
      */
     public function testMinConstraintCanBeSatisfied(): void
     {
-        $rule = new Length(2);
+        $rule = new Length(2, null);
 
         self::assertTrue($rule->test('foo'));
     }
@@ -127,7 +127,7 @@ final class LengthTest extends TestCase
      */
     public function testMinConstraintCanBeUnsatisfied(): void
     {
-        $rule = new Length(2);
+        $rule = new Length(2, null);
 
         self::assertFalse($rule->test('f'));
     }
@@ -167,12 +167,12 @@ final class LengthTest extends TestCase
      */
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
     {
-        $rule = new Length(1);
+        $rule = new Length(1, null);
 
         $rule->enforce('foo');
 
         // Force generation of code coverage
-        $ruleConstruct = new Length(1);
+        $ruleConstruct = new Length(1, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -181,7 +181,7 @@ final class LengthTest extends TestCase
      */
     public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
     {
-        $rule = new Length(1);
+        $rule = new Length(1, null);
 
         $this->expectException(RuleException::class);
 
@@ -193,7 +193,7 @@ final class LengthTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMinConstraint(): void
     {
-        $rule = new Length(5);
+        $rule = new Length(5, null);
 
         self::assertSame('There must be at least 5 characters.', $rule->getMessage());
     }

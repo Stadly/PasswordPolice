@@ -19,10 +19,10 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new UpperCase(5);
+        $rule = new UpperCase(5, null);
 
         // Force generation of code coverage
-        $ruleConstruct = new UpperCase(5);
+        $ruleConstruct = new UpperCase(5, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -57,7 +57,7 @@ final class UpperCaseTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new UpperCase(-10);
+        $rule = new UpperCase(-10, null);
     }
 
     /**
@@ -77,7 +77,7 @@ final class UpperCaseTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new UpperCase(0);
+        $rule = new UpperCase(0, null);
     }
 
     /**
@@ -117,7 +117,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testMinConstraintCanBeSatisfied(): void
     {
-        $rule = new UpperCase(2);
+        $rule = new UpperCase(2, null);
 
         self::assertTrue($rule->test('foo BAR'));
     }
@@ -127,7 +127,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testMinConstraintCanBeUnsatisfied(): void
     {
-        $rule = new UpperCase(2);
+        $rule = new UpperCase(2, null);
 
         self::assertFalse($rule->test('foo bar'));
     }
@@ -157,7 +157,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testUpperCaseUtf8IsCounted(): void
     {
-        $rule = new UpperCase(1);
+        $rule = new UpperCase(1, null);
 
         self::assertTrue($rule->test('Á'));
     }
@@ -167,7 +167,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testLowerCaseUtf8IsNotCounted(): void
     {
-        $rule = new UpperCase(1);
+        $rule = new UpperCase(1, null);
 
         self::assertFalse($rule->test('á'));
     }
@@ -177,12 +177,12 @@ final class UpperCaseTest extends TestCase
      */
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
     {
-        $rule = new UpperCase(1);
+        $rule = new UpperCase(1, null);
 
         $rule->enforce('FOO');
 
         // Force generation of code coverage
-        $ruleConstruct = new UpperCase(1);
+        $ruleConstruct = new UpperCase(1, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -191,7 +191,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
     {
-        $rule = new UpperCase(1);
+        $rule = new UpperCase(1, null);
 
         $this->expectException(RuleException::class);
 
@@ -203,7 +203,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMinConstraint(): void
     {
-        $rule = new UpperCase(5);
+        $rule = new UpperCase(5, null);
 
         self::assertSame('There must be at least 5 upper case characters.', $rule->getMessage());
     }

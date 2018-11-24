@@ -76,7 +76,7 @@ final class HaveIBeenPwnedTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new HaveIBeenPwned(-10);
+        $rule = new HaveIBeenPwned(-10, null);
     }
 
     /**

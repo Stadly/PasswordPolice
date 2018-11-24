@@ -19,10 +19,10 @@ final class CharacterClassTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new CharacterClass('$%&@!', 5);
+        $rule = new CharacterClass('$%&@!', 5, null);
 
         // Force generation of code coverage
-        $ruleConstruct = new CharacterClass('$%&@!', 5);
+        $ruleConstruct = new CharacterClass('$%&@!', 5, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -57,7 +57,7 @@ final class CharacterClassTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new CharacterClass('$%&@!', -10);
+        $rule = new CharacterClass('$%&@!', -10, null);
     }
 
     /**
@@ -77,7 +77,7 @@ final class CharacterClassTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new CharacterClass('$%&@!', 0);
+        $rule = new CharacterClass('$%&@!', 0, null);
     }
 
     /**
@@ -99,7 +99,7 @@ final class CharacterClassTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new CharacterClass('', 5);
+        $rule = new CharacterClass('');
     }
 
     /**
@@ -107,7 +107,7 @@ final class CharacterClassTest extends TestCase
      */
     public function testCanGetCharacters(): void
     {
-        $rule = new CharacterClass('$%&@!', 5, 10);
+        $rule = new CharacterClass('$%&@!');
 
         self::assertSame('$%&@!', $rule->getCharacters());
     }
@@ -137,7 +137,7 @@ final class CharacterClassTest extends TestCase
      */
     public function testMinConstraintCanBeSatisfied(): void
     {
-        $rule = new CharacterClass('$%&@!', 2);
+        $rule = new CharacterClass('$%&@!', 2, null);
 
         self::assertTrue($rule->test('FOO bar $$@'));
     }
@@ -147,7 +147,7 @@ final class CharacterClassTest extends TestCase
      */
     public function testMinConstraintCanBeUnsatisfied(): void
     {
-        $rule = new CharacterClass('$%&@!', 2);
+        $rule = new CharacterClass('$%&@!', 2, null);
 
         self::assertFalse($rule->test('FOO BAR $'));
     }
@@ -177,12 +177,12 @@ final class CharacterClassTest extends TestCase
      */
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
     {
-        $rule = new CharacterClass('$%&@!', 1);
+        $rule = new CharacterClass('$%&@!', 1, null);
 
         $rule->enforce('&');
 
         // Force generation of code coverage
-        $ruleConstruct = new CharacterClass('$%&@!', 1);
+        $ruleConstruct = new CharacterClass('$%&@!', 1, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -191,7 +191,7 @@ final class CharacterClassTest extends TestCase
      */
     public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
     {
-        $rule = new CharacterClass('$%&@!', 1);
+        $rule = new CharacterClass('$%&@!', 1, null);
 
         $this->expectException(RuleException::class);
 
@@ -203,7 +203,7 @@ final class CharacterClassTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMinConstraint(): void
     {
-        $rule = new CharacterClass('$%&@!', 5);
+        $rule = new CharacterClass('$%&@!', 5, null);
 
         self::assertSame('There must be at least 5 characters matching $%&@!.', $rule->getMessage());
     }
