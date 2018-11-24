@@ -13,6 +13,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 - Translator no longer needs to be specified when enforcing rules.
+- Exceptions are now final.
 
 ### Fixed
 - Nothing

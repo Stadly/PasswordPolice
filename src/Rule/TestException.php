@@ -10,7 +10,7 @@ use Throwable;
 /**
  * Exception thrown if an error occurred while testing a rule.
  */
-class TestException extends RuntimeException
+final class TestException extends RuntimeException
 {
     /**
      * @var RuleInterface Rule that was tested when the error occurred.

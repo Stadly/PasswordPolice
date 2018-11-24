@@ -10,7 +10,7 @@ use Throwable;
 /**
  * Exception thrown when a rule could not be enforced.
  */
-class RuleException extends RuntimeException
+final class RuleException extends RuntimeException
 {
     /**
      * @var RuleInterface Rule that could not be enforced.
