@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - Possibility to specify a translator to use for all translations.
 - If no translator is specified, a default translator is created automatically.
+- Rule enforcing that passwords don't contain words from a dictionary.
 
 ### Changed
 - Translator no longer needs to be specified when enforcing rules.
