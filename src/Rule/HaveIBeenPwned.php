@@ -8,7 +8,6 @@ use Http\Discovery\Exception\NotFoundException;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Factory\Discovery\HttpFactory;
 use InvalidArgumentException;
-use LogicException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -67,15 +66,12 @@ final class HaveIBeenPwned implements RuleInterface
 
     /**
      * @return ClientInterface HTTP client for sending requests.
+     * @throws RuntimeException If a client could not be found.
      */
     private function getClient(): ClientInterface
     {
         if (null === $this->client) {
-            try {
-                $this->client = HttpClientDiscovery::find();
-            } catch (NotFoundException $exception) {
-                throw new LogicException($exception->getMessage(), $exception->getCode(), $exception);
-            }
+            $this->client = HttpClientDiscovery::find();
         }
         return $this->client;
     }
@@ -90,15 +86,12 @@ final class HaveIBeenPwned implements RuleInterface
 
     /**
      * @return RequestFactoryInterface Request factory for generating HTTP requests.
+     * @throws RuntimeException If a request factory could not be found.
      */
     private function getRequestFactory(): RequestFactoryInterface
     {
         if (null === $this->requestFactory) {
-            try {
-                $this->requestFactory = HttpFactory::requestFactory();
-            } catch (RuntimeException $exception) {
-                throw new LogicException($exception->getMessage(), $exception->getCode(), $exception);
-            }
+            $this->requestFactory = HttpFactory::requestFactory();
         }
         return $this->requestFactory;
     }
@@ -201,12 +194,12 @@ final class HaveIBeenPwned implements RuleInterface
         $prefix = substr($sha1, 0, 5);
         $suffix = substr($sha1, 5, 35);
 
-        $requestFactory = $this->getRequestFactory();
-        $request = $requestFactory->createRequest('GET', 'https://api.pwnedpasswords.com/range/'.$prefix);
-
-        $client = $this->getClient();
-
         try {
+            $requestFactory = $this->getRequestFactory();
+            $request = $requestFactory->createRequest('GET', 'https://api.pwnedpasswords.com/range/'.$prefix);
+
+            $client = $this->getClient();
+
             $response = $client->sendRequest($request);
             $body = $response->getBody();
             $contents = $body->getContents();

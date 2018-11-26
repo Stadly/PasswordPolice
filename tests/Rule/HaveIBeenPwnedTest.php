@@ -7,12 +7,12 @@ namespace Stadly\PasswordPolice\Rule;
 use Http\Discovery\ClassDiscovery;
 use Http\Factory\Discovery\FactoryLocator;
 use InvalidArgumentException;
-use LogicException;
 use PHPUnit\Framework\MockObject\Stub\Exception;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
+use RuntimeException;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\HaveIBeenPwned
@@ -247,7 +247,7 @@ final class HaveIBeenPwnedTest extends TestCase
 
         $rule = new HaveIBeenPwned(0, 5);
 
-        $this->expectException(LogicException::class);
+        $this->expectException(RuntimeException::class);
 
         $rule->test('291vnnzrvtu9');
     }
@@ -261,7 +261,7 @@ final class HaveIBeenPwnedTest extends TestCase
 
         $rule = new HaveIBeenPwned(0, 5);
 
-        $this->expectException(LogicException::class);
+        $this->expectException(RuntimeException::class);
 
         $rule->test('291vnnzrvtu9');
     }

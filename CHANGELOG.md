@@ -15,6 +15,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Translator no longer needs to be specified when enforcing rules.
 - Exceptions are now final.
 - Let tests mock interfaces instead of depend on implementations.
+- RuntimeException is thrown instead of LogicException when HTTP client or HTTP request factory could not be found.
 
 ### Fixed
 - Nothing
