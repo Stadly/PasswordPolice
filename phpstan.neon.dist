@@ -10,6 +10,11 @@ parameters:
       Http\Factory\Discovery\HttpFactory:
         requestFactory:
           - RuntimeException
+    functionThrowTypeDeclarations:
+      pspell_new:
+        - ErrorException
+      pspell_check:
+        - ErrorException
 
 includes:
   - vendor/phpstan/phpstan-strict-rules/rules.neon

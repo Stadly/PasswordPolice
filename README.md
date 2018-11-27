@@ -22,18 +22,23 @@ $ composer require stadly/password-police
 ``` php
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\PolicyException;
+use Stadly\PasswordPolice\CaseConverter\LowerCase as LowerCaseConverter;
+use Stadly\PasswordPolice\CaseConverter\UpperCase as UpperCaseConverter;
 use Stadly\PasswordPolice\Rule\Digit as DigitRule;
+use Stadly\PasswordPolice\Rule\Dictionary;
 use Stadly\PasswordPolice\Rule\HaveIBeenPwned;
 use Stadly\PasswordPolice\Rule\Length as LengthRule;
 use Stadly\PasswordPolice\Rule\LowerCase as LowerCaseRule;
 use Stadly\PasswordPolice\Rule\UpperCase as UpperCaseRule;
 
 $policy = new Policy();
-$policy->addRules(new LengthRule(8));       // Passwords must be at least 8 characters long.
-$policy->addRules(new LowerCaseRule());     // Passwords must contain lower case letters.
-$policy->addRules(new UpperCaseRule());     // Passwords must contain upper case letters.
-$policy->addRules(new DigitRule());         // Passwords must contain digits.
-$policy->addRules(new HaveIBeenPwned());    // Passwords must not be exposed in data breaches.
+$policy->addRules(new LengthRule(8));       // Password must be at least 8 characters long.
+$policy->addRules(new LowerCaseRule());     // Password must contain lower case letters.
+$policy->addRules(new UpperCaseRule());     // Password must contain upper case letters.
+$policy->addRules(new DigitRule());         // Password must contain digits.
+$policy->addRules(new HaveIBeenPwned());    // Password must not be exposed in data breaches.
+$pspell = Pspell::fromLocale('en', new LowerCaseConverter(), new UpperCaseConverter());
+$policy->addRules(new Dictionary($pspell)); // Password must not contain dictionary words.
 
 try {
     $policy->enforce('password');
