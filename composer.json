@@ -42,7 +42,7 @@
             "parallel-lint . --exclude vendor",
             "phpcs src tests",
             "phpstan analyse",
-            "phpstan analyse -c phpstan.tests.neon.dist",
+            "phpstan analyse -c phpstan.tests.neon.dist --memory-limit 256M",
             "phpunit"
         ],
         "check-style": "phpcs src tests",
@@ -61,6 +61,7 @@
         "nyholm/psr7": "Automatically discoverable HTTP request factory."
     },
     "require-dev": {
+        "antecedent/patchwork": "^2.1.8",
         "jakub-onderka/php-parallel-lint": "^1.0",
         "pepakriz/phpstan-exception-rules": "^0.3.0",
         "phpstan/phpstan": "dev-master as 0.10",

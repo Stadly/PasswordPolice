@@ -1,0 +1,6 @@
+{
+    "redefinable-internals": [
+        "pspell_new",
+        "pspell_check"
+    ]
+}

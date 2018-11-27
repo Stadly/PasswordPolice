@@ -2,6 +2,8 @@ parameters:
   level: max
   paths:
     - tests
+  autoload_files:
+    - vendor/antecedent/patchwork/Patchwork.php
 
 includes:
   - vendor/phpstan/phpstan-strict-rules/rules.neon

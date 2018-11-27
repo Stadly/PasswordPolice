@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\WordList;
 
 use InvalidArgumentException;
+use Patchwork\CallRerouting\Handle;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Error\Notice;
 use RuntimeException;
 use Stadly\PasswordPolice\CaseConverter\CaseConverterInterface;
-use PHPUnit\Framework\Error\Notice;
+use function Patchwork\redefine;
+use function Patchwork\restore;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\WordList\Pspell
@@ -17,6 +20,62 @@ use PHPUnit\Framework\Error\Notice;
  */
 final class PspellTest extends TestCase
 {
+    /**
+     * @var Handle Patchwork handle.
+     */
+    private $pspellNewPatch;
+
+    /**
+     * @var Handle Patchwork handle.
+     */
+    private $pspellCheckPatch;
+
+    protected function setUp(): void
+    {
+        // Errors are triggered in the scope of Pspell, so they can be caught by the error handler.
+        $triggerError = (function () {
+            trigger_error('foo');
+        })->bindTo(null, Pspell::class);
+
+        $this->pspellNewPatch = redefine(
+            'pspell_new',
+            function (string $locale) use ($triggerError) {
+                if ($locale === 'en') {
+                    return 1;
+                }
+
+                $triggerError();
+
+                return false;
+            }
+        );
+
+        $this->pspellCheckPatch = redefine(
+            'pspell_check',
+            function (int $pspell, string $word) use ($triggerError): bool {
+                if ($pspell < 0) {
+                    $triggerError();
+                } else {
+                    switch ($word) {
+                        case 'husband':
+                        case 'USA':
+                        case 'Europe':
+                        case 'iPhone':
+                            return true;
+                    }
+                }
+
+                return false;
+            }
+        );
+    }
+
+    protected function tearDown(): void
+    {
+        restore($this->pspellNewPatch);
+        restore($this->pspellCheckPatch);
+    }
+
     /**
      * @covers ::__construct
      */
@@ -181,8 +240,8 @@ final class PspellTest extends TestCase
 
         self::assertTrue($pspell->contains('HUSband'));
         self::assertTrue($pspell->contains('Usa'));
-        self::assertTrue($pspell->contains('europe'));
-        self::assertTrue($pspell->contains('iPHONE'));
+        self::assertFalse($pspell->contains('europe'));
+        self::assertFalse($pspell->contains('iPHONE'));
     }
 
     /**
