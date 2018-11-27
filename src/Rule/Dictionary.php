@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
+use RuntimeException;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\WordList\WordListInterface;
 
@@ -79,8 +80,12 @@ final class Dictionary implements RuleInterface
             for ($wordLength = mb_strlen($word); $this->min <= $wordLength; --$wordLength) {
                 $word = mb_substr($word, 0, $wordLength);
 
-                if ($this->wordList->contains($word)) {
-                    return false;
+                try {
+                    if ($this->wordList->contains($word)) {
+                        return false;
+                    }
+                } catch (RuntimeException $exception) {
+                    throw new TestException($this, 'An error occurred while using the word list.', $exception);
                 }
             }
         }

@@ -6,6 +6,7 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
+use RuntimeException;
 use Stadly\PasswordPolice\WordList\WordListInterface;
 
 use PHPUnit\Framework\TestCase;
@@ -214,6 +215,21 @@ final class DictionaryTest extends TestCase
         $rule = new Dictionary($this->wordList, 1, null);
 
         self::assertFalse($rule->test('applejack'));
+    }
+
+    /**
+     * @covers ::test
+     */
+    public function testTestThrowsExceptionWhenWordListThrowsException(): void
+    {
+        $wordList = $this->createMock(WordListInterface::class);
+        $wordList->method('contains')->willThrowException(new RuntimeException());
+
+        $rule = new Dictionary($wordList);
+
+        $this->expectException(TestException::class);
+
+        $rule->test('foo');
     }
 
     /**

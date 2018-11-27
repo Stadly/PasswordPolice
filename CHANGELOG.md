@@ -16,6 +16,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Exceptions are now final.
 - Let tests mock interfaces instead of depend on implementations.
 - RuntimeException is thrown instead of LogicException when HTTP client or HTTP request factory could not be found.
+- RuntimeException is thrown instead of TestException when word list cannot be used.
 
 ### Fixed
 - Nothing
