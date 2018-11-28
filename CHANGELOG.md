@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.4.0...HEAD)
 
 ### Added
-- Nothing
+- Interface for hash functions.
 
 ### Changed
 - Nothing
