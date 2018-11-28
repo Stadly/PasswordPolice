@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
+use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 
 final class UpperCase implements RuleInterface
@@ -58,12 +59,12 @@ final class UpperCase implements RuleInterface
     /**
      * Check whether a password adheres to the rule.
      *
-     * @param string $password Password to check.
+     * @param Password|string $password Password to check.
      * @return bool Whether the password adheres to the rule.
      */
-    public function test(string $password): bool
+    public function test($password): bool
     {
-        $count = $this->getCount($password);
+        $count = $this->getCount((string)$password);
 
         if ($count < $this->min) {
             return false;
@@ -79,10 +80,10 @@ final class UpperCase implements RuleInterface
     /**
      * Enforce that a password adheres to the rule.
      *
-     * @param string $password Password that must adhere to the rule.
+     * @param Password|string $password Password that must adhere to the rule.
      * @throws RuleException If the password does not adhrere to the rule.
      */
-    public function enforce(string $password): void
+    public function enforce($password): void
     {
         if (!$this->test($password)) {
             throw new RuleException($this, $this->getMessage());

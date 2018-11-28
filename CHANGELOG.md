@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.3.0...HEAD)
 
 ### Added
-- Nothing
+- Rules accept Password object in addition to string.
 
 ### Changed
 - Nothing

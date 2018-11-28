@@ -72,8 +72,9 @@ final class Dictionary implements RuleInterface
     /**
      * {@inheritDoc}
      */
-    public function test(string $password): bool
+    public function test($password): bool
     {
+        $password = (string)$password;
         for ($start = 0; $start < mb_strlen($password); ++$start) {
             $word = mb_substr($password, $start, $this->max);
 
@@ -95,7 +96,7 @@ final class Dictionary implements RuleInterface
     /**
      * {@inheritDoc}
      */
-    public function enforce(string $password): void
+    public function enforce($password): void
     {
         if (!$this->test($password)) {
             throw new RuleException($this, $this->getMessage());

@@ -115,9 +115,9 @@ final class HaveIBeenPwned implements RuleInterface
     /**
      * {@inheritDoc}
      */
-    public function test(string $password): bool
+    public function test($password): bool
     {
-        $count = $this->getCount($password);
+        $count = $this->getCount((string)$password);
 
         if ($count < $this->min) {
             return false;
@@ -133,7 +133,7 @@ final class HaveIBeenPwned implements RuleInterface
     /**
      * {@inheritDoc}
      */
-    public function enforce(string $password): void
+    public function enforce($password): void
     {
         if (!$this->test($password)) {
             throw new RuleException($this, $this->getMessage());

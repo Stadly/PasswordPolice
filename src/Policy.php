@@ -43,11 +43,11 @@ final class Policy
     /**
      * Check whether a password adheres to the policy.
      *
-     * @param string $password Password to check.
+     * @param Password|string $password Password to check.
      * @return bool Whether the password adheres to the policy.
      * @throws TestException If an error occurred while checking the password.
      */
-    public function test(string $password): bool
+    public function test($password): bool
     {
         foreach ($this->rules as $rule) {
             if (!$rule->test($password)) {
@@ -61,11 +61,11 @@ final class Policy
     /**
      * Enforce that a password adheres to the policy.
      *
-     * @param string $password Password that must adhere to the policy.
+     * @param Password|string $password Password that must adhere to the policy.
      * @throws PolicyException If the password does not adhrere to the policy.
      * @throws TestException If an error occurred while checking the password.
      */
-    public function enforce(string $password): void
+    public function enforce($password): void
     {
         $exceptions = [];
 
