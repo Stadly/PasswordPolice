@@ -23,7 +23,7 @@ final class Policy
     private static $translator;
 
     /**
-     * @param RuleInterface... $rules Policy rules
+     * @param RuleInterface... $rules Policy rules.
      */
     public function __construct(RuleInterface... $rules)
     {
