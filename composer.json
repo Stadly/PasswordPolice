@@ -58,7 +58,8 @@
     },
     "suggest": {
         "php-http/guzzle6-adapter": "Automatically discoverable HTTP client.",
-        "nyholm/psr7": "Automatically discoverable HTTP request factory."
+        "nyholm/psr7": "Automatically discoverable HTTP request factory.",
+        "ext-pspell": "To use pspell with a dictionary."
     },
     "require-dev": {
         "jakub-onderka/php-parallel-lint": "^1.0",
