@@ -4,7 +4,7 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.2.0...HEAD)
+## [v0.3.0](https://github.com/Stadly/PasswordPolice/compare/v0.2.0...v0.3.0) - 2018-11-28
 
 ### Added
 - Possibility to specify a translator to use for all translations.
@@ -19,18 +19,6 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Let tests mock interfaces instead of depend on implementations.
 - RuntimeException is thrown instead of LogicException when HTTP client or HTTP request factory could not be found.
 - RuntimeException is thrown instead of TestException when word list cannot be used.
-
-### Fixed
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ## [v0.2.0](https://github.com/Stadly/PasswordPolice/compare/v0.1.0...v0.2.0) - 2018-11-22
 
