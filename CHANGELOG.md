@@ -4,26 +4,11 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.3.0...HEAD)
+## [v0.4.0](https://github.com/Stadly/PasswordPolice/compare/v0.3.0...v0.4.0) - 2018-11-28
 
 ### Added
 - Rules accept Password object in addition to string.
 - Rule enforcing that passwords don't contain easily guessable data.
-
-### Changed
-- Nothing
-
-### Fixed
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ## [v0.3.0](https://github.com/Stadly/PasswordPolice/compare/v0.2.0...v0.3.0) - 2018-11-28
 
