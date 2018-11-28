@@ -8,7 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Rules accept Password object in addition to string.
-- Rule enforcing that passwords don't containt easily guessable data.
+- Rule enforcing that passwords don't contain easily guessable data.
 
 ### Changed
 - Nothing
