@@ -3,7 +3,7 @@ parameters:
   paths:
     - tests
   autoload_files:
-    - vendor/antecedent/patchwork/Patchwork.php
+    - tests/WordList/PspellMonkeyPatch.php
 
 includes:
   - vendor/phpstan/phpstan-strict-rules/rules.neon
