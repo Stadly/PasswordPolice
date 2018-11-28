@@ -45,10 +45,23 @@ final class Password
     }
 
     /**
-     * @return (string|DateTimeInterface)[]
+     * @param string|DateTimeInterface... $guessableData Guessable data.
+     */
+    public function addGuessableData(... $guessableData): void
+    {
+        $this->guessableData = array_merge($this->guessableData, $guessableData);
+    }
+
+    /**
+     * @return (string|DateTimeInterface)[] Guessable data.
      */
     public function getGuessableData(): array
     {
         return $this->guessableData;
+    }
+
+    public function clearGuessableData(): void
+    {
+        $this->guessableData = [];
     }
 }

@@ -60,13 +60,36 @@ final class PasswordTest extends TestCase
     }
 
     /**
+     * @covers ::addGuessableData
+     */
+    public function testCanAddGuessableData(): void
+    {
+        $date = new DateTime();
+        $password = new Password('foo');
+        $password->addGuessableData('bar', $date);
+
+        self::assertEquals(new Password('foo', ['bar', $date]), $password);
+    }
+
+    /**
      * @covers ::getGuessableData
      */
     public function testCanGetGuessableData(): void
     {
         $date = new DateTime();
-        $password = new Password('bar', ['bar', $date]);
+        $password = new Password('foo', ['bar', $date]);
 
         self::assertSame(['bar', $date], $password->getGuessableData());
+    }
+
+    /**
+     * @covers ::clearGuessableData
+     */
+    public function testCanClearGuessableData(): void
+    {
+        $password = new Password('foo', ['bar', new DateTime()]);
+        $password->clearGuessableData();
+
+        self::assertEquals(new Password('foo'), $password);
     }
 }
