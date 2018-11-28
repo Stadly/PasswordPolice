@@ -20,12 +20,15 @@ $ composer require stadly/password-police
 ## Usage
 
 ``` php
+use DateTime;
+use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\PolicyException;
 use Stadly\PasswordPolice\CaseConverter\LowerCase as LowerCaseConverter;
 use Stadly\PasswordPolice\CaseConverter\UpperCase as UpperCaseConverter;
 use Stadly\PasswordPolice\Rule\Digit as DigitRule;
 use Stadly\PasswordPolice\Rule\Dictionary;
+use Stadly\PasswordPolice\Rule\GuessableData;
 use Stadly\PasswordPolice\Rule\HaveIBeenPwned;
 use Stadly\PasswordPolice\Rule\Length as LengthRule;
 use Stadly\PasswordPolice\Rule\LowerCase as LowerCaseRule;
@@ -36,12 +39,22 @@ $policy->addRules(new LengthRule(8));       // Password must be at least 8 chara
 $policy->addRules(new LowerCaseRule());     // Password must contain lower case letters.
 $policy->addRules(new UpperCaseRule());     // Password must contain upper case letters.
 $policy->addRules(new DigitRule());         // Password must contain digits.
+$policy->addRules(new GuessableData());     // Password must not contain data that is easy to guess.
 $policy->addRules(new HaveIBeenPwned());    // Password must not be exposed in data breaches.
 $pspell = Pspell::fromLocale('en', new LowerCaseConverter(), new UpperCaseConverter());
 $policy->addRules(new Dictionary($pspell)); // Password must not contain dictionary words.
 
 try {
     $policy->enforce('password');
+    // The password adheres to the policy.
+} catch (PolicyException $exception) {
+    // The password does not adhere to the policy.
+    // Use the exception to show an appropriate message to the user.
+}
+
+try {
+    // Specify data that is easy to guess for this password.
+    $policy->enforce(new Password('password', ['first name', 'spouse', DateTime('birthday')]));
     // The password adheres to the policy.
 } catch (PolicyException $exception) {
     // The password does not adhere to the policy.

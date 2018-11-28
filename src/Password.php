@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice;
 
+use DateTimeInterface;
+
 final class Password
 {
     /**
@@ -12,11 +14,18 @@ final class Password
     private $password;
 
     /**
-     * @param string $password Password.
+     * @var (string|DateTimeInterface)[] Guessable data.
      */
-    public function __construct(string $password)
+    private $guessableData;
+
+    /**
+     * @param string $password Password.
+     * @param (string|DateTimeInterface)[] $guessableData Guessable data.
+     */
+    public function __construct(string $password, array $guessableData = [])
     {
         $this->password = $password;
+        $this->guessableData = $guessableData;
     }
 
     /**
@@ -33,5 +42,13 @@ final class Password
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    /**
+     * @return (string|DateTimeInterface)[]
+     */
+    public function getGuessableData(): array
+    {
+        return $this->guessableData;
     }
 }

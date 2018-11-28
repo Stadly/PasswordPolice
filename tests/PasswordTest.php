@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice;
 
+use DateTime;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,6 +27,19 @@ final class PasswordTest extends TestCase
     }
 
     /**
+     * @covers ::__construct
+     */
+    public function testCanConstructPasswordWithGuessableData(): void
+    {
+        $date = new DateTime();
+        $password = new Password('foo', ['bar', $date]);
+
+        // Force generation of code coverage
+        $passwordConstruct = new Password('foo', ['bar', $date]);
+        self::assertEquals($password, $passwordConstruct);
+    }
+
+    /**
      * @covers ::__toString
      */
     public function testCanConvertToString(): void
@@ -43,5 +57,16 @@ final class PasswordTest extends TestCase
         $password = new Password('bar');
 
         self::assertSame('bar', $password->getPassword());
+    }
+
+    /**
+     * @covers ::getGuessableData
+     */
+    public function testCanGetGuessableData(): void
+    {
+        $date = new DateTime();
+        $password = new Password('bar', ['bar', $date]);
+
+        self::assertSame(['bar', $date], $password->getGuessableData());
     }
 }
