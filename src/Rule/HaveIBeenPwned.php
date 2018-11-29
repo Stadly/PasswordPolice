@@ -17,12 +17,12 @@ use Stadly\PasswordPolice\Policy;
 final class HaveIBeenPwned implements RuleInterface
 {
     /**
-     * @var int Minimum number of times the password can appear in breaches.
+     * @var int Minimum number of appearances in breaches.
      */
     private $min;
 
     /**
-     * @var int|null Maximum number of times the password can appear in breaches.
+     * @var int|null Maximum number of appearances in breaches.
      */
     private $max;
 
@@ -37,10 +37,10 @@ final class HaveIBeenPwned implements RuleInterface
     private $requestFactory;
 
     /**
-     * @param int $min Minimum number of times the password can appear in breaches.
-     * @param int|null $max Maximum number of times the password can appear in breaches.
+     * @param int|null $max Maximum number of appearances in breaches.
+     * @param int $min Minimum number of appearances in breaches.
      */
-    public function __construct(int $min = 0, ?int $max = 0)
+    public function __construct(?int $max = 0, int $min = 0)
     {
         if ($min < 0) {
             throw new InvalidArgumentException('Min cannot be negative.');
@@ -97,7 +97,7 @@ final class HaveIBeenPwned implements RuleInterface
     }
 
     /**
-     * @return int Minimum number of times the password can appear in breaches.
+     * @return int Minimum number of appearances in breaches.
      */
     public function getMin(): int
     {
@@ -105,7 +105,7 @@ final class HaveIBeenPwned implements RuleInterface
     }
 
     /**
-     * @return int|null Maximum number of times the password can appear in breaches.
+     * @return int|null Maximum number of appearances in breaches.
      */
     public function getMax(): ?int
     {
@@ -185,7 +185,7 @@ final class HaveIBeenPwned implements RuleInterface
 
     /**
      * @param string $password Password to check in breaches.
-     * @return int Number of times the password appears in breaches.
+     * @return int Number of appearances in breaches.
      * @throws TestException If an error occurred while using the Have I Been Pwned? service.
      */
     private function getCount(string $password): int

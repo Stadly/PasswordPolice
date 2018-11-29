@@ -38,10 +38,10 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new HaveIBeenPwned(5, null);
+        $rule = new HaveIBeenPwned(null, 5);
 
         // Force generation of code coverage
-        $ruleConstruct = new HaveIBeenPwned(5, null);
+        $ruleConstruct = new HaveIBeenPwned(null, 5);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -50,10 +50,10 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = new HaveIBeenPwned(0, 10);
+        $rule = new HaveIBeenPwned(10, 0);
 
         // Force generation of code coverage
-        $ruleConstruct = new HaveIBeenPwned(0, 10);
+        $ruleConstruct = new HaveIBeenPwned(10, 0);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -62,10 +62,10 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new HaveIBeenPwned(5, 10);
+        $rule = new HaveIBeenPwned(10, 5);
 
         // Force generation of code coverage
-        $ruleConstruct = new HaveIBeenPwned(5, 10);
+        $ruleConstruct = new HaveIBeenPwned(10, 5);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -76,7 +76,7 @@ final class HaveIBeenPwnedTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new HaveIBeenPwned(-10, null);
+        $rule = new HaveIBeenPwned(null, -10);
     }
 
     /**
@@ -86,7 +86,7 @@ final class HaveIBeenPwnedTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new HaveIBeenPwned(10, 5);
+        $rule = new HaveIBeenPwned(5, 10);
     }
 
     /**
@@ -96,7 +96,7 @@ final class HaveIBeenPwnedTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new HaveIBeenPwned(0, null);
+        $rule = new HaveIBeenPwned(null, 0);
     }
 
     /**
@@ -116,8 +116,8 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanSetClient(): void
     {
-        $rule = new HaveIBeenPwned(5, 10);
-        $ruleConstruct = new HaveIBeenPwned(5, 10);
+        $rule = new HaveIBeenPwned(10, 5);
+        $ruleConstruct = new HaveIBeenPwned(10, 5);
         self::assertEquals($rule, $ruleConstruct);
 
         $client = $this->createMock(ClientInterface::class);
@@ -130,8 +130,8 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanSetRequestFactory(): void
     {
-        $rule = new HaveIBeenPwned(5, 10);
-        $ruleConstruct = new HaveIBeenPwned(5, 10);
+        $rule = new HaveIBeenPwned(10, 5);
+        $ruleConstruct = new HaveIBeenPwned(10, 5);
         self::assertEquals($rule, $ruleConstruct);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
@@ -144,7 +144,7 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanGetMinConstraint(): void
     {
-        $rule = new HaveIBeenPwned(5, 10);
+        $rule = new HaveIBeenPwned(10, 5);
 
         self::assertSame(5, $rule->getMin());
     }
@@ -154,7 +154,7 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanGetMaxConstraint(): void
     {
-        $rule = new HaveIBeenPwned(5, 10);
+        $rule = new HaveIBeenPwned(10, 5);
 
         self::assertSame(10, $rule->getMax());
     }
@@ -164,7 +164,7 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testMinConstraintCanBeSatisfied(): void
     {
-        $rule = new HaveIBeenPwned(5, null);
+        $rule = new HaveIBeenPwned(null, 5);
 
         self::assertTrue($rule->test('6004468405'));
     }
@@ -174,7 +174,7 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testMinConstraintCanBeUnsatisfied(): void
     {
-        $rule = new HaveIBeenPwned(5, null);
+        $rule = new HaveIBeenPwned(null, 5);
 
         self::assertFalse($rule->test('6597812222'));
     }
@@ -184,7 +184,7 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testMinConstraintIsNotSatisfiedWhenHashIsNotFound(): void
     {
-        $rule = new HaveIBeenPwned(1, null);
+        $rule = new HaveIBeenPwned(null, 1);
 
         self::assertFalse($rule->test('291vnnzrvtu9'));
     }
@@ -194,7 +194,7 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testMaxConstraintCanBeSatisfied(): void
     {
-        $rule = new HaveIBeenPwned(0, 3);
+        $rule = new HaveIBeenPwned(3, 0);
 
         self::assertTrue($rule->test('553193251'));
     }
@@ -204,7 +204,7 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testMaxConstraintCanBeUnsatisfied(): void
     {
-        $rule = new HaveIBeenPwned(0, 3);
+        $rule = new HaveIBeenPwned(3, 0);
 
         self::assertFalse($rule->test('+79250455754'));
     }
@@ -214,7 +214,7 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testMaxConstraintIsSatisfiedWhenHashIsNotFound(): void
     {
-        $rule = new HaveIBeenPwned(0, 5);
+        $rule = new HaveIBeenPwned(5, 0);
 
         self::assertTrue($rule->test('291vnnzrvtu9'));
     }
@@ -230,7 +230,7 @@ final class HaveIBeenPwnedTest extends TestCase
         $client = $this->createMock(ClientInterface::class);
         $client->method('sendRequest')->will($stubException);
 
-        $rule = new HaveIBeenPwned(0, 5);
+        $rule = new HaveIBeenPwned(5, 0);
         $rule->setClient($client);
 
         $this->expectException(TestException::class);
@@ -245,7 +245,7 @@ final class HaveIBeenPwnedTest extends TestCase
     {
         FactoryLocator::unregister(RequestFactoryInterface::class, MockedRequestFactory::class);
 
-        $rule = new HaveIBeenPwned(0, 5);
+        $rule = new HaveIBeenPwned(5, 0);
 
         $this->expectException(RuntimeException::class);
 
@@ -259,7 +259,7 @@ final class HaveIBeenPwnedTest extends TestCase
     {
         ClassDiscovery::setStrategies([]);
 
-        $rule = new HaveIBeenPwned(0, 5);
+        $rule = new HaveIBeenPwned(5, 0);
 
         $this->expectException(RuntimeException::class);
 
@@ -274,14 +274,14 @@ final class HaveIBeenPwnedTest extends TestCase
         $client = new HaveIBeenPwnedClient();
         $requestFactory = new MockedRequestFactory();
 
-        $rule = new HaveIBeenPwned(2, null);
+        $rule = new HaveIBeenPwned(null, 2);
         $rule->setClient($client);
         $rule->setRequestFactory($requestFactory);
 
         $rule->enforce('1397wpfk');
 
         // Force generation of code coverage
-        $ruleConstruct = new HaveIBeenPwned(2, null);
+        $ruleConstruct = new HaveIBeenPwned(null, 2);
         $ruleConstruct->setClient($client);
         $ruleConstruct->setRequestFactory($requestFactory);
         self::assertEquals($rule, $ruleConstruct);
@@ -292,7 +292,7 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
     {
-        $rule = new HaveIBeenPwned(3, null);
+        $rule = new HaveIBeenPwned(null, 3);
 
         $this->expectException(RuleException::class);
 
@@ -304,7 +304,7 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMinConstraint(): void
     {
-        $rule = new HaveIBeenPwned(5, null);
+        $rule = new HaveIBeenPwned(null, 5);
 
         self::assertSame('Must appear at least 5 times in breaches.', $rule->getMessage());
     }
@@ -314,7 +314,7 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMaxConstraint(): void
     {
-        $rule = new HaveIBeenPwned(0, 10);
+        $rule = new HaveIBeenPwned(10, 0);
 
         self::assertSame('Must appear at most 10 times in breaches.', $rule->getMessage());
     }
@@ -324,7 +324,7 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testCanGetMessageForRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new HaveIBeenPwned(5, 10);
+        $rule = new HaveIBeenPwned(10, 5);
 
         self::assertSame('Must appear between 5 and 10 times in breaches.', $rule->getMessage());
     }

@@ -11,7 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Possible to specify former passwords.
 
 ### Changed
-- Nothing
+- Specify the maximum number of appearances in breaches before the minimum in Have I Been Pwned?
 
 ### Fixed
 - Nothing
