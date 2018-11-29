@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Interface for hash functions.
+- Possible to specify former passwords.
 
 ### Changed
 - Nothing

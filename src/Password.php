@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice;
 
 use DateTimeInterface;
+use StableSort\StableSort;
 
 final class Password
 {
@@ -19,13 +20,20 @@ final class Password
     private $guessableData;
 
     /**
+     * @var FormerPassword[] Former passwords, ordered by recentness.
+     */
+    private $formerPasswords = [];
+
+    /**
      * @param string $password Password.
      * @param (string|DateTimeInterface)[] $guessableData Guessable data.
+     * @param FormerPassword[] $formerPasswords Former passwords.
      */
-    public function __construct(string $password, array $guessableData = [])
+    public function __construct(string $password, array $guessableData = [], array $formerPasswords = [])
     {
         $this->password = $password;
         $this->guessableData = $guessableData;
+        $this->addFormerPasswords(...$formerPasswords);
     }
 
     /**
@@ -63,5 +71,30 @@ final class Password
     public function clearGuessableData(): void
     {
         $this->guessableData = [];
+    }
+
+    /**
+     * @param FormerPassword... $formerPasswords Former passwords.
+     */
+    public function addFormerPasswords(... $formerPasswords): void
+    {
+        $this->formerPasswords = array_merge($this->formerPasswords, $formerPasswords);
+
+        StableSort::usort($this->formerPasswords, function (FormerPassword $a, FormerPassword $b): int {
+            return $b->getDate() <=> $a->getDate();
+        });
+    }
+
+    /**
+     * @return FormerPassword[] Former passwords, ordered by recentness.
+     */
+    public function getFormerPasswords(): array
+    {
+        return $this->formerPasswords;
+    }
+
+    public function clearFormerPasswords(): void
+    {
+        $this->formerPasswords = [];
     }
 }
