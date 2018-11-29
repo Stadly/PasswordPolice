@@ -17,32 +17,32 @@ final class Dictionary implements RuleInterface
     private $wordList;
 
     /**
-     * @var int Minimum word length.
+     * @var int Minimum word length to consider.
      */
-    private $min;
+    private $minWordLength;
 
     /**
-     * @var int|null Maximum word length.
+     * @var int|null Maximum word length to consider.
      */
-    private $max;
+    private $maxWordLength;
 
     /**
      * @param WordListInterface $wordList Word list for the dictionary.
-     * @param int $min Minimum word length.
-     * @param int|null $max Maximum word length.
+     * @param int $minWordLength Ignore words shorter than this.
+     * @param int|null $maxWordLength Ignore words longer than this.
      */
-    public function __construct(WordListInterface $wordList, int $min = 3, ?int $max = 25)
+    public function __construct(WordListInterface $wordList, int $minWordLength = 3, ?int $maxWordLength = 25)
     {
-        if ($min < 1) {
-            throw new InvalidArgumentException('Min must be positive.');
+        if ($minWordLength < 1) {
+            throw new InvalidArgumentException('Minimum word length must be positive.');
         }
-        if ($max !== null && $max < $min) {
-            throw new InvalidArgumentException('Max cannot be smaller than min.');
+        if ($maxWordLength !== null && $maxWordLength < $minWordLength) {
+            throw new InvalidArgumentException('Maximum word length cannot be smaller than mininum word length.');
         }
 
         $this->wordList = $wordList;
-        $this->min = $min;
-        $this->max = $max;
+        $this->minWordLength = $minWordLength;
+        $this->maxWordLength = $maxWordLength;
     }
 
     /**
@@ -54,19 +54,19 @@ final class Dictionary implements RuleInterface
     }
 
     /**
-     * @return int Minimum word length.
+     * @return int Minimum word length to consider.
      */
-    public function getMin(): int
+    public function getMinWordLength(): int
     {
-        return $this->min;
+        return $this->minWordLength;
     }
 
     /**
-     * @return int|null Maximum word length.
+     * @return int|null Maximum word length to consider.
      */
-    public function getMax(): ?int
+    public function getMaxWordLength(): ?int
     {
-        return $this->max;
+        return $this->maxWordLength;
     }
 
     /**
@@ -76,9 +76,9 @@ final class Dictionary implements RuleInterface
     {
         $password = (string)$password;
         for ($start = 0; $start < mb_strlen($password); ++$start) {
-            $word = mb_substr($password, $start, $this->max);
+            $word = mb_substr($password, $start, $this->maxWordLength);
 
-            for ($wordLength = mb_strlen($word); $this->min <= $wordLength; --$wordLength) {
+            for ($wordLength = mb_strlen($word); $this->minWordLength <= $wordLength; --$wordLength) {
                 $word = mb_substr($word, 0, $wordLength);
 
                 try {

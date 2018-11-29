@@ -42,7 +42,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCanConstructRuleWithMinConstraint(): void
+    public function testCanConstructRuleWithMinWordLengthConstraint(): void
     {
         $rule = new Dictionary($this->wordList, 5, null);
 
@@ -54,7 +54,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCanConstructRuleWithMaxConstraint(): void
+    public function testCanConstructRuleWithMaxWordLengthConstraint(): void
     {
         $rule = new Dictionary($this->wordList, 1, 10);
 
@@ -66,7 +66,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
+    public function testCanConstructRuleWithBothMinWordLengthAndMaxWordLengthConstraint(): void
     {
         $rule = new Dictionary($this->wordList, 5, 10);
 
@@ -78,7 +78,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructRuleWithMinConstraintEqualToZero(): void
+    public function testCannotConstructRuleWithMinWordLengthConstraintEqualToZero(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -88,7 +88,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructRuleWithNegativeMinConstraint(): void
+    public function testCannotConstructRuleWithNegativeMinWordLengthConstraint(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -98,7 +98,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructRuleWithMaxConstraintSmallerThanMinConstraint(): void
+    public function testCannotConstructRuleWithMaxWordLengthConstraintSmallerThanMinWordLengthConstraint(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -108,7 +108,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
+    public function testCanConstructRuleWithMinWordLengthConstraintEqualToMaxWordLengthConstraint(): void
     {
         $rule = new Dictionary($this->wordList, 5, 5);
 
@@ -118,23 +118,23 @@ final class DictionaryTest extends TestCase
     }
 
     /**
-     * @covers ::getMin
+     * @covers ::getMinWordLength
      */
-    public function testCanGetMinConstraint(): void
+    public function testCanGetMinWordLengthConstraint(): void
     {
         $rule = new Dictionary($this->wordList, 5, 10);
 
-        self::assertSame(5, $rule->getMin());
+        self::assertSame(5, $rule->getMinWordLength());
     }
 
     /**
-     * @covers ::getMax
+     * @covers ::getMaxWordLength
      */
-    public function testCanGetMaxConstraint(): void
+    public function testCanGetMaxWordLengthConstraint(): void
     {
         $rule = new Dictionary($this->wordList, 5, 10);
 
-        self::assertSame(10, $rule->getMax());
+        self::assertSame(10, $rule->getMaxWordLength());
     }
 
     /**
@@ -150,7 +150,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testMinConstraintCanBeSatisfied(): void
+    public function testMinWordLengthConstraintCanBeSatisfied(): void
     {
         $rule = new Dictionary($this->wordList, 3, null);
 
@@ -160,7 +160,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testMinConstraintCanBeUnsatisfied(): void
+    public function testMinWordLengthConstraintCanBeUnsatisfied(): void
     {
         $rule = new Dictionary($this->wordList, 2, null);
 
@@ -170,7 +170,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testMaxConstraintCanBeSatisfied(): void
+    public function testMaxWordLengthConstraintCanBeSatisfied(): void
     {
         $rule = new Dictionary($this->wordList, 1, 4);
 
@@ -180,7 +180,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testMaxConstraintCanBeUnsatisfied(): void
+    public function testMaxWordLengthConstraintCanBeUnsatisfied(): void
     {
         $rule = new Dictionary($this->wordList, 1, 5);
 

@@ -12,6 +12,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 - Specify the maximum number of appearances in breaches before the minimum in Have I Been Pwned?
+- Renamed Dictionary methods `getMin` and `getMax` to `getMinWordLength` and `getMaxWordLength`.
 
 ### Fixed
 - Nothing
