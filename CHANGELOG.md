@@ -4,7 +4,7 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.4.0...HEAD)
+## [v0.5.0](https://github.com/Stadly/PasswordPolice/compare/v0.4.0...v0.5.0) - 2018-11-30
 
 ### Added
 - Interface for hash functions.
@@ -16,18 +16,6 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Specify the maximum number of appearances in breaches before the minimum in Have I Been Pwned?
 - Renamed Dictionary methods `getMin` and `getMax` to `getMinWordLength` and `getMaxWordLength`.
 - Translators must implement `Symfony\Contracts\Translation\TranslatorInterface` instead of `Symfony\Component\Translation\TranslatorInterface`, since the latter is deprecated.
-
-### Fixed
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ## [v0.4.0](https://github.com/Stadly/PasswordPolice/compare/v0.3.0...v0.4.0) - 2018-11-28
 
