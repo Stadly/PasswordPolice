@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - Interface for hash functions.
 - Possible to specify former passwords.
+- Rule enforcing that former passwords are not reused.
 
 ### Changed
 - Specify the maximum number of appearances in breaches before the minimum in Have I Been Pwned?
