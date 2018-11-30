@@ -26,7 +26,7 @@ final class DictionaryTest extends TestCase
     protected function setUp(): void
     {
         $this->wordList = $this->createMock(WordListInterface::class);
-        $this->wordList->method('contains')->will(self::returnCallback(
+        $this->wordList->method('contains')->willReturnCallback(
             function ($word) {
                 switch ($word) {
                     case 'apple':
@@ -36,7 +36,7 @@ final class DictionaryTest extends TestCase
                         return false;
                 }
             }
-        ));
+        );
     }
 
     /**
