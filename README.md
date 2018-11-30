@@ -50,7 +50,7 @@ $policy->addRules(new Dictionary($pspell));         // Password must not contain
 
 try {
     $policy->enforce('password');
-    // The password adheres to the policy.
+    // The password is in compliance with the policy.
 } catch (PolicyException $exception) {
     // The password does not adhere to the policy.
     // Use the exception to show an appropriate message to the user.
@@ -59,7 +59,7 @@ try {
 try {
     // Specify data that is easy to guess for this password.
     $policy->enforce(new Password('password', ['first name', 'spouse', new DateTime('birthday')]));
-    // The password adheres to the policy.
+    // The password is in compliance with the policy.
 } catch (PolicyException $exception) {
     // The password does not adhere to the policy.
     // Use the exception to show an appropriate message to the user.
@@ -71,7 +71,7 @@ try {
         new FormerPassword('hash of old password', new DateTime('2018-11-30')),
         new FormerPassword('hash of even older password', new DateTime('2010-08-23')),
     ]));
-    // The password adheres to the policy.
+    // The password is in compliance with the policy.
 } catch (PolicyException $exception) {
     // The password does not adhere to the policy.
     // Use the exception to show an appropriate message to the user.

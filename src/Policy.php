@@ -41,10 +41,10 @@ final class Policy
     }
 
     /**
-     * Check whether a password adheres to the policy.
+     * Check whether a password is in compliance with the policy.
      *
      * @param Password|string $password Password to check.
-     * @return bool Whether the password adheres to the policy.
+     * @return bool Whether the password is in compliance with the policy.
      * @throws TestException If an error occurred while checking the password.
      */
     public function test($password): bool
@@ -59,7 +59,7 @@ final class Policy
     }
 
     /**
-     * Enforce that a password adheres to the policy.
+     * Enforce that a password is in compliance with the policy.
      *
      * @param Password|string $password Password that must adhere to the policy.
      * @throws PolicyException If the password does not adhrere to the policy.

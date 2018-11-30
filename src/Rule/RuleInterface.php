@@ -12,16 +12,16 @@ use Stadly\PasswordPolice\Password;
 interface RuleInterface
 {
     /**
-     * Check whether a password adheres to the rule.
+     * Check whether a password is in compliance with the rule.
      *
      * @param Password|string $password Password to check.
-     * @return bool Whether the password adheres to the rule.
+     * @return bool Whether the password is in compliance with the rule.
      * @throws TestException If an error occurred while testing the rule.
      */
     public function test($password): bool;
 
     /**
-     * Enforce that a password adheres to the rule.
+     * Enforce that a password is in compliance with the rule.
      *
      * @param Password|string $password Password that must adhere to the rule.
      * @throws RuleException If the password does not adhrere to the rule.
