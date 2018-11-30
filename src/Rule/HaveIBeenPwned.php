@@ -141,6 +141,38 @@ final class HaveIBeenPwned implements RuleInterface
     }
 
     /**
+     * @param string $password Password to check in breaches.
+     * @return int Number of appearances in breaches.
+     * @throws TestException If an error occurred while using the Have I Been Pwned? service.
+     */
+    private function getCount(string $password): int
+    {
+        $sha1 = strtoupper(sha1($password));
+        $prefix = substr($sha1, 0, 5);
+        $suffix = substr($sha1, 5, 35);
+
+        try {
+            $requestFactory = $this->getRequestFactory();
+            $request = $requestFactory->createRequest('GET', 'https://api.pwnedpasswords.com/range/'.$prefix);
+
+            $client = $this->getClient();
+
+            $response = $client->sendRequest($request);
+            $body = $response->getBody();
+            $contents = $body->getContents();
+            $lines = explode("\r\n", $contents);
+            foreach ($lines as $line) {
+                if (substr($line, 0, 35) === $suffix) {
+                    return (int)substr($line, 36);
+                }
+            }
+            return 0;
+        } catch (ClientExceptionInterface | RuntimeException $exception) {
+            throw new TestException($this, 'An error occurred while using the Have I Been Pwned? service.', $exception);
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getMessage(): string
@@ -181,37 +213,5 @@ final class HaveIBeenPwned implements RuleInterface
             'Must appear between %min% and %max% times in breaches.',
             ['%min%' => $this->getMin(), '%max%' => $this->getMax()]
         );
-    }
-
-    /**
-     * @param string $password Password to check in breaches.
-     * @return int Number of appearances in breaches.
-     * @throws TestException If an error occurred while using the Have I Been Pwned? service.
-     */
-    private function getCount(string $password): int
-    {
-        $sha1 = strtoupper(sha1($password));
-        $prefix = substr($sha1, 0, 5);
-        $suffix = substr($sha1, 5, 35);
-
-        try {
-            $requestFactory = $this->getRequestFactory();
-            $request = $requestFactory->createRequest('GET', 'https://api.pwnedpasswords.com/range/'.$prefix);
-
-            $client = $this->getClient();
-
-            $response = $client->sendRequest($request);
-            $body = $response->getBody();
-            $contents = $body->getContents();
-            $lines = explode("\r\n", $contents);
-            foreach ($lines as $line) {
-                if (substr($line, 0, 35) === $suffix) {
-                    return (int)substr($line, 36);
-                }
-            }
-            return 0;
-        } catch (ClientExceptionInterface | RuntimeException $exception) {
-            throw new TestException($this, 'An error occurred while using the Have I Been Pwned? service.', $exception);
-        }
     }
 }

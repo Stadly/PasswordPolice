@@ -91,6 +91,15 @@ final class Length implements RuleInterface
     }
 
     /**
+     * @param string $password Password to count characters in.
+     * @return int Number of characters.
+     */
+    private function getCount(string $password): int
+    {
+        return mb_strlen($password);
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getMessage(): string
@@ -131,14 +140,5 @@ final class Length implements RuleInterface
             'There must be between %min% and %max% characters.',
             ['%min%' => $this->getMin(), '%max%' => $this->getMax()]
         );
-    }
-
-    /**
-     * @param string $password Password to count characters in.
-     * @return int Number of characters.
-     */
-    private function getCount(string $password): int
-    {
-        return mb_strlen($password);
     }
 }

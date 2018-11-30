@@ -91,6 +91,40 @@ final class UpperCase implements RuleInterface
     }
 
     /**
+     * @param string $password Password to count characters in.
+     * @return int Number of upper case characters.
+     */
+    private function getCount(string $password): int
+    {
+        $lowerCase = mb_strtolower($password);
+
+        $passwordCharacters = $this->splitString($password);
+        $lowerCaseCharacters = $this->splitString($lowerCase);
+        assert(count($passwordCharacters) === count($lowerCaseCharacters));
+
+        $count = 0;
+        for ($i = count($passwordCharacters)-1; $i >= 0; --$i) {
+            if ($passwordCharacters[$i] !== $lowerCaseCharacters[$i]) {
+                ++$count;
+            }
+        }
+
+        return $count;
+    }
+
+    /**
+     * @param string $string String to split into individual characters.
+     * @return string[] Array of characters.
+     */
+    private function splitString(string $string): array
+    {
+        $characters = preg_split('{}u', $string, -1, PREG_SPLIT_NO_EMPTY);
+        assert($characters !== false);
+
+        return $characters;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getMessage(): string
@@ -131,39 +165,5 @@ final class UpperCase implements RuleInterface
             'There must be between %min% and %max% upper case characters.',
             ['%min%' => $this->getMin(), '%max%' => $this->getMax()]
         );
-    }
-
-    /**
-     * @param string $password Password to count characters in.
-     * @return int Number of upper case characters.
-     */
-    private function getCount(string $password): int
-    {
-        $lowerCase = mb_strtolower($password);
-
-        $passwordCharacters = $this->splitString($password);
-        $lowerCaseCharacters = $this->splitString($lowerCase);
-        assert(count($passwordCharacters) === count($lowerCaseCharacters));
-
-        $count = 0;
-        for ($i = count($passwordCharacters)-1; $i >= 0; --$i) {
-            if ($passwordCharacters[$i] !== $lowerCaseCharacters[$i]) {
-                ++$count;
-            }
-        }
-
-        return $count;
-    }
-
-    /**
-     * @param string $string String to split into individual characters.
-     * @return string[] Array of characters.
-     */
-    private function splitString(string $string): array
-    {
-        $characters = preg_split('{}u', $string, -1, PREG_SPLIT_NO_EMPTY);
-        assert($characters !== false);
-
-        return $characters;
     }
 }

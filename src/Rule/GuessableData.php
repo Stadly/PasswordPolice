@@ -63,6 +63,19 @@ final class GuessableData implements RuleInterface
     }
 
     /**
+     * Enforce that a password is in compliance with the rule.
+     *
+     * @param Password|string $password Password that must adhere to the rule.
+     * @throws RuleException If the password does not adhrere to the rule.
+     */
+    public function enforce($password): void
+    {
+        if (!$this->test($password)) {
+            throw new RuleException($this, $this->getMessage());
+        }
+    }
+
+    /**
      * @param string $password Password to check.
      * @param string|DateTimeInterface $data Data to check.
      * @return bool Whether the password contains the data.
@@ -111,19 +124,6 @@ final class GuessableData implements RuleInterface
             foreach (self::DATE_SEPARATORS as $separator) {
                 yield implode($separator, $format);
             }
-        }
-    }
-
-    /**
-     * Enforce that a password is in compliance with the rule.
-     *
-     * @param Password|string $password Password that must adhere to the rule.
-     * @throws RuleException If the password does not adhrere to the rule.
-     */
-    public function enforce($password): void
-    {
-        if (!$this->test($password)) {
-            throw new RuleException($this, $this->getMessage());
         }
     }
 

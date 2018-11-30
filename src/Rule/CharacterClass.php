@@ -109,6 +109,19 @@ class CharacterClass implements RuleInterface
     }
 
     /**
+     * @param string $password Password to count characters in.
+     * @return int Number of characters matching the rule.
+     */
+    private function getCount(string $password): int
+    {
+        $escapedCharacters = preg_quote($this->characters);
+        $count = preg_match_all('{['.$escapedCharacters.']}u', $password);
+        assert(false !== $count);
+
+        return $count;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getMessage(): string
@@ -163,18 +176,5 @@ class CharacterClass implements RuleInterface
                 '%characters%' => $this->getCharacters(),
             ]
         );
-    }
-
-    /**
-     * @param string $password Password to count characters in.
-     * @return int Number of characters matching the rule.
-     */
-    private function getCount(string $password): int
-    {
-        $escapedCharacters = preg_quote($this->characters);
-        $count = preg_match_all('{['.$escapedCharacters.']}u', $password);
-        assert(false !== $count);
-
-        return $count;
     }
 }
