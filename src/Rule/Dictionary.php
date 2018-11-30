@@ -74,7 +74,30 @@ final class Dictionary implements RuleInterface
      */
     public function test($password): bool
     {
-        $password = (string)$password;
+        $word = $this->getDictionaryWord((string)$password);
+
+        return $word === null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function enforce($password): void
+    {
+        $word = $this->getDictionaryWord((string)$password);
+
+        if ($word !== null) {
+            throw new RuleException($this, $this->getMessage());
+        }
+    }
+
+    /**
+     * @param string $password Password to find dictionary words in.
+     * @return string|null Dictionary word in the password.
+     * @throws TestException If an error occurred while using the word list.
+     */
+    private function getDictionaryWord(string $password): ?string
+    {
         for ($start = 0; $start < mb_strlen($password); ++$start) {
             $word = mb_substr($password, $start, $this->maxWordLength);
 
@@ -83,24 +106,14 @@ final class Dictionary implements RuleInterface
 
                 try {
                     if ($this->wordList->contains($word)) {
-                        return false;
+                        return $word;
                     }
                 } catch (RuntimeException $exception) {
                     throw new TestException($this, 'An error occurred while using the word list.', $exception);
                 }
             }
         }
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function enforce($password): void
-    {
-        if (!$this->test($password)) {
-            throw new RuleException($this, $this->getMessage());
-        }
+        return null;
     }
 
     /**

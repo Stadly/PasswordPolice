@@ -7,6 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use DateTimeInterface;
 use InvalidArgumentException;
 use RuntimeException;
+use Stadly\PasswordPolice\FormerPassword;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\HashFunction\HashFunctionInterface;
@@ -79,6 +80,32 @@ final class NoReuse implements RuleInterface
      */
     public function test($password): bool
     {
+        $formerPassword = $this->getFormerPassword($password);
+
+        return $formerPassword === null;
+    }
+
+    /**
+     * Enforce that a password is in compliance with the rule.
+     *
+     * @param Password|string $password Password that must adhere to the rule.
+     * @throws RuleException If the password does not adhrere to the rule.
+     */
+    public function enforce($password): void
+    {
+        $formerPassword = $this->getFormerPassword($password);
+
+        if ($formerPassword !== null) {
+            throw new RuleException($this, $this->getMessage());
+        }
+    }
+
+    /**
+     * @param Password|string $password Password to compare with former passwords.
+     * @return FormerPassword|null Former password matching the password.
+     */
+    private function getFormerPassword($password): ?FormerPassword
+    {
         if ($password instanceof Password) {
             $formerPasswords = $password->getFormerPasswords();
 
@@ -90,24 +117,11 @@ final class NoReuse implements RuleInterface
 
             for ($i = $start; $i < $end; ++$i) {
                 if ($this->hashFunction->compare((string)$password, (string)$formerPasswords[$i])) {
-                    return false;
+                    return $formerPasswords[$i];
                 }
             }
         }
-        return true;
-    }
-
-    /**
-     * Enforce that a password is in compliance with the rule.
-     *
-     * @param Password|string $password Password that must adhere to the rule.
-     * @throws RuleException If the password does not adhrere to the rule.
-     */
-    public function enforce($password): void
-    {
-        if (!$this->test($password)) {
-            throw new RuleException($this, $this->getMessage());
-        }
+        return null;
     }
 
     /**

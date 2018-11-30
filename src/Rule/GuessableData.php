@@ -52,14 +52,9 @@ final class GuessableData implements RuleInterface
      */
     public function test($password): bool
     {
-        if ($password instanceof Password) {
-            foreach ($password->getGuessableData() as $data) {
-                if ($this->contains((string)$password, $data)) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        $data = $this->getGuessableData($password);
+
+        return $data === null;
     }
 
     /**
@@ -70,9 +65,27 @@ final class GuessableData implements RuleInterface
      */
     public function enforce($password): void
     {
-        if (!$this->test($password)) {
+        $data = $this->getGuessableData($password);
+
+        if ($data !== null) {
             throw new RuleException($this, $this->getMessage());
         }
+    }
+
+    /**
+     * @param Password|string $password Password to find guessable data in.
+     * @return string|DateTimeInterface|null Guessable data in the password.
+     */
+    private function getGuessableData($password)
+    {
+        if ($password instanceof Password) {
+            foreach ($password->getGuessableData() as $data) {
+                if ($this->contains((string)$password, $data)) {
+                    return $data;
+                }
+            }
+        }
+        return null;
     }
 
     /**

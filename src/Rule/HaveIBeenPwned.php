@@ -117,17 +117,9 @@ final class HaveIBeenPwned implements RuleInterface
      */
     public function test($password): bool
     {
-        $count = $this->getCount((string)$password);
+        $count = $this->getNoncompliantCount((string)$password);
 
-        if ($count < $this->min) {
-            return false;
-        }
-
-        if (null !== $this->max && $this->max < $count) {
-            return false;
-        }
-
-        return true;
+        return $count === null;
     }
 
     /**
@@ -135,9 +127,31 @@ final class HaveIBeenPwned implements RuleInterface
      */
     public function enforce($password): void
     {
-        if (!$this->test($password)) {
+        $count = $this->getNoncompliantCount((string)$password);
+
+        if ($count !== null) {
             throw new RuleException($this, $this->getMessage());
         }
+    }
+
+    /**
+     * @param string $password Password to count appearances in breaches for.
+     * @return int Number of appearances in breaches if not in compliance with the rule.
+     * @throws TestException If an error occurred while using the Have I Been Pwned? service.
+     */
+    private function getNoncompliantCount(string $password): ?int
+    {
+        $count = $this->getCount($password);
+
+        if ($count < $this->min) {
+            return $count;
+        }
+
+        if (null !== $this->max && $this->max < $count) {
+            return $count;
+        }
+
+        return null;
     }
 
     /**
