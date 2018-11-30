@@ -8,7 +8,7 @@ use Stadly\PasswordPolice\Rule\RuleException;
 use Stadly\PasswordPolice\Rule\RuleInterface;
 use Stadly\PasswordPolice\Rule\TestException;
 use Symfony\Component\Translation\Translator;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class Policy
 {

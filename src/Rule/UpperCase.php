@@ -98,10 +98,10 @@ final class UpperCase implements RuleInterface
         $translator = Policy::getTranslator();
 
         if ($this->getMax() === null) {
-            return $translator->transChoice(
+            return $translator->trans(
                 'There must be at least one upper case character.|'.
                 'There must be at least %count% upper case characters.',
-                $this->getMin()
+                ['%count%' => $this->getMin()]
             );
         }
 
@@ -112,18 +112,18 @@ final class UpperCase implements RuleInterface
         }
 
         if ($this->getMin() === 0) {
-            return $translator->transChoice(
+            return $translator->trans(
                 'There must be at most one upper case character.|'.
                 'There must be at most %count% upper case characters.',
-                $this->getMax()
+                ['%count%' => $this->getMax()]
             );
         }
 
         if ($this->getMin() === $this->getMax()) {
-            return $translator->transChoice(
+            return $translator->trans(
                 'There must be exactly one upper case character.|'.
                 'There must be exactly %count% upper case characters.',
-                $this->getMin()
+                ['%count%' => $this->getMin()]
             );
         }
 

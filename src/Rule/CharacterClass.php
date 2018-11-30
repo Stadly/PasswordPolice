@@ -116,11 +116,13 @@ class CharacterClass implements RuleInterface
         $translator = Policy::getTranslator();
 
         if ($this->getMax() === null) {
-            return $translator->transChoice(
+            return $translator->trans(
                 'There must be at least one character matching %characters%.|'.
                 'There must be at least %count% characters matching %characters%.',
-                $this->getMin(),
-                ['%characters%' => $this->getCharacters()]
+                [
+                    '%count%' => $this->getMin(),
+                    '%characters%' => $this->getCharacters(),
+                ]
             );
         }
 
@@ -132,20 +134,24 @@ class CharacterClass implements RuleInterface
         }
 
         if ($this->getMin() === 0) {
-            return $translator->transChoice(
+            return $translator->trans(
                 'There must be at most one character matching %characters%.|'.
                 'There must be at most %count% characters matching %characters%.',
-                $this->getMax(),
-                ['%characters%' => $this->getCharacters()]
+                [
+                    '%count%' => $this->getMax(),
+                    '%characters%' => $this->getCharacters(),
+                ]
             );
         }
 
         if ($this->getMin() === $this->getMax()) {
-            return $translator->transChoice(
+            return $translator->trans(
                 'There must be exactly one character matching %characters%.|'.
                 'There must be exactly %count% characters matching %characters%.',
-                $this->getMin(),
-                ['%characters%' => $this->getCharacters()]
+                [
+                    '%count%' => $this->getMin(),
+                    '%characters%' => $this->getCharacters(),
+                ]
             );
         }
 
@@ -154,7 +160,7 @@ class CharacterClass implements RuleInterface
             [
                 '%min%' => $this->getMin(),
                 '%max%' => $this->getMax(),
-                '%characters%' => $this->getCharacters()
+                '%characters%' => $this->getCharacters(),
             ]
         );
     }
