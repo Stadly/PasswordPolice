@@ -95,7 +95,7 @@ final class Policy
      */
     public static function getTranslator(): TranslatorInterface
     {
-        if (null === self::$translator) {
+        if (self::$translator === null) {
             self::$translator = new Translator('en_US');
         }
         return self::$translator;

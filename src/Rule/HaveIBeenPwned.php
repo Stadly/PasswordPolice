@@ -70,7 +70,7 @@ final class HaveIBeenPwned implements RuleInterface
      */
     private function getClient(): ClientInterface
     {
-        if (null === $this->client) {
+        if ($this->client === null) {
             $this->client = HttpClientDiscovery::find();
         }
         return $this->client;
@@ -90,7 +90,7 @@ final class HaveIBeenPwned implements RuleInterface
      */
     private function getRequestFactory(): RequestFactoryInterface
     {
-        if (null === $this->requestFactory) {
+        if ($this->requestFactory === null) {
             $this->requestFactory = HttpFactory::requestFactory();
         }
         return $this->requestFactory;
