@@ -13,17 +13,17 @@ class CharacterClass implements RuleInterface
     /**
      * @var string Characters matched by the rule.
      */
-    private $characters;
+    protected $characters;
 
     /**
      * @var int Minimum number of characters matching the rule.
      */
-    private $min;
+    protected $min;
 
     /**
      * @var int|null Maximum number of characters matching the rule.
      */
-    private $max;
+    protected $max;
 
     /**
      * @param string $characters Characters matched by the rule.
@@ -141,42 +141,42 @@ class CharacterClass implements RuleInterface
     {
         $translator = Policy::getTranslator();
 
-        if ($this->getMax() === null) {
+        if ($this->max === null) {
             return $translator->trans(
                 'There must be at least one character matching %characters%.|'.
                 'There must be at least %count% characters matching %characters%.',
                 [
-                    '%count%' => $this->getMin(),
-                    '%characters%' => $this->getCharacters(),
+                    '%count%' => $this->min,
+                    '%characters%' => $this->characters,
                 ]
             );
         }
 
-        if ($this->getMax() === 0) {
+        if ($this->max === 0) {
             return $translator->trans(
                 'There must be no characters matching %characters%.',
-                ['%characters%' => $this->getCharacters()]
+                ['%characters%' => $this->characters]
             );
         }
 
-        if ($this->getMin() === 0) {
+        if ($this->min === 0) {
             return $translator->trans(
                 'There must be at most one character matching %characters%.|'.
                 'There must be at most %count% characters matching %characters%.',
                 [
-                    '%count%' => $this->getMax(),
-                    '%characters%' => $this->getCharacters(),
+                    '%count%' => $this->max,
+                    '%characters%' => $this->characters,
                 ]
             );
         }
 
-        if ($this->getMin() === $this->getMax()) {
+        if ($this->min === $this->max) {
             return $translator->trans(
                 'There must be exactly one character matching %characters%.|'.
                 'There must be exactly %count% characters matching %characters%.',
                 [
-                    '%count%' => $this->getMin(),
-                    '%characters%' => $this->getCharacters(),
+                    '%count%' => $this->min,
+                    '%characters%' => $this->characters,
                 ]
             );
         }
@@ -184,9 +184,9 @@ class CharacterClass implements RuleInterface
         return $translator->trans(
             'There must be between %min% and %max% characters matching %characters%.',
             [
-                '%min%' => $this->getMin(),
-                '%max%' => $this->getMax(),
-                '%characters%' => $this->getCharacters(),
+                '%min%' => $this->min,
+                '%max%' => $this->max,
+                '%characters%' => $this->characters,
             ]
         );
     }

@@ -144,39 +144,39 @@ final class LowerCase implements RuleInterface
     {
         $translator = Policy::getTranslator();
 
-        if ($this->getMax() === null) {
+        if ($this->max === null) {
             return $translator->trans(
                 'There must be at least one lower case character.|'.
                 'There must be at least %count% lower case characters.',
-                ['%count%' => $this->getMin()]
+                ['%count%' => $this->min]
             );
         }
 
-        if ($this->getMax() === 0) {
+        if ($this->max === 0) {
             return $translator->trans(
                 'There must be no lower case characters.'
             );
         }
 
-        if ($this->getMin() === 0) {
+        if ($this->min === 0) {
             return $translator->trans(
                 'There must be at most one lower case character.|'.
                 'There must be at most %count% lower case characters.',
-                ['%count%' => $this->getMax()]
+                ['%count%' => $this->max]
             );
         }
 
-        if ($this->getMin() === $this->getMax()) {
+        if ($this->min === $this->max) {
             return $translator->trans(
                 'There must be exactly one lower case character.|'.
                 'There must be exactly %count% lower case characters.',
-                ['%count%' => $this->getMin()]
+                ['%count%' => $this->min]
             );
         }
 
         return $translator->trans(
             'There must be between %min% and %max% lower case characters.',
-            ['%min%' => $this->getMin(), '%max%' => $this->getMax()]
+            ['%min%' => $this->min, '%max%' => $this->max]
         );
     }
 }

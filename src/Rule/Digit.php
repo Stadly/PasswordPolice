@@ -24,39 +24,39 @@ final class Digit extends CharacterClass
     {
         $translator = Policy::getTranslator();
 
-        if ($this->getMax() === null) {
+        if ($this->max === null) {
             return $translator->trans(
                 'There must be at least one digit.|'.
                 'There must be at least %count% digits.',
-                ['%count%' => $this->getMin()]
+                ['%count%' => $this->min]
             );
         }
 
-        if ($this->getMax() === 0) {
+        if ($this->max === 0) {
             return $translator->trans(
                 'There must be no digits.'
             );
         }
 
-        if ($this->getMin() === 0) {
+        if ($this->min === 0) {
             return $translator->trans(
                 'There must be at most one digit.|'.
                 'There must be at most %count% digits.',
-                ['%count%' => $this->getMax()]
+                ['%count%' => $this->max]
             );
         }
 
-        if ($this->getMin() === $this->getMax()) {
+        if ($this->min === $this->max) {
             return $translator->trans(
                 'There must be exactly one digit.|'.
                 'There must be exactly %count% digits.',
-                ['%count%' => $this->getMin()]
+                ['%count%' => $this->min]
             );
         }
 
         return $translator->trans(
             'There must be between %min% and %max% digits.',
-            ['%min%' => $this->getMin(), '%max%' => $this->getMax()]
+            ['%min%' => $this->min, '%max%' => $this->max]
         );
     }
 }

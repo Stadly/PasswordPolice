@@ -119,39 +119,39 @@ final class Length implements RuleInterface
     {
         $translator = Policy::getTranslator();
 
-        if ($this->getMax() === null) {
+        if ($this->max === null) {
             return $translator->trans(
                 'There must be at least one character.|'.
                 'There must be at least %count% characters.',
-                ['%count%' => $this->getMin()]
+                ['%count%' => $this->min]
             );
         }
 
-        if ($this->getMax() === 0) {
+        if ($this->max === 0) {
             return $translator->trans(
                 'There must be no characters.'
             );
         }
 
-        if ($this->getMin() === 0) {
+        if ($this->min === 0) {
             return $translator->trans(
                 'There must be at most one character.|'.
                 'There must be at most %count% characters.',
-                ['%count%' => $this->getMax()]
+                ['%count%' => $this->max]
             );
         }
 
-        if ($this->getMin() === $this->getMax()) {
+        if ($this->min === $this->max) {
             return $translator->trans(
                 'There must be exactly one character.|'.
                 'There must be exactly %count% characters.',
-                ['%count%' => $this->getMin()]
+                ['%count%' => $this->min]
             );
         }
 
         return $translator->trans(
             'There must be between %min% and %max% characters.',
-            ['%min%' => $this->getMin(), '%max%' => $this->getMax()]
+            ['%min%' => $this->min, '%max%' => $this->max]
         );
     }
 }

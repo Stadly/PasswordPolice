@@ -193,39 +193,39 @@ final class HaveIBeenPwned implements RuleInterface
     {
         $translator = Policy::getTranslator();
 
-        if ($this->getMax() === null) {
+        if ($this->max === null) {
             return $translator->trans(
                 'Must appear at least once in breaches.|'.
                 'Must appear at least %count% times in breaches.',
-                ['%count%' => $this->getMin()]
+                ['%count%' => $this->min]
             );
         }
 
-        if ($this->getMax() === 0) {
+        if ($this->max === 0) {
             return $translator->trans(
                 'Must not appear in any breaches.'
             );
         }
 
-        if ($this->getMin() === 0) {
+        if ($this->min === 0) {
             return $translator->trans(
                 'Must appear at most once in breaches.|'.
                 'Must appear at most %count% times in breaches.',
-                ['%count%' => $this->getMax()]
+                ['%count%' => $this->max]
             );
         }
 
-        if ($this->getMin() === $this->getMax()) {
+        if ($this->min === $this->max) {
             return $translator->trans(
                 'Must appear exactly once in breaches.|'.
                 'Must appear exactly %count% times in breaches.',
-                ['%count%' => $this->getMin()]
+                ['%count%' => $this->min]
             );
         }
 
         return $translator->trans(
             'Must appear between %min% and %max% times in breaches.',
-            ['%min%' => $this->getMin(), '%max%' => $this->getMax()]
+            ['%min%' => $this->min, '%max%' => $this->max]
         );
     }
 }
