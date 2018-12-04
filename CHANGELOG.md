@@ -4,25 +4,10 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.6.0...HEAD)
+## [v0.7.0](https://github.com/Stadly/PasswordPolice/compare/v0.6.0...v0.7.0) - 2018-12-04
 
 ### Added
 - Possible for dictionary rules to check wheter the password is a dictionary word, and not only whether it contains dictionary words.
-
-### Changed
-- Nothing
-
-### Fixed
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ## [v0.6.0](https://github.com/Stadly/PasswordPolice/compare/v0.5.0...v0.6.0) - 2018-12-04
 
