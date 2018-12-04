@@ -22,4 +22,14 @@ final class CapitalizeTest extends TestCase
 
         self::assertSame('Foobar', $converter->convert('fOoBaR'));
     }
+
+    /**
+     * @covers ::convert
+     */
+    public function testCanConvertUtf8Characters(): void
+    {
+        $converter = new Capitalize();
+
+        self::assertSame('Ááæøôëñ', $converter->convert('áÁæØôËñ'));
+    }
 }

@@ -22,4 +22,14 @@ final class LowerCaseTest extends TestCase
 
         self::assertSame('foobar', $converter->convert('fOoBaR'));
     }
+
+    /**
+     * @covers ::convert
+     */
+    public function testCanConvertUtf8Characters(): void
+    {
+        $converter = new LowerCase();
+
+        self::assertSame('ááæøôëñ', $converter->convert('áÁæØôËñ'));
+    }
 }

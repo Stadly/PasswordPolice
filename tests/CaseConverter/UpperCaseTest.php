@@ -22,4 +22,14 @@ final class UpperCaseTest extends TestCase
 
         self::assertSame('FOOBAR', $converter->convert('fOoBaR'));
     }
+
+    /**
+     * @covers ::convert
+     */
+    public function testCanConvertUtf8Characters(): void
+    {
+        $converter = new UpperCase();
+
+        self::assertSame('ÁÁÆØÔËÑ', $converter->convert('áÁæØôËñ'));
+    }
 }
