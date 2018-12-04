@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.6.0...HEAD)
 
 ### Added
-- Nothing
+- Possible for dictionary rules to check wheter the password is a dictionary word, and not only whether it contains dictionary words.
 
 ### Changed
 - Nothing

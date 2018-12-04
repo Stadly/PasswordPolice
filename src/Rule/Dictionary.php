@@ -27,12 +27,22 @@ final class Dictionary implements RuleInterface
     private $maxWordLength;
 
     /**
+     * @var bool Whether all substrings of the password should be checked.
+     */
+    private $checkSubstrings;
+
+    /**
      * @param WordListInterface $wordList Word list for the dictionary.
      * @param int $minWordLength Ignore words shorter than this.
      * @param int|null $maxWordLength Ignore words longer than this.
+     * @param bool $checkSubstrings Check all substrings of the password, not just the whole password.
      */
-    public function __construct(WordListInterface $wordList, int $minWordLength = 3, ?int $maxWordLength = 25)
-    {
+    public function __construct(
+        WordListInterface $wordList,
+        int $minWordLength = 3,
+        ?int $maxWordLength = 25,
+        bool $checkSubstrings = true
+    ) {
         if ($minWordLength < 1) {
             throw new InvalidArgumentException('Minimum word length must be positive.');
         }
@@ -43,6 +53,7 @@ final class Dictionary implements RuleInterface
         $this->wordList = $wordList;
         $this->minWordLength = $minWordLength;
         $this->maxWordLength = $maxWordLength;
+        $this->checkSubstrings = $checkSubstrings;
     }
 
     /**
@@ -98,22 +109,73 @@ final class Dictionary implements RuleInterface
      */
     private function getDictionaryWord(string $password): ?string
     {
+        if ($this->checkSubstrings) {
+            return $this->getDictionaryWordCheckSubstrings($password);
+        }
+
+        return $this->getDictionaryWordCheckWord($password);
+    }
+
+    /**
+     * @param string $password Password to find dictionary words in.
+     * @return string|null Dictionary word in the password.
+     * @throws TestException If an error occurred while using the word list.
+     */
+    private function getDictionaryWordCheckWord(string $password): ?string
+    {
+        if (mb_strlen($password) < $this->minWordLength) {
+            return null;
+        }
+
+        if ($this->maxWordLength !== null && $this->maxWordLength < mb_strlen($password)) {
+            return null;
+        }
+
+        if ($this->wordListContains($password)) {
+            return $password;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $password Password to find dictionary words in.
+     * @return string|null Dictionary word in the password.
+     * @throws TestException If an error occurred while using the word list.
+     */
+    private function getDictionaryWordCheckSubstrings(string $password): ?string
+    {
         for ($start = 0; $start < mb_strlen($password); ++$start) {
             $word = mb_substr($password, $start, $this->maxWordLength);
 
             for ($wordLength = mb_strlen($word); $this->minWordLength <= $wordLength; --$wordLength) {
                 $word = mb_substr($word, 0, $wordLength);
 
-                try {
-                    if ($this->wordList->contains($word)) {
-                        return $word;
-                    }
-                } catch (RuntimeException $exception) {
-                    throw new TestException($this, 'An error occurred while using the word list.', $exception);
+                if ($this->wordListContains($word)) {
+                    return $word;
                 }
             }
         }
+
         return null;
+    }
+
+    /**
+     * @param string $word Word to check.
+     * @return bool Whether the word list contains the word.
+     * @throws TestException If an error occurred while using the word list.
+     */
+    private function wordListContains(string $word): bool
+    {
+        try {
+            if ($this->wordList->contains($word)) {
+                return true;
+            }
+        } catch (RuntimeException $exception) {
+            throw new TestException($this, 'An error occurred while using the word list.', $exception);
+        }
+
+        return false;
     }
 
     /**
@@ -123,8 +185,14 @@ final class Dictionary implements RuleInterface
     {
         $translator = Policy::getTranslator();
 
-        return $translator->trans(
-            'Must not contain common dictionary words.'
-        );
+        if ($this->checkSubstrings) {
+            return $translator->trans(
+                'Must not contain dictionary words.'
+            );
+        } else {
+            return $translator->trans(
+                'Must not be a dictionary word.'
+            );
+        }
     }
 }
