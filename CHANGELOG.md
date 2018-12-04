@@ -7,7 +7,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.5.0...HEAD)
 
 ### Added
-- Nothing
+- Rule enforing that passwords are not changed too often. This is useful for example when combined with a rule enforcing that the 5 most recent passwords cannot be reused, since it prevents the user from just changing the password 5 times and then back to the original password.
+- Rule enforcing that passwords must be changed on a regular basis.
 
 ### Changed
 - Nothing
