@@ -4,26 +4,11 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.5.0...HEAD)
+## [v0.6.0](https://github.com/Stadly/PasswordPolice/compare/v0.5.0...v0.6.0) - 2018-12-04
 
 ### Added
 - Rule enforing that passwords are not changed too often. This is useful for example when combined with a rule enforcing that the 5 most recent passwords cannot be reused, since it prevents the user from just changing the password 5 times and then back to the original password.
 - Rule enforcing that passwords must be changed on a regular basis.
-
-### Changed
-- Nothing
-
-### Fixed
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ## [v0.5.0](https://github.com/Stadly/PasswordPolice/compare/v0.4.0...v0.5.0) - 2018-11-30
 
