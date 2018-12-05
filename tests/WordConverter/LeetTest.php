@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Stadly\PasswordPolice\CharacterConverter;
+namespace Stadly\PasswordPolice\WordConverter;
 
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\CharacterConverter\Leet
+ * @coversDefaultClass \Stadly\PasswordPolice\WordConverter\Leet
  * @covers ::<protected>
  * @covers ::<private>
  */

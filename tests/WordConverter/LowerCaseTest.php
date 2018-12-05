@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Stadly\PasswordPolice\CaseConverter;
+namespace Stadly\PasswordPolice\WordConverter;
 
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\CaseConverter\LowerCase
+ * @coversDefaultClass \Stadly\PasswordPolice\WordConverter\LowerCase
  * @covers ::<protected>
  * @covers ::<private>
  */
@@ -20,7 +20,7 @@ final class LowerCaseTest extends TestCase
     {
         $converter = new LowerCase();
 
-        self::assertSame('foobar', $converter->convert('fOoBaR'));
+        self::assertSame(['foobar'], iterator_to_array($converter->convert('fOoBaR')));
     }
 
     /**
@@ -30,6 +30,6 @@ final class LowerCaseTest extends TestCase
     {
         $converter = new LowerCase();
 
-        self::assertSame('ááæøôëñ', $converter->convert('áÁæØôËñ'));
+        self::assertSame(['ááæøôëñ'], iterator_to_array($converter->convert('áÁæØôËñ')));
     }
 }

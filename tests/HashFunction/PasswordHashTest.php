@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Notice;
 use RuntimeException;
-use Stadly\PasswordPolice\CaseConverter\CaseConverterInterface;
+use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\HashFunction\PasswordHash

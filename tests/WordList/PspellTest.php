@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Notice;
 use RuntimeException;
-use Stadly\PasswordPolice\CaseConverter\CaseConverterInterface;
+use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\WordList\Pspell
@@ -153,12 +153,16 @@ final class PspellTest extends TestCase
     /**
      * @covers ::contains
      */
-    public function testWordListCanContainWordsAfterSingleCaseConverter(): void
+    public function testWordListCanContainWordsAfterSingleWordConverter(): void
     {
-        $caseConverter = $this->createMock(CaseConverterInterface::class);
-        $caseConverter->method('convert')->willReturnCallback('mb_strtolower');
+        $wordConverter = $this->createMock(WordConverterInterface::class);
+        $wordConverter->method('convert')->willReturnCallback(
+            function ($word) {
+                yield mb_strtolower($word);
+            }
+        );
 
-        $pspell = Pspell::fromLocale('en', $caseConverter);
+        $pspell = Pspell::fromLocale('en', $wordConverter);
 
         self::assertTrue($pspell->contains('HUSband'));
         self::assertFalse($pspell->contains('Usa'));
@@ -169,15 +173,23 @@ final class PspellTest extends TestCase
     /**
      * @covers ::contains
      */
-    public function testWordListCanContainWordsAfterMultipleCaseConverters(): void
+    public function testWordListCanContainWordsAfterMultipleWordConverters(): void
     {
-        $caseConverter1 = $this->createMock(CaseConverterInterface::class);
-        $caseConverter1->method('convert')->willReturnCallback('mb_strtolower');
+        $wordConverter1 = $this->createMock(WordConverterInterface::class);
+        $wordConverter1->method('convert')->willReturnCallback(
+            function ($word) {
+                yield mb_strtolower($word);
+            }
+        );
 
-        $caseConverter2 = $this->createMock(CaseConverterInterface::class);
-        $caseConverter2->method('convert')->willReturnCallback('mb_strtoupper');
+        $wordConverter2 = $this->createMock(WordConverterInterface::class);
+        $wordConverter2->method('convert')->willReturnCallback(
+            function ($word) {
+                yield mb_strtoupper($word);
+            }
+        );
 
-        $pspell = Pspell::fromLocale('en', $caseConverter1, $caseConverter2);
+        $pspell = Pspell::fromLocale('en', $wordConverter1, $wordConverter2);
 
         self::assertTrue($pspell->contains('HUSband'));
         self::assertTrue($pspell->contains('Usa'));

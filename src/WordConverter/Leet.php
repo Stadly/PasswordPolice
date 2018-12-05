@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Stadly\PasswordPolice\CharacterConverter;
+namespace Stadly\PasswordPolice\WordConverter;
 
 use Traversable;
 
-final class Leet implements CharacterConverterInterface
+final class Leet implements WordConverterInterface
 {
     /**
      * @var array<string, string[]>

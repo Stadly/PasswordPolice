@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Stadly\PasswordPolice\CaseConverter;
+namespace Stadly\PasswordPolice\WordConverter;
 
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\CaseConverter\Capitalize
+ * @coversDefaultClass \Stadly\PasswordPolice\WordConverter\Capitalize
  * @covers ::<protected>
  * @covers ::<private>
  */
@@ -20,7 +20,7 @@ final class CapitalizeTest extends TestCase
     {
         $converter = new Capitalize();
 
-        self::assertSame('Foobar', $converter->convert('fOoBaR'));
+        self::assertSame(['Foobar'], iterator_to_array($converter->convert('fOoBaR')));
     }
 
     /**
@@ -30,6 +30,6 @@ final class CapitalizeTest extends TestCase
     {
         $converter = new Capitalize();
 
-        self::assertSame('Ááæøôëñ', $converter->convert('áÁæØôËñ'));
+        self::assertSame(['Ááæøôëñ'], iterator_to_array($converter->convert('áÁæØôËñ')));
     }
 }

@@ -11,7 +11,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Leetspeak character converter.
 
 ### Changed
-- Nothing
+- Case converters return a traversable with strings instead of a single string.
+- Case converters and character converters are combined into word converters.
 
 ### Fixed
 - Nothing
