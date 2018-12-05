@@ -7,6 +7,7 @@ namespace Stadly\PasswordPolice\WordList;
 use ErrorException;
 use InvalidArgumentException;
 use RuntimeException;
+use Traversable;
 use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
 
 final class Pspell implements WordListInterface
@@ -87,19 +88,35 @@ final class Pspell implements WordListInterface
     }
 
     /**
-     * @return string[] Variants of the word to check.
+     * @param string $word Word to check.
+     * @return Traversable<string> Variants of the word to check.
      */
-    private function getWordsToCheck(string $word): array
+    private function getWordsToCheck($word): Traversable
     {
-        $words = [$word];
+        $checked = [];
+        foreach ($this->getConvertedWords($word) as $wordToCheck) {
+            if (isset($checked[$wordToCheck])) {
+                continue;
+            }
+
+            $checked[$wordToCheck] = true;
+            yield $wordToCheck;
+        }
+    }
+
+    /**
+     * @param string $word Word to convert.
+     * @return Traversable<string> Converted words. May contain duplicates.
+     */
+    private function getConvertedWords(string $word): Traversable
+    {
+        yield $word;
 
         foreach ($this->wordConverters as $wordConverter) {
             foreach ($wordConverter->convert($word) as $converted) {
-                $words[] = $converted;
+                yield $converted;
             }
         }
-
-        return array_unique($words);
     }
 
     /**
