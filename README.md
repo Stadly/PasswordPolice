@@ -20,7 +20,6 @@ $ composer require stadly/password-police
 ## Usage
 
 ``` php
-use DateTime;
 use Stadly\PasswordPolice\FormerPassword;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
