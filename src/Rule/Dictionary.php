@@ -6,7 +6,9 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use RuntimeException;
+use Traversable;
 use Stadly\PasswordPolice\Policy;
+use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
 use Stadly\PasswordPolice\WordList\WordListInterface;
 
 final class Dictionary implements RuleInterface
@@ -32,16 +34,23 @@ final class Dictionary implements RuleInterface
     private $checkSubstrings;
 
     /**
+     * @var WordConverterInterface[] Word converters.
+     */
+    private $wordConverters;
+
+    /**
      * @param WordListInterface $wordList Word list for the dictionary.
      * @param int $minWordLength Ignore words shorter than this.
      * @param int|null $maxWordLength Ignore words longer than this.
      * @param bool $checkSubstrings Check all substrings of the password, not just the whole password.
+     * @param WordConverterInterface... $wordConverters Word converters.
      */
     public function __construct(
         WordListInterface $wordList,
         int $minWordLength = 3,
         ?int $maxWordLength = 25,
-        bool $checkSubstrings = true
+        bool $checkSubstrings = true,
+        WordConverterInterface... $wordConverters
     ) {
         if ($minWordLength < 1) {
             throw new InvalidArgumentException('Minimum word length must be positive.');
@@ -54,6 +63,7 @@ final class Dictionary implements RuleInterface
         $this->minWordLength = $minWordLength;
         $this->maxWordLength = $maxWordLength;
         $this->checkSubstrings = $checkSubstrings;
+        $this->wordConverters = $wordConverters;
     }
 
     /**
@@ -109,73 +119,97 @@ final class Dictionary implements RuleInterface
      */
     private function getDictionaryWord(string $password): ?string
     {
-        if ($this->checkSubstrings) {
-            return $this->getDictionaryWordCheckSubstrings($password);
-        }
-
-        return $this->getDictionaryWordCheckWord($password);
-    }
-
-    /**
-     * @param string $password Password to find dictionary words in.
-     * @return string|null Dictionary word in the password.
-     * @throws TestException If an error occurred while using the word list.
-     */
-    private function getDictionaryWordCheckWord(string $password): ?string
-    {
-        if (mb_strlen($password) < $this->minWordLength) {
-            return null;
-        }
-
-        if ($this->maxWordLength !== null && $this->maxWordLength < mb_strlen($password)) {
-            return null;
-        }
-
-        if ($this->wordListContains($password)) {
-            return $password;
-        }
-
-        return null;
-    }
-
-    /**
-     * @param string $password Password to find dictionary words in.
-     * @return string|null Dictionary word in the password.
-     * @throws TestException If an error occurred while using the word list.
-     */
-    private function getDictionaryWordCheckSubstrings(string $password): ?string
-    {
-        for ($start = 0; $start < mb_strlen($password); ++$start) {
-            $word = mb_substr($password, $start, $this->maxWordLength);
-
-            for ($wordLength = mb_strlen($word); $this->minWordLength <= $wordLength; --$wordLength) {
-                $word = mb_substr($word, 0, $wordLength);
-
-                if ($this->wordListContains($word)) {
+        foreach ($this->getWordsToCheck($password) as $word) {
+            try {
+                if ($this->wordList->contains($word)) {
                     return $word;
                 }
+            } catch (RuntimeException $exception) {
+                throw new TestException($this, 'An error occurred while using the word list.', $exception);
             }
         }
-
         return null;
     }
 
     /**
      * @param string $word Word to check.
-     * @return bool Whether the word list contains the word.
-     * @throws TestException If an error occurred while using the word list.
+     * @return Traversable<string> Variants of the word to check.
      */
-    private function wordListContains(string $word): bool
+    private function getWordsToCheck($word): Traversable
     {
-        try {
-            if ($this->wordList->contains($word)) {
-                return true;
-            }
-        } catch (RuntimeException $exception) {
-            throw new TestException($this, 'An error occurred while using the word list.', $exception);
+        $convertedWords = $this->getUniqueWords($this->getConvertedWords($word));
+
+        if ($this->checkSubstrings) {
+            $wordsToCheck = $this->getUniqueWords($this->getSubstringWordsToCheck($convertedWords));
+        } else {
+            $wordsToCheck = $this->getWholeWordsToCheck($convertedWords);
         }
 
-        return false;
+        yield from $wordsToCheck;
+    }
+
+    /**
+     * @param Traversable<string> $words Words to filter.
+     * @return Traversable<string> Unique words.
+     */
+    private function getUniqueWords(Traversable $words): Traversable
+    {
+        $checked = [];
+        foreach ($words as $word) {
+            if (isset($checked[$word])) {
+                continue;
+            }
+
+            $checked[$word] = true;
+            yield $word;
+        }
+    }
+
+    /**
+     * @param string $word Word to convert.
+     * @return Traversable<string> Converted words. May contain duplicates.
+     */
+    private function getConvertedWords(string $word): Traversable
+    {
+        yield $word;
+
+        foreach ($this->wordConverters as $wordConverter) {
+            foreach ($wordConverter->convert($word) as $converted) {
+                yield $converted;
+            }
+        }
+    }
+
+    /**
+     * @param Traversable<string> $words Words to check.
+     * @return Traversable<string> Whole words to check.
+     */
+    private function getWholeWordsToCheck(Traversable $words): Traversable
+    {
+        foreach ($words as $word) {
+            if ($this->minWordLength <= mb_strlen($word) &&
+               ($this->maxWordLength === null || mb_strlen($word) <= $this->maxWordLength)
+            ) {
+                yield $word;
+            }
+        }
+    }
+
+    /**
+     * @param Traversable<string> $words Words to check.
+     * @return Traversable<string> Substring words to check.
+     */
+    private function getSubstringWordsToCheck(Traversable $words): Traversable
+    {
+        foreach ($words as $word) {
+            for ($start = 0; $start < mb_strlen($word); ++$start) {
+                $substring = mb_substr($word, $start, $this->maxWordLength);
+
+                for ($wordLength = mb_strlen($substring); $this->minWordLength <= $wordLength; --$wordLength) {
+                    yield mb_substr($substring, 0, $wordLength);
+                }
+            }
+        }
     }
 
     /**

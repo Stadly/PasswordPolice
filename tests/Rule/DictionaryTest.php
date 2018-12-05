@@ -7,6 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
+use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
 use Stadly\PasswordPolice\WordList\WordListInterface;
 
 use PHPUnit\Framework\TestCase;
@@ -300,6 +301,100 @@ final class DictionaryTest extends TestCase
         $this->expectException(TestException::class);
 
         $rule->test('foo');
+    }
+
+    /**
+     * @covers ::test
+     */
+    public function testWholeWordIsRecognizedAfterSingleWordConverter(): void
+    {
+        $wordConverter = $this->createMock(WordConverterInterface::class);
+        $wordConverter->method('convert')->willReturnCallback(
+            function ($word) {
+                yield str_replace(['4', '€'], ['a', 'e'], $word);
+            }
+        );
+
+        $rule = new Dictionary($this->wordList, 1, null, false, $wordConverter);
+
+        self::assertFalse($rule->test('4ppl€'));
+        self::assertTrue($rule->test('pine4ppl€jack'));
+    }
+
+    /**
+     * @covers ::test
+     */
+    public function testSubstringWordIsRecognizedAfterSingleWordConverter(): void
+    {
+        $wordConverter = $this->createMock(WordConverterInterface::class);
+        $wordConverter->method('convert')->willReturnCallback(
+            function ($word) {
+                yield str_replace(['4', '€'], ['a', 'e'], $word);
+            }
+        );
+
+        $rule = new Dictionary($this->wordList, 1, null, true, $wordConverter);
+
+        self::assertFalse($rule->test('4ppl€'));
+        self::assertFalse($rule->test('pine4ppl€jack'));
+    }
+
+    /**
+     * @covers ::test
+     */
+    public function testWholeWordIsRecognizedAfterMultipleWordConverters(): void
+    {
+        $wordConverter1 = $this->createMock(WordConverterInterface::class);
+        $wordConverter1->method('convert')->willReturnCallback(
+            function ($word) {
+                yield str_replace(['4'], ['a'], $word);
+            }
+        );
+
+        $wordConverter2 = $this->createMock(WordConverterInterface::class);
+        $wordConverter2->method('convert')->willReturnCallback(
+            function ($word) {
+                yield str_replace(['€'], ['e'], $word);
+            }
+        );
+
+        $rule = new Dictionary($this->wordList, 1, null, false, $wordConverter1, $wordConverter2);
+
+        self::assertTrue($rule->test('4ppl€'));
+        self::assertTrue($rule->test('pine4ppl€jack'));
+        self::assertFalse($rule->test('4pple'));
+        self::assertTrue($rule->test('pine4pplejack'));
+        self::assertFalse($rule->test('appl€'));
+        self::assertTrue($rule->test('pineappl€jack'));
+    }
+
+    /**
+     * @covers ::test
+     */
+    public function testSubstringWordIsRecognizedAfterMultipleWordConverters(): void
+    {
+        $wordConverter1 = $this->createMock(WordConverterInterface::class);
+        $wordConverter1->method('convert')->willReturnCallback(
+            function ($word) {
+                yield str_replace(['4'], ['a'], $word);
+            }
+        );
+
+        $wordConverter2 = $this->createMock(WordConverterInterface::class);
+        $wordConverter2->method('convert')->willReturnCallback(
+            function ($word) {
+                yield str_replace(['€'], ['e'], $word);
+            }
+        );
+
+        $rule = new Dictionary($this->wordList, 1, null, true, $wordConverter1, $wordConverter2);
+
+        self::assertTrue($rule->test('4ppl€'));
+        self::assertTrue($rule->test('pine4ppl€jack'));
+        self::assertFalse($rule->test('4pple'));
+        self::assertFalse($rule->test('pine4pplejack'));
+        self::assertFalse($rule->test('appl€'));
+        self::assertFalse($rule->test('pineappl€jack'));
     }
 
     /**
