@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.7.0...HEAD)
 
 ### Added
-- Nothing
+- Interface for character converters.
 
 ### Changed
 - Nothing
