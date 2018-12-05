@@ -240,7 +240,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testPrefixWordIsRecognizedWhenNotCheckingSubstrings(): void
+    public function testPrefixWordIsNotRecognizedWhenNotCheckingSubstrings(): void
     {
         $rule = new Dictionary($this->wordList, 1, null, false);
 
@@ -260,7 +260,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testInfixWordIsRecognizedWhenNotCheckingSubstrings(): void
+    public function testInfixWordIsNotRecognizedWhenNotCheckingSubstrings(): void
     {
         $rule = new Dictionary($this->wordList, 1, null, false);
 
@@ -280,7 +280,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testPostfixWordIsRecognizedWhenNotCheckingSubstrings(): void
+    public function testPostfixWordIsNotRecognizedWhenNotCheckingSubstrings(): void
     {
         $rule = new Dictionary($this->wordList, 1, null, false);
 
