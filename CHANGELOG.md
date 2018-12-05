@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Interface for character converters.
+- Leetspeak character converter.
 
 ### Changed
 - Nothing
