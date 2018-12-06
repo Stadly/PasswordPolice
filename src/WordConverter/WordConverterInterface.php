@@ -13,7 +13,7 @@ interface WordConverterInterface
 {
     /**
      * @param string $word Word to convert.
-     * @return Traversable<string> Converted words.
+     * @return Traversable<string> Converted words. May contain duplicates.
      */
     public function convert(string $word): Traversable;
 }
