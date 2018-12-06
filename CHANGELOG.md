@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Leetspeak character converter.
 - Word converter creating all combinations of upper case and lower case letters in words.
 - Possible to use word converters in dictionaries. Useful for converting leetspeak to normal characters before checking the word list.
+- Possible to use word converters in guessable data rules. Useful for converting leetspeak to normal characters before comparing to the guessable data.
 
 ### Changed
 - Case converters return a traversable with strings instead of a single string.

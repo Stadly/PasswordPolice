@@ -7,8 +7,10 @@ namespace Stadly\PasswordPolice\Rule;
 use DateTimeInterface;
 use InvalidArgumentException;
 use RuntimeException;
+use Traversable;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
+use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
 use Stadly\PasswordPolice\WordList\WordListInterface;
 
 final class GuessableData implements RuleInterface
@@ -55,6 +57,19 @@ final class GuessableData implements RuleInterface
     ];
 
     /**
+     * @var WordConverterInterface[] Word converters.
+     */
+    private $wordConverters;
+
+    /**
+     * @param WordConverterInterface... $wordConverters Word converters.
+     */
+    public function __construct(WordConverterInterface... $wordConverters)
+    {
+        $this->wordConverters = $wordConverters;
+    }
+
+    /**
      * Check whether a password is in compliance with the rule.
      *
      * @param Password|string $password Password to check.
@@ -89,13 +104,47 @@ final class GuessableData implements RuleInterface
     private function getGuessableData($password)
     {
         if ($password instanceof Password) {
-            foreach ($password->getGuessableData() as $data) {
-                if ($this->contains((string)$password, $data)) {
-                    return $data;
+            foreach ($this->getWordsToCheck((string)$password) as $word) {
+                foreach ($password->getGuessableData() as $data) {
+                    if ($this->contains($word, $data)) {
+                        return $data;
+                    }
                 }
             }
         }
         return null;
+    }
+
+    /**
+     * @param string $word Word to check.
+     * @return Traversable<string> Variants of the word to check.
+     */
+    private function getWordsToCheck(string $word): Traversable
+    {
+        $checked = [];
+        foreach ($this->getConvertedWords($word) as $wordToCheck) {
+            if (isset($checked[$wordToCheck])) {
+                continue;
+            }
+
+            $checked[$wordToCheck] = true;
+            yield $wordToCheck;
+        }
+    }
+
+    /**
+     * @param string $word Word to convert.
+     * @return Traversable<string> Converted words. May contain duplicates.
+     */
+    private function getConvertedWords(string $word): Traversable
+    {
+        yield $word;
+
+        foreach ($this->wordConverters as $wordConverter) {
+            foreach ($wordConverter->convert($word) as $converted) {
+                yield $converted;
+            }
+        }
     }
 
     /**
