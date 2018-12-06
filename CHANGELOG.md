@@ -10,7 +10,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Changed
-- Nothing
+- Use HTTP Factory Discovery instead of HTTPlug Discovery to discover HTTP Client implementations. The removes the HTTPlug 2.0 dependency making the library incompatible with projects using HTTPlug 1.0.
 
 ### Fixed
 - Nothing

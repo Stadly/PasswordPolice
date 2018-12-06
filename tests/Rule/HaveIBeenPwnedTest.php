@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use Http\Discovery\ClassDiscovery;
+use Http\Factory\Discovery\ClientLocator;
 use Http\Factory\Discovery\FactoryLocator;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\Stub\Exception;
@@ -24,13 +24,13 @@ final class HaveIBeenPwnedTest extends TestCase
     protected function setUp(): void
     {
         FactoryLocator::register(RequestFactoryInterface::class, MockedRequestFactory::class);
-        ClassDiscovery::setStrategies([HaveIBeenPwnedDiscoveryStrategy::class]);
+        ClientLocator::register(ClientInterface::class, HaveIBeenPwnedClient::class);
     }
 
     protected function tearDown(): void
     {
         FactoryLocator::unregister(RequestFactoryInterface::class, MockedRequestFactory::class);
-        ClassDiscovery::setStrategies([]);
+        ClientLocator::unregister(ClientInterface::class, HaveIBeenPwnedClient::class);
     }
 
     /**
@@ -257,7 +257,7 @@ final class HaveIBeenPwnedTest extends TestCase
      */
     public function testExceptionIsThrownWhenNoClientIsRegistered(): void
     {
-        ClassDiscovery::setStrategies([]);
+        ClientLocator::unregister(ClientInterface::class, HaveIBeenPwnedClient::class);
 
         $rule = new HaveIBeenPwned(5, 0);
 

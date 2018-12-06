@@ -10,6 +10,9 @@ parameters:
       Http\Factory\Discovery\HttpFactory:
         requestFactory:
           - RuntimeException
+      Http\Factory\Discovery\HttpClient:
+        client:
+          - RuntimeException
     functionThrowTypeDeclarations:
       pspell_new:
         - ErrorException

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use Http\Discovery\Exception\NotFoundException;
-use Http\Discovery\HttpClientDiscovery;
 use Http\Factory\Discovery\HttpFactory;
+use Http\Factory\Discovery\HttpClient;
 use InvalidArgumentException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
@@ -71,7 +70,8 @@ final class HaveIBeenPwned implements RuleInterface
     private function getClient(): ClientInterface
     {
         if ($this->client === null) {
-            $this->client = HttpClientDiscovery::find();
+            $client = HttpClient::client();
+            $this->client = $client;
         }
         return $this->client;
     }

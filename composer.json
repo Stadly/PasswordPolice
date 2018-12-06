@@ -20,16 +20,20 @@
     ],
     "require": {
         "php": ">=7.1",
-        "http-interop/http-factory-discovery": "^1.3",
+        "http-interop/http-factory-discovery": "dev-http-client-discovery",
         "nesbot/carbon": "^2.0",
-        "php-http/discovery": "^1.0",
-        "php-http/httplug": "^2.0",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",
         "stadly/php-date": "^1.0",
         "symfony/translation": "^4.2",
         "vanderlee/php-stable-sort-functions": "^2.0.4"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Stadly/http-factory-discovery"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Stadly\\PasswordPolice\\": "src"
