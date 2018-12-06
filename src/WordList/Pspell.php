@@ -91,7 +91,7 @@ final class Pspell implements WordListInterface
      * @param string $word Word to check.
      * @return Traversable<string> Variants of the word to check.
      */
-    private function getWordsToCheck($word): Traversable
+    private function getWordsToCheck(string $word): Traversable
     {
         $checked = [];
         foreach ($this->getConvertedWords($word) as $wordToCheck) {

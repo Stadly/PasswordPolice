@@ -135,7 +135,7 @@ final class Dictionary implements RuleInterface
      * @param string $word Word to check.
      * @return Traversable<string> Variants of the word to check.
      */
-    private function getWordsToCheck($word): Traversable
+    private function getWordsToCheck(string $word): Traversable
     {
         $convertedWords = $this->getUniqueWords($this->getConvertedWords($word));
 
