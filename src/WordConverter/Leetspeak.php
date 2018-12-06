@@ -6,7 +6,7 @@ namespace Stadly\PasswordPolice\WordConverter;
 
 use Traversable;
 
-final class Leet implements WordConverterInterface
+final class Leetspeak implements WordConverterInterface
 {
     /**
      * @var array<string, string[]>

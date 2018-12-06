@@ -7,30 +7,30 @@ namespace Stadly\PasswordPolice\WordConverter;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\WordConverter\Leet
+ * @coversDefaultClass \Stadly\PasswordPolice\WordConverter\Leetspeak
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class LeetTest extends TestCase
+final class LeetspeakTest extends TestCase
 {
     /**
      * @covers ::__construct
      */
     public function testCanConstructConverter(): void
     {
-        $converter = new Leet();
+        $converter = new Leetspeak();
 
         // Force generation of code coverage
-        $converterConstruct = new Leet();
+        $converterConstruct = new Leetspeak();
         self::assertEquals($converter, $converterConstruct);
     }
 
     /**
      * @covers ::convert
      */
-    public function testCanConvertWordWithoutLeet(): void
+    public function testCanConvertWordWithoutLeetspeak(): void
     {
-        $converter = new Leet();
+        $converter = new Leetspeak();
 
         self::assertSame(['fOoBaR'], iterator_to_array($converter->convert('fOoBaR')));
     }
@@ -38,9 +38,9 @@ final class LeetTest extends TestCase
     /**
      * @covers ::convert
      */
-    public function testCanConvertWordWithLeet(): void
+    public function testCanConvertWordWithLeetspeak(): void
     {
-        $converter = new Leet();
+        $converter = new Leetspeak();
 
         self::assertContains('LEET SPEAK', iterator_to_array($converter->convert('1337 5P34K')));
     }
