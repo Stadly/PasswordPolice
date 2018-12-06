@@ -4,7 +4,7 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.7.0...HEAD)
+## [v0.8.0](https://github.com/Stadly/PasswordPolice/compare/v0.7.0...v0.8.0) - 2018-12-06
 
 ### Added
 - Interface for character converters.
@@ -17,18 +17,6 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Case converters return a traversable with strings instead of a single string.
 - Case converters and character converters are combined into word converters.
 - Short form of just year is no longer recognized as a guessable date.
-
-### Fixed
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ## [v0.7.0](https://github.com/Stadly/PasswordPolice/compare/v0.6.0...v0.7.0) - 2018-12-04
 
