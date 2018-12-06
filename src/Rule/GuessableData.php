@@ -15,8 +15,18 @@ final class GuessableData implements RuleInterface
 {
     private const DATE_FORMATS = [
         // Year
-        ['y'], // 18
         ['Y'], // 2018
+
+        // Year month
+        ['y', 'n'], // 18 8
+        ['y', 'm'], // 18 08
+        ['y', 'M'], // 18 Aug
+        ['y', 'F'], // 18 August
+
+        // Month year
+        ['n', 'y'], // 8 18
+        ['M', 'y'], // Aug 18
+        ['F', 'y'], // August 18
 
         // Day month
         ['j', 'n'], // 4 8

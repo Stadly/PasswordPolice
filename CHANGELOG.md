@@ -15,6 +15,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
 - Case converters return a traversable with strings instead of a single string.
 - Case converters and character converters are combined into word converters.
+- Short form of just year is no longer recognized as a guessable date.
 
 ### Fixed
 - Nothing
