@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 - Use HTTP Factory Discovery instead of HTTPlug Discovery to discover HTTP Client implementations. The removes the HTTPlug 2.0 dependency making the library incompatible with projects using HTTPlug 1.0.
+- Translators must implement `Symfony\Contracts\Translation\LocaleAwareInterface`, since `getLocale()` has been removed from `Symfony\Contracts\Translation\TranslatorInterface`.
 
 ### Fixed
 - Nothing

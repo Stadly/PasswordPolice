@@ -8,6 +8,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\Rule\RuleException;
 use Stadly\PasswordPolice\Rule\RuleInterface;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -32,6 +33,11 @@ final class PolicyTest extends TestCase
      */
     private $unsatisfiedRule;
 
+    /**
+     * @var MockObject&TranslatorInterface&LocaleAwareInterface
+     */
+    private $translator;
+
     protected function setUp(): void
     {
         $this->satisfiedRule1 = $this->createMock(RuleInterface::class);
@@ -43,6 +49,12 @@ final class PolicyTest extends TestCase
         $ruleException = new RuleException($this->createMock(RuleInterface::class), 'foo');
         $this->unsatisfiedRule = $this->createMock(RuleInterface::class);
         $this->unsatisfiedRule->method('enforce')->willThrowException($ruleException);
+
+        /**
+         * @var MockObject&TranslatorInterface&LocaleAwareInterface
+         */
+        $translator = $this->createMock([TranslatorInterface::class, LocaleAwareInterface::class]);
+        $this->translator = $translator;
     }
 
     /**
@@ -199,10 +211,8 @@ final class PolicyTest extends TestCase
      */
     public function testCanSetAndGetTranslator(): void
     {
-        $translator = $this->createMock(TranslatorInterface::class);
-
-        Policy::setTranslator($translator);
-        self::assertSame($translator, Policy::getTranslator());
+        Policy::setTranslator($this->translator);
+        self::assertSame($this->translator, Policy::getTranslator());
         Policy::setTranslator(null);
     }
 
@@ -212,10 +222,9 @@ final class PolicyTest extends TestCase
      */
     public function testCanGetWhenNoTranslatorIsSet(): void
     {
-        $translator = $this->createMock(TranslatorInterface::class);
-        Policy::setTranslator($translator);
+        Policy::setTranslator($this->translator);
         Policy::setTranslator(null);
 
-        self::assertNotSame($translator, Policy::getTranslator());
+        self::assertNotSame($this->translator, Policy::getTranslator());
     }
 }

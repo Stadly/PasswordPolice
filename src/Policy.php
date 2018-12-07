@@ -8,6 +8,7 @@ use Stadly\PasswordPolice\Rule\RuleException;
 use Stadly\PasswordPolice\Rule\RuleInterface;
 use Stadly\PasswordPolice\Rule\TestException;
 use Symfony\Component\Translation\Translator;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class Policy
@@ -18,7 +19,7 @@ final class Policy
     private $rules = [];
 
     /**
-     * @var TranslatorInterface|null Translator for translating messages.
+     * @var (TranslatorInterface&LocaleAwareInterface)|null Translator for translating messages.
      */
     private static $translator;
 
@@ -83,17 +84,17 @@ final class Policy
     }
 
     /**
-     * @param TranslatorInterface|null $translator Translator for translating messages.
+     * @param (TranslatorInterface&LocaleAwareInterface)|null $translator Translator for translating messages.
      */
-    public static function setTranslator(?TranslatorInterface $translator): void
+    public static function setTranslator($translator): void
     {
         self::$translator = $translator;
     }
 
     /**
-     * @return TranslatorInterface Translator for translating messages.
+     * @return TranslatorInterface&LocaleAwareInterface Translator for translating messages.
      */
-    public static function getTranslator(): TranslatorInterface
+    public static function getTranslator()
     {
         if (self::$translator === null) {
             self::$translator = new Translator('en_US');
