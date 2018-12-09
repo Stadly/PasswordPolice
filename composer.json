@@ -20,7 +20,7 @@
     ],
     "require": {
         "php": ">=7.1",
-        "http-interop/http-factory-discovery": "dev-http-client-discovery",
+        "http-interop/http-factory-discovery": "^1.4",
         "nesbot/carbon": "^2.0",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",
@@ -28,12 +28,6 @@
         "symfony/translation": "^4.2.1",
         "vanderlee/php-stable-sort-functions": "^2.0.4"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/Stadly/http-factory-discovery"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "Stadly\\PasswordPolice\\": "src"
