@@ -20,9 +20,6 @@ final class HaveIBeenPwnedClient implements ClientInterface
     {
         $generator = new Generator();
 
-        /**
-         * @var MockObject&StreamInterface
-         */
         $stream = $generator->getMock(StreamInterface::class);
 
         // SHA1 prefix 00000
