@@ -54,7 +54,11 @@ final class Pspell implements WordListInterface
         try {
             $pspell = pspell_new($locale);
         } catch (ErrorException $exception) {
-            throw new RuntimeException('An error occurred while loading the word list.', /*code*/0, $exception);
+            throw new RuntimeException(
+                'An error occurred while loading the word list: '.$exception->getMessage(),
+                /*code*/0,
+                $exception
+            );
         } finally {
             restore_error_handler();
         }
@@ -74,7 +78,11 @@ final class Pspell implements WordListInterface
             try {
                 $check = pspell_check($this->pspell, $wordVariant);
             } catch (ErrorException $exception) {
-                throw new RuntimeException('An error occurred while using the word list.', /*code*/0, $exception);
+                throw new RuntimeException(
+                    'An error occurred while using the word list: '.$exception->getMessage(),
+                    /*code*/0,
+                    $exception
+                );
             } finally {
                 restore_error_handler();
             }

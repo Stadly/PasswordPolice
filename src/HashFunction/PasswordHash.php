@@ -40,7 +40,11 @@ final class PasswordHash implements HashFunctionInterface
         try {
             $hash = password_hash($password, $this->algorithm, $this->options);
         } catch (ErrorException $exception) {
-            throw new RuntimeException('An error occurred while hashing the password.', /*code*/0, $exception);
+            throw new RuntimeException(
+                'An error occurred while hashing the password: '.$exception->getMessage(),
+                /*code*/0,
+                $exception
+            );
         } finally {
             restore_error_handler();
         }

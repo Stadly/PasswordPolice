@@ -125,7 +125,11 @@ final class Dictionary implements RuleInterface
                     return $word;
                 }
             } catch (RuntimeException $exception) {
-                throw new TestException($this, 'An error occurred while using the word list.', $exception);
+                throw new TestException(
+                    $this,
+                    'An error occurred while using the word list: '.$exception->getMessage(),
+                    $exception
+                );
             }
         }
         return null;

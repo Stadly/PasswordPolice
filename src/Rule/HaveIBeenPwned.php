@@ -182,7 +182,11 @@ final class HaveIBeenPwned implements RuleInterface
             }
             return 0;
         } catch (ClientExceptionInterface | RuntimeException $exception) {
-            throw new TestException($this, 'An error occurred while using the Have I Been Pwned? service.', $exception);
+            throw new TestException(
+                $this,
+                'An error occurred while using the Have I Been Pwned? service: '.$exception->getMessage(),
+                $exception
+            );
         }
     }
 
