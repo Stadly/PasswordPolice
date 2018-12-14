@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 
-class CharacterClass implements RuleInterface
+abstract class CharacterClass implements RuleInterface
 {
     /**
      * @var string Characters matched by the rule.
@@ -132,62 +132,5 @@ class CharacterClass implements RuleInterface
         assert(false !== $count);
 
         return $count;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getMessage(): string
-    {
-        $translator = Policy::getTranslator();
-
-        if ($this->max === null) {
-            return $translator->trans(
-                'There must be at least one character matching %characters%.|'.
-                'There must be at least %count% characters matching %characters%.',
-                [
-                    '%count%' => $this->min,
-                    '%characters%' => $this->characters,
-                ]
-            );
-        }
-
-        if ($this->max === 0) {
-            return $translator->trans(
-                'There must be no characters matching %characters%.',
-                ['%characters%' => $this->characters]
-            );
-        }
-
-        if ($this->min === 0) {
-            return $translator->trans(
-                'There must be at most one character matching %characters%.|'.
-                'There must be at most %count% characters matching %characters%.',
-                [
-                    '%count%' => $this->max,
-                    '%characters%' => $this->characters,
-                ]
-            );
-        }
-
-        if ($this->min === $this->max) {
-            return $translator->trans(
-                'There must be exactly one character matching %characters%.|'.
-                'There must be exactly %count% characters matching %characters%.',
-                [
-                    '%count%' => $this->min,
-                    '%characters%' => $this->characters,
-                ]
-            );
-        }
-
-        return $translator->trans(
-            'There must be between %min% and %max% characters matching %characters%.',
-            [
-                '%min%' => $this->min,
-                '%max%' => $this->max,
-                '%characters%' => $this->characters,
-            ]
-        );
     }
 }

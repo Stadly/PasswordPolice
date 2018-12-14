@@ -7,10 +7,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.9.0...HEAD)
 
 ### Added
-- Nothing
+- Rule enforcing the use of symbols in passwords.
 
 ### Changed
 - Improved exception messages.
+- The character class rule can not be used directly anymore. Use the symbol rule instead.
 
 ### Fixed
 - Nothing

@@ -8,21 +8,21 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\Rule\CharacterClass
+ * @coversDefaultClass \Stadly\PasswordPolice\Rule\Symbol
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class CharacterClassTest extends TestCase
+final class SymbolTest extends TestCase
 {
     /**
      * @covers ::__construct
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 5, null]);
+        $rule = new Symbol('$%&@!', 5, null);
 
         // Force generation of code coverage
-        $ruleConstruct = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 5, null]);
+        $ruleConstruct = new Symbol('$%&@!', 5, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -31,10 +31,10 @@ final class CharacterClassTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 0, 10]);
+        $rule = new Symbol('$%&@!', 0, 10);
 
         // Force generation of code coverage
-        $ruleConstruct = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 0, 10]);
+        $ruleConstruct = new Symbol('$%&@!', 0, 10);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -43,10 +43,10 @@ final class CharacterClassTest extends TestCase
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 5, 10]);
+        $rule = new Symbol('$%&@!', 5, 10);
 
         // Force generation of code coverage
-        $ruleConstruct = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 5, 10]);
+        $ruleConstruct = new Symbol('$%&@!', 5, 10);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -57,7 +57,7 @@ final class CharacterClassTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', -10, null]);
+        $rule = new Symbol('$%&@!', -10, null);
     }
 
     /**
@@ -67,7 +67,7 @@ final class CharacterClassTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 10, 5]);
+        $rule = new Symbol('$%&@!', 10, 5);
     }
 
     /**
@@ -77,7 +77,7 @@ final class CharacterClassTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 0, null]);
+        $rule = new Symbol('$%&@!', 0, null);
     }
 
     /**
@@ -85,10 +85,10 @@ final class CharacterClassTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 5, 5]);
+        $rule = new Symbol('$%&@!', 5, 5);
 
         // Force generation of code coverage
-        $ruleConstruct = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 5, 5]);
+        $ruleConstruct = new Symbol('$%&@!', 5, 5);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -99,7 +99,7 @@ final class CharacterClassTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['']);
+        $rule = new Symbol('');
     }
 
     /**
@@ -107,7 +107,7 @@ final class CharacterClassTest extends TestCase
      */
     public function testCanGetCharacters(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!']);
+        $rule = new Symbol('$%&@!');
 
         self::assertSame('$%&@!', $rule->getCharacters());
     }
@@ -117,7 +117,7 @@ final class CharacterClassTest extends TestCase
      */
     public function testCanGetMinConstraint(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 5, 10]);
+        $rule = new Symbol('$%&@!', 5, 10);
 
         self::assertSame(5, $rule->getMin());
     }
@@ -127,7 +127,7 @@ final class CharacterClassTest extends TestCase
      */
     public function testCanGetMaxConstraint(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 5, 10]);
+        $rule = new Symbol('$%&@!', 5, 10);
 
         self::assertSame(10, $rule->getMax());
     }
@@ -137,7 +137,7 @@ final class CharacterClassTest extends TestCase
      */
     public function testMinConstraintCanBeSatisfied(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 2, null]);
+        $rule = new Symbol('$%&@!', 2, null);
 
         self::assertTrue($rule->test('FOO bar $$@'));
     }
@@ -147,7 +147,7 @@ final class CharacterClassTest extends TestCase
      */
     public function testMinConstraintCanBeUnsatisfied(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 2, null]);
+        $rule = new Symbol('$%&@!', 2, null);
 
         self::assertFalse($rule->test('FOO BAR $'));
     }
@@ -157,7 +157,7 @@ final class CharacterClassTest extends TestCase
      */
     public function testMaxConstraintCanBeSatisfied(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 0, 3]);
+        $rule = new Symbol('$%&@!', 0, 3);
 
         self::assertTrue($rule->test('FOO bar $$@'));
     }
@@ -167,7 +167,7 @@ final class CharacterClassTest extends TestCase
      */
     public function testMaxConstraintCanBeUnsatisfied(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 0, 3]);
+        $rule = new Symbol('$%&@!', 0, 3);
 
         self::assertFalse($rule->test('foo bar $$@!'));
     }
@@ -177,12 +177,12 @@ final class CharacterClassTest extends TestCase
      */
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 1, null]);
+        $rule = new Symbol('$%&@!', 1, null);
 
         $rule->enforce('&');
 
         // Force generation of code coverage
-        $ruleConstruct = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 1, null]);
+        $ruleConstruct = new Symbol('$%&@!', 1, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -191,10 +191,60 @@ final class CharacterClassTest extends TestCase
      */
     public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 1, null]);
+        $rule = new Symbol('$%&@!', 1, null);
 
         $this->expectException(RuleException::class);
 
         $rule->enforce('€');
+    }
+
+    /**
+     * @covers ::getMessage
+     */
+    public function testCanGetMessageForRuleWithMinConstraint(): void
+    {
+        $rule = new Symbol('$%&@!', 5, null);
+
+        self::assertSame('There must be at least 5 symbols ($%&@!).', $rule->getMessage());
+    }
+
+    /**
+     * @covers ::getMessage
+     */
+    public function testCanGetMessageForRuleWithMaxConstraint(): void
+    {
+        $rule = new Symbol('$%&@!', 0, 10);
+
+        self::assertSame('There must be at most 10 symbols ($%&@!).', $rule->getMessage());
+    }
+
+    /**
+     * @covers ::getMessage
+     */
+    public function testCanGetMessageForRuleWithBothMinAndMaxConstraint(): void
+    {
+        $rule = new Symbol('$%&@!', 5, 10);
+
+        self::assertSame('There must be between 5 and 10 symbols ($%&@!).', $rule->getMessage());
+    }
+
+    /**
+     * @covers ::getMessage
+     */
+    public function testCanGetMessageForRuleWithMaxConstraintEqualToZero(): void
+    {
+        $rule = new Symbol('$%&@!', 0, 0);
+
+        self::assertSame('There must be no symbols ($%&@!).', $rule->getMessage());
+    }
+
+    /**
+     * @covers ::getMessage
+     */
+    public function testCanGetMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
+    {
+        $rule = new Symbol('$%&@!', 3, 3);
+
+        self::assertSame('There must be exactly 3 symbols ($%&@!).', $rule->getMessage());
     }
 }
