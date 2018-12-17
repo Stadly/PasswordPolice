@@ -16,7 +16,7 @@ use Stadly\PasswordPolice\Policy;
 final class Change implements RuleInterface
 {
     /**
-     * @var DateInterval|null Minimum time between password changes.
+     * @var DateInterval Minimum time between password changes.
      */
     private $min;
 
@@ -32,19 +32,17 @@ final class Change implements RuleInterface
     public function __construct(?DateInterval $min, ?DateInterval $max = null)
     {
         if ($min === null) {
-            if ($max === null) {
-                throw new InvalidArgumentException('Both min and max cannot be unconstrained.');
-            }
-            if (0 < Interval::compare(new DateInterval('PT0S'), $max)) {
-                throw new InvalidArgumentException('Max cannot be negative.');
-            }
-        } else {
-            if (0 < Interval::compare(new DateInterval('PT0S'), $min)) {
-                throw new InvalidArgumentException('Min cannot be negative.');
-            }
-            if ($max !== null && 0 < Interval::compare($min, $max)) {
-                throw new InvalidArgumentException('Max cannot be smaller than min.');
-            }
+            $min = new DateInterval('PT0S');
+        }
+
+        if (0 < Interval::compare(new DateInterval('PT0S'), $min)) {
+            throw new InvalidArgumentException('Min cannot be negative.');
+        }
+        if ($max !== null && 0 < Interval::compare($min, $max)) {
+            throw new InvalidArgumentException('Max cannot be smaller than min.');
+        }
+        if (0 === Interval::compare(new DateInterval('PT0S'), $min) && $max === null) {
+            throw new InvalidArgumentException('Min cannot be zero when max is unconstrained.');
         }
 
         $this->min = $min;
@@ -52,9 +50,9 @@ final class Change implements RuleInterface
     }
 
     /**
-     * @return DateInterval|null Minimum time between password changes.
+     * @return DateInterval Minimum time between password changes.
      */
-    public function getMin(): ?DateInterval
+    public function getMin(): DateInterval
     {
         return $this->min;
     }
@@ -105,7 +103,7 @@ final class Change implements RuleInterface
 
         if ($date !== null) {
             $now = new DateTimeImmutable();
-            if ($this->min !== null && $now->sub($this->min) < $date) {
+            if ($now->sub($this->min) < $date) {
                 return $date;
             }
 
@@ -141,7 +139,7 @@ final class Change implements RuleInterface
         $translator = Policy::getTranslator();
         $locale = $translator->getLocale();
 
-        $min = $this->min === null ? null : CarbonInterval::instance($this->min)->locale($locale);
+        $min = CarbonInterval::instance($this->min)->locale($locale);
         $max = $this->max === null ? null : CarbonInterval::instance($this->max)->locale($locale);
 
         if ($this->max === null) {
@@ -151,7 +149,7 @@ final class Change implements RuleInterface
             );
         }
 
-        if ($this->min === null) {
+        if (0 === Interval::compare(new DateInterval('PT0S'), $min)) {
             return $translator->trans(
                 'Must be at most %interval% between password changes.',
                 ['%interval%' => $max]

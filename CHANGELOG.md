@@ -10,7 +10,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Changed
-- Nothing
+- Minimum constraint of password change rule is never null.
 
 ### Fixed
 - Nothing
