@@ -61,14 +61,16 @@ final class Leetspeak implements WordConverterInterface
 
         $decodeMap = [];
         foreach ($this->decodeMap as $encodedChar => $chars) {
-            if ((string)$encodedChar === mb_substr($word, 0, mb_strlen((string)$encodedChar))) {
+            $encodedChar = ''.$encodedChar; // Cast to string
+            if ($encodedChar === mb_substr($word, 0, mb_strlen($encodedChar))) {
                 $decodeMap[$encodedChar] = $chars;
             }
         }
         $decodeMap[mb_substr($word, 0, 1)][] = mb_substr($word, 0, 1);
 
         foreach ($decodeMap as $encodedChar => $chars) {
-            foreach ($this->convert(mb_substr($word, mb_strlen((string)$encodedChar))) as $suffix) {
+            $encodedChar = ''.$encodedChar; // Cast to string
+            foreach ($this->convert(mb_substr($word, mb_strlen($encodedChar))) as $suffix) {
                 foreach ($chars as $char) {
                     yield $char.$suffix;
                 }

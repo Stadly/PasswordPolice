@@ -118,7 +118,9 @@ final class Change implements RuleInterface
             $formerPasswords = $password->getFormerPasswords();
 
             if ($formerPasswords !== []) {
-                return reset($formerPasswords)->getDate();
+                $formerPassword = reset($formerPasswords);
+                assert($formerPassword !== false);
+                return $formerPassword->getDate();
             }
         }
         return null;
