@@ -16,18 +16,18 @@ use Stadly\PasswordPolice\Policy;
 final class Change implements RuleInterface
 {
     /**
-     * @var DateInterval Minimum time between password changes.
+     * @var DateInterval Minimum time since last password change.
      */
     private $min;
 
     /**
-     * @var DateInterval|null Maximum time between password changes.
+     * @var DateInterval|null Maximum time since last password change.
      */
     private $max;
 
     /**
-     * @param DateInterval $min Minimum time between password changes.
-     * @param DateInterval|null $max Maximum time between password changes.
+     * @param DateInterval $min Minimum time since last password change.
+     * @param DateInterval|null $max Maximum time since last password change.
      */
     public function __construct(DateInterval $min, ?DateInterval $max = null)
     {
@@ -43,7 +43,7 @@ final class Change implements RuleInterface
     }
 
     /**
-     * @return DateInterval Minimum time between password changes.
+     * @return DateInterval Minimum time since last password change.
      */
     public function getMin(): DateInterval
     {
@@ -51,7 +51,7 @@ final class Change implements RuleInterface
     }
 
     /**
-     * @return DateInterval|null Maximum time between password changes.
+     * @return DateInterval|null Maximum time since last password change.
      */
     public function getMax(): ?DateInterval
     {
