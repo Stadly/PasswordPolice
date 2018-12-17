@@ -213,42 +213,50 @@ final class ChangeTest extends TestCase
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMinConstraint(): void
+    public function testValidationMessageForRuleWithMinConstraint(): void
     {
-        $rule = new Change(new DateInterval('P5D'), null);
+        $rule = new Change(new DateInterval('P10D'), null);
 
-        self::assertSame('Must be at least 5 days between password changes.', $rule->getMessage());
+        $this->expectExceptionMessage('Must be at least 1 week 3 days between password changes.');
+
+        $rule->enforce($this->password);
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMaxConstraint(): void
+    public function testValidationMessageForRuleWithMaxConstraint(): void
     {
-        $rule = new Change(new DateInterval('PT0S'), new DateInterval('P2M'));
+        $rule = new Change(new DateInterval('PT0S'), new DateInterval('P5D'));
 
-        self::assertSame('Must be at most 2 months between password changes.', $rule->getMessage());
+        $this->expectExceptionMessage('Must be at most 5 days between password changes.');
+
+        $rule->enforce($this->password);
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithBothMinAndMaxConstraint(): void
+    public function testValidationMessageForRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new Change(new DateInterval('P5D'), new DateInterval('P1M'));
+        $rule = new Change(new DateInterval('P14D'), new DateInterval('P1M'));
 
-        self::assertSame('Must be between 5 days and 1 month between password changes.', $rule->getMessage());
+        $this->expectExceptionMessage('Must be between 2 weeks and 1 month between password changes.');
+
+        $rule->enforce($this->password);
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
+    public function testValidationMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $rule = new Change(new DateInterval('P7D'), new DateInterval('PT168H'));
+        $rule = new Change(new DateInterval('P6D'), new DateInterval('PT144H'));
 
-        self::assertSame('Must be exactly 1 week between password changes.', $rule->getMessage());
+        $this->expectExceptionMessage('Must be exactly 6 days between password changes.');
+
+        $rule->enforce($this->password);
     }
 }

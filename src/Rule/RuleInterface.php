@@ -28,9 +28,4 @@ interface RuleInterface
      * @throws TestException If an error occurred while testing the rule.
      */
     public function enforce($password): void;
-
-    /**
-     * @return string Message explaining the requirements of the rule.
-     */
-    public function getMessage(): string;
 }

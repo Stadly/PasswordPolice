@@ -302,52 +302,62 @@ final class HaveIBeenPwnedTest extends TestCase
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMinConstraint(): void
+    public function testValidationMessageForRuleWithMinConstraint(): void
     {
         $rule = new HaveIBeenPwned(null, 5);
 
-        self::assertSame('Must appear at least 5 times in breaches.', $rule->getMessage());
+        $this->expectExceptionMessage('Must appear at least 5 times in breaches.');
+
+        $rule->enforce('1397wpfk');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMaxConstraint(): void
+    public function testValidationMessageForRuleWithMaxConstraint(): void
     {
         $rule = new HaveIBeenPwned(10, 0);
 
-        self::assertSame('Must appear at most 10 times in breaches.', $rule->getMessage());
+        $this->expectExceptionMessage('Must appear at most 10 times in breaches.');
+
+        $rule->enforce('6004468405');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithBothMinAndMaxConstraint(): void
+    public function testValidationMessageForRuleWithBothMinAndMaxConstraint(): void
     {
         $rule = new HaveIBeenPwned(10, 5);
 
-        self::assertSame('Must appear between 5 and 10 times in breaches.', $rule->getMessage());
+        $this->expectExceptionMessage('Must appear between 5 and 10 times in breaches.');
+
+        $rule->enforce('1397wpfk');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMaxConstraintEqualToZero(): void
+    public function testValidationMessageForRuleWithMaxConstraintEqualToZero(): void
     {
         $rule = new HaveIBeenPwned(0, 0);
 
-        self::assertSame('Must not appear in any breaches.', $rule->getMessage());
+        $this->expectExceptionMessage('Must not appear in any breaches.');
+
+        $rule->enforce('1397wpfk');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
+    public function testValidationMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
     {
         $rule = new HaveIBeenPwned(3, 3);
 
-        self::assertSame('Must appear exactly 3 times in breaches.', $rule->getMessage());
+        $this->expectExceptionMessage('Must appear exactly 3 times in breaches.');
+
+        $rule->enforce('1397wpfk');
     }
 }

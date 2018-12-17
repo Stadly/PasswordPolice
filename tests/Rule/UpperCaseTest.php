@@ -201,52 +201,62 @@ final class UpperCaseTest extends TestCase
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMinConstraint(): void
+    public function testValidationMessageForRuleWithMinConstraint(): void
     {
         $rule = new UpperCase(5, null);
 
-        self::assertSame('There must be at least 5 upper case characters.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be at least 5 upper case characters.');
+
+        $rule->enforce('FOo');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMaxConstraint(): void
+    public function testValidationMessageForRuleWithMaxConstraint(): void
     {
         $rule = new UpperCase(0, 10);
 
-        self::assertSame('There must be at most 10 upper case characters.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be at most 10 upper case characters.');
+
+        $rule->enforce('FOo BAR QWERTY');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithBothMinAndMaxConstraint(): void
+    public function testValidationMessageForRuleWithBothMinAndMaxConstraint(): void
     {
         $rule = new UpperCase(5, 10);
 
-        self::assertSame('There must be between 5 and 10 upper case characters.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be between 5 and 10 upper case characters.');
+
+        $rule->enforce('FOo');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMaxConstraintEqualToZero(): void
+    public function testValidationMessageForRuleWithMaxConstraintEqualToZero(): void
     {
         $rule = new UpperCase(0, 0);
 
-        self::assertSame('There must be no upper case characters.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be no upper case characters.');
+
+        $rule->enforce('FOo');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
+    public function testValidationMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
     {
         $rule = new UpperCase(3, 3);
 
-        self::assertSame('There must be exactly 3 upper case characters.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be exactly 3 upper case characters.');
+
+        $rule->enforce('FOo');
     }
 }

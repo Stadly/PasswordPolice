@@ -130,4 +130,9 @@ abstract class CharacterClass implements RuleInterface
 
         return $count;
     }
+
+    /**
+     * @return string Message explaining the violation.
+     */
+    abstract protected function getMessage(): string;
 }

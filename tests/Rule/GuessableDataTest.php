@@ -199,12 +199,15 @@ final class GuessableDataTest extends TestCase
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMinConstraint(): void
+    public function testValidationMessageForRuleWithMinConstraint(): void
     {
         $rule = new GuessableData();
+        $password = new Password('foobar', ['oba', new DateTime('2018-11-28')]);
 
-        self::assertSame('Must not contain guessable data.', $rule->getMessage());
+        $this->expectExceptionMessage('Must not contain guessable data.');
+
+        $rule->enforce($password);
     }
 }

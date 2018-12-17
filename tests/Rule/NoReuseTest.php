@@ -231,12 +231,14 @@ final class NoReuseTest extends TestCase
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessage(): void
+    public function testValidationMessage(): void
     {
         $rule = new NoReuse($this->hashFunction);
 
-        self::assertSame('Cannot reuse former passwords.', $rule->getMessage());
+        $this->expectExceptionMessage('Cannot reuse former passwords.');
+
+        $rule->enforce($this->password);
     }
 }

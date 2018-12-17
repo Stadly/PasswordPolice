@@ -201,52 +201,62 @@ final class SymbolTest extends TestCase
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMinConstraint(): void
+    public function testValidationMessageForRuleWithMinConstraint(): void
     {
         $rule = new Symbol('$%&@!', 5, null);
 
-        self::assertSame('There must be at least 5 symbols ($%&@!).', $rule->getMessage());
+        $this->expectExceptionMessage('There must be at least 5 symbols ($%&@!).');
+
+        $rule->enforce('foo bar');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMaxConstraint(): void
+    public function testValidationMessageForRuleWithMaxConstraint(): void
     {
         $rule = new Symbol('$%&@!', 0, 10);
 
-        self::assertSame('There must be at most 10 symbols ($%&@!).', $rule->getMessage());
+        $this->expectExceptionMessage('There must be at most 10 symbols ($%&@!).');
+
+        $rule->enforce('foo bar $$@! $$@! $$@!');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithBothMinAndMaxConstraint(): void
+    public function testValidationMessageForRuleWithBothMinAndMaxConstraint(): void
     {
         $rule = new Symbol('$%&@!', 5, 10);
 
-        self::assertSame('There must be between 5 and 10 symbols ($%&@!).', $rule->getMessage());
+        $this->expectExceptionMessage('There must be between 5 and 10 symbols ($%&@!).');
+
+        $rule->enforce('foo bar $$@!');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMaxConstraintEqualToZero(): void
+    public function testValidationMessageForRuleWithMaxConstraintEqualToZero(): void
     {
         $rule = new Symbol('$%&@!', 0, 0);
 
-        self::assertSame('There must be no symbols ($%&@!).', $rule->getMessage());
+        $this->expectExceptionMessage('There must be no symbols ($%&@!).');
+
+        $rule->enforce('foo bar $$@!');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
+    public function testValidationMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
     {
         $rule = new Symbol('$%&@!', 3, 3);
 
-        self::assertSame('There must be exactly 3 symbols ($%&@!).', $rule->getMessage());
+        $this->expectExceptionMessage('There must be exactly 3 symbols ($%&@!).');
+
+        $rule->enforce('foo bar $$@!');
     }
 }

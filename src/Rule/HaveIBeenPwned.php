@@ -188,9 +188,9 @@ final class HaveIBeenPwned implements RuleInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @return string Message explaining the violation.
      */
-    public function getMessage(): string
+    private function getMessage(): string
     {
         $translator = Policy::getTranslator();
 

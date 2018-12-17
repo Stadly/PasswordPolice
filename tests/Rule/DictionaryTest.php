@@ -424,22 +424,26 @@ final class DictionaryTest extends TestCase
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageWhenCheckingSubstrings(): void
+    public function testValidationMessageWhenCheckingSubstrings(): void
     {
         $rule = new Dictionary($this->wordList, 1, null, true);
 
-        self::assertSame('Must not contain dictionary words.', $rule->getMessage());
+        $this->expectExceptionMessage('Must not contain dictionary words.');
+
+        $rule->enforce('apple');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageWhenNotCheckingSubstrings(): void
+    public function testValidationMessageWhenNotCheckingSubstrings(): void
     {
         $rule = new Dictionary($this->wordList, 1, null, false);
 
-        self::assertSame('Must not be a dictionary word.', $rule->getMessage());
+        $this->expectExceptionMessage('Must not be a dictionary word.');
+
+        $rule->enforce('apple');
     }
 }

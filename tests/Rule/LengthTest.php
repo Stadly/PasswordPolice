@@ -191,52 +191,62 @@ final class LengthTest extends TestCase
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMinConstraint(): void
+    public function testValidationMessageForRuleWithMinConstraint(): void
     {
         $rule = new Length(5, null);
 
-        self::assertSame('There must be at least 5 characters.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be at least 5 characters.');
+
+        $rule->enforce('fo');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMaxConstraint(): void
+    public function testValidationMessageForRuleWithMaxConstraint(): void
     {
         $rule = new Length(0, 10);
 
-        self::assertSame('There must be at most 10 characters.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be at most 10 characters.');
+
+        $rule->enforce('fo bar qwerty');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithBothMinAndMaxConstraint(): void
+    public function testValidationMessageForRuleWithBothMinAndMaxConstraint(): void
     {
         $rule = new Length(5, 10);
 
-        self::assertSame('There must be between 5 and 10 characters.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be between 5 and 10 characters.');
+
+        $rule->enforce('fo');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMaxConstraintEqualToZero(): void
+    public function testValidationMessageForRuleWithMaxConstraintEqualToZero(): void
     {
         $rule = new Length(0, 0);
 
-        self::assertSame('There must be no characters.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be no characters.');
+
+        $rule->enforce('fo');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
+    public function testValidationMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
     {
         $rule = new Length(3, 3);
 
-        self::assertSame('There must be exactly 3 characters.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be exactly 3 characters.');
+
+        $rule->enforce('fo');
     }
 }

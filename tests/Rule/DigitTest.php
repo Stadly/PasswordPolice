@@ -181,52 +181,62 @@ final class DigitTest extends TestCase
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMinConstraint(): void
+    public function testValidationMessageForRuleWithMinConstraint(): void
     {
         $rule = new Digit(5, null);
 
-        self::assertSame('There must be at least 5 digits.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be at least 5 digits.');
+
+        $rule->enforce('foo 12');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMaxConstraint(): void
+    public function testValidationMessageForRuleWithMaxConstraint(): void
     {
         $rule = new Digit(0, 10);
 
-        self::assertSame('There must be at most 10 digits.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be at most 10 digits.');
+
+        $rule->enforce('foo 123 456 123456');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithBothMinAndMaxConstraint(): void
+    public function testValidationMessageForRuleWithBothMinAndMaxConstraint(): void
     {
         $rule = new Digit(5, 10);
 
-        self::assertSame('There must be between 5 and 10 digits.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be between 5 and 10 digits.');
+
+        $rule->enforce('foo 12');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMaxConstraintEqualToZero(): void
+    public function testValidationMessageForRuleWithMaxConstraintEqualToZero(): void
     {
         $rule = new Digit(0, 0);
 
-        self::assertSame('There must be no digits.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be no digits.');
+
+        $rule->enforce('foo 12');
     }
 
     /**
-     * @covers ::getMessage
+     * @covers ::enforce
      */
-    public function testCanGetMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
+    public function testValidationMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
     {
         $rule = new Digit(3, 3);
 
-        self::assertSame('There must be exactly 3 digits.', $rule->getMessage());
+        $this->expectExceptionMessage('There must be exactly 3 digits.');
+
+        $rule->enforce('foo 12');
     }
 }

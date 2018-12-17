@@ -20,7 +20,7 @@ final class Digit extends CharacterClass
     /**
      * {@inheritDoc}
      */
-    public function getMessage(): string
+    protected function getMessage(): string
     {
         $translator = Policy::getTranslator();
 
