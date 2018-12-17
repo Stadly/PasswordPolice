@@ -33,7 +33,7 @@ final class Length implements RuleInterface
      * @param int $weight Constraint weight.
      * @return $this
      */
-    public function addConstraint(int $min = 1, ?int $max = null, int $weight = 1): self
+    public function addConstraint(int $min = 8, ?int $max = null, int $weight = 1): self
     {
         $this->constraints[] = new Count($min, $max, $weight);
 
