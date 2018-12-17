@@ -8,6 +8,8 @@ use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
 use InvalidArgumentException;
+use StableSort\StableSort;
+use Stadly\PasswordPolice\Constraint\Date;
 use Carbon\CarbonInterval;
 use Stadly\Date\Interval;
 use Stadly\PasswordPolice\Password;
@@ -16,46 +18,35 @@ use Stadly\PasswordPolice\Policy;
 final class Change implements RuleInterface
 {
     /**
-     * @var DateInterval Minimum time since last password change.
+     * @var Date[] Rule constraints.
      */
-    private $min;
-
-    /**
-     * @var DateInterval|null Maximum time since last password change.
-     */
-    private $max;
+    private $constraints;
 
     /**
      * @param DateInterval $min Minimum time since last password change.
      * @param DateInterval|null $max Maximum time since last password change.
+     * @param int $weight Constraint weight.
      */
-    public function __construct(DateInterval $min, ?DateInterval $max = null)
+    public function __construct(DateInterval $min, ?DateInterval $max = null, int $weight = 1)
     {
-        if (0 < Interval::compare(new DateInterval('PT0S'), $min)) {
-            throw new InvalidArgumentException('Min cannot be negative.');
-        }
-        if ($max !== null && 0 < Interval::compare($min, $max)) {
-            throw new InvalidArgumentException('Max cannot be smaller than min.');
-        }
-
-        $this->min = $min;
-        $this->max = $max;
+        $this->addConstraint($min, $max, $weight);
     }
 
     /**
-     * @return DateInterval Minimum time since last password change.
+     * @param DateInterval $min Minimum time since last password change.
+     * @param DateInterval|null $max Maximum time since last password change.
+     * @param int $weight Constraint weight.
+     * @return $this
      */
-    public function getMin(): DateInterval
+    public function addConstraint(DateInterval $min, ?DateInterval $max = null, int $weight = 1): self
     {
-        return $this->min;
-    }
+        $this->constraints[] = new Date($min, $max, $weight);
 
-    /**
-     * @return DateInterval|null Maximum time since last password change.
-     */
-    public function getMax(): ?DateInterval
-    {
-        return $this->max;
+        StableSort::usort($this->constraints, function (Date $a, Date $b): int {
+            return $b->getWeight() <=> $a->getWeight();
+        });
+
+        return $this;
     }
 
     /**
@@ -66,9 +57,10 @@ final class Change implements RuleInterface
      */
     public function test($password): bool
     {
-        $date = $this->getNoncompliantDate($password);
+        $date = $this->getDate($password);
+        $constraint = $this->getViolation($date);
 
-        return $date === null;
+        return $constraint === null;
     }
 
     /**
@@ -79,29 +71,28 @@ final class Change implements RuleInterface
      */
     public function enforce($password): void
     {
-        $date = $this->getNoncompliantDate($password);
+        $date = $this->getDate($password);
+        $constraint = $this->getViolation($date);
 
-        if ($date !== null) {
-            throw new RuleException($this, $this->getMessage());
+        if ($constraint !== null) {
+            assert($date !== null);
+            throw new RuleException($this, $this->getMessage($constraint, $date));
         }
     }
 
     /**
-     * @param Password|string $password Password to check when was last changed.
-     * @return DateTimeInterface|null When the password was last changed if not in compliance with the rule.
+     * @param DateTimeInterface|null $date When the password was last changed.
+     * @return Date|null Constraint violated by the count.
      */
-    private function getNoncompliantDate($password): ?DateTimeInterface
+    private function getViolation(?DateTimeInterface $date): ?Date
     {
-        $date = $this->getDate($password);
+        if ($date === null) {
+            return null;
+        }
 
-        if ($date !== null) {
-            $now = new DateTimeImmutable();
-            if ($now->sub($this->min) < $date) {
-                return $date;
-            }
-
-            if ($this->max !== null && $date < $now->sub($this->max)) {
-                return $date;
+        foreach ($this->constraints as $constraint) {
+            if (!$constraint->test($date)) {
+                return $constraint;
             }
         }
 
@@ -125,23 +116,25 @@ final class Change implements RuleInterface
     }
 
     /**
+     * @param Date $constraint Constraint that is violated.
+     * @param DateTimeInterface $date Date that violates the constraint.
      * @return string Message explaining the violation.
      */
-    private function getMessage(): string
+    private function getMessage(Date $constraint, DateTimeInterface $date): string
     {
         $translator = Policy::getTranslator();
         $locale = $translator->getLocale();
 
-        $min = CarbonInterval::instance($this->min);
+        $min = CarbonInterval::instance($constraint->getMin());
         $min->locale($locale);
-        if ($this->max === null) {
+        if ($constraint->getMax() === null) {
             $max = null;
         } else {
-            $max = CarbonInterval::instance($this->max);
+            $max = CarbonInterval::instance($constraint->getMax());
             $max->locale($locale);
         }
 
-        if ($this->max === null) {
+        if ($constraint->getMax() === null) {
             return $translator->trans(
                 'Must be at least %interval% between password changes.',
                 ['%interval%' => $min]
@@ -155,7 +148,7 @@ final class Change implements RuleInterface
             );
         }
 
-        if (Interval::compare($this->min, $this->max) === 0) {
+        if (Interval::compare($constraint->getMin(), $constraint->getMax()) === 0) {
             return $translator->trans(
                 'Must be exactly %interval% between password changes.',
                 ['%interval%' => $min]

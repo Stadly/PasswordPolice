@@ -113,27 +113,31 @@ final class ChangeTest extends TestCase
     }
 
     /**
-     * @covers ::getMin
+     * @covers ::addConstraint
      */
-    public function testCanGetMinConstraint(): void
+    public function testCanAddConstraint(): void
     {
-        $min = new DateInterval('P5D');
-        $max = new DateInterval('P10D');
-        $rule = new Change($min, $max);
+        $rule = new Change(new DateInterval('P5D'), new DateInterval('P5D'), 1);
+        $rule->addConstraint(new DateInterval('P10D'), new DateInterval('P10D'), 1);
 
-        self::assertSame($min, $rule->getMin());
+        // Force generation of code coverage
+        $ruleConstruct = new Change(new DateInterval('P5D'), new DateInterval('P5D'), 1);
+        $ruleConstruct->addConstraint(new DateInterval('P10D'), new DateInterval('P10D'), 1);
+        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
-     * @covers ::getMax
+     * @covers ::addConstraint
      */
-    public function testCanGetMaxConstraint(): void
+    public function testConstraintsAreOrdered(): void
     {
-        $min = new DateInterval('P5D');
-        $max = new DateInterval('P10D');
-        $rule = new Change($min, $max);
+        $rule = new Change(new DateInterval('P5D'), new DateInterval('P5D'), 1);
+        $rule->addConstraint(new DateInterval('P10D'), new DateInterval('P10D'), 2);
 
-        self::assertSame($max, $rule->getMax());
+        // Force generation of code coverage
+        $ruleConstruct = new Change(new DateInterval('P10D'), new DateInterval('P10D'), 2);
+        $ruleConstruct->addConstraint(new DateInterval('P5D'), new DateInterval('P5D'), 1);
+        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**

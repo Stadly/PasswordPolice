@@ -16,6 +16,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Symbol rules can have multiple constraints.
 - Character class rules can have multiple constraints.
 - Have I Been Pwned? rules can have multiple constraints.
+- Password change rules can have multiple constraints.
 
 ### Changed
 - Minimum constraint of password change rule is never null.
