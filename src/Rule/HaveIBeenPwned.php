@@ -11,19 +11,16 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use RuntimeException;
+use StableSort\StableSort;
+use Stadly\PasswordPolice\Constraint\Count;
 use Stadly\PasswordPolice\Policy;
 
 final class HaveIBeenPwned implements RuleInterface
 {
     /**
-     * @var int Minimum number of appearances in breaches.
+     * @var Count[] Rule constraints.
      */
-    private $min;
-
-    /**
-     * @var int|null Maximum number of appearances in breaches.
-     */
-    private $max;
+    private $constraints;
 
     /**
      * @var ClientInterface|null HTTP client for sending requests.
@@ -38,18 +35,28 @@ final class HaveIBeenPwned implements RuleInterface
     /**
      * @param int|null $max Maximum number of appearances in breaches.
      * @param int $min Minimum number of appearances in breaches.
+     * @param int $weight Constraint weight.
      */
-    public function __construct(?int $max = 0, int $min = 0)
+    public function __construct(?int $max = 0, int $min = 0, int $weight = 1)
     {
-        if ($min < 0) {
-            throw new InvalidArgumentException('Min cannot be negative.');
-        }
-        if ($max !== null && $max < $min) {
-            throw new InvalidArgumentException('Max cannot be smaller than min.');
-        }
+        $this->addConstraint($max, $min, $weight);
+    }
 
-        $this->min = $min;
-        $this->max = $max;
+    /**
+     * @param int|null $max Maximum number of appearances in breaches.
+     * @param int $min Minimum number of appearances in breaches.
+     * @param int $weight Constraint weight.
+     * @return $this
+     */
+    public function addConstraint(?int $max = 0, int $min = 0, int $weight = 1): self
+    {
+        $this->constraints[] = new Count($min, $max, $weight);
+
+        StableSort::usort($this->constraints, function (Count $a, Count $b): int {
+            return $b->getWeight() <=> $a->getWeight();
+        });
+
+        return $this;
     }
 
     /**
@@ -94,29 +101,14 @@ final class HaveIBeenPwned implements RuleInterface
     }
 
     /**
-     * @return int Minimum number of appearances in breaches.
-     */
-    public function getMin(): int
-    {
-        return $this->min;
-    }
-
-    /**
-     * @return int|null Maximum number of appearances in breaches.
-     */
-    public function getMax(): ?int
-    {
-        return $this->max;
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function test($password): bool
     {
-        $count = $this->getNoncompliantCount((string)$password);
+        $count = $this->getCount((string)$password);
+        $constraint = $this->getViolation($count);
 
-        return $count === null;
+        return $constraint === null;
     }
 
     /**
@@ -124,28 +116,24 @@ final class HaveIBeenPwned implements RuleInterface
      */
     public function enforce($password): void
     {
-        $count = $this->getNoncompliantCount((string)$password);
+        $count = $this->getCount((string)$password);
+        $constraint = $this->getViolation($count);
 
-        if ($count !== null) {
-            throw new RuleException($this, $this->getMessage());
+        if ($constraint !== null) {
+            throw new RuleException($this, $this->getMessage($constraint, $count));
         }
     }
 
     /**
-     * @param string $password Password to count appearances in breaches for.
-     * @return int Number of appearances in breaches if not in compliance with the rule.
-     * @throws TestException If an error occurred while using the Have I Been Pwned? service.
+     * @param int $count Number of appearances in breaches.
+     * @return Count|null Constraint violated by the count.
      */
-    private function getNoncompliantCount(string $password): ?int
+    private function getViolation(int $count): ?Count
     {
-        $count = $this->getCount($password);
-
-        if ($count < $this->min) {
-            return $count;
-        }
-
-        if (null !== $this->max && $this->max < $count) {
-            return $count;
+        foreach ($this->constraints as $constraint) {
+            if (!$constraint->test($count)) {
+                return $constraint;
+            }
         }
 
         return null;
@@ -188,45 +176,47 @@ final class HaveIBeenPwned implements RuleInterface
     }
 
     /**
+     * @param Count $constraint Constraint that is violated.
+     * @param int $count Count that violates the constraint.
      * @return string Message explaining the violation.
      */
-    private function getMessage(): string
+    private function getMessage(Count $constraint, int $count): string
     {
         $translator = Policy::getTranslator();
 
-        if ($this->max === null) {
+        if ($constraint->getMax() === null) {
             return $translator->trans(
                 'Must appear at least once in breaches.|'.
                 'Must appear at least %count% times in breaches.',
-                ['%count%' => $this->min]
+                ['%count%' => $constraint->getMin()]
             );
         }
 
-        if ($this->max === 0) {
+        if ($constraint->getMax() === 0) {
             return $translator->trans(
                 'Must not appear in any breaches.'
             );
         }
 
-        if ($this->min === 0) {
+        if ($constraint->getMin() === 0) {
             return $translator->trans(
                 'Must appear at most once in breaches.|'.
                 'Must appear at most %count% times in breaches.',
-                ['%count%' => $this->max]
+                ['%count%' => $constraint->getMax()]
             );
         }
 
-        if ($this->min === $this->max) {
+        if ($constraint->getMin() === $constraint->getMax()) {
             return $translator->trans(
                 'Must appear exactly once in breaches.|'.
                 'Must appear exactly %count% times in breaches.',
-                ['%count%' => $this->min]
+                ['%count%' => $constraint->getMin()]
             );
         }
 
         return $translator->trans(
             'Must appear between %min% and %max% times in breaches.',
-            ['%min%' => $this->min, '%max%' => $this->max]
+            ['%min%' => $constraint->getMin(), '%max%' => $constraint->getMax()]
         );
     }
 }
