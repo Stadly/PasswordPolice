@@ -50,6 +50,23 @@ final class Leetspeak implements WordConverterInterface
     }
 
     /**
+     * @param string $word Word to get decode map for.
+     * @return array<string, string[]> Map for decoding the word prefix.
+     */
+    private function getDecodeMap(string $word): array
+    {
+        $decodeMap = [];
+        foreach ($this->decodeMap as $encodedChar => $chars) {
+            if ((string)$encodedChar === mb_substr($word, 0, mb_strlen((string)$encodedChar))) {
+                $decodeMap[$encodedChar] = $chars;
+            }
+        }
+        $decodeMap[mb_substr($word, 0, 1)][] = mb_substr($word, 0, 1);
+
+        return $decodeMap;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function convert(string $word): Traversable
@@ -59,15 +76,7 @@ final class Leetspeak implements WordConverterInterface
             return;
         }
 
-        $decodeMap = [];
-        foreach ($this->decodeMap as $encodedChar => $chars) {
-            if ((string)$encodedChar === mb_substr($word, 0, mb_strlen((string)$encodedChar))) {
-                $decodeMap[$encodedChar] = $chars;
-            }
-        }
-        $decodeMap[mb_substr($word, 0, 1)][] = mb_substr($word, 0, 1);
-
-        foreach ($decodeMap as $encodedChar => $chars) {
+        foreach ($this->getDecodeMap($word) as $encodedChar => $chars) {
             foreach ($this->convert(mb_substr($word, mb_strlen((string)$encodedChar))) as $suffix) {
                 foreach ($chars as $char) {
                     yield $char.$suffix;
