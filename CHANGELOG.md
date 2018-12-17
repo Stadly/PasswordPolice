@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Constraint for counts in rules.
+- Constraint for dates in rules.
 - Upper case rules can have multiple constraints.
 - Lower case rules can have multiple constraints.
 - Password length rules can have multiple constraints.
