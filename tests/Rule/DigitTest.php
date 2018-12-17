@@ -95,23 +95,31 @@ final class DigitTest extends TestCase
     }
 
     /**
-     * @covers ::getMin
+     * @covers ::addConstraint
      */
-    public function testCanGetMinConstraint(): void
+    public function testCanAddConstraint(): void
     {
-        $rule = new Digit(5, 10);
+        $rule = new Digit(5, 5, 1);
+        $rule->addConstraint(10, 10, 1);
 
-        self::assertSame(5, $rule->getMin());
+        // Force generation of code coverage
+        $ruleConstruct = new Digit(5, 5, 1);
+        $ruleConstruct->addConstraint(10, 10, 1);
+        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
-     * @covers ::getMax
+     * @covers ::addConstraint
      */
-    public function testCanGetMaxConstraint(): void
+    public function testConstraintsAreOrdered(): void
     {
-        $rule = new Digit(5, 10);
+        $rule = new Digit(5, 5, 1);
+        $rule->addConstraint(10, 10, 2);
 
-        self::assertSame(10, $rule->getMax());
+        // Force generation of code coverage
+        $ruleConstruct = new Digit(10, 10, 2);
+        $ruleConstruct->addConstraint(5, 5, 1);
+        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**

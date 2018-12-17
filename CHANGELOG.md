@@ -11,6 +11,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Upper case rules can have multiple constraints.
 - Lower case rules can have multiple constraints.
 - Password length rules can have multiple constraints.
+- Digit rules can have multiple constraints.
+- Symbol rules can have multiple constraints.
+- Character class rules can have multiple constraints.
 
 ### Changed
 - Minimum constraint of password change rule is never null.

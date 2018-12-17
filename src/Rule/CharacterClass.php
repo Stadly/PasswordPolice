@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
+use StableSort\StableSort;
+use Stadly\PasswordPolice\Constraint\Count;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 
@@ -16,35 +18,41 @@ abstract class CharacterClass implements RuleInterface
     protected $characters;
 
     /**
-     * @var int Minimum number of characters matching the rule.
+     * @var Count[] Rule constraints.
      */
-    protected $min;
-
-    /**
-     * @var int|null Maximum number of characters matching the rule.
-     */
-    protected $max;
+    private $constraints;
 
     /**
      * @param string $characters Characters matched by the rule.
      * @param int $min Minimum number of characters matching the rule.
      * @param int|null $max Maximum number of characters matching the rule.
+     * @param int $weight Constraint weight.
      */
-    public function __construct(string $characters, int $min = 1, ?int $max = null)
+    public function __construct(string $characters, int $min = 1, ?int $max = null, int $weight = 1)
     {
         if ($characters === '') {
             throw new InvalidArgumentException('At least one character must be specified.');
         }
-        if ($min < 0) {
-            throw new InvalidArgumentException('Min cannot be negative.');
-        }
-        if ($max !== null && $max < $min) {
-            throw new InvalidArgumentException('Max cannot be smaller than min.');
-        }
 
         $this->characters = $characters;
-        $this->min = $min;
-        $this->max = $max;
+        $this->addConstraint($min, $max, $weight);
+    }
+
+    /**
+     * @param int $min Minimum number of characters matching the rule.
+     * @param int|null $max Maximum number of characters matching the rule.
+     * @param int $weight Constraint weight.
+     * @return $this
+     */
+    public function addConstraint(int $min = 1, ?int $max = null, int $weight = 1): self
+    {
+        $this->constraints[] = new Count($min, $max, $weight);
+
+        StableSort::usort($this->constraints, function (Count $a, Count $b): int {
+            return $b->getWeight() <=> $a->getWeight();
+        });
+
+        return $this;
     }
 
     /**
@@ -56,22 +64,6 @@ abstract class CharacterClass implements RuleInterface
     }
 
     /**
-     * @return int Minimum number of characters matching the rule.
-     */
-    public function getMin(): int
-    {
-        return $this->min;
-    }
-
-    /**
-     * @return int|null Maximum number of characters matching the rule.
-     */
-    public function getMax(): ?int
-    {
-        return $this->max;
-    }
-
-    /**
      * Check whether a password is in compliance with the rule.
      *
      * @param Password|string $password Password to check.
@@ -79,9 +71,10 @@ abstract class CharacterClass implements RuleInterface
      */
     public function test($password): bool
     {
-        $count = $this->getNoncompliantCount((string)$password);
+        $count = $this->getCount((string)$password);
+        $constraint = $this->getViolation($count);
 
-        return $count === null;
+        return $constraint === null;
     }
 
     /**
@@ -92,27 +85,24 @@ abstract class CharacterClass implements RuleInterface
      */
     public function enforce($password): void
     {
-        $count = $this->getNoncompliantCount((string)$password);
+        $count = $this->getCount((string)$password);
+        $constraint = $this->getViolation($count);
 
-        if ($count !== null) {
-            throw new RuleException($this, $this->getMessage());
+        if ($constraint !== null) {
+            throw new RuleException($this, $this->getMessage($constraint, $count));
         }
     }
 
     /**
-     * @param string $password Password to count characters in.
-     * @return int Number of characters matching the rule if not in compliance with the rule.
+     * @param int $count Number of characters matching the rule.
+     * @return Count|null Constraint violated by the count.
      */
-    private function getNoncompliantCount(string $password): ?int
+    private function getViolation(int $count): ?Count
     {
-        $count = $this->getCount($password);
-
-        if ($count < $this->min) {
-            return $count;
-        }
-
-        if (null !== $this->max && $this->max < $count) {
-            return $count;
+        foreach ($this->constraints as $constraint) {
+            if (!$constraint->test($count)) {
+                return $constraint;
+            }
         }
 
         return null;
@@ -132,7 +122,9 @@ abstract class CharacterClass implements RuleInterface
     }
 
     /**
+     * @param Count $constraint Constraint that is violated.
+     * @param int $count Count that violates the constraint.
      * @return string Message explaining the violation.
      */
-    abstract protected function getMessage(): string;
+    abstract protected function getMessage(Count $constraint, int $count): string;
 }

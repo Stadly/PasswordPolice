@@ -115,23 +115,31 @@ final class CharacterClassTest extends TestCase
     }
 
     /**
-     * @covers ::getMin
+     * @covers ::addConstraint
      */
-    public function testCanGetMinConstraint(): void
+    public function testCanAddConstraint(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 5, 10]);
+        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 5, 5, 1]);
+        $rule->addConstraint(10, 10, 1);
 
-        self::assertSame(5, $rule->getMin());
+        // Force generation of code coverage
+        $ruleConstruct = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 5, 5, 1]);
+        $ruleConstruct->addConstraint(10, 10, 1);
+        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
-     * @covers ::getMax
+     * @covers ::addConstraint
      */
-    public function testCanGetMaxConstraint(): void
+    public function testConstraintsAreOrdered(): void
     {
-        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 5, 10]);
+        $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 5, 5, 1]);
+        $rule->addConstraint(10, 10, 2);
 
-        self::assertSame(10, $rule->getMax());
+        // Force generation of code coverage
+        $ruleConstruct = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 10, 10, 2]);
+        $ruleConstruct->addConstraint(5, 5, 1);
+        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**

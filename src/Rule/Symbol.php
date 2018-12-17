@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
+use Stadly\PasswordPolice\Constraint\Count;
 use Stadly\PasswordPolice\Policy;
 
 final class Symbol extends CharacterClass
@@ -11,45 +12,45 @@ final class Symbol extends CharacterClass
     /**
      * {@inheritDoc}
      */
-    protected function getMessage(): string
+    protected function getMessage(Count $constraint, int $count): string
     {
         $translator = Policy::getTranslator();
 
-        if ($this->max === null) {
+        if ($constraint->getMax() === null) {
             return $translator->trans(
                 'There must be at least one symbol (%characters%).|'.
                 'There must be at least %count% symbols (%characters%).',
                 [
-                    '%count%' => $this->min,
+                    '%count%' => $constraint->getMin(),
                     '%characters%' => $this->characters,
                 ]
             );
         }
 
-        if ($this->max === 0) {
+        if ($constraint->getMax() === 0) {
             return $translator->trans(
                 'There must be no symbols (%characters%).',
                 ['%characters%' => $this->characters]
             );
         }
 
-        if ($this->min === 0) {
+        if ($constraint->getMin() === 0) {
             return $translator->trans(
                 'There must be at most one symbol (%characters%).|'.
                 'There must be at most %count% symbols (%characters%).',
                 [
-                    '%count%' => $this->max,
+                    '%count%' => $constraint->getMax(),
                     '%characters%' => $this->characters,
                 ]
             );
         }
 
-        if ($this->min === $this->max) {
+        if ($constraint->getMin() === $constraint->getMax()) {
             return $translator->trans(
                 'There must be exactly one symbol (%characters%).|'.
                 'There must be exactly %count% symbols (%characters%).',
                 [
-                    '%count%' => $this->min,
+                    '%count%' => $constraint->getMin(),
                     '%characters%' => $this->characters,
                 ]
             );
@@ -58,8 +59,8 @@ final class Symbol extends CharacterClass
         return $translator->trans(
             'There must be between %min% and %max% symbols (%characters%).',
             [
-                '%min%' => $this->min,
-                '%max%' => $this->max,
+                '%min%' => $constraint->getMin(),
+                '%max%' => $constraint->getMax(),
                 '%characters%' => $this->characters,
             ]
         );
