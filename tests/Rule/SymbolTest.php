@@ -73,11 +73,13 @@ final class SymbolTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructUnconstrainedRule(): void
+    public function testCanConstructUnconstrainedRule(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-
         $rule = new Symbol('$%&@!', 0, null);
+
+        // Force generation of code coverage
+        $ruleConstruct = new Symbol('$%&@!', 0, null);
+        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**

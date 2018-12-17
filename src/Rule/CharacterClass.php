@@ -41,9 +41,6 @@ abstract class CharacterClass implements RuleInterface
         if ($max !== null && $max < $min) {
             throw new InvalidArgumentException('Max cannot be smaller than min.');
         }
-        if ($min === 0 && $max === null) {
-            throw new InvalidArgumentException('Min cannot be zero when max is unconstrained.');
-        }
 
         $this->characters = $characters;
         $this->min = $min;

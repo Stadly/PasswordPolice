@@ -91,11 +91,13 @@ final class ChangeTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructUnconstrainedRule(): void
+    public function testCanConstructUnconstrainedRule(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-
         $rule = new Change(new DateInterval('PT0S'), null);
+
+        // Force generation of code coverage
+        $ruleConstruct = new Change(new DateInterval('PT0S'), null);
+        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**

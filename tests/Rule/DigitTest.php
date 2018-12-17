@@ -73,11 +73,13 @@ final class DigitTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructUnconstrainedRule(): void
+    public function testCanConstructUnconstrainedRule(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-
         $rule = new Digit(0, null);
+
+        // Force generation of code coverage
+        $ruleConstruct = new Digit(0, null);
+        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**

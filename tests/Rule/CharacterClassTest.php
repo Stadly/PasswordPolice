@@ -73,11 +73,13 @@ final class CharacterClassTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructUnconstrainedRule(): void
+    public function testCanConstructUnconstrainedRule(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-
         $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 0, null]);
+
+        // Force generation of code coverage
+        $ruleConstruct = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 0, null]);
+        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**

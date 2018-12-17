@@ -92,11 +92,13 @@ final class HaveIBeenPwnedTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructUnconstrainedRule(): void
+    public function testCanConstructUnconstrainedRule(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-
         $rule = new HaveIBeenPwned(null, 0);
+
+        // Force generation of code coverage
+        $ruleConstruct = new HaveIBeenPwned(null, 0);
+        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**

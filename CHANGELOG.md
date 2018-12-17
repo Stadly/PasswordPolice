@@ -12,6 +12,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
 - Minimum constraint of password change rule is never null.
 - Password change rule cannot be constructed with null minimum constraint.
+- Possible to construct unconstrained rules.
 
 ### Fixed
 - Nothing

@@ -37,9 +37,6 @@ final class Change implements RuleInterface
         if ($max !== null && 0 < Interval::compare($min, $max)) {
             throw new InvalidArgumentException('Max cannot be smaller than min.');
         }
-        if (0 === Interval::compare(new DateInterval('PT0S'), $min) && $max === null) {
-            throw new InvalidArgumentException('Min cannot be zero when max is unconstrained.');
-        }
 
         $this->min = $min;
         $this->max = $max;
