@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - Constraint for counts in rules.
 - Upper case rules can have multiple constraints.
+- Lower case rules can have multiple constraints.
 
 ### Changed
 - Minimum constraint of password change rule is never null.

@@ -5,52 +5,43 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
+use StableSort\StableSort;
+use Stadly\PasswordPolice\Constraint\Count;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 
 final class LowerCase implements RuleInterface
 {
     /**
-     * @var int Minimum number of lower case letters.
+     * @var Count[] Rule constraints.
      */
-    private $min;
-
-    /**
-     * @var int|null Maximum number of lower case letters.
-     */
-    private $max;
+    private $constraints;
 
     /**
      * @param int $min Minimum number of lower case letters.
      * @param int|null $max Maximum number of lower case letters.
+     * @param int $weight Constraint weight.
      */
-    public function __construct(int $min = 1, ?int $max = null)
+    public function __construct(int $min = 1, ?int $max = null, int $weight = 1)
     {
-        if ($min < 0) {
-            throw new InvalidArgumentException('Min cannot be negative.');
-        }
-        if ($max !== null && $max < $min) {
-            throw new InvalidArgumentException('Max cannot be smaller than min.');
-        }
-
-        $this->min = $min;
-        $this->max = $max;
+        $this->addConstraint($min, $max, $weight);
     }
 
     /**
-     * @return int Minimum number of lower case letters.
+     * @param int $min Minimum number of lower case letters.
+     * @param int|null $max Maximum number of lower case letters.
+     * @param int $weight Constraint weight.
+     * @return $this
      */
-    public function getMin(): int
+    public function addConstraint(int $min = 1, ?int $max = null, int $weight = 1): self
     {
-        return $this->min;
-    }
+        $this->constraints[] = new Count($min, $max, $weight);
 
-    /**
-     * @return int|null Maximum number of lower case letters.
-     */
-    public function getMax(): ?int
-    {
-        return $this->max;
+        StableSort::usort($this->constraints, function (Count $a, Count $b): int {
+            return $b->getWeight() <=> $a->getWeight();
+        });
+
+        return $this;
     }
 
     /**
@@ -61,9 +52,10 @@ final class LowerCase implements RuleInterface
      */
     public function test($password): bool
     {
-        $count = $this->getNoncompliantCount((string)$password);
+        $count = $this->getCount((string)$password);
+        $constraint = $this->getViolation($count);
 
-        return $count === null;
+        return $constraint === null;
     }
 
     /**
@@ -74,27 +66,24 @@ final class LowerCase implements RuleInterface
      */
     public function enforce($password): void
     {
-        $count = $this->getNoncompliantCount((string)$password);
+        $count = $this->getCount((string)$password);
+        $constraint = $this->getViolation($count);
 
-        if ($count !== null) {
-            throw new RuleException($this, $this->getMessage());
+        if ($constraint !== null) {
+            throw new RuleException($this, $this->getMessage($constraint, $count));
         }
     }
 
     /**
-     * @param string $password Password to count characters in.
-     * @return int Number of lower case characters if not in compliance with the rule.
+     * @param int $count Number of lower case characters.
+     * @return Count|null Constraint violated by the count.
      */
-    private function getNoncompliantCount(string $password): ?int
+    private function getViolation(int $count): ?Count
     {
-        $count = $this->getCount($password);
-
-        if ($count < $this->min) {
-            return $count;
-        }
-
-        if (null !== $this->max && $this->max < $count) {
-            return $count;
+        foreach ($this->constraints as $constraint) {
+            if (!$constraint->test($count)) {
+                return $constraint;
+            }
         }
 
         return null;
@@ -135,45 +124,47 @@ final class LowerCase implements RuleInterface
     }
 
     /**
+     * @param Count $constraint Constraint that is violated.
+     * @param int $count Count that violates the constraint.
      * @return string Message explaining the violation.
      */
-    private function getMessage(): string
+    private function getMessage(Count $constraint, int $count): string
     {
         $translator = Policy::getTranslator();
 
-        if ($this->max === null) {
+        if ($constraint->getMax() === null) {
             return $translator->trans(
                 'There must be at least one lower case character.|'.
                 'There must be at least %count% lower case characters.',
-                ['%count%' => $this->min]
+                ['%count%' => $constraint->getMin()]
             );
         }
 
-        if ($this->max === 0) {
+        if ($constraint->getMax() === 0) {
             return $translator->trans(
                 'There must be no lower case characters.'
             );
         }
 
-        if ($this->min === 0) {
+        if ($constraint->getMin() === 0) {
             return $translator->trans(
                 'There must be at most one lower case character.|'.
                 'There must be at most %count% lower case characters.',
-                ['%count%' => $this->max]
+                ['%count%' => $constraint->getMax()]
             );
         }
 
-        if ($this->min === $this->max) {
+        if ($constraint->getMin() === $constraint->getMax()) {
             return $translator->trans(
                 'There must be exactly one lower case character.|'.
                 'There must be exactly %count% lower case characters.',
-                ['%count%' => $this->min]
+                ['%count%' => $constraint->getMin()]
             );
         }
 
         return $translator->trans(
             'There must be between %min% and %max% lower case characters.',
-            ['%min%' => $this->min, '%max%' => $this->max]
+            ['%min%' => $constraint->getMin(), '%max%' => $constraint->getMax()]
         );
     }
 }
