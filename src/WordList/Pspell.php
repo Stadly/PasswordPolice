@@ -63,6 +63,8 @@ final class Pspell implements WordListInterface
             restore_error_handler();
         }
 
+        assert($pspell !== false);
+
         return new self($pspell, ...$wordConverters);
     }
 

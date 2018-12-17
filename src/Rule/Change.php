@@ -118,9 +118,7 @@ final class Change implements RuleInterface
             $formerPasswords = $password->getFormerPasswords();
 
             if ($formerPasswords !== []) {
-                $formerPassword = reset($formerPasswords);
-                assert($formerPassword !== false);
-                return $formerPassword->getDate();
+                return reset($formerPasswords)->getDate();
             }
         }
         return null;
@@ -134,8 +132,14 @@ final class Change implements RuleInterface
         $translator = Policy::getTranslator();
         $locale = $translator->getLocale();
 
-        $min = CarbonInterval::instance($this->min)->locale($locale);
-        $max = $this->max === null ? null : CarbonInterval::instance($this->max)->locale($locale);
+        $min = CarbonInterval::instance($this->min);
+        $min->locale($locale);
+        if ($this->max === null) {
+            $max = null;
+        } else {
+            $max = CarbonInterval::instance($this->max);
+            $max->locale($locale);
+        }
 
         if ($this->max === null) {
             return $translator->trans(

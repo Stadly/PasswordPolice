@@ -65,7 +65,7 @@
     "require-dev": {
         "jakub-onderka/php-parallel-lint": "^1.0",
         "pepakriz/phpstan-exception-rules": "^0.3.0",
-        "phpstan/phpstan": "^0.10.4",
+        "phpstan/phpstan": "dev-master as 0.10",
         "phpstan/phpstan-deprecation-rules": "^0.10.0",
         "phpstan/phpstan-phpunit": "^0.10.0",
         "phpstan/phpstan-strict-rules": "^0.10.0",
