@@ -49,10 +49,10 @@ final class ChangeTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = new Change(null, new DateInterval('P10D'));
+        $rule = new Change(new DateInterval('PT0S'), new DateInterval('P10D'));
 
         // Force generation of code coverage
-        $ruleConstruct = new Change(null, new DateInterval('P10D'));
+        $ruleConstruct = new Change(new DateInterval('PT0S'), new DateInterval('P10D'));
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -95,7 +95,7 @@ final class ChangeTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new Change(null, null);
+        $rule = new Change(new DateInterval('PT0S'), null);
     }
 
     /**
@@ -169,7 +169,7 @@ final class ChangeTest extends TestCase
      */
     public function testMaxConstraintCanBeSatisfied(): void
     {
-        $rule = new Change(null, new DateInterval('P10D'));
+        $rule = new Change(new DateInterval('PT0S'), new DateInterval('P10D'));
 
         self::assertTrue($rule->test($this->password));
     }
@@ -179,7 +179,7 @@ final class ChangeTest extends TestCase
      */
     public function testMaxConstraintCanBeUnsatisfied(): void
     {
-        $rule = new Change(null, new DateInterval('P5D'));
+        $rule = new Change(new DateInterval('PT0S'), new DateInterval('P5D'));
 
         self::assertFalse($rule->test($this->password));
     }
@@ -225,7 +225,7 @@ final class ChangeTest extends TestCase
      */
     public function testCanGetMessageForRuleWithMaxConstraint(): void
     {
-        $rule = new Change(null, new DateInterval('P2M'));
+        $rule = new Change(new DateInterval('PT0S'), new DateInterval('P2M'));
 
         self::assertSame('Must be at most 2 months between password changes.', $rule->getMessage());
     }

@@ -26,15 +26,11 @@ final class Change implements RuleInterface
     private $max;
 
     /**
-     * @param DateInterval|null $min Minimum time between password changes.
+     * @param DateInterval $min Minimum time between password changes.
      * @param DateInterval|null $max Maximum time between password changes.
      */
-    public function __construct(?DateInterval $min, ?DateInterval $max = null)
+    public function __construct(DateInterval $min, ?DateInterval $max = null)
     {
-        if ($min === null) {
-            $min = new DateInterval('PT0S');
-        }
-
         if (0 < Interval::compare(new DateInterval('PT0S'), $min)) {
             throw new InvalidArgumentException('Min cannot be negative.');
         }
