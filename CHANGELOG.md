@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.10.0...HEAD)
 
 ### Added
-- Nothing
+- Constraint for counts in rules.
 
 ### Changed
 - Minimum constraint of password change rule is never null.
