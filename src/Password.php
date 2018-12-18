@@ -76,7 +76,7 @@ final class Password
     /**
      * @param FormerPassword... $formerPasswords Former passwords.
      */
-    public function addFormerPasswords(... $formerPasswords): void
+    public function addFormerPasswords(FormerPassword... $formerPasswords): void
     {
         $this->formerPasswords = array_merge($this->formerPasswords, $formerPasswords);
 
