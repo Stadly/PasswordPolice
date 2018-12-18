@@ -39,18 +39,25 @@ final class Dictionary implements RuleInterface
     private $wordConverters;
 
     /**
+     * @var int Constraint weight.
+     */
+    private $weight;
+
+    /**
      * @param WordListInterface $wordList Word list for the dictionary.
      * @param int $minWordLength Ignore words shorter than this.
      * @param int|null $maxWordLength Ignore words longer than this.
      * @param bool $checkSubstrings Check all substrings of the password, not just the whole password.
      * @param WordConverterInterface[] $wordConverters Word converters.
+     * @param int $weight Constraint weight.
      */
     public function __construct(
         WordListInterface $wordList,
         int $minWordLength = 3,
         ?int $maxWordLength = 25,
         bool $checkSubstrings = true,
-        array $wordConverters = []
+        array $wordConverters = [],
+        int $weight = 1
     ) {
         if ($minWordLength < 1) {
             throw new InvalidArgumentException('Minimum word length must be positive.');
@@ -64,6 +71,7 @@ final class Dictionary implements RuleInterface
         $this->maxWordLength = $maxWordLength;
         $this->checkSubstrings = $checkSubstrings;
         $this->wordConverters = $wordConverters;
+        $this->weight = $weight;
     }
 
     /**
@@ -108,7 +116,7 @@ final class Dictionary implements RuleInterface
         $word = $this->getDictionaryWord((string)$password);
 
         if ($word !== null) {
-            throw new RuleException($this, $this->getMessage());
+            throw new RuleException($this, $this->getMessage($word));
         }
     }
 
@@ -217,9 +225,10 @@ final class Dictionary implements RuleInterface
     }
 
     /**
+     * @param string $word Word that violates the constraint.
      * @return string Message explaining the violation.
      */
-    private function getMessage(): string
+    private function getMessage(string $word): string
     {
         $translator = Policy::getTranslator();
 
