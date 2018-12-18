@@ -62,11 +62,18 @@ final class GuessableData implements RuleInterface
     private $wordConverters;
 
     /**
-     * @param WordConverterInterface[] $wordConverters Word converters.
+     * @var int Constraint weight.
      */
-    public function __construct(array $wordConverters = [])
+    private $weight;
+
+    /**
+     * @param WordConverterInterface[] $wordConverters Word converters.
+     * @param int $weight Constraint weight.
+     */
+    public function __construct(array $wordConverters = [], int $weight = 1)
     {
         $this->wordConverters = $wordConverters;
+        $this->weight = $weight;
     }
 
     /**
@@ -93,7 +100,7 @@ final class GuessableData implements RuleInterface
         $data = $this->getGuessableData($password);
 
         if ($data !== null) {
-            throw new RuleException($this, $this->getMessage());
+            throw new RuleException($this, $this->getMessage($data));
         }
     }
 
@@ -200,9 +207,10 @@ final class GuessableData implements RuleInterface
     }
 
     /**
+     * @param string|DateTimeInterface $data Data that violates the constraint.
      * @return string Message explaining the violation.
      */
-    private function getMessage(): string
+    private function getMessage($data): string
     {
         $translator = Policy::getTranslator();
 
