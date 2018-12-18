@@ -26,6 +26,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Possible to construct unconstrained rules.
 - Not possible to get message from rule.
 - The first-constraint of reuse rules is 0-indexed instead of 1-indexed.
+- Guessable data constructor is no longer variadic, but takes an array of word converters instead.
 
 ### Fixed
 - Nothing

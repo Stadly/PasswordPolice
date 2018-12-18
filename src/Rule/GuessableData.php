@@ -62,9 +62,9 @@ final class GuessableData implements RuleInterface
     private $wordConverters;
 
     /**
-     * @param WordConverterInterface... $wordConverters Word converters.
+     * @param WordConverterInterface[] $wordConverters Word converters.
      */
-    public function __construct(WordConverterInterface... $wordConverters)
+    public function __construct(array $wordConverters = [])
     {
         $this->wordConverters = $wordConverters;
     }
