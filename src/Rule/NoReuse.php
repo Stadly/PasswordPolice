@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
+use StableSort\StableSort;
+use Stadly\PasswordPolice\Constraint\Position;
 use Stadly\PasswordPolice\FormerPassword;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
@@ -18,31 +20,41 @@ final class NoReuse implements RuleInterface
     private $hashFunction;
 
     /**
-     * @var int First former password to consider.
+     * @var Position[] Rule constraints.
      */
-    private $first;
+    private $constraints;
 
     /**
-     * @var int|null Number of former passwords to consider.
+     * @param HashFunctionInterface $hashFunction Hash function to use when comparing passwords.
+     * @param int|null $count Number of former passwords to consider.
+     * @param int $first First former password to consider.
+     * @param int $weight Constraint weight.
      */
-    private $count;
+    public function __construct(
+        HashFunctionInterface $hashFunction,
+        ?int $count = null,
+        int $first = 0,
+        int $weight = 1
+    ) {
+        $this->hashFunction = $hashFunction;
+        $this->addConstraint($count, $first, $weight);
+    }
 
     /**
      * @param int|null $count Number of former passwords to consider.
      * @param int $first First former password to consider.
+     * @param int $weight Constraint weight.
+     * @return $this
      */
-    public function __construct(HashFunctionInterface $hashFunction, ?int $count = null, int $first = 1)
+    public function addConstraint(?int $count = null, int $first = 0, int $weight = 1): self
     {
-        if ($first < 1) {
-            throw new InvalidArgumentException('First must be positive.');
-        }
-        if ($count !== null && $count < 1) {
-            throw new InvalidArgumentException('Count must be positive.');
-        }
+        $this->constraints[] = new Position($first, $count, $weight);
 
-        $this->hashFunction = $hashFunction;
-        $this->first = $first;
-        $this->count = $count;
+        StableSort::usort($this->constraints, function (Position $a, Position $b): int {
+            return $b->getWeight() <=> $a->getWeight();
+        });
+
+        return $this;
     }
 
     /**
@@ -54,22 +66,6 @@ final class NoReuse implements RuleInterface
     }
 
     /**
-     * @return int First former password to consider.
-     */
-    public function getFirst(): int
-    {
-        return $this->first;
-    }
-
-    /**
-     * @return int|null Number of former passwords to consider.
-     */
-    public function getCount(): ?int
-    {
-        return $this->count;
-    }
-
-    /**
      * Check whether a password is in compliance with the rule.
      *
      * @param Password|string $password Password to check.
@@ -77,9 +73,10 @@ final class NoReuse implements RuleInterface
      */
     public function test($password): bool
     {
-        $formerPassword = $this->getFormerPassword($password);
+        $positions = $this->getPositions($password);
+        $constraint = $this->getViolation(...$positions);
 
-        return $formerPassword === null;
+        return $constraint === null;
     }
 
     /**
@@ -90,41 +87,56 @@ final class NoReuse implements RuleInterface
      */
     public function enforce($password): void
     {
-        $formerPassword = $this->getFormerPassword($password);
+        $positions = $this->getPositions($password);
+        $constraint = $this->getViolation(...$positions);
 
-        if ($formerPassword !== null) {
-            throw new RuleException($this, $this->getMessage());
+        if ($constraint !== null) {
+            throw new RuleException($this, $this->getMessage($constraint));
         }
     }
 
     /**
-     * @param Password|string $password Password to compare with former passwords.
-     * @return FormerPassword|null Former password matching the password.
+     * @param int... $positions Positions of former passwords matching the password.
+     * @return Position|null Constraint violated by the position.
      */
-    private function getFormerPassword($password): ?FormerPassword
+    private function getViolation(int... $positions): ?Position
     {
-        if ($password instanceof Password) {
-            $formerPasswords = $password->getFormerPasswords();
-
-            $start = $this->first-1;
-            $end = count($formerPasswords);
-            if ($this->count !== null) {
-                $end = min($end, $start+$this->count);
-            }
-
-            for ($i = $start; $i < $end; ++$i) {
-                if ($this->hashFunction->compare((string)$password, (string)$formerPasswords[$i])) {
-                    return $formerPasswords[$i];
+        foreach ($this->constraints as $constraint) {
+            foreach ($positions as $position) {
+                if ($constraint->test($position)) {
+                    return $constraint;
                 }
             }
         }
+
         return null;
     }
 
     /**
+     * @param Password|string $password Password to compare with former passwords.
+     * @return int[] Positions of former passwords matching the password.
+     */
+    private function getPositions($password): array
+    {
+        $positions = [];
+
+        if ($password instanceof Password) {
+            $position = 0;
+            foreach ($password->getFormerPasswords() as $formerPassword) {
+                if ($this->hashFunction->compare((string)$password, (string)$formerPassword)) {
+                    $positions[] = $position;
+                }
+                ++$position;
+            }
+        }
+        return $positions;
+    }
+
+    /**
+     * @param Position $constraint Constraint that is violated.
      * @return string Message explaining the violation.
      */
-    private function getMessage(): string
+    private function getMessage(Position $constraint): string
     {
         $translator = Policy::getTranslator();
 

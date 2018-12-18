@@ -18,12 +18,14 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Character class rules can have multiple constraints.
 - Have I Been Pwned? rules can have multiple constraints.
 - Password change rules can have multiple constraints.
+- No reuse rules can have multiple constraints.
 
 ### Changed
 - Minimum constraint of password change rule is never null.
 - Password change rule cannot be constructed with null minimum constraint.
 - Possible to construct unconstrained rules.
 - Not possible to get message from rule.
+- The first-constraint of reuse rules is 0-indexed instead of 1-indexed.
 
 ### Fixed
 - Nothing
