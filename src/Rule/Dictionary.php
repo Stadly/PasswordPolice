@@ -43,14 +43,14 @@ final class Dictionary implements RuleInterface
      * @param int $minWordLength Ignore words shorter than this.
      * @param int|null $maxWordLength Ignore words longer than this.
      * @param bool $checkSubstrings Check all substrings of the password, not just the whole password.
-     * @param WordConverterInterface... $wordConverters Word converters.
+     * @param WordConverterInterface[] $wordConverters Word converters.
      */
     public function __construct(
         WordListInterface $wordList,
         int $minWordLength = 3,
         ?int $maxWordLength = 25,
         bool $checkSubstrings = true,
-        WordConverterInterface... $wordConverters
+        array $wordConverters = []
     ) {
         if ($minWordLength < 1) {
             throw new InvalidArgumentException('Minimum word length must be positive.');

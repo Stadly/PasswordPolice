@@ -315,7 +315,7 @@ final class DictionaryTest extends TestCase
             }
         );
 
-        $rule = new Dictionary($this->wordList, 1, null, false, $wordConverter);
+        $rule = new Dictionary($this->wordList, 1, null, false, [$wordConverter]);
 
         self::assertFalse($rule->test('4ppl€'));
         self::assertTrue($rule->test('pine4ppl€jack'));
@@ -333,7 +333,7 @@ final class DictionaryTest extends TestCase
             }
         );
 
-        $rule = new Dictionary($this->wordList, 1, null, true, $wordConverter);
+        $rule = new Dictionary($this->wordList, 1, null, true, [$wordConverter]);
 
         self::assertFalse($rule->test('4ppl€'));
         self::assertFalse($rule->test('pine4ppl€jack'));
@@ -358,7 +358,7 @@ final class DictionaryTest extends TestCase
             }
         );
 
-        $rule = new Dictionary($this->wordList, 1, null, false, $wordConverter1, $wordConverter2);
+        $rule = new Dictionary($this->wordList, 1, null, false, [$wordConverter1, $wordConverter2]);
 
         self::assertTrue($rule->test('4ppl€'));
         self::assertTrue($rule->test('pine4ppl€jack'));
@@ -387,7 +387,7 @@ final class DictionaryTest extends TestCase
             }
         );
 
-        $rule = new Dictionary($this->wordList, 1, null, true, $wordConverter1, $wordConverter2);
+        $rule = new Dictionary($this->wordList, 1, null, true, [$wordConverter1, $wordConverter2]);
 
         self::assertTrue($rule->test('4ppl€'));
         self::assertTrue($rule->test('pine4ppl€jack'));
