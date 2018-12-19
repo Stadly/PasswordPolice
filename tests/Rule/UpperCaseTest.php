@@ -183,6 +183,16 @@ final class UpperCaseTest extends TestCase
     }
 
     /**
+     * @covers ::test
+     */
+    public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
+    {
+        $rule = new UpperCase(0, 3, 1);
+
+        self::assertTrue($rule->test('FOO BAR', 2));
+    }
+
+    /**
      * @covers ::enforce
      */
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void

@@ -232,6 +232,16 @@ final class HaveIBeenPwnedTest extends TestCase
     /**
      * @covers ::test
      */
+    public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
+    {
+        $rule = new HaveIBeenPwned(3, 0, 1);
+
+        self::assertTrue($rule->test('+79250455754', 2));
+    }
+
+    /**
+     * @covers ::test
+     */
     public function testErrorsWhenCalculatingCountAreHandled(): void
     {
         $exception = $this->createMock(ClientExceptionInterface::class);

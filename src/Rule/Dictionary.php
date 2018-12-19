@@ -101,8 +101,12 @@ final class Dictionary implements RuleInterface
     /**
      * {@inheritDoc}
      */
-    public function test($password): bool
+    public function test($password, ?int $weight = 1): bool
     {
+        if ($weight !== null && $this->weight < $weight) {
+            return true;
+        }
+
         $word = $this->getDictionaryWord((string)$password);
 
         return $word === null;

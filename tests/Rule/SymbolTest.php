@@ -183,6 +183,16 @@ final class SymbolTest extends TestCase
     }
 
     /**
+     * @covers ::test
+     */
+    public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
+    {
+        $rule = new Symbol('$%&@!', 0, 3, 1);
+
+        self::assertTrue($rule->test('foo bar $$@!', 2));
+    }
+
+    /**
      * @covers ::enforce
      */
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void

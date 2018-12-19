@@ -69,12 +69,13 @@ final class NoReuse implements RuleInterface
      * Check whether a password is in compliance with the rule.
      *
      * @param Password|string $password Password to check.
+     * @param int|null $weight Don't consider constraints with lower weights.
      * @return bool Whether the password is in compliance with the rule.
      */
-    public function test($password): bool
+    public function test($password, ?int $weight = 1): bool
     {
         $positions = $this->getPositions($password);
-        $constraint = $this->getViolation($positions);
+        $constraint = $this->getViolation($positions, $weight);
 
         return $constraint === null;
     }
@@ -97,11 +98,15 @@ final class NoReuse implements RuleInterface
 
     /**
      * @param int[] $positions Positions of former passwords matching the password.
+     * @param int|null $weight Don't consider constraints with lower weights.
      * @return Position|null Constraint violated by the position.
      */
-    private function getViolation(array $positions): ?Position
+    private function getViolation(array $positions, ?int $weight = null): ?Position
     {
         foreach ($this->constraints as $constraint) {
+            if ($weight !== null && $constraint->getWeight() < $weight) {
+                continue;
+            }
             foreach ($positions as $position) {
                 if ($constraint->test($position)) {
                     return $constraint;

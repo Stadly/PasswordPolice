@@ -21,6 +21,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - No reuse rules can have multiple constraints.
 - Guessable data rules are weighted.
 - Dictionary rules are weighted.
+- Possible to set a lower weight limit when testing rules.
 
 ### Changed
 - Minimum constraint of password change rule is never null.

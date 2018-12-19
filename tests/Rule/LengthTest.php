@@ -173,6 +173,16 @@ final class LengthTest extends TestCase
     }
 
     /**
+     * @covers ::test
+     */
+    public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
+    {
+        $rule = new Length(0, 3, 1);
+
+        self::assertTrue($rule->test('foobar', 2));
+    }
+
+    /**
      * @covers ::enforce
      */
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void

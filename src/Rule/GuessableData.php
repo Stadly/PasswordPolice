@@ -80,10 +80,15 @@ final class GuessableData implements RuleInterface
      * Check whether a password is in compliance with the rule.
      *
      * @param Password|string $password Password to check.
+     * @param int|null $weight Don't consider constraints with lower weights.
      * @return bool Whether the password is in compliance with the rule.
      */
-    public function test($password): bool
+    public function test($password, ?int $weight = 1): bool
     {
+        if ($weight !== null && $this->weight < $weight) {
+            return true;
+        }
+
         $data = $this->getGuessableData($password);
 
         return $data === null;

@@ -163,6 +163,16 @@ final class DigitTest extends TestCase
     }
 
     /**
+     * @covers ::test
+     */
+    public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
+    {
+        $rule = new Digit(0, 3, 1);
+
+        self::assertTrue($rule->test('foo bar 0597', 2));
+    }
+
+    /**
      * @covers ::enforce
      */
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void

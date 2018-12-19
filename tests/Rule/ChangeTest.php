@@ -191,6 +191,16 @@ final class ChangeTest extends TestCase
     }
 
     /**
+     * @covers ::test
+     */
+    public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
+    {
+        $rule = new Change(new DateInterval('PT0S'), new DateInterval('P5D'), 1);
+
+        self::assertTrue($rule->test($this->password, 2));
+    }
+
+    /**
      * @covers ::enforce
      */
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void

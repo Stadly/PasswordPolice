@@ -215,6 +215,16 @@ final class NoReuseTest extends TestCase
     }
 
     /**
+     * @covers ::test
+     */
+    public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
+    {
+        $rule = new NoReuse($this->hashFunction, null, 3, 1);
+
+        self::assertTrue($rule->test($this->password, 2));
+    }
+
+    /**
      * @covers ::enforce
      */
     public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void

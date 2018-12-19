@@ -48,12 +48,13 @@ final class UpperCase implements RuleInterface
      * Check whether a password is in compliance with the rule.
      *
      * @param Password|string $password Password to check.
+     * @param int|null $weight Don't consider constraints with lower weights.
      * @return bool Whether the password is in compliance with the rule.
      */
-    public function test($password): bool
+    public function test($password, ?int $weight = 1): bool
     {
         $count = $this->getCount((string)$password);
-        $constraint = $this->getViolation($count);
+        $constraint = $this->getViolation($count, $weight);
 
         return $constraint === null;
     }
@@ -76,11 +77,15 @@ final class UpperCase implements RuleInterface
 
     /**
      * @param int $count Number of upper case characters.
+     * @param int|null $weight Don't consider constraints with lower weights.
      * @return Count|null Constraint violated by the count.
      */
-    private function getViolation(int $count): ?Count
+    private function getViolation(int $count, ?int $weight = null): ?Count
     {
         foreach ($this->constraints as $constraint) {
+            if ($weight !== null && $constraint->getWeight() < $weight) {
+                continue;
+            }
             if (!$constraint->test($count)) {
                 return $constraint;
             }

@@ -103,10 +103,10 @@ final class HaveIBeenPwned implements RuleInterface
     /**
      * {@inheritDoc}
      */
-    public function test($password): bool
+    public function test($password, ?int $weight = 1): bool
     {
         $count = $this->getCount((string)$password);
-        $constraint = $this->getViolation($count);
+        $constraint = $this->getViolation($count, $weight);
 
         return $constraint === null;
     }
@@ -126,11 +126,15 @@ final class HaveIBeenPwned implements RuleInterface
 
     /**
      * @param int $count Number of appearances in breaches.
+     * @param int|null $weight Don't consider constraints with lower weights.
      * @return Count|null Constraint violated by the count.
      */
-    private function getViolation(int $count): ?Count
+    private function getViolation(int $count, ?int $weight = null): ?Count
     {
         foreach ($this->constraints as $constraint) {
+            if ($weight !== null && $constraint->getWeight() < $weight) {
+                continue;
+            }
             if (!$constraint->test($count)) {
                 return $constraint;
             }

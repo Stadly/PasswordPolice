@@ -85,6 +85,17 @@ final class GuessableDataTest extends TestCase
     /**
      * @covers ::test
      */
+    public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
+    {
+        $rule = new GuessableData([], 1);
+        $password = new Password('foobar', ['oba']);
+
+        self::assertTrue($rule->test($password, 2));
+    }
+
+    /**
+     * @covers ::test
+     */
     public function testStringIsRecognizedAfterSingleWordConverter(): void
     {
         $wordConverter = $this->createMock(WordConverterInterface::class);

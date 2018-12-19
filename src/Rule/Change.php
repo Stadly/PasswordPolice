@@ -53,12 +53,13 @@ final class Change implements RuleInterface
      * Check whether a password is in compliance with the rule.
      *
      * @param Password|string $password Password to check.
+     * @param int|null $weight Don't consider constraints with lower weights.
      * @return bool Whether the password is in compliance with the rule.
      */
-    public function test($password): bool
+    public function test($password, ?int $weight = 1): bool
     {
         $date = $this->getDate($password);
-        $constraint = $this->getViolation($date);
+        $constraint = $this->getViolation($date, $weight);
 
         return $constraint === null;
     }
@@ -82,15 +83,19 @@ final class Change implements RuleInterface
 
     /**
      * @param DateTimeInterface|null $date When the password was last changed.
+     * @param int|null $weight Don't consider constraints with lower weights.
      * @return Date|null Constraint violated by the count.
      */
-    private function getViolation(?DateTimeInterface $date): ?Date
+    private function getViolation(?DateTimeInterface $date, ?int $weight = null): ?Date
     {
         if ($date === null) {
             return null;
         }
 
         foreach ($this->constraints as $constraint) {
+            if ($weight !== null && $constraint->getWeight() < $weight) {
+                continue;
+            }
             if (!$constraint->test($date)) {
                 return $constraint;
             }

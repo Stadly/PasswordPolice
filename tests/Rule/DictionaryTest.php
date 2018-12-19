@@ -291,6 +291,16 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
+    public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
+    {
+        $rule = new Dictionary($this->wordList, 1, 5, false, [], 1);
+
+        self::assertTrue($rule->test('apple', 2));
+    }
+
+    /**
+     * @covers ::test
+     */
     public function testTestThrowsExceptionWhenWordListThrowsException(): void
     {
         $wordList = $this->createMock(WordListInterface::class);
