@@ -29,10 +29,10 @@ final class RuleExceptionTest extends TestCase
      */
     public function testCanConstructException(): void
     {
-        $exception = new RuleException($this->rule, 'foo');
+        $exception = new RuleException($this->rule, 1, 'foo');
 
         // Force generation of code coverage
-        $exceptionConstruct = new RuleException($this->rule, 'foo');
+        $exceptionConstruct = new RuleException($this->rule, 1, 'foo');
         self::assertEquals($exception, $exceptionConstruct);
     }
 
@@ -41,8 +41,18 @@ final class RuleExceptionTest extends TestCase
      */
     public function testCanGetRule(): void
     {
-        $exception = new RuleException($this->rule, 'foo');
+        $exception = new RuleException($this->rule, 1, 'foo');
 
         self::assertSame($this->rule, $exception->getRule());
+    }
+
+    /**
+     * @covers ::getWeight
+     */
+    public function testCanGetWeight(): void
+    {
+        $exception = new RuleException($this->rule, 1, 'foo');
+
+        self::assertSame(1, $exception->getWeight());
     }
 }

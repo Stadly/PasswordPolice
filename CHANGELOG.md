@@ -22,6 +22,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Guessable data rules are weighted.
 - Dictionary rules are weighted.
 - Possible to set a lower weight limit when testing rules.
+- Weight of violated constraint is available in rule exception.
 
 ### Changed
 - Minimum constraint of password change rule is never null.

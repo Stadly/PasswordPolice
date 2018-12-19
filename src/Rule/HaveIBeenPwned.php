@@ -120,7 +120,7 @@ final class HaveIBeenPwned implements RuleInterface
         $constraint = $this->getViolation($count);
 
         if ($constraint !== null) {
-            throw new RuleException($this, $this->getMessage($constraint, $count));
+            throw new RuleException($this, $constraint->getWeight(), $this->getMessage($constraint, $count));
         }
     }
 

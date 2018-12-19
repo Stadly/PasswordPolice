@@ -105,7 +105,7 @@ final class GuessableData implements RuleInterface
         $data = $this->getGuessableData($password);
 
         if ($data !== null) {
-            throw new RuleException($this, $this->getMessage($data));
+            throw new RuleException($this, $this->weight, $this->getMessage($data));
         }
     }
 

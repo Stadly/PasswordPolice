@@ -23,7 +23,7 @@ final class PolicyExceptionTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->ruleException = new RuleException($this->createMock(RuleInterface::class), 'foo');
+        $this->ruleException = new RuleException($this->createMock(RuleInterface::class), 1, 'foo');
     }
 
     /**

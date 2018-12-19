@@ -77,7 +77,7 @@ final class Change implements RuleInterface
 
         if ($constraint !== null) {
             assert($date !== null);
-            throw new RuleException($this, $this->getMessage($constraint, $date));
+            throw new RuleException($this, $constraint->getWeight(), $this->getMessage($constraint, $date));
         }
     }
 

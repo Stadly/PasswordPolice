@@ -46,7 +46,7 @@ final class PolicyTest extends TestCase
         $this->satisfiedRule2 = $this->createMock(RuleInterface::class);
         $this->satisfiedRule2->method('test')->willReturn(true);
 
-        $ruleException = new RuleException($this->createMock(RuleInterface::class), 'foo');
+        $ruleException = new RuleException($this->createMock(RuleInterface::class), 1, 'foo');
         $this->unsatisfiedRule = $this->createMock(RuleInterface::class);
         $this->unsatisfiedRule->method('enforce')->willThrowException($ruleException);
 

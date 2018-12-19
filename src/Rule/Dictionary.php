@@ -120,7 +120,7 @@ final class Dictionary implements RuleInterface
         $word = $this->getDictionaryWord((string)$password);
 
         if ($word !== null) {
-            throw new RuleException($this, $this->getMessage($word));
+            throw new RuleException($this, $this->weight, $this->getMessage($word));
         }
     }
 
