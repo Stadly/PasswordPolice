@@ -74,7 +74,7 @@ final class NoReuse implements RuleInterface
     public function test($password): bool
     {
         $positions = $this->getPositions($password);
-        $constraint = $this->getViolation(...$positions);
+        $constraint = $this->getViolation($positions);
 
         return $constraint === null;
     }
@@ -88,7 +88,7 @@ final class NoReuse implements RuleInterface
     public function enforce($password): void
     {
         $positions = $this->getPositions($password);
-        $constraint = $this->getViolation(...$positions);
+        $constraint = $this->getViolation($positions);
 
         if ($constraint !== null) {
             throw new RuleException($this, $this->getMessage($constraint));
@@ -96,10 +96,10 @@ final class NoReuse implements RuleInterface
     }
 
     /**
-     * @param int... $positions Positions of former passwords matching the password.
+     * @param int[] $positions Positions of former passwords matching the password.
      * @return Position|null Constraint violated by the position.
      */
-    private function getViolation(int... $positions): ?Position
+    private function getViolation(array $positions): ?Position
     {
         foreach ($this->constraints as $constraint) {
             foreach ($positions as $position) {
