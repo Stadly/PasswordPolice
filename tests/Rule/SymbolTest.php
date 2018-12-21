@@ -210,7 +210,7 @@ final class SymbolTest extends TestCase
         $rule = new Symbol('$%&@!', 5, null);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be at least 5 symbols ($%&@!).'),
+            new ValidationError('There must be at least 5 symbols ($%&@!).', 'foo bar $$@!', $rule, 1),
             $rule->validate('foo bar $$@!')
         );
     }
@@ -223,7 +223,7 @@ final class SymbolTest extends TestCase
         $rule = new Symbol('$%&@!', 0, 10);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be at most 10 symbols ($%&@!).'),
+            new ValidationError('There must be at most 10 symbols ($%&@!).', 'foo bar $$@! $$@! $$@!', $rule, 1),
             $rule->validate('foo bar $$@! $$@! $$@!')
         );
     }
@@ -236,7 +236,7 @@ final class SymbolTest extends TestCase
         $rule = new Symbol('$%&@!', 5, 10);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be between 5 and 10 symbols ($%&@!).'),
+            new ValidationError('There must be between 5 and 10 symbols ($%&@!).', 'foo bar $$@!', $rule, 1),
             $rule->validate('foo bar $$@!')
         );
     }
@@ -249,7 +249,7 @@ final class SymbolTest extends TestCase
         $rule = new Symbol('$%&@!', 0, 0);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be no symbols ($%&@!).'),
+            new ValidationError('There must be no symbols ($%&@!).', 'foo bar $$@!', $rule, 1),
             $rule->validate('foo bar $$@!')
         );
     }
@@ -262,7 +262,7 @@ final class SymbolTest extends TestCase
         $rule = new Symbol('$%&@!', 3, 3);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be exactly 3 symbols ($%&@!).'),
+            new ValidationError('There must be exactly 3 symbols ($%&@!).', 'foo bar $$@!', $rule, 1),
             $rule->validate('foo bar $$@!')
         );
     }

@@ -91,7 +91,12 @@ final class NoReuse implements RuleInterface
         $constraint = $this->getViolation($positions);
 
         if ($constraint !== null) {
-            return new ValidationError($this, $constraint->getWeight(), $this->getMessage($constraint));
+            return new ValidationError(
+                $this->getMessage($constraint),
+                $password,
+                $this,
+                $constraint->getWeight()
+            );
         }
 
         return null;

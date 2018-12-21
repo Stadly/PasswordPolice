@@ -103,7 +103,12 @@ final class GuessableData implements RuleInterface
         $data = $this->getGuessableData($password);
 
         if ($data !== null) {
-            return new ValidationError($this, $this->weight, $this->getMessage($data));
+            return new ValidationError(
+                $this->getMessage($data),
+                $password,
+                $this,
+                $this->weight
+            );
         }
 
         return null;

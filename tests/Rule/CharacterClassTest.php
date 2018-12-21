@@ -211,7 +211,7 @@ final class CharacterClassTest extends TestCase
         $rule->method('getMessage')->willReturn('foo');
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'foo'),
+            new ValidationError('foo', '€', $rule, 1),
             $rule->validate('€')
         );
     }

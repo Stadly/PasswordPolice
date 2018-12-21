@@ -71,7 +71,12 @@ final class UpperCase implements RuleInterface
         $constraint = $this->getViolation($count);
 
         if ($constraint !== null) {
-            return new ValidationError($this, $constraint->getWeight(), $this->getMessage($constraint, $count));
+            return new ValidationError(
+                $this->getMessage($constraint, $count),
+                $password,
+                $this,
+                $constraint->getWeight()
+            );
         }
 
         return null;

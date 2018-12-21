@@ -200,7 +200,7 @@ final class LengthTest extends TestCase
         $rule = new Length(5, null);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be at least 5 characters.'),
+            new ValidationError('There must be at least 5 characters.', 'fo', $rule, 1),
             $rule->validate('fo')
         );
     }
@@ -213,7 +213,7 @@ final class LengthTest extends TestCase
         $rule = new Length(0, 10);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be at most 10 characters.'),
+            new ValidationError('There must be at most 10 characters.', 'fo bar qwerty', $rule, 1),
             $rule->validate('fo bar qwerty')
         );
     }
@@ -226,7 +226,7 @@ final class LengthTest extends TestCase
         $rule = new Length(5, 10);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be between 5 and 10 characters.'),
+            new ValidationError('There must be between 5 and 10 characters.', 'fo', $rule, 1),
             $rule->validate('fo')
         );
     }
@@ -239,7 +239,7 @@ final class LengthTest extends TestCase
         $rule = new Length(0, 0);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be no characters.'),
+            new ValidationError('There must be no characters.', 'fo', $rule, 1),
             $rule->validate('fo')
         );
     }
@@ -252,7 +252,7 @@ final class LengthTest extends TestCase
         $rule = new Length(3, 3);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be exactly 3 characters.'),
+            new ValidationError('There must be exactly 3 characters.', 'fo', $rule, 1),
             $rule->validate('fo')
         );
     }

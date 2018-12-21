@@ -121,7 +121,12 @@ final class Dictionary implements RuleInterface
         $word = $this->getDictionaryWord((string)$password);
 
         if ($word !== null) {
-            return new ValidationError($this, $this->weight, $this->getMessage($word));
+            return new ValidationError(
+                $this->getMessage($word),
+                $password,
+                $this,
+                $this->weight
+            );
         }
 
         return null;

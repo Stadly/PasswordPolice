@@ -242,7 +242,7 @@ final class NoReuseTest extends TestCase
         $rule = new NoReuse($this->hashFunction, null, 0);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'Cannot reuse former passwords.'),
+            new ValidationError('Cannot reuse former passwords.', $this->password, $rule, 1),
             $rule->validate($this->password)
         );
     }

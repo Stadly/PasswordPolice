@@ -9,7 +9,17 @@ use Stadly\PasswordPolice\Rule\RuleInterface;
 final class ValidationError
 {
     /**
-     * @var RuleInterface Rule that could not be validated.
+     * @var string Message describing why the password could not be validated.
+     */
+    private $message;
+
+    /**
+     * @var Password|string $password Password that could not be validated.
+     */
+    private $password;
+
+    /**
+     * @var RuleInterface Rule that the password is not in compliance with.
      */
     private $rule;
 
@@ -19,24 +29,37 @@ final class ValidationError
     private $weight;
 
     /**
-     * @var string Message describing why the rule could not be validated.
-     */
-    private $message;
-
-    /**
-     * @param RuleInterface $rule Rule that could not be validated.
+     * @param string $message Message describing why the password could not be validated.
+     * @param Password|string $password Password that could not be validated.
+     * @param RuleInterface $rule Rule that the password is not in compliance with.
      * @param int $weight Weight of violated constraint.
-     * @param string $message Message describing why the rule could not be validated.
      */
-    public function __construct(RuleInterface $rule, int $weight, string $message)
+    public function __construct(string $message, $password, RuleInterface $rule, int $weight)
     {
+        $this->message = $message;
+        $this->password = $password;
         $this->rule = $rule;
         $this->weight = $weight;
-        $this->message = $message;
     }
 
     /**
-     * @return RuleInterface Rule that could not be validated.
+     * @return string Message describing why the password could not be validated.
+     */
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
+
+    /**
+     * @return Password|string $password Password that could not be validated.
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @return RuleInterface Rule that the password is not in compliance with.
      */
     public function getRule(): RuleInterface
     {
@@ -49,13 +72,5 @@ final class ValidationError
     public function getWeight(): int
     {
         return $this->weight;
-    }
-
-    /**
-     * @return string Message describing why the rule could not be validated.
-     */
-    public function getMessage(): string
-    {
-        return $this->message;
     }
 }

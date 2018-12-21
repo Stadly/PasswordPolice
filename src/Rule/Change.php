@@ -77,7 +77,12 @@ final class Change implements RuleInterface
 
         if ($constraint !== null) {
             assert($date !== null);
-            return new ValidationError($this, $constraint->getWeight(), $this->getMessage($constraint, $date));
+            return new ValidationError(
+                $this->getMessage($constraint, $date),
+                $password,
+                $this,
+                $constraint->getWeight()
+            );
         }
 
         return null;

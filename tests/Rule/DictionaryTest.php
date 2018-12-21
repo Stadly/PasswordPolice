@@ -426,7 +426,7 @@ final class DictionaryTest extends TestCase
         $rule = new Dictionary($this->wordList, 1, null, true);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'Must not contain dictionary words.'),
+            new ValidationError('Must not contain dictionary words.', 'apple', $rule, 1),
             $rule->validate('apple')
         );
     }
@@ -439,7 +439,7 @@ final class DictionaryTest extends TestCase
         $rule = new Dictionary($this->wordList, 1, null, false);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'Must not be a dictionary word.'),
+            new ValidationError('Must not be a dictionary word.', 'apple', $rule, 1),
             $rule->validate('apple')
         );
     }

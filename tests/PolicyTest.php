@@ -46,7 +46,7 @@ final class PolicyTest extends TestCase
         $this->satisfiedRule2->method('test')->willReturn(true);
 
         $this->unsatisfiedRule = $this->createMock(RuleInterface::class);
-        $validationError = new ValidationError($this->unsatisfiedRule, 1, 'foo');
+        $validationError = new ValidationError('foo', '', $this->unsatisfiedRule, 1);
         $this->unsatisfiedRule->method('validate')->willReturn($validationError);
 
         /**
@@ -196,7 +196,7 @@ final class PolicyTest extends TestCase
         $policy = new Policy($this->unsatisfiedRule);
 
         self::assertEquals(
-            [new ValidationError($this->unsatisfiedRule, 1, 'foo')],
+            [new ValidationError('foo', '', $this->unsatisfiedRule, 1)],
             $policy->validate('')
         );
     }

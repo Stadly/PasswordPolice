@@ -210,7 +210,7 @@ final class UpperCaseTest extends TestCase
         $rule = new UpperCase(5, null);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be at least 5 upper case characters.'),
+            new ValidationError('There must be at least 5 upper case characters.', 'FOo', $rule, 1),
             $rule->validate('FOo')
         );
     }
@@ -223,7 +223,7 @@ final class UpperCaseTest extends TestCase
         $rule = new UpperCase(0, 10);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be at most 10 upper case characters.'),
+            new ValidationError('There must be at most 10 upper case characters.', 'FOo BAR QWERTY', $rule, 1),
             $rule->validate('FOo BAR QWERTY')
         );
     }
@@ -236,7 +236,7 @@ final class UpperCaseTest extends TestCase
         $rule = new UpperCase(5, 10);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be between 5 and 10 upper case characters.'),
+            new ValidationError('There must be between 5 and 10 upper case characters.', 'FOo', $rule, 1),
             $rule->validate('FOo')
         );
     }
@@ -249,7 +249,7 @@ final class UpperCaseTest extends TestCase
         $rule = new UpperCase(0, 0);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be no upper case characters.'),
+            new ValidationError('There must be no upper case characters.', 'FOo', $rule, 1),
             $rule->validate('FOo')
         );
     }
@@ -262,7 +262,7 @@ final class UpperCaseTest extends TestCase
         $rule = new UpperCase(3, 3);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be exactly 3 upper case characters.'),
+            new ValidationError('There must be exactly 3 upper case characters.', 'FOo', $rule, 1),
             $rule->validate('FOo')
         );
     }

@@ -210,7 +210,7 @@ final class LowerCaseTest extends TestCase
         $rule = new LowerCase(5, null);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be at least 5 lower case characters.'),
+            new ValidationError('There must be at least 5 lower case characters.', 'Foo', $rule, 1),
             $rule->validate('Foo')
         );
     }
@@ -223,7 +223,7 @@ final class LowerCaseTest extends TestCase
         $rule = new LowerCase(0, 10);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be at most 10 lower case characters.'),
+            new ValidationError('There must be at most 10 lower case characters.', 'Foo bar qwerty test', $rule, 1),
             $rule->validate('Foo bar qwerty test')
         );
     }
@@ -236,7 +236,7 @@ final class LowerCaseTest extends TestCase
         $rule = new LowerCase(5, 10);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be between 5 and 10 lower case characters.'),
+            new ValidationError('There must be between 5 and 10 lower case characters.', 'Foo', $rule, 1),
             $rule->validate('Foo')
         );
     }
@@ -249,7 +249,7 @@ final class LowerCaseTest extends TestCase
         $rule = new LowerCase(0, 0);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be no lower case characters.'),
+            new ValidationError('There must be no lower case characters.', 'Foo', $rule, 1),
             $rule->validate('Foo')
         );
     }
@@ -262,7 +262,7 @@ final class LowerCaseTest extends TestCase
         $rule = new LowerCase(3, 3);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be exactly 3 lower case characters.'),
+            new ValidationError('There must be exactly 3 lower case characters.', 'Foo', $rule, 1),
             $rule->validate('Foo')
         );
     }

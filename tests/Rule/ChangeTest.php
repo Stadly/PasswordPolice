@@ -218,7 +218,12 @@ final class ChangeTest extends TestCase
         $rule = new Change(new DateInterval('P10D'), null);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'Must be at least 1 week 3 days between password changes.'),
+            new ValidationError(
+                'Must be at least 1 week 3 days between password changes.',
+                $this->password,
+                $rule,
+                1
+            ),
             $rule->validate($this->password)
         );
     }
@@ -231,7 +236,12 @@ final class ChangeTest extends TestCase
         $rule = new Change(new DateInterval('PT0S'), new DateInterval('P5D'));
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'Must be at most 5 days between password changes.'),
+            new ValidationError(
+                'Must be at most 5 days between password changes.',
+                $this->password,
+                $rule,
+                1
+            ),
             $rule->validate($this->password)
         );
     }
@@ -244,7 +254,12 @@ final class ChangeTest extends TestCase
         $rule = new Change(new DateInterval('P14D'), new DateInterval('P1M'));
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'Must be between 2 weeks and 1 month between password changes.'),
+            new ValidationError(
+                'Must be between 2 weeks and 1 month between password changes.',
+                $this->password,
+                $rule,
+                1
+            ),
             $rule->validate($this->password)
         );
     }
@@ -257,7 +272,12 @@ final class ChangeTest extends TestCase
         $rule = new Change(new DateInterval('P6D'), new DateInterval('PT144H'));
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'Must be exactly 6 days between password changes.'),
+            new ValidationError(
+                'Must be exactly 6 days between password changes.',
+                $this->password,
+                $rule,
+                1
+            ),
             $rule->validate($this->password)
         );
     }

@@ -202,7 +202,7 @@ final class GuessableDataTest extends TestCase
         $password = new Password('foobar', ['oba', new DateTime('2018-11-28')]);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'Must not contain guessable data.'),
+            new ValidationError('Must not contain guessable data.', $password, $rule, 1),
             $rule->validate($password)
         );
     }

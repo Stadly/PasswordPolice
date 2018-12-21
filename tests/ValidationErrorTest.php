@@ -30,11 +30,31 @@ final class ValidationErrorTest extends TestCase
      */
     public function testCanConstructException(): void
     {
-        $validationError = new ValidationError($this->rule, 1, 'foo');
+        $validationError = new ValidationError('foo', 'bar', $this->rule, 1);
 
         // Force generation of code coverage
-        $validationErrorConstruct = new ValidationError($this->rule, 1, 'foo');
+        $validationErrorConstruct = new ValidationError('foo', 'bar', $this->rule, 1);
         self::assertEquals($validationError, $validationErrorConstruct);
+    }
+
+    /**
+     * @covers ::getMessage
+     */
+    public function testCanGetMessage(): void
+    {
+        $validationError = new ValidationError('foo', 'bar', $this->rule, 1);
+
+        self::assertSame('foo', $validationError->getMessage());
+    }
+
+    /**
+     * @covers ::getPassword
+     */
+    public function testCanGetPassword(): void
+    {
+        $validationError = new ValidationError('foo', 'bar', $this->rule, 1);
+
+        self::assertSame('bar', $validationError->getPassword());
     }
 
     /**
@@ -42,7 +62,7 @@ final class ValidationErrorTest extends TestCase
      */
     public function testCanGetRule(): void
     {
-        $validationError = new ValidationError($this->rule, 1, 'foo');
+        $validationError = new ValidationError('foo', 'bar', $this->rule, 1);
 
         self::assertSame($this->rule, $validationError->getRule());
     }
@@ -52,18 +72,8 @@ final class ValidationErrorTest extends TestCase
      */
     public function testCanGetWeight(): void
     {
-        $validationError = new ValidationError($this->rule, 1, 'foo');
+        $validationError = new ValidationError('foo', 'bar', $this->rule, 1);
 
         self::assertSame(1, $validationError->getWeight());
-    }
-
-    /**
-     * @covers ::getMessage
-     */
-    public function testCanGetMessage(): void
-    {
-        $validationError = new ValidationError($this->rule, 1, 'foo');
-
-        self::assertSame('foo', $validationError->getMessage());
     }
 }

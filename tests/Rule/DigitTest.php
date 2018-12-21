@@ -190,7 +190,7 @@ final class DigitTest extends TestCase
         $rule = new Digit(5, null);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be at least 5 digits.'),
+            new ValidationError('There must be at least 5 digits.', 'foo 12', $rule, 1),
             $rule->validate('foo 12')
         );
     }
@@ -203,7 +203,7 @@ final class DigitTest extends TestCase
         $rule = new Digit(0, 10);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be at most 10 digits.'),
+            new ValidationError('There must be at most 10 digits.', 'foo 123 456 123456', $rule, 1),
             $rule->validate('foo 123 456 123456')
         );
     }
@@ -216,7 +216,7 @@ final class DigitTest extends TestCase
         $rule = new Digit(5, 10);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be between 5 and 10 digits.'),
+            new ValidationError('There must be between 5 and 10 digits.', 'foo 12', $rule, 1),
             $rule->validate('foo 12')
         );
     }
@@ -229,7 +229,7 @@ final class DigitTest extends TestCase
         $rule = new Digit(0, 0);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be no digits.'),
+            new ValidationError('There must be no digits.', 'foo 12', $rule, 1),
             $rule->validate('foo 12')
         );
     }
@@ -242,7 +242,7 @@ final class DigitTest extends TestCase
         $rule = new Digit(3, 3);
 
         self::assertEquals(
-            new ValidationError($rule, 1, 'There must be exactly 3 digits.'),
+            new ValidationError('There must be exactly 3 digits.', 'foo 12', $rule, 1),
             $rule->validate('foo 12')
         );
     }
