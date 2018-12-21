@@ -134,7 +134,6 @@ final class ChangeTest extends TestCase
         $rule = new Change(new DateInterval('P5D'), new DateInterval('P5D'), 1);
         $rule->addConstraint(new DateInterval('P10D'), new DateInterval('P10D'), 2);
 
-        // Force generation of code coverage
         $ruleConstruct = new Change(new DateInterval('P10D'), new DateInterval('P10D'), 2);
         $ruleConstruct->addConstraint(new DateInterval('P5D'), new DateInterval('P5D'), 1);
         self::assertEquals($rule, $ruleConstruct);

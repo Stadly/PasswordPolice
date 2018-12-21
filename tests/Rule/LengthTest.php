@@ -116,7 +116,6 @@ final class LengthTest extends TestCase
         $rule = new Length(5, 5, 1);
         $rule->addConstraint(10, 10, 2);
 
-        // Force generation of code coverage
         $ruleConstruct = new Length(10, 10, 2);
         $ruleConstruct->addConstraint(5, 5, 1);
         self::assertEquals($rule, $ruleConstruct);

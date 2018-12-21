@@ -158,7 +158,6 @@ final class NoReuseTest extends TestCase
         $rule = new NoReuse($this->hashFunction, 5, 5, 1);
         $rule->addConstraint(10, 10, 2);
 
-        // Force generation of code coverage
         $ruleConstruct = new NoReuse($this->hashFunction, 10, 10, 2);
         $ruleConstruct->addConstraint(5, 5, 1);
         self::assertEquals($rule, $ruleConstruct);

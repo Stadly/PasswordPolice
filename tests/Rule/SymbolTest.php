@@ -136,7 +136,6 @@ final class SymbolTest extends TestCase
         $rule = new Symbol('$%&@!', 5, 5, 1);
         $rule->addConstraint(10, 10, 2);
 
-        // Force generation of code coverage
         $ruleConstruct = new Symbol('$%&@!', 10, 10, 2);
         $ruleConstruct->addConstraint(5, 5, 1);
         self::assertEquals($rule, $ruleConstruct);

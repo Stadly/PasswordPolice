@@ -136,7 +136,6 @@ final class CharacterClassTest extends TestCase
         $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 5, 5, 1]);
         $rule->addConstraint(10, 10, 2);
 
-        // Force generation of code coverage
         $ruleConstruct = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 10, 10, 2]);
         $ruleConstruct->addConstraint(5, 5, 1);
         self::assertEquals($rule, $ruleConstruct);
