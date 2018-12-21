@@ -7,6 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
+use Stadly\PasswordPolice\ValidationError;
 use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
 use Stadly\PasswordPolice\WordList\WordListInterface;
 
@@ -408,52 +409,38 @@ final class DictionaryTest extends TestCase
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
+    public function testRuleCanBeValidated(): void
     {
         $rule = new Dictionary($this->wordList, 1, null);
 
-        $rule->enforce('foo');
-
-        // Force generation of code coverage
-        $ruleConstruct = new Dictionary($this->wordList, 1, null);
-        self::assertEquals($rule, $ruleConstruct);
+        self::assertNull($rule->validate('foo'));
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
-    {
-        $rule = new Dictionary($this->wordList, 1, null);
-
-        $this->expectException(RuleException::class);
-
-        $rule->enforce('apple');
-    }
-
-    /**
-     * @covers ::enforce
-     */
-    public function testValidationMessageWhenCheckingSubstrings(): void
+    public function testRuleCanBeInvalidatedWhenCheckingSubstrings(): void
     {
         $rule = new Dictionary($this->wordList, 1, null, true);
 
-        $this->expectExceptionMessage('Must not contain dictionary words.');
-
-        $rule->enforce('apple');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'Must not contain dictionary words.'),
+            $rule->validate('apple')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageWhenNotCheckingSubstrings(): void
+    public function testRuleCanBeInvalidatedWhenNotCheckingSubstrings(): void
     {
         $rule = new Dictionary($this->wordList, 1, null, false);
 
-        $this->expectExceptionMessage('Must not be a dictionary word.');
-
-        $rule->enforce('apple');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'Must not be a dictionary word.'),
+            $rule->validate('apple')
+        );
     }
 }

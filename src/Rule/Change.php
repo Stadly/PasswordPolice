@@ -13,6 +13,7 @@ use Carbon\CarbonInterval;
 use Stadly\Date\Interval;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
+use Stadly\PasswordPolice\ValidationError;
 
 final class Change implements RuleInterface
 {
@@ -64,20 +65,22 @@ final class Change implements RuleInterface
     }
 
     /**
-     * Enforce that a password is in compliance with the rule.
+     * Validate that a password is in compliance with the rule.
      *
-     * @param Password|string $password Password that must adhere to the rule.
-     * @throws RuleException If the password does not adhrere to the rule.
+     * @param Password|string $password Password to validate.
+     * @return ValidationError|null Validation error describing why the password is not in compliance with the rule.
      */
-    public function enforce($password): void
+    public function validate($password): ?ValidationError
     {
         $date = $this->getDate($password);
         $constraint = $this->getViolation($date);
 
         if ($constraint !== null) {
             assert($date !== null);
-            throw new RuleException($this, $constraint->getWeight(), $this->getMessage($constraint, $date));
+            return new ValidationError($this, $constraint->getWeight(), $this->getMessage($constraint, $date));
         }
+
+        return null;
     }
 
     /**

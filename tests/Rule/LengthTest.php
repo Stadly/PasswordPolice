@@ -6,6 +6,7 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Stadly\PasswordPolice\ValidationError;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\Length
@@ -182,88 +183,77 @@ final class LengthTest extends TestCase
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
+    public function testRuleCanBeValidated(): void
     {
         $rule = new Length(1, null);
 
-        $rule->enforce('foo');
-
-        // Force generation of code coverage
-        $ruleConstruct = new Length(1, null);
-        self::assertEquals($rule, $ruleConstruct);
+        self::assertNull($rule->validate('foo'));
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
-    {
-        $rule = new Length(1, null);
-
-        $this->expectException(RuleException::class);
-
-        $rule->enforce('');
-    }
-
-    /**
-     * @covers ::enforce
-     */
-    public function testValidationMessageForRuleWithMinConstraint(): void
+    public function testRuleWithMinConstraintCanBeInvalidated(): void
     {
         $rule = new Length(5, null);
 
-        $this->expectExceptionMessage('There must be at least 5 characters.');
-
-        $rule->enforce('fo');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be at least 5 characters.'),
+            $rule->validate('fo')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMaxConstraint(): void
+    public function testRuleWithMaxConstraintCanBeInvalidated(): void
     {
         $rule = new Length(0, 10);
 
-        $this->expectExceptionMessage('There must be at most 10 characters.');
-
-        $rule->enforce('fo bar qwerty');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be at most 10 characters.'),
+            $rule->validate('fo bar qwerty')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithBothMinAndMaxConstraint(): void
+    public function testRuleWithBothMinAndMaxConstraintCanBeInvalidated(): void
     {
         $rule = new Length(5, 10);
 
-        $this->expectExceptionMessage('There must be between 5 and 10 characters.');
-
-        $rule->enforce('fo');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be between 5 and 10 characters.'),
+            $rule->validate('fo')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMaxConstraintEqualToZero(): void
+    public function testRuleWithMaxConstraintEqualToZeroCanBeInvalidated(): void
     {
         $rule = new Length(0, 0);
 
-        $this->expectExceptionMessage('There must be no characters.');
-
-        $rule->enforce('fo');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be no characters.'),
+            $rule->validate('fo')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
+    public function testRuleWithMinConstraintEqualToMaxConstraintCanBeInvalidated(): void
     {
         $rule = new Length(3, 3);
 
-        $this->expectExceptionMessage('There must be exactly 3 characters.');
-
-        $rule->enforce('fo');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be exactly 3 characters.'),
+            $rule->validate('fo')
+        );
     }
 }

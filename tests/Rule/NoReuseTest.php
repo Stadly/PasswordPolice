@@ -10,6 +10,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Stadly\PasswordPolice\FormerPassword;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\HashFunction\HashFunctionInterface;
+use Stadly\PasswordPolice\ValidationError;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -224,40 +225,25 @@ final class NoReuseTest extends TestCase
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
+    public function testRuleCanBeValidated(): void
     {
         $rule = new NoReuse($this->hashFunction, 1, 0);
 
-        $rule->enforce($this->password);
-
-        // Force generation of code coverage
-        $ruleConstruct = new NoReuse($this->hashFunction, 1, 0);
-        self::assertEquals($rule, $ruleConstruct);
+        self::assertNull($rule->validate($this->password));
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
+    public function testRuleCanBeInvalidated(): void
     {
         $rule = new NoReuse($this->hashFunction, null, 0);
 
-        $this->expectException(RuleException::class);
-
-        $rule->enforce($this->password);
-    }
-
-    /**
-     * @covers ::enforce
-     */
-    public function testValidationMessage(): void
-    {
-        $rule = new NoReuse($this->hashFunction);
-
-        $this->expectExceptionMessage('Cannot reuse former passwords.');
-
-        $rule->enforce($this->password);
+        self::assertEquals(
+            new ValidationError($rule, 1, 'Cannot reuse former passwords.'),
+            $rule->validate($this->password)
+        );
     }
 }

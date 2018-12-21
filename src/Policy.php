@@ -60,27 +60,25 @@ final class Policy
     }
 
     /**
-     * Enforce that a password is in compliance with the policy.
+     * Validate that a password is in compliance with the policy.
      *
-     * @param Password|string $password Password that must adhere to the policy.
-     * @throws PolicyException If the password does not adhrere to the policy.
+     * @param Password|string $password Password to validate.
+     * @return ValidationError[] Validation errors describing why the password is not in compliance with the policy.
      * @throws TestException If an error occurred while testing the policy.
      */
-    public function enforce($password): void
+    public function validate($password): array
     {
-        $exceptions = [];
+        $validationErrors = [];
 
         foreach ($this->rules as $rule) {
-            try {
-                $rule->enforce($password);
-            } catch (RuleException $exception) {
-                $exceptions[] = $exception;
+            $validationError = $rule->validate($password);
+
+            if ($validationError !== null) {
+                $validationErrors[] = $validationError;
             }
         }
 
-        if ($exceptions !== []) {
-            throw new PolicyException($this, $exceptions);
-        }
+        return $validationErrors;
     }
 
     /**

@@ -6,6 +6,7 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Stadly\PasswordPolice\ValidationError;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\CharacterClass
@@ -192,28 +193,26 @@ final class CharacterClassTest extends TestCase
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
+    public function testRuleCanBeValidated(): void
     {
         $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 1, null]);
 
-        $rule->enforce('&');
-
-        // Force generation of code coverage
-        $ruleConstruct = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 1, null]);
-        self::assertEquals($rule, $ruleConstruct);
+        self::assertNull($rule->validate('&'));
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
+    public function testRuleCanBeInvalidated(): void
     {
         $rule = $this->getMockForAbstractClass(CharacterClass::class, ['$%&@!', 1, null]);
+        $rule->method('getMessage')->willReturn('foo');
 
-        $this->expectException(RuleException::class);
-
-        $rule->enforce('€');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'foo'),
+            $rule->validate('€')
+        );
     }
 }

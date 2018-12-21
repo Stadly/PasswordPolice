@@ -7,6 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\Password;
+use Stadly\PasswordPolice\ValidationError;
 use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
 
 /**
@@ -182,43 +183,27 @@ final class GuessableDataTest extends TestCase
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
+    public function testRuleCanBeValidated(): void
     {
         $rule = new GuessableData();
         $password = new Password('test', ['oba', new DateTime('2018-11-28')]);
 
-        $rule->enforce($password);
-
-        // Force generation of code coverage
-        $ruleConstruct = new GuessableData();
-        self::assertEquals($rule, $ruleConstruct);
+        self::assertNull($rule->validate($password));
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
+    public function testRuleCanBeInvalidated(): void
     {
         $rule = new GuessableData();
         $password = new Password('foobar', ['oba', new DateTime('2018-11-28')]);
 
-        $this->expectException(RuleException::class);
-
-        $rule->enforce($password);
-    }
-
-    /**
-     * @covers ::enforce
-     */
-    public function testValidationMessageForRuleWithMinConstraint(): void
-    {
-        $rule = new GuessableData();
-        $password = new Password('foobar', ['oba', new DateTime('2018-11-28')]);
-
-        $this->expectExceptionMessage('Must not contain guessable data.');
-
-        $rule->enforce($password);
+        self::assertEquals(
+            new ValidationError($rule, 1, 'Must not contain guessable data.'),
+            $rule->validate($password)
+        );
     }
 }

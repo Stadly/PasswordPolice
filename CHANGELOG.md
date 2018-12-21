@@ -23,6 +23,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Dictionary rules are weighted.
 - Possible to set a lower weight limit when testing rules.
 - Weight of violated constraint is available in rule exception.
+- It is now possible to validate that a password is in compliance with a rule. If not, a validation error is returned.
+- It is now possible to validate that a password is in compliance with a policy. An array of validation errors is returned. The array is empty if the password is in compliance with the policy.
 
 ### Changed
 - Minimum constraint of password change rule is never null.
@@ -40,7 +42,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Removed
-- Nothing
+- Rules can no longer be enforced. Use password validation instead.
+- Policies can no longer be enforced. Use password validation instead.
 
 ### Security
 - Nothing

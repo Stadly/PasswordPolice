@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use Stadly\PasswordPolice\Password;
+use Stadly\PasswordPolice\ValidationError;
 
 /**
  * Interface that must be implemented by all rules.
@@ -22,11 +23,11 @@ interface RuleInterface
     public function test($password, ?int $weight = 1): bool;
 
     /**
-     * Enforce that a password is in compliance with the rule.
+     * Validate that a password is in compliance with the rule.
      *
-     * @param Password|string $password Password that must adhere to the rule.
-     * @throws RuleException If the password does not adhrere to the rule.
+     * @param Password|string $password Password to validate.
+     * @return ValidationError|null Validation error describing why the password is not in compliance with the rule.
      * @throws TestException If an error occurred while testing the rule.
      */
-    public function enforce($password): void;
+    public function validate($password): ?ValidationError;
 }

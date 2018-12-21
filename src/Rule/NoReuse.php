@@ -9,6 +9,7 @@ use Stadly\PasswordPolice\Constraint\Position;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\HashFunction\HashFunctionInterface;
+use Stadly\PasswordPolice\ValidationError;
 
 final class NoReuse implements RuleInterface
 {
@@ -79,19 +80,21 @@ final class NoReuse implements RuleInterface
     }
 
     /**
-     * Enforce that a password is in compliance with the rule.
+     * Validate that a password is in compliance with the rule.
      *
-     * @param Password|string $password Password that must adhere to the rule.
-     * @throws RuleException If the password does not adhrere to the rule.
+     * @param Password|string $password Password to validate.
+     * @return ValidationError|null Validation error describing why the password is not in compliance with the rule.
      */
-    public function enforce($password): void
+    public function validate($password): ?ValidationError
     {
         $positions = $this->getPositions($password);
         $constraint = $this->getViolation($positions);
 
         if ($constraint !== null) {
-            throw new RuleException($this, $constraint->getWeight(), $this->getMessage($constraint));
+            return new ValidationError($this, $constraint->getWeight(), $this->getMessage($constraint));
         }
+
+        return null;
     }
 
     /**

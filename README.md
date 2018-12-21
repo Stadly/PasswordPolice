@@ -23,7 +23,6 @@ composer require stadly/password-police
 use Stadly\PasswordPolice\FormerPassword;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
-use Stadly\PasswordPolice\PolicyException;
 use Stadly\PasswordPolice\WordConverter\Leetspeak;
 use Stadly\PasswordPolice\WordConverter\LowerCase as LowerCaseConverter;
 use Stadly\PasswordPolice\WordConverter\UpperCase as UpperCaseConverter;
@@ -49,34 +48,30 @@ $pspell = Pspell::fromLocale('en', new LowerCaseConverter(), new UpperCaseConver
 $dictionary = new Dictionary($pspell, 3, 25, true, new Leetspeak();
 $policy->addRules($dictionary));                    // Password must not contain dictionary words.
 
-try {
-    $policy->enforce('password');
+$validationErrors = $policy->validate('password');
+if (empty($validationErrors)) {
     // The password is in compliance with the policy.
-} catch (PolicyException $exception) {
-    // The password does not adhere to the policy.
-    // Use the exception to show an appropriate message to the user.
+} else {
+    // The password is not incompliance with the policy.
+    // Use the array of validation errors to show appropriate messages to the user.
 }
 
-try {
-    // Specify data that is easy to guess for this password.
-    $policy->enforce(new Password('password', ['first name', 'spouse', new DateTime('birthday')]));
-    // The password is in compliance with the policy.
-} catch (PolicyException $exception) {
-    // The password does not adhere to the policy.
-    // Use the exception to show an appropriate message to the user.
-}
 
-try {
-    // Specify former passwords that cannot be reused.
-    $policy->enforce(new Password('password', [] [
-        new FormerPassword('hash of old password', new DateTime('2018-11-30')),
-        new FormerPassword('hash of even older password', new DateTime('2010-08-23')),
-    ]));
-    // The password is in compliance with the policy.
-} catch (PolicyException $exception) {
-    // The password does not adhere to the policy.
-    // Use the exception to show an appropriate message to the user.
-}
+// Specify data that is easy to guess for this password.
+$guessableData = [
+    'first name',
+    'spouse',
+    new DateTime('birthday'),
+];
+$validationErrors = $policy->validate(new Password('password', $guessableData));
+
+
+// Specify former passwords that cannot be reused.
+$formerPasswords = [
+    new FormerPassword('hash of old password', new DateTime('2018-11-30')),
+    new FormerPassword('hash of even older password', new DateTime('2010-08-23')),
+];
+$validationErrors = $policy->validate(new Password('password', [], $formerPasswords));
 ```
 
 ## Change log

@@ -13,6 +13,7 @@ use RuntimeException;
 use StableSort\StableSort;
 use Stadly\PasswordPolice\Constraint\Count;
 use Stadly\PasswordPolice\Policy;
+use Stadly\PasswordPolice\ValidationError;
 
 final class HaveIBeenPwned implements RuleInterface
 {
@@ -113,14 +114,16 @@ final class HaveIBeenPwned implements RuleInterface
     /**
      * {@inheritDoc}
      */
-    public function enforce($password): void
+    public function validate($password): ?ValidationError
     {
         $count = $this->getCount((string)$password);
         $constraint = $this->getViolation($count);
 
         if ($constraint !== null) {
-            throw new RuleException($this, $constraint->getWeight(), $this->getMessage($constraint, $count));
+            return new ValidationError($this, $constraint->getWeight(), $this->getMessage($constraint, $count));
         }
+
+        return null;
     }
 
     /**

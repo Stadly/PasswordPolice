@@ -9,6 +9,7 @@ use DateInterval;
 use InvalidArgumentException;
 use Stadly\PasswordPolice\FormerPassword;
 use Stadly\PasswordPolice\Password;
+use Stadly\PasswordPolice\ValidationError;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -200,76 +201,64 @@ final class ChangeTest extends TestCase
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
+    public function testRuleCanBeValidated(): void
     {
         $rule = new Change(new DateInterval('P5D'), null);
 
-        $rule->enforce($this->password);
-
-        // Force generation of code coverage
-        $ruleConstruct = new Change(new DateInterval('P5D'), null);
-        self::assertEquals($rule, $ruleConstruct);
+        self::assertNull($rule->validate($this->password));
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
+    public function testRuleWithMinConstraintCanBeInvalidated(): void
     {
         $rule = new Change(new DateInterval('P10D'), null);
 
-        $this->expectException(RuleException::class);
-
-        $rule->enforce($this->password);
+        self::assertEquals(
+            new ValidationError($rule, 1, 'Must be at least 1 week 3 days between password changes.'),
+            $rule->validate($this->password)
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMinConstraint(): void
-    {
-        $rule = new Change(new DateInterval('P10D'), null);
-
-        $this->expectExceptionMessage('Must be at least 1 week 3 days between password changes.');
-
-        $rule->enforce($this->password);
-    }
-
-    /**
-     * @covers ::enforce
-     */
-    public function testValidationMessageForRuleWithMaxConstraint(): void
+    public function testRuleWithMaxConstraintCanBeInvalidated(): void
     {
         $rule = new Change(new DateInterval('PT0S'), new DateInterval('P5D'));
 
-        $this->expectExceptionMessage('Must be at most 5 days between password changes.');
-
-        $rule->enforce($this->password);
+        self::assertEquals(
+            new ValidationError($rule, 1, 'Must be at most 5 days between password changes.'),
+            $rule->validate($this->password)
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithBothMinAndMaxConstraint(): void
+    public function testRuleWithBothMinAndMaxConstraintCanBeInvalidated(): void
     {
         $rule = new Change(new DateInterval('P14D'), new DateInterval('P1M'));
 
-        $this->expectExceptionMessage('Must be between 2 weeks and 1 month between password changes.');
-
-        $rule->enforce($this->password);
+        self::assertEquals(
+            new ValidationError($rule, 1, 'Must be between 2 weeks and 1 month between password changes.'),
+            $rule->validate($this->password)
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
+    public function testRuleWithMinConstraintEqualToMaxConstraintCanBeInvalidated(): void
     {
         $rule = new Change(new DateInterval('P6D'), new DateInterval('PT144H'));
 
-        $this->expectExceptionMessage('Must be exactly 6 days between password changes.');
-
-        $rule->enforce($this->password);
+        self::assertEquals(
+            new ValidationError($rule, 1, 'Must be exactly 6 days between password changes.'),
+            $rule->validate($this->password)
+        );
     }
 }

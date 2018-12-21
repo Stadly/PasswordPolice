@@ -6,7 +6,6 @@ namespace Stadly\PasswordPolice;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Stadly\PasswordPolice\Rule\RuleException;
 use Stadly\PasswordPolice\Rule\RuleInterface;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -46,9 +45,9 @@ final class PolicyTest extends TestCase
         $this->satisfiedRule2 = $this->createMock(RuleInterface::class);
         $this->satisfiedRule2->method('test')->willReturn(true);
 
-        $ruleException = new RuleException($this->createMock(RuleInterface::class), 1, 'foo');
         $this->unsatisfiedRule = $this->createMock(RuleInterface::class);
-        $this->unsatisfiedRule->method('enforce')->willThrowException($ruleException);
+        $validationError = new ValidationError($this->unsatisfiedRule, 1, 'foo');
+        $this->unsatisfiedRule->method('validate')->willReturn($validationError);
 
         /**
          * @var MockObject&TranslatorInterface&LocaleAwareInterface
@@ -180,29 +179,26 @@ final class PolicyTest extends TestCase
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceDoesNotThrowExceptionWhenPolicyIsSatisfied(): void
+    public function testPolicyCanBeValidated(): void
     {
         $policy = new Policy($this->satisfiedRule1);
 
-        $policy->enforce('foo');
-
-        // Force generation of code coverage
-        $policyConstruct = new Policy($this->satisfiedRule1);
-        self::assertEquals($policy, $policyConstruct);
+        self::assertSame([], $policy->validate('foo'));
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceThrowsExceptionWhenPolicyIsNotSatisfied(): void
+    public function testPolicyCanBeInvalidated(): void
     {
         $policy = new Policy($this->unsatisfiedRule);
 
-        $this->expectException(PolicyException::class);
-
-        $policy->enforce('');
+        self::assertEquals(
+            [new ValidationError($this->unsatisfiedRule, 1, 'foo')],
+            $policy->validate('')
+        );
     }
 
     /**

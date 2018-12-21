@@ -6,6 +6,7 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Stadly\PasswordPolice\ValidationError;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\Digit
@@ -172,88 +173,77 @@ final class DigitTest extends TestCase
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
+    public function testRuleCanBeValidated(): void
     {
         $rule = new Digit(1, null);
 
-        $rule->enforce('1');
-
-        // Force generation of code coverage
-        $ruleConstruct = new Digit(1, null);
-        self::assertEquals($rule, $ruleConstruct);
+        self::assertNull($rule->validate('1'));
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
-    {
-        $rule = new Digit(1, null);
-
-        $this->expectException(RuleException::class);
-
-        $rule->enforce('-');
-    }
-
-    /**
-     * @covers ::enforce
-     */
-    public function testValidationMessageForRuleWithMinConstraint(): void
+    public function testRuleWithMinConstraintCanBeInvalidated(): void
     {
         $rule = new Digit(5, null);
 
-        $this->expectExceptionMessage('There must be at least 5 digits.');
-
-        $rule->enforce('foo 12');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be at least 5 digits.'),
+            $rule->validate('foo 12')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMaxConstraint(): void
+    public function testRuleWithMaxConstraintCanBeInvalidated(): void
     {
         $rule = new Digit(0, 10);
 
-        $this->expectExceptionMessage('There must be at most 10 digits.');
-
-        $rule->enforce('foo 123 456 123456');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be at most 10 digits.'),
+            $rule->validate('foo 123 456 123456')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithBothMinAndMaxConstraint(): void
+    public function testRuleWithBothMinAndMaxConstraintCanBeInvalidated(): void
     {
         $rule = new Digit(5, 10);
 
-        $this->expectExceptionMessage('There must be between 5 and 10 digits.');
-
-        $rule->enforce('foo 12');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be between 5 and 10 digits.'),
+            $rule->validate('foo 12')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMaxConstraintEqualToZero(): void
+    public function testRuleWithMaxConstraintEqualToZeroCanBeInvalidated(): void
     {
         $rule = new Digit(0, 0);
 
-        $this->expectExceptionMessage('There must be no digits.');
-
-        $rule->enforce('foo 12');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be no digits.'),
+            $rule->validate('foo 12')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
+    public function testRuleWithMinConstraintEqualToMaxConstraintCanBeInvalidated(): void
     {
         $rule = new Digit(3, 3);
 
-        $this->expectExceptionMessage('There must be exactly 3 digits.');
-
-        $rule->enforce('foo 12');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be exactly 3 digits.'),
+            $rule->validate('foo 12')
+        );
     }
 }

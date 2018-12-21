@@ -6,6 +6,7 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Stadly\PasswordPolice\ValidationError;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\UpperCase
@@ -192,88 +193,77 @@ final class UpperCaseTest extends TestCase
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
+    public function testRuleCanBeValidated(): void
     {
         $rule = new UpperCase(1, null);
 
-        $rule->enforce('FOO');
-
-        // Force generation of code coverage
-        $ruleConstruct = new UpperCase(1, null);
-        self::assertEquals($rule, $ruleConstruct);
+        self::assertNull($rule->validate('FOO'));
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
-    {
-        $rule = new UpperCase(1, null);
-
-        $this->expectException(RuleException::class);
-
-        $rule->enforce('foo');
-    }
-
-    /**
-     * @covers ::enforce
-     */
-    public function testValidationMessageForRuleWithMinConstraint(): void
+    public function testRuleWithMinConstraintCanBeInvalidated(): void
     {
         $rule = new UpperCase(5, null);
 
-        $this->expectExceptionMessage('There must be at least 5 upper case characters.');
-
-        $rule->enforce('FOo');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be at least 5 upper case characters.'),
+            $rule->validate('FOo')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMaxConstraint(): void
+    public function testRuleWithMaxConstraintCanBeInvalidated(): void
     {
         $rule = new UpperCase(0, 10);
 
-        $this->expectExceptionMessage('There must be at most 10 upper case characters.');
-
-        $rule->enforce('FOo BAR QWERTY');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be at most 10 upper case characters.'),
+            $rule->validate('FOo BAR QWERTY')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithBothMinAndMaxConstraint(): void
+    public function testRuleWithBothMinAndMaxConstraintCanBeInvalidated(): void
     {
         $rule = new UpperCase(5, 10);
 
-        $this->expectExceptionMessage('There must be between 5 and 10 upper case characters.');
-
-        $rule->enforce('FOo');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be between 5 and 10 upper case characters.'),
+            $rule->validate('FOo')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMaxConstraintEqualToZero(): void
+    public function testRuleWithMaxConstraintEqualToZeroCanBeInvalidated(): void
     {
         $rule = new UpperCase(0, 0);
 
-        $this->expectExceptionMessage('There must be no upper case characters.');
-
-        $rule->enforce('FOo');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be no upper case characters.'),
+            $rule->validate('FOo')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
+    public function testRuleWithMinConstraintEqualToMaxConstraintCanBeInvalidated(): void
     {
         $rule = new UpperCase(3, 3);
 
-        $this->expectExceptionMessage('There must be exactly 3 upper case characters.');
-
-        $rule->enforce('FOo');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be exactly 3 upper case characters.'),
+            $rule->validate('FOo')
+        );
     }
 }

@@ -10,6 +10,7 @@ use Traversable;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
 use Stadly\PasswordPolice\WordList\WordListInterface;
+use Stadly\PasswordPolice\ValidationError;
 
 final class Dictionary implements RuleInterface
 {
@@ -115,13 +116,15 @@ final class Dictionary implements RuleInterface
     /**
      * {@inheritDoc}
      */
-    public function enforce($password): void
+    public function validate($password): ?ValidationError
     {
         $word = $this->getDictionaryWord((string)$password);
 
         if ($word !== null) {
-            throw new RuleException($this, $this->weight, $this->getMessage($word));
+            return new ValidationError($this, $this->weight, $this->getMessage($word));
         }
+
+        return null;
     }
 
     /**

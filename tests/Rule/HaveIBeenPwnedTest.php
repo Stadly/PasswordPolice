@@ -13,6 +13,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use RuntimeException;
+use Stadly\PasswordPolice\ValidationError;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\HaveIBeenPwned
@@ -286,95 +287,77 @@ final class HaveIBeenPwnedTest extends TestCase
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
+    public function testRuleCanBeValidated(): void
     {
-        $client = new HaveIBeenPwnedClient();
-        $requestFactory = new MockedRequestFactory();
-
         $rule = new HaveIBeenPwned(null, 2);
-        $rule->setClient($client);
-        $rule->setRequestFactory($requestFactory);
 
-        $rule->enforce('1397wpfk');
-
-        // Force generation of code coverage
-        $ruleConstruct = new HaveIBeenPwned(null, 2);
-        $ruleConstruct->setClient($client);
-        $ruleConstruct->setRequestFactory($requestFactory);
-        self::assertEquals($rule, $ruleConstruct);
+        self::assertNull($rule->validate('1397wpfk'));
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
-    {
-        $rule = new HaveIBeenPwned(null, 3);
-
-        $this->expectException(RuleException::class);
-
-        $rule->enforce('1397wpfk');
-    }
-
-    /**
-     * @covers ::enforce
-     */
-    public function testValidationMessageForRuleWithMinConstraint(): void
+    public function testRuleWithMinConstraintCanBeInvalidated(): void
     {
         $rule = new HaveIBeenPwned(null, 5);
 
-        $this->expectExceptionMessage('Must appear at least 5 times in breaches.');
-
-        $rule->enforce('1397wpfk');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'Must appear at least 5 times in breaches.'),
+            $rule->validate('1397wpfk')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMaxConstraint(): void
+    public function testRuleWithMaxConstraintCanBeInvalidated(): void
     {
         $rule = new HaveIBeenPwned(10, 0);
 
-        $this->expectExceptionMessage('Must appear at most 10 times in breaches.');
-
-        $rule->enforce('6004468405');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'Must appear at most 10 times in breaches.'),
+            $rule->validate('6004468405')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithBothMinAndMaxConstraint(): void
+    public function testRuleWithBothMinAndMaxConstraintCanBeInvalidated(): void
     {
         $rule = new HaveIBeenPwned(10, 5);
 
-        $this->expectExceptionMessage('Must appear between 5 and 10 times in breaches.');
-
-        $rule->enforce('1397wpfk');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'Must appear between 5 and 10 times in breaches.'),
+            $rule->validate('1397wpfk')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMaxConstraintEqualToZero(): void
+    public function testRuleWithMaxConstraintEqualToZeroCanBeInvalidated(): void
     {
         $rule = new HaveIBeenPwned(0, 0);
 
-        $this->expectExceptionMessage('Must not appear in any breaches.');
-
-        $rule->enforce('1397wpfk');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'Must not appear in any breaches.'),
+            $rule->validate('1397wpfk')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
+    public function testRuleWithMinConstraintEqualToMaxConstraintCanBeInvalidated(): void
     {
         $rule = new HaveIBeenPwned(3, 3);
 
-        $this->expectExceptionMessage('Must appear exactly 3 times in breaches.');
-
-        $rule->enforce('1397wpfk');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'Must appear exactly 3 times in breaches.'),
+            $rule->validate('1397wpfk')
+        );
     }
 }

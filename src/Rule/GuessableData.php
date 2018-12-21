@@ -9,6 +9,7 @@ use Traversable;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
+use Stadly\PasswordPolice\ValidationError;
 
 final class GuessableData implements RuleInterface
 {
@@ -92,18 +93,20 @@ final class GuessableData implements RuleInterface
     }
 
     /**
-     * Enforce that a password is in compliance with the rule.
+     * Validate that a password is in compliance with the rule.
      *
-     * @param Password|string $password Password that must adhere to the rule.
-     * @throws RuleException If the password does not adhrere to the rule.
+     * @param Password|string $password Password to validate.
+     * @return ValidationError|null Validation error describing why the password is not in compliance with the rule.
      */
-    public function enforce($password): void
+    public function validate($password): ?ValidationError
     {
         $data = $this->getGuessableData($password);
 
         if ($data !== null) {
-            throw new RuleException($this, $this->weight, $this->getMessage($data));
+            return new ValidationError($this, $this->weight, $this->getMessage($data));
         }
+
+        return null;
     }
 
     /**

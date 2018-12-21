@@ -6,6 +6,7 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Stadly\PasswordPolice\ValidationError;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\Symbol
@@ -192,88 +193,77 @@ final class SymbolTest extends TestCase
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceDoesNotThrowExceptionWhenRuleIsSatisfied(): void
+    public function testRuleCanBeValidated(): void
     {
         $rule = new Symbol('$%&@!', 1, null);
 
-        $rule->enforce('&');
-
-        // Force generation of code coverage
-        $ruleConstruct = new Symbol('$%&@!', 1, null);
-        self::assertEquals($rule, $ruleConstruct);
+        self::assertNull($rule->validate('&'));
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testEnforceThrowsExceptionWhenRuleIsNotSatisfied(): void
-    {
-        $rule = new Symbol('$%&@!', 1, null);
-
-        $this->expectException(RuleException::class);
-
-        $rule->enforce('€');
-    }
-
-    /**
-     * @covers ::enforce
-     */
-    public function testValidationMessageForRuleWithMinConstraint(): void
+    public function testRuleWithMinConstraintCanBeInvalidated(): void
     {
         $rule = new Symbol('$%&@!', 5, null);
 
-        $this->expectExceptionMessage('There must be at least 5 symbols ($%&@!).');
-
-        $rule->enforce('foo bar');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be at least 5 symbols ($%&@!).'),
+            $rule->validate('foo bar $$@!')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMaxConstraint(): void
+    public function testRuleWithMaxConstraintCanBeInvalidated(): void
     {
         $rule = new Symbol('$%&@!', 0, 10);
 
-        $this->expectExceptionMessage('There must be at most 10 symbols ($%&@!).');
-
-        $rule->enforce('foo bar $$@! $$@! $$@!');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be at most 10 symbols ($%&@!).'),
+            $rule->validate('foo bar $$@! $$@! $$@!')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithBothMinAndMaxConstraint(): void
+    public function testRuleWithBothMinAndMaxConstraintCanBeInvalidated(): void
     {
         $rule = new Symbol('$%&@!', 5, 10);
 
-        $this->expectExceptionMessage('There must be between 5 and 10 symbols ($%&@!).');
-
-        $rule->enforce('foo bar $$@!');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be between 5 and 10 symbols ($%&@!).'),
+            $rule->validate('foo bar $$@!')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMaxConstraintEqualToZero(): void
+    public function testRuleWithMaxConstraintEqualToZeroCanBeInvalidated(): void
     {
         $rule = new Symbol('$%&@!', 0, 0);
 
-        $this->expectExceptionMessage('There must be no symbols ($%&@!).');
-
-        $rule->enforce('foo bar $$@!');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be no symbols ($%&@!).'),
+            $rule->validate('foo bar $$@!')
+        );
     }
 
     /**
-     * @covers ::enforce
+     * @covers ::validate
      */
-    public function testValidationMessageForRuleWithMinConstraintEqualToMaxConstraint(): void
+    public function testRuleWithMinConstraintEqualToMaxConstraintCanBeInvalidated(): void
     {
         $rule = new Symbol('$%&@!', 3, 3);
 
-        $this->expectExceptionMessage('There must be exactly 3 symbols ($%&@!).');
-
-        $rule->enforce('foo bar $$@!');
+        self::assertEquals(
+            new ValidationError($rule, 1, 'There must be exactly 3 symbols ($%&@!).'),
+            $rule->validate('foo bar $$@!')
+        );
     }
 }
