@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use DateTimeInterface;
-use InvalidArgumentException;
-use RuntimeException;
 use Traversable;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
-use Stadly\PasswordPolice\WordList\WordListInterface;
 
 final class GuessableData implements RuleInterface
 {

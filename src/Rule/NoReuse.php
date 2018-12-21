@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use InvalidArgumentException;
 use StableSort\StableSort;
 use Stadly\PasswordPolice\Constraint\Position;
-use Stadly\PasswordPolice\FormerPassword;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\HashFunction\HashFunctionInterface;

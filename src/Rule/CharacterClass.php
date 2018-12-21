@@ -8,7 +8,6 @@ use InvalidArgumentException;
 use StableSort\StableSort;
 use Stadly\PasswordPolice\Constraint\Count;
 use Stadly\PasswordPolice\Password;
-use Stadly\PasswordPolice\Policy;
 
 abstract class CharacterClass implements RuleInterface
 {

@@ -7,7 +7,6 @@ namespace Stadly\PasswordPolice\Rule;
 use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
-use InvalidArgumentException;
 use StableSort\StableSort;
 use Stadly\PasswordPolice\Constraint\Date;
 use Carbon\CarbonInterval;

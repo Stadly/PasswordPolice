@@ -6,7 +6,6 @@ namespace Stadly\PasswordPolice\Rule;
 
 use Http\Factory\Discovery\HttpFactory;
 use Http\Factory\Discovery\HttpClient;
-use InvalidArgumentException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
