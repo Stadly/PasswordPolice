@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice;
 
-use Stadly\PasswordPolice\Rule\RuleException;
 use Stadly\PasswordPolice\Rule\RuleInterface;
 use Stadly\PasswordPolice\Rule\TestException;
 use Symfony\Component\Translation\Translator;
