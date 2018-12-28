@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use DateTimeImmutable;
 use DateInterval;
+use DateTimeImmutable;
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\FormerPassword;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\ValidationError;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\ChangeInterval

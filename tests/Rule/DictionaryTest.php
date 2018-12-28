@@ -6,12 +6,11 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Stadly\PasswordPolice\ValidationError;
 use Stadly\PasswordPolice\WordConverter;
 use Stadly\PasswordPolice\WordList;
-
-use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\Dictionary

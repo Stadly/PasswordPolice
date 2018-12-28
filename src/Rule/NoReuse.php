@@ -6,9 +6,9 @@ namespace Stadly\PasswordPolice\Rule;
 
 use StableSort\StableSort;
 use Stadly\PasswordPolice\Constraint\Position;
+use Stadly\PasswordPolice\HashFunction;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
-use Stadly\PasswordPolice\HashFunction;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 

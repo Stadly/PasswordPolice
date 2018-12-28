@@ -7,11 +7,11 @@ namespace Stadly\PasswordPolice\Rule;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
-use Stadly\PasswordPolice\FormerPassword;
-use Stadly\PasswordPolice\Password;
-use Stadly\PasswordPolice\HashFunction;
-use Stadly\PasswordPolice\ValidationError;
 use PHPUnit\Framework\TestCase;
+use Stadly\PasswordPolice\FormerPassword;
+use Stadly\PasswordPolice\HashFunction;
+use Stadly\PasswordPolice\Password;
+use Stadly\PasswordPolice\ValidationError;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\NoReuse

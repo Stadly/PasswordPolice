@@ -6,12 +6,12 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use RuntimeException;
-use Traversable;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
+use Stadly\PasswordPolice\ValidationError;
 use Stadly\PasswordPolice\WordConverter;
 use Stadly\PasswordPolice\WordList;
-use Stadly\PasswordPolice\ValidationError;
+use Traversable;
 
 final class Dictionary implements Rule
 {

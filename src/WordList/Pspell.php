@@ -7,9 +7,9 @@ namespace Stadly\PasswordPolice\WordList;
 use ErrorException;
 use InvalidArgumentException;
 use RuntimeException;
-use Traversable;
 use Stadly\PasswordPolice\WordConverter;
 use Stadly\PasswordPolice\WordList;
+use Traversable;
 
 final class Pspell implements WordList
 {

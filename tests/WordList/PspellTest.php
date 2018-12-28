@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\WordList;
 
 use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Notice;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Stadly\PasswordPolice\WordConverter;
 

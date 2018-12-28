@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use Http\Factory\Discovery\HttpFactory;
 use Http\Factory\Discovery\HttpClient;
+use Http\Factory\Discovery\HttpFactory;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
