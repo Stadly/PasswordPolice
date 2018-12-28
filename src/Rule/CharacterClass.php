@@ -129,7 +129,7 @@ abstract class CharacterClass implements Rule
     {
         $escapedCharacters = preg_quote($this->characters);
         $count = preg_match_all('{['.$escapedCharacters.']}u', $password);
-        assert(false !== $count);
+        assert($count !== false);
 
         return $count;
     }

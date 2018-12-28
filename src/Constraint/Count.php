@@ -78,7 +78,7 @@ final class Count
             return false;
         }
 
-        if (null !== $this->max && $this->max < $count) {
+        if ($this->max !== null && $this->max < $count) {
             return false;
         }
 

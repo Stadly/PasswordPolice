@@ -151,7 +151,7 @@ final class ChangeInterval implements Rule
         $max->locale($locale);
         $maxString = $max->forHumans(['join' => true]);
 
-        if (0 === Interval::compare(new \DateInterval('PT0S'), $constraint->getMin())) {
+        if (Interval::compare(new \DateInterval('PT0S'), $constraint->getMin()) === 0) {
             return $translator->trans(
                 'Must be at most %interval% between password changes.',
                 ['%interval%' => $maxString]

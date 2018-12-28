@@ -72,11 +72,11 @@ final class Date
      */
     public function test(DateTimeInterface $date): bool
     {
-        if (null !== $this->min && $date < $this->min) {
+        if ($this->min !== null && $date < $this->min) {
             return false;
         }
 
-        if (null !== $this->max && $this->max < $date) {
+        if ($this->max !== null && $this->max < $date) {
             return false;
         }
 

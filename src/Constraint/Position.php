@@ -78,7 +78,7 @@ final class Position
             return false;
         }
 
-        if (null !== $this->count && $this->first+$this->count <= $pos) {
+        if ($this->count !== null && $this->first+$this->count <= $pos) {
             return false;
         }
 

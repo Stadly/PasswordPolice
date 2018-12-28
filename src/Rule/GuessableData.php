@@ -197,7 +197,7 @@ final class GuessableData implements Rule
      */
     private function containsString(string $password, string $string): bool
     {
-        return false !== mb_stripos($password, $string);
+        return mb_stripos($password, $string) !== false;
     }
 
     /**
