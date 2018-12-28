@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use Carbon\CarbonInterval;
+use DateInterval as PhpDateInterval;
 use DateTimeInterface;
 use StableSort\StableSort;
 use Stadly\Date\Interval;
@@ -22,22 +23,22 @@ final class ChangeInterval implements Rule
     private $constraints;
 
     /**
-     * @param \DateInterval $min Minimum time since last password change.
-     * @param \DateInterval|null $max Maximum time since last password change.
+     * @param PhpDateInterval $min Minimum time since last password change.
+     * @param PhpDateInterval|null $max Maximum time since last password change.
      * @param int $weight Constraint weight.
      */
-    public function __construct(\DateInterval $min, ?\DateInterval $max = null, int $weight = 1)
+    public function __construct(PhpDateInterval $min, ?PhpDateInterval $max = null, int $weight = 1)
     {
         $this->addConstraint($min, $max, $weight);
     }
 
     /**
-     * @param \DateInterval $min Minimum time since last password change.
-     * @param \DateInterval|null $max Maximum time since last password change.
+     * @param PhpDateInterval $min Minimum time since last password change.
+     * @param PhpDateInterval|null $max Maximum time since last password change.
      * @param int $weight Constraint weight.
      * @return $this
      */
-    public function addConstraint(\DateInterval $min, ?\DateInterval $max = null, int $weight = 1): self
+    public function addConstraint(PhpDateInterval $min, ?PhpDateInterval $max = null, int $weight = 1): self
     {
         $this->constraints[] = new DateInterval($min, $max, $weight);
 
@@ -151,7 +152,7 @@ final class ChangeInterval implements Rule
         $max->locale($locale);
         $maxString = $max->forHumans(['join' => true]);
 
-        if (Interval::compare(new \DateInterval('PT0S'), $constraint->getMin()) === 0) {
+        if (Interval::compare(new PhpDateInterval('PT0S'), $constraint->getMin()) === 0) {
             return $translator->trans(
                 'Must be at most %interval% between password changes.',
                 ['%interval%' => $maxString]

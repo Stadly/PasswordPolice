@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Constraint;
 
+use DateInterval as PhpDateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
 use InvalidArgumentException;
@@ -12,12 +13,12 @@ use Stadly\Date\Interval;
 final class DateInterval
 {
     /**
-     * @var \DateInterval Minimum time from then until now.
+     * @var PhpDateInterval Minimum time from then until now.
      */
     private $min;
 
     /**
-     * @var \DateInterval|null Maximum time from then until now.
+     * @var PhpDateInterval|null Maximum time from then until now.
      */
     private $max;
 
@@ -27,13 +28,13 @@ final class DateInterval
     private $weight;
 
     /**
-     * @param \DateInterval $min Minimum time from then until now.
-     * @param \DateInterval|null $max Maximum time from then until now.
+     * @param PhpDateInterval $min Minimum time from then until now.
+     * @param PhpDateInterval|null $max Maximum time from then until now.
      * @param int $weight Constraint weight.
      */
-    public function __construct(\DateInterval $min, ?\DateInterval $max = null, int $weight = 1)
+    public function __construct(PhpDateInterval $min, ?PhpDateInterval $max = null, int $weight = 1)
     {
-        if (0 < Interval::compare(new \DateInterval('PT0S'), $min)) {
+        if (0 < Interval::compare(new PhpDateInterval('PT0S'), $min)) {
             throw new InvalidArgumentException('Min cannot be negative.');
         }
         if ($max !== null && 0 < Interval::compare($min, $max)) {
@@ -46,17 +47,17 @@ final class DateInterval
     }
 
     /**
-     * @return \DateInterval Minimum time from then until now.
+     * @return PhpDateInterval Minimum time from then until now.
      */
-    public function getMin(): \DateInterval
+    public function getMin(): PhpDateInterval
     {
         return $this->min;
     }
 
     /**
-     * @return \DateInterval|null Maximum time from then until now.
+     * @return PhpDateInterval|null Maximum time from then until now.
      */
-    public function getMax(): ?\DateInterval
+    public function getMax(): ?PhpDateInterval
     {
         return $this->max;
     }
