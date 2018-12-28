@@ -41,7 +41,7 @@ $policy->addRules(new LengthRule(8));               // Password must be at least
 $policy->addRules(new LowerCaseRule());             // Password must contain lower case letters.
 $policy->addRules(new UpperCaseRule());             // Password must contain upper case letters.
 $policy->addRules(new DigitRule());                 // Password must contain digits.
-$policy->addRules(new GuessableData());             // Password must not contain data that is easy to guess.
+$policy->addRules(new GuessableData(['company']));  // Password must not contain data that is easy to guess.
 $policy->addRules(new HaveIBeenPwned());            // Password must not be exposed in data breaches.
 $policy->addRules(new NoReuse(new PasswordHash())); // Password must not have been used earlier.
 $pspell = Pspell::fromLocale('en', new LowerCaseConverter(), new UpperCaseConverter());
@@ -57,7 +57,7 @@ if (empty($validationErrors)) {
 }
 
 
-// Specify data that is easy to guess for this password.
+// Specify additional data that is easy to guess for this password.
 $guessableData = [
     'first name',
     'spouse',

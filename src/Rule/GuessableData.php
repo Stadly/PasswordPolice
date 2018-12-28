@@ -56,6 +56,11 @@ final class GuessableData implements Rule
     ];
 
     /**
+     * @var (string|DateTimeInterface)[] Guessable data.
+     */
+    private $guessableData;
+
+    /**
      * @var WordConverter[] Word converters.
      */
     private $wordConverters;
@@ -66,11 +71,13 @@ final class GuessableData implements Rule
     private $weight;
 
     /**
+     * @param (string|DateTimeInterface)[] $guessableData Guessable data.
      * @param WordConverter[] $wordConverters Word converters.
      * @param int $weight Constraint weight.
      */
-    public function __construct(array $wordConverters = [], int $weight = 1)
+    public function __construct(array $guessableData = [], array $wordConverters = [], int $weight = 1)
     {
+        $this->guessableData = $guessableData;
         $this->wordConverters = $wordConverters;
         $this->weight = $weight;
     }
@@ -121,15 +128,19 @@ final class GuessableData implements Rule
      */
     private function getGuessableData($password)
     {
+        $guessableData = $this->guessableData;
         if ($password instanceof Password) {
-            foreach ($this->getWordsToCheck((string)$password) as $word) {
-                foreach ($password->getGuessableData() as $data) {
-                    if ($this->contains($word, $data)) {
-                        return $data;
-                    }
+            $guessableData = array_merge($guessableData, $password->getGuessableData());
+        }
+
+        foreach ($this->getWordsToCheck((string)$password) as $word) {
+            foreach ($guessableData as $data) {
+                if ($this->contains($word, $data)) {
+                    return $data;
                 }
             }
         }
+
         return null;
     }
 

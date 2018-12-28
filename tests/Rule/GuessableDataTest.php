@@ -42,7 +42,18 @@ final class GuessableDataTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testPasswordCanContainString(): void
+    public function testPasswordCanContainGuessableStringInRule(): void
+    {
+        $rule = new GuessableData(['oba']);
+        $password = new Password('foobar');
+
+        self::assertFalse($rule->test($password));
+    }
+
+    /**
+     * @covers ::test
+     */
+    public function testPasswordCanContainGuessableStringInPassword(): void
     {
         $rule = new GuessableData();
         $password = new Password('foobar', ['oba']);
@@ -53,9 +64,9 @@ final class GuessableDataTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testPasswordCanNotContainString(): void
+    public function testPasswordCanNotContainGuessableString(): void
     {
-        $rule = new GuessableData();
+        $rule = new GuessableData(['oob']);
         $password = new Password('foo28/11/18bar', ['oba']);
 
         self::assertTrue($rule->test($password));
@@ -64,7 +75,18 @@ final class GuessableDataTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testPasswordCanContainDate(): void
+    public function testPasswordCanContainGuessableDateInRule(): void
+    {
+        $rule = new GuessableData([new DateTime('2018-11-28')]);
+        $password = new Password('foo28/11/18bar');
+
+        self::assertFalse($rule->test($password));
+    }
+
+    /**
+     * @covers ::test
+     */
+    public function testPasswordCanContainGuessableDateInPassword(): void
     {
         $rule = new GuessableData();
         $password = new Password('foo28/11/18bar', [new DateTime('2018-11-28')]);
@@ -75,7 +97,7 @@ final class GuessableDataTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testPasswordCanNotContainDate(): void
+    public function testPasswordCanNotContainGuessableDate(): void
     {
         $rule = new GuessableData();
         $password = new Password('foobar', [new DateTime('2018-11-28')]);
@@ -88,7 +110,7 @@ final class GuessableDataTest extends TestCase
      */
     public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
     {
-        $rule = new GuessableData([], 1);
+        $rule = new GuessableData([], [], 1);
         $password = new Password('foobar', ['oba']);
 
         self::assertTrue($rule->test($password, 2));
@@ -106,7 +128,7 @@ final class GuessableDataTest extends TestCase
             }
         );
 
-        $rule = new GuessableData([$wordConverter]);
+        $rule = new GuessableData([], [$wordConverter]);
 
         self::assertFalse($rule->test(new Password('pine4ppl€jack', ['apple'])));
         self::assertTrue($rule->test(new Password('pine4pp1€jack', ['apple'])));
@@ -124,7 +146,7 @@ final class GuessableDataTest extends TestCase
             }
         );
 
-        $rule = new GuessableData([$wordConverter]);
+        $rule = new GuessableData([], [$wordConverter]);
 
         self::assertFalse($rule->test(new Password('foo2B/II/1Bbar', [new DateTime('2018-11-28')])));
         self::assertTrue($rule->test(new Password('fooZB/I!/1Bbar', [new DateTime('2018-11-28')])));
@@ -149,7 +171,7 @@ final class GuessableDataTest extends TestCase
             }
         );
 
-        $rule = new GuessableData([$wordConverter1, $wordConverter2]);
+        $rule = new GuessableData([], [$wordConverter1, $wordConverter2]);
 
         self::assertTrue($rule->test(new Password('pine4ppl€jack', ['apple'])));
         self::assertFalse($rule->test(new Password('pineappl€jack', ['apple'])));
@@ -175,7 +197,7 @@ final class GuessableDataTest extends TestCase
             }
         );
 
-        $rule = new GuessableData([$wordConverter1, $wordConverter2]);
+        $rule = new GuessableData([], [$wordConverter1, $wordConverter2]);
 
         self::assertTrue($rule->test(new Password('foo2B/I!/1Bbar', [new DateTime('2018-11-28')])));
         self::assertFalse($rule->test(new Password('foo28/II/18bar', [new DateTime('2018-11-28')])));

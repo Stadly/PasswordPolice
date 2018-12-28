@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.13.0...HEAD)
 
 ### Added
-- Nothing
+- Possible to specify guessable data for the rule, that applies to all passwords.
 
 ### Changed
 - Nothing
