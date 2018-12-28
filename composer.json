@@ -21,7 +21,7 @@
     "require": {
         "php": ">=7.1",
         "http-interop/http-factory-discovery": "^1.4",
-        "nesbot/carbon": "^2.0",
+        "nesbot/carbon": "^2.9",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",
         "stadly/php-date": "^1.0",
