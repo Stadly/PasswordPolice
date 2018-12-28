@@ -76,7 +76,7 @@ final class ChangeIntervalTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new ChangeInterval(DateInterval::createFromDateString('- 5 days'), null);
+        $rule = new ChangeInterval(DateInterval::createFromDateString('-5 days'), null);
     }
 
     /**
