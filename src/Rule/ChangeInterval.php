@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use StableSort\StableSort;
 use Stadly\PasswordPolice\Constraint\DateInterval;
