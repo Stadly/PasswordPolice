@@ -4,7 +4,7 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.12.0...HEAD)
+## [v0.13.0](https://github.com/Stadly/PasswordPolice/compare/v0.12.0...v0.13.0) - 2018-12-28
 
 ### Added
 - Date constraint.
@@ -15,18 +15,6 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Rename `Change` rule to `ChangeInterval`.
 - Rename `Date` constraint to `DateInterval`.
 - The dates of former passwords must be immutable.
-
-### Fixed
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ## [v0.12.0](https://github.com/Stadly/PasswordPolice/compare/v0.11.0...v0.12.0) - 2018-12-28
 
