@@ -12,6 +12,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
 - Remove `Interface` suffix from interfaces.
 - Move interfaces one level up in the namespace hierarchy.
+- Rename `TestException` to `Exception`.
 
 ### Fixed
 - Nothing

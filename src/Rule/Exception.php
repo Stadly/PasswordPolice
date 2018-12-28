@@ -9,17 +9,17 @@ use Stadly\PasswordPolice\Rule;
 use Throwable;
 
 /**
- * Exception thrown if an error occurred while testing a rule.
+ * Exception thrown if a rule caused an error.
  */
-final class TestException extends RuntimeException
+final class Exception extends RuntimeException
 {
     /**
-     * @var Rule Rule that was tested when the error occurred.
+     * @var Rule Rule that caused the error.
      */
     private $rule;
 
     /**
-     * @param Rule $rule Rule that was tested when the error occurred.
+     * @param Rule $rule Rule that caused the error.
      * @param string $message Exception message.
      * @param Throwable|null $previous Previous exception, used for exception chaining.
      */
@@ -31,7 +31,7 @@ final class TestException extends RuntimeException
     }
 
     /**
-     * @return Rule Rule that was tested when the error occurred.
+     * @return Rule Rule that caused the error.
      */
     public function getRule(): Rule
     {

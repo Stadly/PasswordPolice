@@ -9,11 +9,11 @@ use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\Rule;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\Rule\TestException
+ * @coversDefaultClass \Stadly\PasswordPolice\Rule\Exception
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class TestExceptionTest extends TestCase
+final class ExceptionTest extends TestCase
 {
     /**
      * @var MockObject&Rule
@@ -30,10 +30,10 @@ final class TestExceptionTest extends TestCase
      */
     public function testCanConstructException(): void
     {
-        $exception = new TestException($this->rule, 'foo');
+        $exception = new Exception($this->rule, 'foo');
 
         // Force generation of code coverage
-        $exceptionConstruct = new TestException($this->rule, 'foo');
+        $exceptionConstruct = new Exception($this->rule, 'foo');
         self::assertEquals($exception, $exceptionConstruct);
     }
 
@@ -42,7 +42,7 @@ final class TestExceptionTest extends TestCase
      */
     public function testCanGetRule(): void
     {
-        $exception = new TestException($this->rule, 'foo');
+        $exception = new Exception($this->rule, 'foo');
 
         self::assertSame($this->rule, $exception->getRule());
     }

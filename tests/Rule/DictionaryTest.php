@@ -309,7 +309,7 @@ final class DictionaryTest extends TestCase
 
         $rule = new Dictionary($wordList);
 
-        $this->expectException(TestException::class);
+        $this->expectException(Exception::class);
 
         $rule->test('foo');
     }

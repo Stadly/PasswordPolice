@@ -136,7 +136,7 @@ final class Dictionary implements Rule
     /**
      * @param string $password Password to find dictionary words in.
      * @return string|null Dictionary word in the password.
-     * @throws TestException If an error occurred while using the word list.
+     * @throws Exception If an error occurred.
      */
     private function getDictionaryWord(string $password): ?string
     {
@@ -146,7 +146,7 @@ final class Dictionary implements Rule
                     return $word;
                 }
             } catch (RuntimeException $exception) {
-                throw new TestException(
+                throw new Exception(
                     $this,
                     'An error occurred while using the word list: '.$exception->getMessage(),
                     $exception

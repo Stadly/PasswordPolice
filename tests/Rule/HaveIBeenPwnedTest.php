@@ -7,7 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use Http\Factory\Discovery\ClientLocator;
 use Http\Factory\Discovery\FactoryLocator;
 use InvalidArgumentException;
-use PHPUnit\Framework\MockObject\Stub\Exception;
+use PHPUnit\Framework\MockObject\Stub\Exception as StubException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
@@ -245,7 +245,7 @@ final class HaveIBeenPwnedTest extends TestCase
     public function testErrorsWhenCalculatingCountAreHandled(): void
     {
         $exception = $this->createMock(ClientExceptionInterface::class);
-        $stubException = new Exception($exception);
+        $stubException = new StubException($exception);
 
         $client = $this->createMock(ClientInterface::class);
         $client->method('sendRequest')->will($stubException);
@@ -253,7 +253,7 @@ final class HaveIBeenPwnedTest extends TestCase
         $rule = new HaveIBeenPwned(5, 0);
         $rule->setClient($client);
 
-        $this->expectException(TestException::class);
+        $this->expectException(Exception::class);
 
         $rule->test('291vnnzrvtu9');
     }
