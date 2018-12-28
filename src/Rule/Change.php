@@ -140,37 +140,36 @@ final class Change implements Rule
 
         $min = CarbonInterval::instance($constraint->getMin());
         $min->locale($locale);
-        if ($constraint->getMax() === null) {
-            $max = null;
-        } else {
-            $max = CarbonInterval::instance($constraint->getMax());
-            $max->locale($locale);
-        }
+        $minString = $min->forHumans(['join' => true]);
 
         if ($constraint->getMax() === null) {
             return $translator->trans(
                 'Must be at least %interval% between password changes.',
-                ['%interval%' => $min]
+                ['%interval%' => $minString]
             );
         }
 
-        if (0 === Interval::compare(new DateInterval('PT0S'), $min)) {
+        $max = CarbonInterval::instance($constraint->getMax());
+        $max->locale($locale);
+        $maxString = $max->forHumans(['join' => true]);
+
+        if (0 === Interval::compare(new DateInterval('PT0S'), $constraint->getMin())) {
             return $translator->trans(
                 'Must be at most %interval% between password changes.',
-                ['%interval%' => $max]
+                ['%interval%' => $maxString]
             );
         }
 
         if (Interval::compare($constraint->getMin(), $constraint->getMax()) === 0) {
             return $translator->trans(
                 'Must be exactly %interval% between password changes.',
-                ['%interval%' => $min]
+                ['%interval%' => $minString]
             );
         }
 
         return $translator->trans(
             'Must be between %min% and %max% between password changes.',
-            ['%min%' => $min, '%max%' => $max]
+            ['%min%' => $minString, '%max%' => $maxString]
         );
     }
 }

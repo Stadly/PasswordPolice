@@ -27,7 +27,7 @@ final class ChangeTest extends TestCase
     protected function setUp(): void
     {
         $this->password = new Password('foobar', [], [
-            new FormerPassword('qwerty', new DateTime('- 7 days')),
+            new FormerPassword('qwerty', new DateTime('-6 days')),
             new FormerPassword('baz', new DateTime('-1 month')),
             new FormerPassword('bar', new DateTime('-1 year')),
         ]);
@@ -215,11 +215,11 @@ final class ChangeTest extends TestCase
      */
     public function testRuleWithMinConstraintCanBeInvalidated(): void
     {
-        $rule = new Change(new DateInterval('P10D'), null);
+        $rule = new Change(new DateInterval('P7D'), null);
 
         self::assertEquals(
             new ValidationError(
-                'Must be at least 1 week 3 days between password changes.',
+                'Must be at least 1 week between password changes.',
                 $this->password,
                 $rule,
                 1
