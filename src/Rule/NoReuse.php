@@ -30,12 +30,8 @@ final class NoReuse implements Rule
      * @param int $first First former password to consider.
      * @param int $weight Constraint weight.
      */
-    public function __construct(
-        HashFunction $hashFunction,
-        ?int $count = null,
-        int $first = 0,
-        int $weight = 1
-    ) {
+    public function __construct(HashFunction $hashFunction, ?int $count = null, int $first = 0, int $weight = 1)
+    {
         $this->hashFunction = $hashFunction;
         $this->addConstraint($count, $first, $weight);
     }
