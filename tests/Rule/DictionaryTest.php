@@ -29,7 +29,7 @@ final class DictionaryTest extends TestCase
     {
         $this->wordList = $this->createMock(WordList::class);
         $this->wordList->method('contains')->willReturnCallback(
-            function ($word) {
+            static function ($word) {
                 switch ($word) {
                     case 'apple':
                     case 'be':
@@ -321,7 +321,7 @@ final class DictionaryTest extends TestCase
     {
         $wordConverter = $this->createMock(WordConverter::class);
         $wordConverter->method('convert')->willReturnCallback(
-            function ($word) {
+            static function ($word) {
                 yield str_replace(['4', '€'], ['a', 'e'], $word);
             }
         );
@@ -339,7 +339,7 @@ final class DictionaryTest extends TestCase
     {
         $wordConverter = $this->createMock(WordConverter::class);
         $wordConverter->method('convert')->willReturnCallback(
-            function ($word) {
+            static function ($word) {
                 yield str_replace(['4', '€'], ['a', 'e'], $word);
             }
         );
@@ -357,14 +357,14 @@ final class DictionaryTest extends TestCase
     {
         $wordConverter1 = $this->createMock(WordConverter::class);
         $wordConverter1->method('convert')->willReturnCallback(
-            function ($word) {
+            static function ($word) {
                 yield str_replace(['4'], ['a'], $word);
             }
         );
 
         $wordConverter2 = $this->createMock(WordConverter::class);
         $wordConverter2->method('convert')->willReturnCallback(
-            function ($word) {
+            static function ($word) {
                 yield str_replace(['€'], ['e'], $word);
             }
         );
@@ -386,14 +386,14 @@ final class DictionaryTest extends TestCase
     {
         $wordConverter1 = $this->createMock(WordConverter::class);
         $wordConverter1->method('convert')->willReturnCallback(
-            function ($word) {
+            static function ($word) {
                 yield str_replace(['4'], ['a'], $word);
             }
         );
 
         $wordConverter2 = $this->createMock(WordConverter::class);
         $wordConverter2->method('convert')->willReturnCallback(
-            function ($word) {
+            static function ($word) {
                 yield str_replace(['€'], ['e'], $word);
             }
         );

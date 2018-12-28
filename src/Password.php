@@ -80,7 +80,7 @@ final class Password
     {
         $this->formerPasswords = array_merge($this->formerPasswords, $formerPasswords);
 
-        StableSort::usort($this->formerPasswords, function (FormerPassword $a, FormerPassword $b): int {
+        StableSort::usort($this->formerPasswords, static function (FormerPassword $a, FormerPassword $b): int {
             return $b->getDate() <=> $a->getDate();
         });
     }

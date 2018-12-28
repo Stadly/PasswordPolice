@@ -157,7 +157,7 @@ final class PspellTest extends TestCase
     {
         $wordConverter = $this->createMock(WordConverter::class);
         $wordConverter->method('convert')->willReturnCallback(
-            function ($word) {
+            static function ($word) {
                 yield mb_strtolower($word);
             }
         );
@@ -177,14 +177,14 @@ final class PspellTest extends TestCase
     {
         $wordConverter1 = $this->createMock(WordConverter::class);
         $wordConverter1->method('convert')->willReturnCallback(
-            function ($word) {
+            static function ($word) {
                 yield mb_strtolower($word);
             }
         );
 
         $wordConverter2 = $this->createMock(WordConverter::class);
         $wordConverter2->method('convert')->willReturnCallback(
-            function ($word) {
+            static function ($word) {
                 yield mb_strtoupper($word);
             }
         );

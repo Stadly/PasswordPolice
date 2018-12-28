@@ -19,7 +19,7 @@ function pspell_new(
     }
 
     // Trigger error in the scope of Pspell, so it can be caught by the error handler.
-    (function (): void {
+    (static function (): void {
         trigger_error('foo');
     })->bindTo(null, Pspell::class)();
 
@@ -30,7 +30,7 @@ function pspell_check(int $dictionary_link, string $word): bool
 {
     if ($dictionary_link < 0) {
         // Trigger error in the scope of Pspell, so it can be caught by the error handler.
-        (function (): void {
+        (static function (): void {
             trigger_error('foo');
         })->bindTo(null, Pspell::class)();
     } else {

@@ -41,7 +41,7 @@ final class ChangeInterval implements Rule
     {
         $this->constraints[] = new DateInterval($min, $max, $weight);
 
-        StableSort::usort($this->constraints, function (DateInterval $a, DateInterval $b): int {
+        StableSort::usort($this->constraints, static function (DateInterval $a, DateInterval $b): int {
             return $b->getWeight() <=> $a->getWeight();
         });
 

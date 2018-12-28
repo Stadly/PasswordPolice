@@ -41,7 +41,7 @@ final class ChangeDate implements Rule
     {
         $this->constraints[] = new Date($min, $max, $weight);
 
-        StableSort::usort($this->constraints, function (Date $a, Date $b): int {
+        StableSort::usort($this->constraints, static function (Date $a, Date $b): int {
             return $b->getWeight() <=> $a->getWeight();
         });
 

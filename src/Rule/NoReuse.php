@@ -46,7 +46,7 @@ final class NoReuse implements Rule
     {
         $this->constraints[] = new Position($first, $count, $weight);
 
-        StableSort::usort($this->constraints, function (Position $a, Position $b): int {
+        StableSort::usort($this->constraints, static function (Position $a, Position $b): int {
             return $b->getWeight() <=> $a->getWeight();
         });
 

@@ -53,7 +53,7 @@ final class HaveIBeenPwned implements Rule
     {
         $this->constraints[] = new Count($min, $max, $weight);
 
-        StableSort::usort($this->constraints, function (Count $a, Count $b): int {
+        StableSort::usort($this->constraints, static function (Count $a, Count $b): int {
             return $b->getWeight() <=> $a->getWeight();
         });
 
