@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use DateTime;
+use DateTimeImmutable;
 use DateInterval;
 use InvalidArgumentException;
 use Stadly\PasswordPolice\FormerPassword;
@@ -27,9 +27,9 @@ final class ChangeIntervalTest extends TestCase
     protected function setUp(): void
     {
         $this->password = new Password('foobar', [], [
-            new FormerPassword('qwerty', new DateTime('-6 days')),
-            new FormerPassword('baz', new DateTime('-1 month')),
-            new FormerPassword('bar', new DateTime('-1 year')),
+            new FormerPassword('qwerty', new DateTimeImmutable('-6 days')),
+            new FormerPassword('baz', new DateTimeImmutable('-1 month')),
+            new FormerPassword('bar', new DateTimeImmutable('-1 year')),
         ]);
     }
 

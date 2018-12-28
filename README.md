@@ -68,8 +68,8 @@ $validationErrors = $policy->validate(new Password('password', $guessableData));
 
 // Specify former passwords that cannot be reused.
 $formerPasswords = [
-    new FormerPassword('hash of old password', new DateTime('2018-11-30')),
-    new FormerPassword('hash of even older password', new DateTime('2010-08-23')),
+    new FormerPassword('hash of old password', new DateTimeImmutable('2018-11-30')),
+    new FormerPassword('hash of even older password', new DateTimeImmutable('2010-08-23')),
 ];
 $validationErrors = $policy->validate(new Password('password', [], $formerPasswords));
 ```

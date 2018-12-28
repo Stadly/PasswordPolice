@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice;
 
-use DateTime;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,7 +19,7 @@ final class FormerPasswordTest extends TestCase
      */
     public function testCanConstructFormerPassword(): void
     {
-        $date = new DateTime('2018-11-28');
+        $date = new DateTimeImmutable('2018-11-28');
         $password = new FormerPassword('foo', $date);
 
         // Force generation of code coverage
@@ -32,7 +32,7 @@ final class FormerPasswordTest extends TestCase
      */
     public function testCanConvertToString(): void
     {
-        $date = new DateTime('2018-11-28');
+        $date = new DateTimeImmutable('2018-11-28');
         $password = new FormerPassword('foo', $date);
 
         self::assertSame('foo', (string)$password);
@@ -43,7 +43,7 @@ final class FormerPasswordTest extends TestCase
      */
     public function testCanGetHash(): void
     {
-        $date = new DateTime('2018-11-28');
+        $date = new DateTimeImmutable('2018-11-28');
         $password = new FormerPassword('foo', $date);
 
         self::assertSame('foo', $password->getHash());
@@ -54,7 +54,7 @@ final class FormerPasswordTest extends TestCase
      */
     public function testGetDate(): void
     {
-        $date = new DateTime('2018-11-28');
+        $date = new DateTimeImmutable('2018-11-28');
         $password = new FormerPassword('foo', $date);
 
         self::assertSame($date, $password->getDate());

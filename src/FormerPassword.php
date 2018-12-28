@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 
 final class FormerPassword
 {
@@ -14,15 +14,15 @@ final class FormerPassword
     private $hash;
 
     /**
-     * @var DateTimeInterface Creation date.
+     * @var DateTimeImmutable Creation date.
      */
     private $date;
 
     /**
      * @param string $hash Password hash.
-     * @param DateTimeInterface $date Creation date.
+     * @param DateTimeImmutable $date Creation date.
      */
-    public function __construct(string $hash, DateTimeInterface $date)
+    public function __construct(string $hash, DateTimeImmutable $date)
     {
         $this->hash = $hash;
         $this->date = $date;
@@ -45,9 +45,9 @@ final class FormerPassword
     }
 
     /**
-     * @return DateTimeInterface Creation date.
+     * @return DateTimeImmutable Creation date.
      */
-    public function getDate(): DateTimeInterface
+    public function getDate(): DateTimeImmutable
     {
         return $this->date;
     }

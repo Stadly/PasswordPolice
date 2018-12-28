@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use DateTime;
+use DateTimeImmutable;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use Stadly\PasswordPolice\FormerPassword;
@@ -40,12 +40,12 @@ final class NoReuseTest extends TestCase
         );
 
         $this->password = new Password('foobar', [], [
-            new FormerPassword('qwerty', new DateTime('2006-06-06')),
-            new FormerPassword('baz', new DateTime('2005-05-05')),
-            new FormerPassword('bar', new DateTime('2004-04-04')),
-            new FormerPassword('foobar', new DateTime('2003-03-03')),
-            new FormerPassword('foo', new DateTime('2002-02-02')),
-            new FormerPassword('test', new DateTime('2001-01-01')),
+            new FormerPassword('qwerty', new DateTimeImmutable('2006-06-06')),
+            new FormerPassword('baz', new DateTimeImmutable('2005-05-05')),
+            new FormerPassword('bar', new DateTimeImmutable('2004-04-04')),
+            new FormerPassword('foobar', new DateTimeImmutable('2003-03-03')),
+            new FormerPassword('foo', new DateTimeImmutable('2002-02-02')),
+            new FormerPassword('test', new DateTimeImmutable('2001-01-01')),
         ]);
     }
 
