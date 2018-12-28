@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Stadly\PasswordPolice\WordList;
+namespace Stadly\PasswordPolice;
 
 use RuntimeException;
 
 /**
  * Interface that must be implemented by all word lists.
  */
-interface WordListInterface
+interface WordList
 {
     /**
      * Check whether a word is present in the word list.

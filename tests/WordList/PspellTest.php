@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Notice;
 use RuntimeException;
-use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
+use Stadly\PasswordPolice\WordConverter;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\WordList\Pspell
@@ -155,7 +155,7 @@ final class PspellTest extends TestCase
      */
     public function testWordListCanContainWordsAfterSingleWordConverter(): void
     {
-        $wordConverter = $this->createMock(WordConverterInterface::class);
+        $wordConverter = $this->createMock(WordConverter::class);
         $wordConverter->method('convert')->willReturnCallback(
             function ($word) {
                 yield mb_strtolower($word);
@@ -175,14 +175,14 @@ final class PspellTest extends TestCase
      */
     public function testWordListCanContainWordsAfterMultipleWordConverters(): void
     {
-        $wordConverter1 = $this->createMock(WordConverterInterface::class);
+        $wordConverter1 = $this->createMock(WordConverter::class);
         $wordConverter1->method('convert')->willReturnCallback(
             function ($word) {
                 yield mb_strtolower($word);
             }
         );
 
-        $wordConverter2 = $this->createMock(WordConverterInterface::class);
+        $wordConverter2 = $this->createMock(WordConverter::class);
         $wordConverter2->method('convert')->willReturnCallback(
             function ($word) {
                 yield mb_strtoupper($word);

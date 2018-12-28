@@ -13,9 +13,10 @@ use Carbon\CarbonInterval;
 use Stadly\Date\Interval;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
+use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 
-final class Change implements RuleInterface
+final class Change implements Rule
 {
     /**
      * @var Date[] Rule constraints.

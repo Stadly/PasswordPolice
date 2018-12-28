@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Stadly\PasswordPolice\Rule;
+namespace Stadly\PasswordPolice;
 
-use Stadly\PasswordPolice\Password;
-use Stadly\PasswordPolice\ValidationError;
+use Stadly\PasswordPolice\Rule\TestException;
 
 /**
  * Interface that must be implemented by all rules.
  */
-interface RuleInterface
+interface Rule
 {
     /**
      * Check whether a password is in compliance with the rule.

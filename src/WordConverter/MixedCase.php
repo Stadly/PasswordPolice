@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\WordConverter;
 
+use Stadly\PasswordPolice\WordConverter;
 use Traversable;
 
-final class MixedCase implements WordConverterInterface
+final class MixedCase implements WordConverter
 {
     /**
      * {@inheritDoc}

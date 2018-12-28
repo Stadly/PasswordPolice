@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice;
 
-use Stadly\PasswordPolice\Rule\RuleInterface;
 use Stadly\PasswordPolice\Rule\TestException;
 use Symfony\Component\Translation\Translator;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
@@ -13,7 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class Policy
 {
     /**
-     * @var RuleInterface[] Policy rules.
+     * @var Rule[] Policy rules.
      */
     private $rules = [];
 
@@ -23,17 +22,17 @@ final class Policy
     private static $translator;
 
     /**
-     * @param RuleInterface... $rules Policy rules.
+     * @param Rule... $rules Policy rules.
      */
-    public function __construct(RuleInterface... $rules)
+    public function __construct(Rule... $rules)
     {
         $this->addRules(...$rules);
     }
 
     /**
-     * @param RuleInterface... $rules Policy rules
+     * @param Rule... $rules Policy rules
      */
-    public function addRules(RuleInterface... $rules): void
+    public function addRules(Rule... $rules): void
     {
         foreach ($rules as $rule) {
             $this->rules[] = $rule;

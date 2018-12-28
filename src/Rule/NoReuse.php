@@ -8,13 +8,14 @@ use StableSort\StableSort;
 use Stadly\PasswordPolice\Constraint\Position;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
-use Stadly\PasswordPolice\HashFunction\HashFunctionInterface;
+use Stadly\PasswordPolice\HashFunction;
+use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 
-final class NoReuse implements RuleInterface
+final class NoReuse implements Rule
 {
     /**
-     * @var HashFunctionInterface Hash function.
+     * @var HashFunction Hash function.
      */
     private $hashFunction;
 
@@ -24,13 +25,13 @@ final class NoReuse implements RuleInterface
     private $constraints;
 
     /**
-     * @param HashFunctionInterface $hashFunction Hash function to use when comparing passwords.
+     * @param HashFunction $hashFunction Hash function to use when comparing passwords.
      * @param int|null $count Number of former passwords to consider.
      * @param int $first First former password to consider.
      * @param int $weight Constraint weight.
      */
     public function __construct(
-        HashFunctionInterface $hashFunction,
+        HashFunction $hashFunction,
         ?int $count = null,
         int $first = 0,
         int $weight = 1
@@ -57,9 +58,9 @@ final class NoReuse implements RuleInterface
     }
 
     /**
-     * @return HashFunctionInterface Hash function.
+     * @return HashFunction Hash function.
      */
-    public function getHashFunction(): HashFunctionInterface
+    public function getHashFunction(): HashFunction
     {
         return $this->hashFunction;
     }

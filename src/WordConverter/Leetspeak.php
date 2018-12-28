@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\WordConverter;
 
+use Stadly\PasswordPolice\WordConverter;
 use Traversable;
 
-final class Leetspeak implements WordConverterInterface
+final class Leetspeak implements WordConverter
 {
     /**
      * @var array<string, string[]>

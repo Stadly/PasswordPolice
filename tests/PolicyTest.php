@@ -6,7 +6,6 @@ namespace Stadly\PasswordPolice;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Stadly\PasswordPolice\Rule\RuleInterface;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -18,17 +17,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class PolicyTest extends TestCase
 {
     /**
-     * @var MockObject&RuleInterface
+     * @var MockObject&Rule
      */
     private $satisfiedRule1;
 
     /**
-     * @var MockObject&RuleInterface
+     * @var MockObject&Rule
      */
     private $satisfiedRule2;
 
     /**
-     * @var MockObject&RuleInterface
+     * @var MockObject&Rule
      */
     private $unsatisfiedRule;
 
@@ -39,13 +38,13 @@ final class PolicyTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->satisfiedRule1 = $this->createMock(RuleInterface::class);
+        $this->satisfiedRule1 = $this->createMock(Rule::class);
         $this->satisfiedRule1->method('test')->willReturn(true);
 
-        $this->satisfiedRule2 = $this->createMock(RuleInterface::class);
+        $this->satisfiedRule2 = $this->createMock(Rule::class);
         $this->satisfiedRule2->method('test')->willReturn(true);
 
-        $this->unsatisfiedRule = $this->createMock(RuleInterface::class);
+        $this->unsatisfiedRule = $this->createMock(Rule::class);
         $validationError = new ValidationError('foo', '', $this->unsatisfiedRule, 1);
         $this->unsatisfiedRule->method('validate')->willReturn($validationError);
 

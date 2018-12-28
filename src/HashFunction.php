@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Stadly\PasswordPolice\HashFunction;
+namespace Stadly\PasswordPolice;
 
 use RuntimeException;
 
 /**
  * Interface that must be implemented by all hash functions.
  */
-interface HashFunctionInterface
+interface HashFunction
 {
     /**
      * @param string $password Password to hash.

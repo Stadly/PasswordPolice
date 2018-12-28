@@ -8,9 +8,10 @@ use StableSort\StableSort;
 use Stadly\PasswordPolice\Constraint\Count;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
+use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 
-final class Length implements RuleInterface
+final class Length implements Rule
 {
     /**
      * @var Count[] Rule constraints.

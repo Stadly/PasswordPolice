@@ -6,7 +6,6 @@ namespace Stadly\PasswordPolice;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Stadly\PasswordPolice\Rule\RuleInterface;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\ValidationError
@@ -16,13 +15,13 @@ use Stadly\PasswordPolice\Rule\RuleInterface;
 final class ValidationErrorTest extends TestCase
 {
     /**
-     * @var MockObject&RuleInterface
+     * @var MockObject&Rule
      */
     private $rule;
 
     protected function setUp(): void
     {
-        $this->rule = $this->createMock(RuleInterface::class);
+        $this->rule = $this->createMock(Rule::class);
     }
 
     /**

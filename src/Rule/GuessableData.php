@@ -8,10 +8,11 @@ use DateTimeInterface;
 use Traversable;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
-use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
+use Stadly\PasswordPolice\Rule;
+use Stadly\PasswordPolice\WordConverter;
 use Stadly\PasswordPolice\ValidationError;
 
-final class GuessableData implements RuleInterface
+final class GuessableData implements Rule
 {
     private const DATE_FORMATS = [
         // Year
@@ -55,7 +56,7 @@ final class GuessableData implements RuleInterface
     ];
 
     /**
-     * @var WordConverterInterface[] Word converters.
+     * @var WordConverter[] Word converters.
      */
     private $wordConverters;
 
@@ -65,7 +66,7 @@ final class GuessableData implements RuleInterface
     private $weight;
 
     /**
-     * @param WordConverterInterface[] $wordConverters Word converters.
+     * @param WordConverter[] $wordConverters Word converters.
      * @param int $weight Constraint weight.
      */
     public function __construct(array $wordConverters = [], int $weight = 1)

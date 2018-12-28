@@ -8,8 +8,8 @@ use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
 use Stadly\PasswordPolice\ValidationError;
-use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
-use Stadly\PasswordPolice\WordList\WordListInterface;
+use Stadly\PasswordPolice\WordConverter;
+use Stadly\PasswordPolice\WordList;
 
 use PHPUnit\Framework\TestCase;
 
@@ -21,13 +21,13 @@ use PHPUnit\Framework\TestCase;
 final class DictionaryTest extends TestCase
 {
     /**
-     * @var MockObject&WordListInterface
+     * @var MockObject&WordList
      */
     private $wordList;
 
     protected function setUp(): void
     {
-        $this->wordList = $this->createMock(WordListInterface::class);
+        $this->wordList = $this->createMock(WordList::class);
         $this->wordList->method('contains')->willReturnCallback(
             function ($word) {
                 switch ($word) {
@@ -304,7 +304,7 @@ final class DictionaryTest extends TestCase
      */
     public function testTestThrowsExceptionWhenWordListThrowsException(): void
     {
-        $wordList = $this->createMock(WordListInterface::class);
+        $wordList = $this->createMock(WordList::class);
         $wordList->method('contains')->willThrowException(new RuntimeException());
 
         $rule = new Dictionary($wordList);
@@ -319,7 +319,7 @@ final class DictionaryTest extends TestCase
      */
     public function testWholeWordIsRecognizedAfterSingleWordConverter(): void
     {
-        $wordConverter = $this->createMock(WordConverterInterface::class);
+        $wordConverter = $this->createMock(WordConverter::class);
         $wordConverter->method('convert')->willReturnCallback(
             function ($word) {
                 yield str_replace(['4', '€'], ['a', 'e'], $word);
@@ -337,7 +337,7 @@ final class DictionaryTest extends TestCase
      */
     public function testSubstringWordIsRecognizedAfterSingleWordConverter(): void
     {
-        $wordConverter = $this->createMock(WordConverterInterface::class);
+        $wordConverter = $this->createMock(WordConverter::class);
         $wordConverter->method('convert')->willReturnCallback(
             function ($word) {
                 yield str_replace(['4', '€'], ['a', 'e'], $word);
@@ -355,14 +355,14 @@ final class DictionaryTest extends TestCase
      */
     public function testWholeWordIsRecognizedAfterMultipleWordConverters(): void
     {
-        $wordConverter1 = $this->createMock(WordConverterInterface::class);
+        $wordConverter1 = $this->createMock(WordConverter::class);
         $wordConverter1->method('convert')->willReturnCallback(
             function ($word) {
                 yield str_replace(['4'], ['a'], $word);
             }
         );
 
-        $wordConverter2 = $this->createMock(WordConverterInterface::class);
+        $wordConverter2 = $this->createMock(WordConverter::class);
         $wordConverter2->method('convert')->willReturnCallback(
             function ($word) {
                 yield str_replace(['€'], ['e'], $word);
@@ -384,14 +384,14 @@ final class DictionaryTest extends TestCase
      */
     public function testSubstringWordIsRecognizedAfterMultipleWordConverters(): void
     {
-        $wordConverter1 = $this->createMock(WordConverterInterface::class);
+        $wordConverter1 = $this->createMock(WordConverter::class);
         $wordConverter1->method('convert')->willReturnCallback(
             function ($word) {
                 yield str_replace(['4'], ['a'], $word);
             }
         );
 
-        $wordConverter2 = $this->createMock(WordConverterInterface::class);
+        $wordConverter2 = $this->createMock(WordConverter::class);
         $wordConverter2->method('convert')->willReturnCallback(
             function ($word) {
                 yield str_replace(['€'], ['e'], $word);

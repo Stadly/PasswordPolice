@@ -9,7 +9,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use Stadly\PasswordPolice\FormerPassword;
 use Stadly\PasswordPolice\Password;
-use Stadly\PasswordPolice\HashFunction\HashFunctionInterface;
+use Stadly\PasswordPolice\HashFunction;
 use Stadly\PasswordPolice\ValidationError;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 final class NoReuseTest extends TestCase
 {
     /**
-     * @var MockObject&HashFunctionInterface
+     * @var MockObject&HashFunction
      */
     private $hashFunction;
 
@@ -32,7 +32,7 @@ final class NoReuseTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->hashFunction = $this->createMock(HashFunctionInterface::class);
+        $this->hashFunction = $this->createMock(HashFunction::class);
         $this->hashFunction->method('compare')->willReturnCallback(
             function ($password, $hash) {
                 return $password === $hash;

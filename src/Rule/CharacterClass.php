@@ -8,9 +8,10 @@ use InvalidArgumentException;
 use StableSort\StableSort;
 use Stadly\PasswordPolice\Constraint\Count;
 use Stadly\PasswordPolice\Password;
+use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 
-abstract class CharacterClass implements RuleInterface
+abstract class CharacterClass implements Rule
 {
     /**
      * @var string Characters matched by the rule.

@@ -6,8 +6,9 @@ namespace Stadly\PasswordPolice\HashFunction;
 
 use ErrorException;
 use RuntimeException;
+use Stadly\PasswordPolice\HashFunction;
 
-final class PasswordHash implements HashFunctionInterface
+final class PasswordHash implements HashFunction
 {
     /**
      * @var int Algorithm.

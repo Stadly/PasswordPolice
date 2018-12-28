@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Stadly\PasswordPolice\WordConverter;
+namespace Stadly\PasswordPolice;
 
 use Traversable;
 
 /**
  * Interface that must be implemented by all word converters.
  */
-interface WordConverterInterface
+interface WordConverter
 {
     /**
      * @param string $word Word to convert.

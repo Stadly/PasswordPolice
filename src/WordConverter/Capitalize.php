@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\WordConverter;
 
+use Stadly\PasswordPolice\WordConverter;
 use Traversable;
 
-final class Capitalize implements WordConverterInterface
+final class Capitalize implements WordConverter
 {
     /**
      * {@inheritDoc}

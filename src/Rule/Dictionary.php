@@ -8,14 +8,15 @@ use InvalidArgumentException;
 use RuntimeException;
 use Traversable;
 use Stadly\PasswordPolice\Policy;
-use Stadly\PasswordPolice\WordConverter\WordConverterInterface;
-use Stadly\PasswordPolice\WordList\WordListInterface;
+use Stadly\PasswordPolice\Rule;
+use Stadly\PasswordPolice\WordConverter;
+use Stadly\PasswordPolice\WordList;
 use Stadly\PasswordPolice\ValidationError;
 
-final class Dictionary implements RuleInterface
+final class Dictionary implements Rule
 {
     /**
-     * @var WordListInterface Word list for the dictionary.
+     * @var WordList Word list for the dictionary.
      */
     private $wordList;
 
@@ -35,7 +36,7 @@ final class Dictionary implements RuleInterface
     private $checkSubstrings;
 
     /**
-     * @var WordConverterInterface[] Word converters.
+     * @var WordConverter[] Word converters.
      */
     private $wordConverters;
 
@@ -45,15 +46,15 @@ final class Dictionary implements RuleInterface
     private $weight;
 
     /**
-     * @param WordListInterface $wordList Word list for the dictionary.
+     * @param WordList $wordList Word list for the dictionary.
      * @param int $minWordLength Ignore words shorter than this.
      * @param int|null $maxWordLength Ignore words longer than this.
      * @param bool $checkSubstrings Check all substrings of the password, not just the whole password.
-     * @param WordConverterInterface[] $wordConverters Word converters.
+     * @param WordConverter[] $wordConverters Word converters.
      * @param int $weight Constraint weight.
      */
     public function __construct(
-        WordListInterface $wordList,
+        WordList $wordList,
         int $minWordLength = 3,
         ?int $maxWordLength = 25,
         bool $checkSubstrings = true,
@@ -76,9 +77,9 @@ final class Dictionary implements RuleInterface
     }
 
     /**
-     * @return WordListInterface Word list for the dictionary.
+     * @return WordList Word list for the dictionary.
      */
-    public function getWordList(): WordListInterface
+    public function getWordList(): WordList
     {
         return $this->wordList;
     }

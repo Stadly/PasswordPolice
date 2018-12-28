@@ -10,7 +10,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Changed
-- Nothing
+- Remove `Interface` suffix from interfaces.
+- Move interfaces one level up in the namespace hierarchy.
 
 ### Fixed
 - Nothing
