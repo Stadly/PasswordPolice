@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 - Compound date intervals are joined more naturally, such as "3 hours, 5 minutes and 6 seconds" instead of "3 hours 5 minutes 6 seconds".
+- Rename `Change` to `IntervalChange`.
 
 ### Fixed
 - Nothing

@@ -16,7 +16,7 @@ use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 
-final class Change implements Rule
+final class IntervalChange implements Rule
 {
     /**
      * @var Date[] Rule constraints.
