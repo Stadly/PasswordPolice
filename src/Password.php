@@ -53,9 +53,9 @@ final class Password
     }
 
     /**
-     * @param string|DateTimeInterface... $guessableData Guessable data.
+     * @param string|DateTimeInterface ...$guessableData Guessable data.
      */
-    public function addGuessableData(... $guessableData): void
+    public function addGuessableData(...$guessableData): void
     {
         $this->guessableData = array_merge($this->guessableData, $guessableData);
     }
@@ -74,9 +74,9 @@ final class Password
     }
 
     /**
-     * @param FormerPassword... $formerPasswords Former passwords.
+     * @param FormerPassword...$formerPasswords Former passwords.
      */
-    public function addFormerPasswords(FormerPassword... $formerPasswords): void
+    public function addFormerPasswords(FormerPassword ...$formerPasswords): void
     {
         $this->formerPasswords = array_merge($this->formerPasswords, $formerPasswords);
 

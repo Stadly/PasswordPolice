@@ -22,17 +22,17 @@ final class Policy
     private static $translator;
 
     /**
-     * @param Rule... $rules Policy rules.
+     * @param Rule ...$rules Policy rules.
      */
-    public function __construct(Rule... $rules)
+    public function __construct(Rule ...$rules)
     {
         $this->addRules(...$rules);
     }
 
     /**
-     * @param Rule... $rules Policy rules
+     * @param Rule ...$rules Policy rules
      */
-    public function addRules(Rule... $rules): void
+    public function addRules(Rule ...$rules): void
     {
         foreach ($rules as $rule) {
             $this->rules[] = $rule;
