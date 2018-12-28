@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Date constraint.
+- Rule enforcing that passwords are changed after a specific date.
 
 ### Changed
 - Compound date intervals are joined more naturally, such as "3 hours, 5 minutes and 6 seconds" instead of "3 hours 5 minutes 6 seconds".
