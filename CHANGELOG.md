@@ -4,27 +4,12 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.11.0...HEAD)
-
-### Added
-- Nothing
+## [v0.12.0](https://github.com/Stadly/PasswordPolice/compare/v0.11.0...v0.12.0) - 2018-12-28
 
 ### Changed
 - Remove `Interface` suffix from interfaces.
 - Move interfaces one level up in the namespace hierarchy.
 - Rename `TestException` to `Exception`.
-
-### Fixed
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ## [v0.11.0](https://github.com/Stadly/PasswordPolice/compare/v0.10.0...v0.11.0) - 2018-12-21
 
