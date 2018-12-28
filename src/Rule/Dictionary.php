@@ -249,10 +249,10 @@ final class Dictionary implements Rule
             return $translator->trans(
                 'Must not contain dictionary words.'
             );
-        } else {
-            return $translator->trans(
-                'Must not be a dictionary word.'
-            );
         }
+
+        return $translator->trans(
+            'Must not be a dictionary word.'
+        );
     }
 }
