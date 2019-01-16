@@ -17,79 +17,79 @@ final class SubstringTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCanConstructWordConverterWithMinLengthConstraint(): void
+    public function testCanConstructConverterWithMinLengthConstraint(): void
     {
-        $wordConverter = new Substring(5, null);
+        $converter = new Substring(5, null);
 
         // Force generation of code coverage
-        $wordConverterConstruct = new Substring(5, null);
-        self::assertEquals($wordConverter, $wordConverterConstruct);
+        $converterConstruct = new Substring(5, null);
+        self::assertEquals($converter, $converterConstruct);
     }
 
     /**
      * @covers ::__construct
      */
-    public function testCanConstructWordConverterWithMaxLengthConstraint(): void
+    public function testCanConstructConverterWithMaxLengthConstraint(): void
     {
-        $wordConverter = new Substring(1, 10);
+        $converter = new Substring(1, 10);
 
         // Force generation of code coverage
-        $wordConverterConstruct = new Substring(1, 10);
-        self::assertEquals($wordConverter, $wordConverterConstruct);
+        $converterConstruct = new Substring(1, 10);
+        self::assertEquals($converter, $converterConstruct);
     }
 
     /**
      * @covers ::__construct
      */
-    public function testCanConstructWordConverterWithBothMinLengthAndMaxLengthConstraint(): void
+    public function testCanConstructConverterWithBothMinLengthAndMaxLengthConstraint(): void
     {
-        $wordConverter = new Substring(5, 10);
+        $converter = new Substring(5, 10);
 
         // Force generation of code coverage
-        $wordConverterConstruct = new Substring(5, 10);
-        self::assertEquals($wordConverter, $wordConverterConstruct);
+        $converterConstruct = new Substring(5, 10);
+        self::assertEquals($converter, $converterConstruct);
     }
 
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructWordConverterWithMinLengthConstraintEqualToZero(): void
+    public function testCannotConstructConverterWithMinLengthConstraintEqualToZero(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $wordConverter = new Substring(0, null);
+        $converter = new Substring(0, null);
     }
 
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructWordConverterWithNegativeMinLengthConstraint(): void
+    public function testCannotConstructConverterWithNegativeMinLengthConstraint(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $wordConverter = new Substring(-10, null);
+        $converter = new Substring(-10, null);
     }
 
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructWordConverterWithMaxLengthConstraintSmallerThanMinLengthConstraint(): void
+    public function testCannotConstructConverterWithMaxLengthConstraintSmallerThanMinLengthConstraint(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $wordConverter = new Substring(10, 5);
+        $converter = new Substring(10, 5);
     }
 
     /**
      * @covers ::__construct
      */
-    public function testCanConstructWordConverterWithMinLengthConstraintEqualToMaxLengthConstraint(): void
+    public function testCanConstructConverterWithMinLengthConstraintEqualToMaxLengthConstraint(): void
     {
-        $wordConverter = new Substring(5, 5);
+        $converter = new Substring(5, 5);
 
         // Force generation of code coverage
-        $wordConverterConstruct = new Substring(5, 5);
-        self::assertEquals($wordConverter, $wordConverterConstruct);
+        $converterConstruct = new Substring(5, 5);
+        self::assertEquals($converter, $converterConstruct);
     }
 
     /**
