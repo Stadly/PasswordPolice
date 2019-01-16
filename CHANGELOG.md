@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Possible to specify guessable data for the rule, that applies to all passwords.
+- Word converter generating substrings of the word.
 
 ### Changed
 - Nothing
