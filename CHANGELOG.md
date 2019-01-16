@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - Possible to specify guessable data for the rule, that applies to all passwords.
 - Word converter generating substrings of the word.
+- Word converter applying other word converters in series. The output for the first word converter is used as input for the second word converter, etc.
 
 ### Changed
 - Nothing
