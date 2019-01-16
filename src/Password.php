@@ -74,7 +74,7 @@ final class Password
     }
 
     /**
-     * @param FormerPassword...$formerPasswords Former passwords.
+     * @param FormerPassword ...$formerPasswords Former passwords.
      */
     public function addFormerPasswords(FormerPassword ...$formerPasswords): void
     {
