@@ -102,14 +102,23 @@ final class Pspell implements WordList
      */
     private function getWordsToCheck(string $word): Traversable
     {
+        yield from $this->getUniqueWords($this->getFormattedWords($word));
+    }
+
+    /**
+     * @param iterable<string> $words Words to filter.
+     * @return Traversable<string> Unique words.
+     */
+    private function getUniqueWords(iterable $words): Traversable
+    {
         $checked = [];
-        foreach ($this->getFormattedWords($word) as $wordToCheck) {
-            if (isset($checked[$wordToCheck])) {
+        foreach ($words as $word) {
+            if (isset($checked[$word])) {
                 continue;
             }
 
-            $checked[$wordToCheck] = true;
-            yield $wordToCheck;
+            $checked[$word] = true;
+            yield $word;
         }
     }
 
