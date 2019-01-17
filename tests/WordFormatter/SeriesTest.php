@@ -53,11 +53,13 @@ final class SeriesTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructSeriesFormatterWithZeroWordFormatters(): void
+    public function testCanConstructSeriesFormatterWithZeroWordFormatters(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-
         $formatter = new Series();
+
+        // Force generation of code coverage
+        $formatterConstruct = new Series();
+        self::assertEquals($formatter, $formatterConstruct);
     }
 
     /**

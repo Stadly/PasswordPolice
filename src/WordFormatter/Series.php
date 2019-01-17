@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\WordFormatter;
 
-use InvalidArgumentException;
 use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
@@ -20,10 +19,6 @@ final class Series implements WordFormatter
      */
     public function __construct(WordFormatter ...$wordFormatters)
     {
-        if ($wordFormatters === []) {
-            throw new InvalidArgumentException('At least one word formatter must be specified.');
-        }
-
         $this->wordFormatters = $wordFormatters;
     }
 
