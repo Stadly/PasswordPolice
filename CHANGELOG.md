@@ -21,7 +21,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Removed
-- Nothing
+- Whether to check all substrings or not can no longer be specified for dictionary rules. Use the substring word converter instead.
 
 ### Security
 - Nothing

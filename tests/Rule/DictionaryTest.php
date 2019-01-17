@@ -151,9 +151,9 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testMinWordLengthConstraintCanBeSatisfiedWhenCheckingSubstrings(): void
+    public function testMinWordLengthConstraintCanBeSatisfied(): void
     {
-        $rule = new Dictionary($this->wordList, 3, null, true);
+        $rule = new Dictionary($this->wordList, 3, null);
 
         self::assertTrue($rule->test('be'));
     }
@@ -161,19 +161,9 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testMinWordLengthConstraintCanBeSatisfiedWhenNotCheckingSubstrings(): void
+    public function testMinWordLengthConstraintCanBeUnsatisfied(): void
     {
-        $rule = new Dictionary($this->wordList, 3, null, false);
-
-        self::assertTrue($rule->test('be'));
-    }
-
-    /**
-     * @covers ::test
-     */
-    public function testMinWordLengthConstraintCanBeUnsatisfiedWhenCheckingSubstrings(): void
-    {
-        $rule = new Dictionary($this->wordList, 2, null, true);
+        $rule = new Dictionary($this->wordList, 2, null);
 
         self::assertFalse($rule->test('be'));
     }
@@ -181,19 +171,9 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testMinWordLengthConstraintCanBeUnsatisfiedWhenNotCheckingSubstrings(): void
+    public function testMaxWordLengthConstraintCanBeSatisfied(): void
     {
-        $rule = new Dictionary($this->wordList, 2, null, false);
-
-        self::assertFalse($rule->test('be'));
-    }
-
-    /**
-     * @covers ::test
-     */
-    public function testMaxWordLengthConstraintCanBeSatisfiedWhenCheckingSubstrings(): void
-    {
-        $rule = new Dictionary($this->wordList, 1, 4, true);
+        $rule = new Dictionary($this->wordList, 1, 4);
 
         self::assertTrue($rule->test('apple'));
     }
@@ -201,19 +181,9 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testMaxWordLengthConstraintCanBeSatisfiedWhenNotCheckingSubstrings(): void
+    public function testMaxWordLengthConstraintCanBeUnsatisfied(): void
     {
-        $rule = new Dictionary($this->wordList, 1, 4, false);
-
-        self::assertTrue($rule->test('apple'));
-    }
-
-    /**
-     * @covers ::test
-     */
-    public function testMaxWordLengthConstraintCanBeUnsatisfiedWhenCheckingSubstrings(): void
-    {
-        $rule = new Dictionary($this->wordList, 1, 5, true);
+        $rule = new Dictionary($this->wordList, 1, 5);
 
         self::assertFalse($rule->test('apple'));
     }
@@ -221,29 +191,9 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testMaxWordLengthConstraintCanBeUnsatisfiedWhenNotCheckingSubstrings(): void
+    public function testPrefixWordIsNotRecognized(): void
     {
-        $rule = new Dictionary($this->wordList, 1, 5, false);
-
-        self::assertFalse($rule->test('apple'));
-    }
-
-    /**
-     * @covers ::test
-     */
-    public function testPrefixWordIsRecognizedWhenCheckingSubstrings(): void
-    {
-        $rule = new Dictionary($this->wordList, 1, null, true);
-
-        self::assertFalse($rule->test('pineapple'));
-    }
-
-    /**
-     * @covers ::test
-     */
-    public function testPrefixWordIsNotRecognizedWhenNotCheckingSubstrings(): void
-    {
-        $rule = new Dictionary($this->wordList, 1, null, false);
+        $rule = new Dictionary($this->wordList, 1, null);
 
         self::assertTrue($rule->test('pineapple'));
     }
@@ -251,19 +201,9 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testInfixWordIsRecognizedWhenCheckingSubstrings(): void
+    public function testInfixWordIsNotRecognized(): void
     {
-        $rule = new Dictionary($this->wordList, 1, null, true);
-
-        self::assertFalse($rule->test('pineapplejack'));
-    }
-
-    /**
-     * @covers ::test
-     */
-    public function testInfixWordIsNotRecognizedWhenNotCheckingSubstrings(): void
-    {
-        $rule = new Dictionary($this->wordList, 1, null, false);
+        $rule = new Dictionary($this->wordList, 1, null);
 
         self::assertTrue($rule->test('pineapplejack'));
     }
@@ -271,19 +211,9 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testPostfixWordIsRecognizedWhenCheckingSubstrings(): void
+    public function testPostfixWordIsNotRecognized(): void
     {
-        $rule = new Dictionary($this->wordList, 1, null, true);
-
-        self::assertFalse($rule->test('applejack'));
-    }
-
-    /**
-     * @covers ::test
-     */
-    public function testPostfixWordIsNotRecognizedWhenNotCheckingSubstrings(): void
-    {
-        $rule = new Dictionary($this->wordList, 1, null, false);
+        $rule = new Dictionary($this->wordList, 1, null);
 
         self::assertTrue($rule->test('applejack'));
     }
@@ -293,7 +223,7 @@ final class DictionaryTest extends TestCase
      */
     public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
     {
-        $rule = new Dictionary($this->wordList, 1, 5, false, [], 1);
+        $rule = new Dictionary($this->wordList, 1, 5, [], 1);
 
         self::assertTrue($rule->test('apple', 2));
     }
@@ -316,7 +246,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testWholeWordIsRecognizedAfterSingleWordConverter(): void
+    public function testWordIsRecognizedAfterSingleWordConverter(): void
     {
         $wordConverter = $this->createMock(WordConverter::class);
         $wordConverter->method('convert')->willReturnCallback(
@@ -325,7 +255,7 @@ final class DictionaryTest extends TestCase
             }
         );
 
-        $rule = new Dictionary($this->wordList, 1, null, false, [$wordConverter]);
+        $rule = new Dictionary($this->wordList, 1, null, [$wordConverter]);
 
         self::assertFalse($rule->test('4ppl€'));
         self::assertTrue($rule->test('pine4ppl€jack'));
@@ -334,25 +264,7 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testSubstringWordIsRecognizedAfterSingleWordConverter(): void
-    {
-        $wordConverter = $this->createMock(WordConverter::class);
-        $wordConverter->method('convert')->willReturnCallback(
-            static function ($word) {
-                yield str_replace(['4', '€'], ['a', 'e'], $word);
-            }
-        );
-
-        $rule = new Dictionary($this->wordList, 1, null, true, [$wordConverter]);
-
-        self::assertFalse($rule->test('4ppl€'));
-        self::assertFalse($rule->test('pine4ppl€jack'));
-    }
-
-    /**
-     * @covers ::test
-     */
-    public function testWholeWordIsRecognizedAfterMultipleWordConverters(): void
+    public function testWordIsRecognizedAfterMultipleWordConverters(): void
     {
         $wordConverter1 = $this->createMock(WordConverter::class);
         $wordConverter1->method('convert')->willReturnCallback(
@@ -368,7 +280,7 @@ final class DictionaryTest extends TestCase
             }
         );
 
-        $rule = new Dictionary($this->wordList, 1, null, false, [$wordConverter1, $wordConverter2]);
+        $rule = new Dictionary($this->wordList, 1, null, [$wordConverter1, $wordConverter2]);
 
         self::assertTrue($rule->test('4ppl€'));
         self::assertTrue($rule->test('pine4ppl€jack'));
@@ -376,35 +288,6 @@ final class DictionaryTest extends TestCase
         self::assertTrue($rule->test('pine4pplejack'));
         self::assertFalse($rule->test('appl€'));
         self::assertTrue($rule->test('pineappl€jack'));
-    }
-
-    /**
-     * @covers ::test
-     */
-    public function testSubstringWordIsRecognizedAfterMultipleWordConverters(): void
-    {
-        $wordConverter1 = $this->createMock(WordConverter::class);
-        $wordConverter1->method('convert')->willReturnCallback(
-            static function ($word) {
-                yield str_replace(['4'], ['a'], $word);
-            }
-        );
-
-        $wordConverter2 = $this->createMock(WordConverter::class);
-        $wordConverter2->method('convert')->willReturnCallback(
-            static function ($word) {
-                yield str_replace(['€'], ['e'], $word);
-            }
-        );
-
-        $rule = new Dictionary($this->wordList, 1, null, true, [$wordConverter1, $wordConverter2]);
-
-        self::assertTrue($rule->test('4ppl€'));
-        self::assertTrue($rule->test('pine4ppl€jack'));
-        self::assertFalse($rule->test('4pple'));
-        self::assertFalse($rule->test('pine4pplejack'));
-        self::assertFalse($rule->test('appl€'));
-        self::assertFalse($rule->test('pineappl€jack'));
     }
 
     /**
@@ -420,25 +303,12 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::validate
      */
-    public function testRuleCanBeInvalidatedWhenCheckingSubstrings(): void
+    public function testRuleCanBeInvalidated(): void
     {
-        $rule = new Dictionary($this->wordList, 1, null, true);
+        $rule = new Dictionary($this->wordList, 1, null);
 
         self::assertEquals(
             new ValidationError('Must not contain dictionary words.', 'apple', $rule, 1),
-            $rule->validate('apple')
-        );
-    }
-
-    /**
-     * @covers ::validate
-     */
-    public function testRuleCanBeInvalidatedWhenNotCheckingSubstrings(): void
-    {
-        $rule = new Dictionary($this->wordList, 1, null, false);
-
-        self::assertEquals(
-            new ValidationError('Must not be a dictionary word.', 'apple', $rule, 1),
             $rule->validate('apple')
         );
     }

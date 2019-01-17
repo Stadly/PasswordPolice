@@ -31,11 +31,6 @@ final class Dictionary implements Rule
     private $maxWordLength;
 
     /**
-     * @var bool Whether all substrings of the password should be checked.
-     */
-    private $checkSubstrings;
-
-    /**
      * @var WordConverter[] Word converters.
      */
     private $wordConverters;
@@ -49,7 +44,6 @@ final class Dictionary implements Rule
      * @param WordList $wordList Word list for the dictionary.
      * @param int $minWordLength Ignore words shorter than this.
      * @param int|null $maxWordLength Ignore words longer than this.
-     * @param bool $checkSubstrings Check all substrings of the password, not just the whole password.
      * @param WordConverter[] $wordConverters Word converters.
      * @param int $weight Constraint weight.
      */
@@ -57,7 +51,6 @@ final class Dictionary implements Rule
         WordList $wordList,
         int $minWordLength = 3,
         ?int $maxWordLength = 25,
-        bool $checkSubstrings = true,
         array $wordConverters = [],
         int $weight = 1
     ) {
@@ -71,7 +64,6 @@ final class Dictionary implements Rule
         $this->wordList = $wordList;
         $this->minWordLength = $minWordLength;
         $this->maxWordLength = $maxWordLength;
-        $this->checkSubstrings = $checkSubstrings;
         $this->wordConverters = $wordConverters;
         $this->weight = $weight;
     }
@@ -164,13 +156,13 @@ final class Dictionary implements Rule
     {
         $convertedWords = $this->getUniqueWords($this->getConvertedWords($word));
 
-        if ($this->checkSubstrings) {
-            $wordsToCheck = $this->getUniqueWords($this->getSubstringWordsToCheck($convertedWords));
-        } else {
-            $wordsToCheck = $this->getWholeWordsToCheck($convertedWords);
+        foreach ($convertedWords as $convertedWord) {
+            if ($this->minWordLength <= mb_strlen($convertedWord) &&
+               ($this->maxWordLength === null || mb_strlen($convertedWord) <= $this->maxWordLength)
+            ) {
+                yield $convertedWord;
+            }
         }
-
-        yield from $wordsToCheck;
     }
 
     /**
@@ -206,38 +198,6 @@ final class Dictionary implements Rule
     }
 
     /**
-     * @param Traversable<string> $words Words to check.
-     * @return Traversable<string> Whole words to check.
-     */
-    private function getWholeWordsToCheck(Traversable $words): Traversable
-    {
-        foreach ($words as $word) {
-            if ($this->minWordLength <= mb_strlen($word) &&
-               ($this->maxWordLength === null || mb_strlen($word) <= $this->maxWordLength)
-            ) {
-                yield $word;
-            }
-        }
-    }
-
-    /**
-     * @param Traversable<string> $words Words to check.
-     * @return Traversable<string> Substring words to check.
-     */
-    private function getSubstringWordsToCheck(Traversable $words): Traversable
-    {
-        foreach ($words as $word) {
-            for ($start = 0; $start < mb_strlen($word); ++$start) {
-                $substring = mb_substr($word, $start, $this->maxWordLength);
-
-                for ($wordLength = mb_strlen($substring); $this->minWordLength <= $wordLength; --$wordLength) {
-                    yield mb_substr($substring, 0, $wordLength);
-                }
-            }
-        }
-    }
-
-    /**
      * @param string $word Word that violates the constraint.
      * @return string Message explaining the violation.
      */
@@ -245,14 +205,8 @@ final class Dictionary implements Rule
     {
         $translator = Policy::getTranslator();
 
-        if ($this->checkSubstrings) {
-            return $translator->trans(
-                'Must not contain dictionary words.'
-            );
-        }
-
         return $translator->trans(
-            'Must not be a dictionary word.'
+            'Must not contain dictionary words.'
         );
     }
 }
