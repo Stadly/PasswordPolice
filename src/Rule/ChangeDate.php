@@ -151,7 +151,9 @@ final class ChangeDate implements Rule
             );
         }
 
-        if ($constraint->getMin() == $constraint->getMax()) {
+        if ($constraint->getMin()->format(DateTimeInterface::RFC3339_EXTENDED)
+        === $constraint->getMax()->format(DateTimeInterface::RFC3339_EXTENDED)
+        ) {
             return $translator->trans(
                 'The password must have been changed at %date%.',
                 ['%date%' => $minString]
