@@ -131,9 +131,7 @@ final class Pspell implements WordList
         yield $word;
 
         foreach ($this->wordFormatters as $wordFormatter) {
-            foreach ($wordFormatter->apply([$word]) as $formatted) {
-                yield $formatted;
-            }
+            yield from $wordFormatter->apply([$word]);
         }
     }
 

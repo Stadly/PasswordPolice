@@ -179,9 +179,7 @@ final class GuessableData implements Rule
         yield $word;
 
         foreach ($this->wordFormatters as $wordFormatter) {
-            foreach ($wordFormatter->apply([$word]) as $formatted) {
-                yield $formatted;
-            }
+            yield from $wordFormatter->apply([$word]);
         }
     }
 
