@@ -23,9 +23,9 @@ composer require stadly/password-police
 use Stadly\PasswordPolice\FormerPassword;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
-use Stadly\PasswordPolice\WordConverter\Leetspeak;
-use Stadly\PasswordPolice\WordConverter\LowerCase as LowerCaseConverter;
-use Stadly\PasswordPolice\WordConverter\UpperCase as UpperCaseConverter;
+use Stadly\PasswordPolice\WordFormatter\Leetspeak;
+use Stadly\PasswordPolice\WordFormatter\LowerCase as LowerCaseConverter;
+use Stadly\PasswordPolice\WordFormatter\UpperCase as UpperCaseConverter;
 use Stadly\PasswordPolice\HashFunction\PasswordHash;
 use Stadly\PasswordPolice\Rule\Digit as DigitRule;
 use Stadly\PasswordPolice\Rule\Dictionary;
@@ -45,7 +45,7 @@ $policy->addRules(new GuessableData(['company']));  // Password must not contain
 $policy->addRules(new HaveIBeenPwned());            // Password must not be exposed in data breaches.
 $policy->addRules(new NoReuse(new PasswordHash())); // Password must not have been used earlier.
 $pspell = Pspell::fromLocale('en', new LowerCaseConverter(), new UpperCaseConverter());
-$dictionary = new Dictionary($pspell, 3, 25, true, new Leetspeak();
+$dictionary = new Dictionary($pspell, 3, 25, [new Leetspeak()]);
 $policy->addRules($dictionary));                    // Password must not contain dictionary words.
 
 $validationErrors = $policy->validate('password');
