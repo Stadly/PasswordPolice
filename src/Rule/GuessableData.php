@@ -150,14 +150,23 @@ final class GuessableData implements Rule
      */
     private function getWordsToCheck(string $word): Traversable
     {
+        yield from $this->getUniqueWords($this->getConvertedWords($word));
+    }
+
+    /**
+     * @param Traversable<string> $words Words to filter.
+     * @return Traversable<string> Unique words.
+     */
+    private function getUniqueWords(Traversable $words): Traversable
+    {
         $checked = [];
-        foreach ($this->getConvertedWords($word) as $wordToCheck) {
-            if (isset($checked[$wordToCheck])) {
+        foreach ($words as $word) {
+            if (isset($checked[$word])) {
                 continue;
             }
 
-            $checked[$wordToCheck] = true;
-            yield $wordToCheck;
+            $checked[$word] = true;
+            yield $word;
         }
     }
 
