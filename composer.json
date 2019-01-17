@@ -40,12 +40,17 @@
     },
     "scripts": {
         "test": [
-            "parallel-lint . --exclude vendor",
-            "phpcs src tests",
-            "phpstan analyse",
-            "phpstan analyse -c phpstan.tests.neon.dist --memory-limit 256M",
-            "phpunit"
+            "composer lint",
+            "composer check-style",
+            "composer phpstan",
+            "composer phpunit"
         ],
+        "lint": "parallel-lint . --exclude vendor",
+        "phpstan": [
+            "phpstan analyse",
+            "phpstan analyse -c phpstan.tests.neon.dist --memory-limit 256M"
+        ],
+        "phpunit": "phpunit",
         "check-style": "phpcs src tests",
         "fix-style": "phpcbf src tests"
     },
