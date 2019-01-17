@@ -131,28 +131,28 @@ final class SubstringTest extends TestCase
             'f',
         ], iterator_to_array($formatter->apply(['abc', 'def']), false), '', 0, 10, true);
     }
-    
+
     /**
      * @covers ::apply
      */
     public function testCanFormatWordWithMinLengthConstraint(): void
     {
         $formatter = new Substring(2, null);
-        
+
         self::assertEquals([
             'abc',
             'ab',
             'bc',
         ], iterator_to_array($formatter->apply(['abc']), false), '', 0, 10, true);
     }
-    
+
     /**
      * @covers ::apply
      */
     public function testCanFormatWordWithMaxLengthConstraint(): void
     {
         $formatter = new Substring(1, 2);
-        
+
         self::assertEquals([
             'ab',
             'bc',
@@ -161,14 +161,14 @@ final class SubstringTest extends TestCase
             'c',
         ], iterator_to_array($formatter->apply(['abc']), false), '', 0, 10, true);
     }
-    
+
     /**
      * @covers ::apply
      */
     public function testCanFormatWordWithBothMinAndMaxLengthConstraint(): void
     {
         $formatter = new Substring(2, 2);
-        
+
         self::assertEquals([
             'ab',
             'bc',
