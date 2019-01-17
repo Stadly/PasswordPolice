@@ -30,22 +30,24 @@ final class Series implements WordFormatter
     /**
      * {@inheritDoc}
      */
-    public function apply(string $word): Traversable
+    public function apply(iterable $words): Traversable
     {
-        yield from $this->formatWord($word, $this->wordFormatters);
+        yield from $this->formatWord($words, $this->wordFormatters);
     }
 
-    private function formatWord(string $word, array $wordFormatters): Traversable
+    /**
+     * @param iterable<string> $words Words to format.
+     * @param WordFormatter[] $wordFormatters Word formatters.
+     * @return Traversable<string> Formatted words. May contain duplicates.
+     */
+    private function formatWord(iterable $words, array $wordFormatters): Traversable
     {
-        $wordFormatter = array_shift($wordFormatters);
-
         if ($wordFormatters === []) {
-            yield from $wordFormatter->apply($word);
+            yield from $words;
             return;
         }
 
-        foreach ($wordFormatter->apply($word) as $formatted) {
-            yield from $this->formatWord($formatted, $wordFormatters);
-        }
+        $wordFormatter = array_shift($wordFormatters);
+        yield from $this->formatWord($wordFormatter->apply($words), $wordFormatters);
     }
 }

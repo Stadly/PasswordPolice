@@ -9,6 +9,7 @@ use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Stadly\PasswordPolice\WordFormatter;
+use Traversable;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\WordList\Pspell
@@ -157,8 +158,10 @@ final class PspellTest extends TestCase
     {
         $wordFormatter = $this->createMock(WordFormatter::class);
         $wordFormatter->method('apply')->willReturnCallback(
-            static function ($word) {
-                yield mb_strtolower($word);
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield mb_strtolower($word);
+                }
             }
         );
 
@@ -177,15 +180,19 @@ final class PspellTest extends TestCase
     {
         $wordFormatter1 = $this->createMock(WordFormatter::class);
         $wordFormatter1->method('apply')->willReturnCallback(
-            static function ($word) {
-                yield mb_strtolower($word);
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield mb_strtolower($word);
+                }
             }
         );
 
         $wordFormatter2 = $this->createMock(WordFormatter::class);
         $wordFormatter2->method('apply')->willReturnCallback(
-            static function ($word) {
-                yield mb_strtoupper($word);
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield mb_strtoupper($word);
+                }
             }
         );
 

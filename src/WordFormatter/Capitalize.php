@@ -12,8 +12,10 @@ final class Capitalize implements WordFormatter
     /**
      * {@inheritDoc}
      */
-    public function apply(string $word): Traversable
+    public function apply(iterable $words): Traversable
     {
-        yield mb_strtoupper(mb_substr($word, 0, 1)).mb_strtolower(mb_substr($word, 1));
+        foreach ($words as $word) {
+            yield mb_strtoupper(mb_substr($word, 0, 1)).mb_strtolower(mb_substr($word, 1));
+        }
     }
 }

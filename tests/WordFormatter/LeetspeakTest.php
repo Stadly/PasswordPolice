@@ -32,7 +32,17 @@ final class LeetspeakTest extends TestCase
     {
         $formatter = new Leetspeak();
 
-        self::assertSame(['fOoBaR'], iterator_to_array($formatter->apply('fOoBaR')));
+        self::assertSame(['fOoBaR'], iterator_to_array($formatter->apply(['fOoBaR']), false));
+    }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanFormatWordsWithoutLeetspeak(): void
+    {
+        $formatter = new Leetspeak();
+
+        self::assertSame(['fOo', 'BaR'], iterator_to_array($formatter->apply(['fOo', 'BaR']), false));
     }
 
     /**
@@ -42,6 +52,17 @@ final class LeetspeakTest extends TestCase
     {
         $formatter = new Leetspeak();
 
-        self::assertContains('LEET SPEAK', iterator_to_array($formatter->apply('1337 5P34K')));
+        self::assertContains('LEET SPEAK', iterator_to_array($formatter->apply(['1337 5P34K']), false));
+    }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanFormatWordsWithLeetspeak(): void
+    {
+        $formatter = new Leetspeak();
+
+        self::assertContains('LEET', iterator_to_array($formatter->apply(['1337', '5P34K']), false));
+        self::assertContains('SPEAK', iterator_to_array($formatter->apply(['1337', '5P34K']), false));
     }
 }

@@ -20,7 +20,16 @@ final class CapitalizeTest extends TestCase
     {
         $formatter = new Capitalize();
 
-        self::assertSame(['Foobar'], iterator_to_array($formatter->apply('fOoBaR')));
+        self::assertSame(['Foobar'], iterator_to_array($formatter->apply(['fOoBaR']), false));
+    }
+    /**
+     * @covers ::apply
+     */
+    public function testCanFormatWords(): void
+    {
+        $formatter = new Capitalize();
+
+        self::assertSame(['Foo', 'Bar'], iterator_to_array($formatter->apply(['fOo', 'BaR']), false));
     }
 
     /**
@@ -30,6 +39,6 @@ final class CapitalizeTest extends TestCase
     {
         $formatter = new Capitalize();
 
-        self::assertSame(['Ááæøôëñ'], iterator_to_array($formatter->apply('áÁæØôËñ')));
+        self::assertSame(['Ááæøôëñ'], iterator_to_array($formatter->apply(['áÁæØôËñ']), false));
     }
 }

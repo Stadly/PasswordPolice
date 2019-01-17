@@ -12,7 +12,18 @@ final class MixedCase implements WordFormatter
     /**
      * {@inheritDoc}
      */
-    public function apply(string $word): Traversable
+    public function apply(iterable $words): Traversable
+    {
+        foreach ($words as $word) {
+            yield from $this->formatWord($word);
+        }
+    }
+
+    /**
+     * @param string $word Word to format.
+     * @return Traversable<string> Formatted words. May contain duplicates.
+     */
+    private function formatWord(string $word): Traversable
     {
         if ($word === '') {
             yield '';
@@ -29,7 +40,7 @@ final class MixedCase implements WordFormatter
             $chars[] = mb_strtoupper($char);
         }
 
-        foreach ($this->apply(mb_substr($word, 1)) as $suffix) {
+        foreach ($this->formatWord(mb_substr($word, 1)) as $suffix) {
             foreach ($chars as $formattedChar) {
                 yield $formattedChar.$suffix;
             }

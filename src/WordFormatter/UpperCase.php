@@ -12,8 +12,10 @@ final class UpperCase implements WordFormatter
     /**
      * {@inheritDoc}
      */
-    public function apply(string $word): Traversable
+    public function apply(iterable $words): Traversable
     {
-        yield mb_strtoupper($word);
+        foreach ($words as $word) {
+            yield mb_strtoupper($word);
+        }
     }
 }

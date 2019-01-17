@@ -12,8 +12,8 @@ use Traversable;
 interface WordFormatter
 {
     /**
-     * @param string $word Word to format.
+     * @param iterable<string> $words Words to format.
      * @return Traversable<string> Formatted words. May contain duplicates.
      */
-    public function apply(string $word): Traversable;
+    public function apply(iterable $words): Traversable;
 }

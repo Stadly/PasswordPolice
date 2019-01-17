@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\ValidationError;
 use Stadly\PasswordPolice\WordFormatter;
+use Traversable;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\GuessableData
@@ -123,8 +124,10 @@ final class GuessableDataTest extends TestCase
     {
         $wordFormatter = $this->createMock(WordFormatter::class);
         $wordFormatter->method('apply')->willReturnCallback(
-            static function ($word) {
-                yield str_replace(['4', '€'], ['a', 'e'], $word);
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield str_replace(['4', '€'], ['a', 'e'], $word);
+                }
             }
         );
 
@@ -141,8 +144,10 @@ final class GuessableDataTest extends TestCase
     {
         $wordFormatter = $this->createMock(WordFormatter::class);
         $wordFormatter->method('apply')->willReturnCallback(
-            static function ($word) {
-                yield str_replace(['I', 'B'], ['1', '8'], $word);
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield str_replace(['I', 'B'], ['1', '8'], $word);
+                }
             }
         );
 
@@ -159,15 +164,19 @@ final class GuessableDataTest extends TestCase
     {
         $wordFormatter1 = $this->createMock(WordFormatter::class);
         $wordFormatter1->method('apply')->willReturnCallback(
-            static function ($word) {
-                yield str_replace(['4'], ['a'], $word);
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield str_replace(['4'], ['a'], $word);
+                }
             }
         );
 
         $wordFormatter2 = $this->createMock(WordFormatter::class);
         $wordFormatter2->method('apply')->willReturnCallback(
-            static function ($word) {
-                yield str_replace(['€'], ['e'], $word);
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield str_replace(['€'], ['e'], $word);
+                }
             }
         );
 
@@ -185,15 +194,19 @@ final class GuessableDataTest extends TestCase
     {
         $wordFormatter1 = $this->createMock(WordFormatter::class);
         $wordFormatter1->method('apply')->willReturnCallback(
-            static function ($word) {
-                yield str_replace(['I'], ['1'], $word);
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield str_replace(['I'], ['1'], $word);
+                }
             }
         );
 
         $wordFormatter2 = $this->createMock(WordFormatter::class);
         $wordFormatter2->method('apply')->willReturnCallback(
-            static function ($word) {
-                yield str_replace(['B'], ['8'], $word);
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield str_replace(['B'], ['8'], $word);
+                }
             }
         );
 

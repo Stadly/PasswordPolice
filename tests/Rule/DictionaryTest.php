@@ -11,6 +11,7 @@ use RuntimeException;
 use Stadly\PasswordPolice\ValidationError;
 use Stadly\PasswordPolice\WordFormatter;
 use Stadly\PasswordPolice\WordList;
+use Traversable;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\Dictionary
@@ -28,7 +29,7 @@ final class DictionaryTest extends TestCase
     {
         $this->wordList = $this->createMock(WordList::class);
         $this->wordList->method('contains')->willReturnCallback(
-            static function ($word) {
+            static function (string $word): bool {
                 switch ($word) {
                     case 'apple':
                     case 'be':
@@ -250,8 +251,10 @@ final class DictionaryTest extends TestCase
     {
         $wordFormatter = $this->createMock(WordFormatter::class);
         $wordFormatter->method('apply')->willReturnCallback(
-            static function ($word) {
-                yield str_replace(['4', '€'], ['a', 'e'], $word);
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield str_replace(['4', '€'], ['a', 'e'], $word);
+                }
             }
         );
 
@@ -268,15 +271,19 @@ final class DictionaryTest extends TestCase
     {
         $wordFormatter1 = $this->createMock(WordFormatter::class);
         $wordFormatter1->method('apply')->willReturnCallback(
-            static function ($word) {
-                yield str_replace(['4'], ['a'], $word);
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield str_replace(['4'], ['a'], $word);
+                }
             }
         );
 
         $wordFormatter2 = $this->createMock(WordFormatter::class);
         $wordFormatter2->method('apply')->willReturnCallback(
-            static function ($word) {
-                yield str_replace(['€'], ['e'], $word);
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield str_replace(['€'], ['e'], $word);
+                }
             }
         );
 

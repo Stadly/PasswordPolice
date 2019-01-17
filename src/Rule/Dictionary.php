@@ -166,10 +166,10 @@ final class Dictionary implements Rule
     }
 
     /**
-     * @param Traversable<string> $words Words to filter.
+     * @param iterable<string> $words Words to filter.
      * @return Traversable<string> Unique words.
      */
-    private function getUniqueWords(Traversable $words): Traversable
+    private function getUniqueWords(iterable $words): Traversable
     {
         $checked = [];
         foreach ($words as $word) {
@@ -191,7 +191,7 @@ final class Dictionary implements Rule
         yield $word;
 
         foreach ($this->wordFormatters as $wordFormatter) {
-            foreach ($wordFormatter->apply($word) as $formatted) {
+            foreach ($wordFormatter->apply([$word]) as $formatted) {
                 yield $formatted;
             }
         }

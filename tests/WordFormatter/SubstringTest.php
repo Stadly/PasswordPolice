@@ -106,7 +106,30 @@ final class SubstringTest extends TestCase
             'a',
             'b',
             'c',
-        ], iterator_to_array($formatter->apply('abc')), '', 0, 10, true);
+        ], iterator_to_array($formatter->apply(['abc']), false), '', 0, 10, true);
+    }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanFormatWords(): void
+    {
+        $formatter = new Substring(1, null);
+
+        self::assertEquals([
+            'abc',
+            'ab',
+            'bc',
+            'a',
+            'b',
+            'c',
+            'def',
+            'de',
+            'ef',
+            'd',
+            'e',
+            'f',
+        ], iterator_to_array($formatter->apply(['abc', 'def']), false), '', 0, 10, true);
     }
     
     /**
@@ -120,7 +143,7 @@ final class SubstringTest extends TestCase
             'abc',
             'ab',
             'bc',
-        ], iterator_to_array($formatter->apply('abc')), '', 0, 10, true);
+        ], iterator_to_array($formatter->apply(['abc']), false), '', 0, 10, true);
     }
     
     /**
@@ -136,7 +159,7 @@ final class SubstringTest extends TestCase
             'a',
             'b',
             'c',
-        ], iterator_to_array($formatter->apply('abc')), '', 0, 10, true);
+        ], iterator_to_array($formatter->apply(['abc']), false), '', 0, 10, true);
     }
     
     /**
@@ -149,6 +172,6 @@ final class SubstringTest extends TestCase
         self::assertEquals([
             'ab',
             'bc',
-        ], iterator_to_array($formatter->apply('abc')), '', 0, 10, true);
+        ], iterator_to_array($formatter->apply(['abc']), false), '', 0, 10, true);
     }
 }

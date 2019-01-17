@@ -29,7 +29,24 @@ final class MixedCaseTest extends TestCase
             'F1O2O',
             'f1o2O',
             'F1o2O',
-        ], iterator_to_array($formatter->apply('f1O2o')), '', 0, 10, true);
+        ], iterator_to_array($formatter->apply(['f1O2o']), false), '', 0, 10, true);
+    }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanFormatWords(): void
+    {
+        $formatter = new MixedCase();
+
+        self::assertEquals([
+            'f1O',
+            'F1O',
+            'f1o',
+            'F1o',
+            '2o',
+            '2O',
+        ], iterator_to_array($formatter->apply(['f1O', '2o']), false), '', 0, 10, true);
     }
 
     /**
@@ -48,6 +65,6 @@ final class MixedCaseTest extends TestCase
             'á1æ2ë',
             'Á1Æ2ë',
             'á1Æ2ë',
-        ], iterator_to_array($formatter->apply('Á1æ2Ë')), '', 0, 10, true);
+        ], iterator_to_array($formatter->apply(['Á1æ2Ë']), false), '', 0, 10, true);
     }
 }

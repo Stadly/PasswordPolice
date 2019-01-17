@@ -40,7 +40,18 @@ final class Substring implements WordFormatter
     /**
      * {@inheritDoc}
      */
-    public function apply(string $word): Traversable
+    public function apply(iterable $words): Traversable
+    {
+        foreach ($words as $word) {
+            yield from $this->formatWord($word);
+        }
+    }
+
+    /**
+     * @param string $word Word to format.
+     * @return Traversable<string> Formatted words. May contain duplicates.
+     */
+    private function formatWord(string $word): Traversable
     {
         for ($start = 0; $start < mb_strlen($word); ++$start) {
             $substring = mb_substr($word, $start, $this->maxLength);

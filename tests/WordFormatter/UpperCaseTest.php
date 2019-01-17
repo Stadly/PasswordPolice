@@ -20,7 +20,16 @@ final class UpperCaseTest extends TestCase
     {
         $formatter = new UpperCase();
 
-        self::assertSame(['FOOBAR'], iterator_to_array($formatter->apply('fOoBaR')));
+        self::assertSame(['FOOBAR'], iterator_to_array($formatter->apply(['fOoBaR']), false));
+    }
+    /**
+     * @covers ::apply
+     */
+    public function testCanFormatWords(): void
+    {
+        $formatter = new UpperCase();
+
+        self::assertSame(['FOO', 'BAR'], iterator_to_array($formatter->apply(['fOo' ,'BaR']), false));
     }
 
     /**
@@ -30,6 +39,6 @@ final class UpperCaseTest extends TestCase
     {
         $formatter = new UpperCase();
 
-        self::assertSame(['ÁÁÆØÔËÑ'], iterator_to_array($formatter->apply('áÁæØôËñ')));
+        self::assertSame(['ÁÁÆØÔËÑ'], iterator_to_array($formatter->apply(['áÁæØôËñ']), false));
     }
 }

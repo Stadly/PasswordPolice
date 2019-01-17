@@ -70,7 +70,18 @@ final class Leetspeak implements WordFormatter
     /**
      * {@inheritDoc}
      */
-    public function apply(string $word): Traversable
+    public function apply(iterable $words): Traversable
+    {
+        foreach ($words as $word) {
+            yield from $this->formatWord($word);
+        }
+    }
+
+    /**
+     * @param string $word Word to format.
+     * @return Traversable<string> Formatted words. May contain duplicates.
+     */
+    private function formatWord(string $word): Traversable
     {
         if ($word === '') {
             yield '';
@@ -78,7 +89,7 @@ final class Leetspeak implements WordFormatter
         }
 
         foreach ($this->getDecodeMap($word) as $encodedChar => $chars) {
-            foreach ($this->apply(mb_substr($word, mb_strlen((string)$encodedChar))) as $suffix) {
+            foreach ($this->formatWord(mb_substr($word, mb_strlen((string)$encodedChar))) as $suffix) {
                 foreach ($chars as $char) {
                     yield $char.$suffix;
                 }

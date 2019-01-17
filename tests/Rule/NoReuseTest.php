@@ -34,7 +34,7 @@ final class NoReuseTest extends TestCase
     {
         $this->hashFunction = $this->createMock(HashFunction::class);
         $this->hashFunction->method('compare')->willReturnCallback(
-            static function ($password, $hash) {
+            static function (string $password, string $hash): bool {
                 return $password === $hash;
             }
         );

@@ -20,7 +20,17 @@ final class LowerCaseTest extends TestCase
     {
         $formatter = new LowerCase();
 
-        self::assertSame(['foobar'], iterator_to_array($formatter->apply('fOoBaR')));
+        self::assertSame(['foobar'], iterator_to_array($formatter->apply(['fOoBaR']), false));
+    }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanFormatWords(): void
+    {
+        $formatter = new LowerCase();
+
+        self::assertSame(['foo', 'bar'], iterator_to_array($formatter->apply(['fOo', 'BaR']), false));
     }
 
     /**
@@ -30,6 +40,6 @@ final class LowerCaseTest extends TestCase
     {
         $formatter = new LowerCase();
 
-        self::assertSame(['ááæøôëñ'], iterator_to_array($formatter->apply('áÁæØôËñ')));
+        self::assertSame(['ááæøôëñ'], iterator_to_array($formatter->apply(['áÁæØôËñ']), false));
     }
 }

@@ -13,7 +13,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 - Word converters have been renamed word formatters.
-- The convert method of word formatters (former word converters) has been renamed apply.
+- The convert method of word formatters has been renamed apply.
+- The apply method of word formatters take multiple words instead of a single word.
 
 ### Fixed
 - Nothing

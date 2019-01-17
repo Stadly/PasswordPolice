@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\WordFormatter;
+use Traversable;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\Series
@@ -30,17 +31,21 @@ final class SeriesTest extends TestCase
     {
         $this->wordFormatter1 = $this->createMock(WordFormatter::class);
         $this->wordFormatter1->method('apply')->willReturnCallback(
-            static function ($word) {
-                yield str_replace('4', 'a', $word);
-                yield str_replace('1', 'i', $word);
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield str_replace('4', 'a', $word);
+                    yield str_replace('1', 'i', $word);
+                }
             }
         );
 
         $this->wordFormatter2 = $this->createMock(WordFormatter::class);
         $this->wordFormatter2->method('apply')->willReturnCallback(
-            static function ($word) {
-                yield str_replace('3', 'e', $word);
-                yield str_replace('1', 'l', $word);
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield str_replace('3', 'e', $word);
+                    yield str_replace('1', 'l', $word);
+                }
             }
         );
     }
@@ -89,7 +94,22 @@ final class SeriesTest extends TestCase
         self::assertEquals([
             'ha11o 1337',
             'h4iio i337',
-        ], iterator_to_array($formatter->apply('h411o 1337'), false), '', 0, 10, true);
+        ], iterator_to_array($formatter->apply(['h411o 1337']), false), '', 0, 10, true);
+    }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanFormatWordsUsingSingleWordFormatter(): void
+    {
+        $formatter = new Series($this->wordFormatter1);
+
+        self::assertEquals([
+            'ha11o',
+            'h4iio',
+            '1337',
+            'i337',
+        ], iterator_to_array($formatter->apply(['h411o', '1337']), false), '', 0, 10, true);
     }
 
     /**
@@ -104,6 +124,25 @@ final class SeriesTest extends TestCase
             'hallo l337',
             'h4iio iee7',
             'h4iio i337',
-        ], iterator_to_array($formatter->apply('h411o 1337'), false), '', 0, 10, true);
+        ], iterator_to_array($formatter->apply(['h411o 1337']), false), '', 0, 10, true);
+    }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanFormatWordsUsingMultipleWordFormatters(): void
+    {
+        $formatter = new Series($this->wordFormatter1, $this->wordFormatter2);
+
+        self::assertEquals([
+            'ha11e',
+            'hall3',
+            'h4iie',
+            'h4ii3',
+            '1ee7',
+            'l337',
+            'iee7',
+            'i337',
+        ], iterator_to_array($formatter->apply(['h4113', '1337']), false), '', 0, 10, true);
     }
 }
