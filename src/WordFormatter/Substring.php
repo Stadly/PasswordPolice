@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Stadly\PasswordPolice\WordConverter;
+namespace Stadly\PasswordPolice\WordFormatter;
 
 use InvalidArgumentException;
-use Stadly\PasswordPolice\WordConverter;
+use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class Substring implements WordConverter
+final class Substring implements WordFormatter
 {
     /**
      * @var int Minimum substring length.
@@ -40,7 +40,7 @@ final class Substring implements WordConverter
     /**
      * {@inheritDoc}
      */
-    public function convert(string $word): Traversable
+    public function apply(string $word): Traversable
     {
         for ($start = 0; $start < mb_strlen($word); ++$start) {
             $substring = mb_substr($word, $start, $this->maxLength);

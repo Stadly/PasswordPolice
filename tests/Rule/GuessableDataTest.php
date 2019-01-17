@@ -8,7 +8,7 @@ use DateTime;
 use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\ValidationError;
-use Stadly\PasswordPolice\WordConverter;
+use Stadly\PasswordPolice\WordFormatter;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\GuessableData
@@ -119,16 +119,16 @@ final class GuessableDataTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testStringIsRecognizedAfterSingleWordConverter(): void
+    public function testStringIsRecognizedAfterSingleWordFormatter(): void
     {
-        $wordConverter = $this->createMock(WordConverter::class);
-        $wordConverter->method('convert')->willReturnCallback(
+        $wordFormatter = $this->createMock(WordFormatter::class);
+        $wordFormatter->method('apply')->willReturnCallback(
             static function ($word) {
                 yield str_replace(['4', '€'], ['a', 'e'], $word);
             }
         );
 
-        $rule = new GuessableData([], [$wordConverter]);
+        $rule = new GuessableData([], [$wordFormatter]);
 
         self::assertFalse($rule->test(new Password('pine4ppl€jack', ['apple'])));
         self::assertTrue($rule->test(new Password('pine4pp1€jack', ['apple'])));
@@ -137,16 +137,16 @@ final class GuessableDataTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testDateIsRecognizedAfterSingleWordConverter(): void
+    public function testDateIsRecognizedAfterSingleWordFormatter(): void
     {
-        $wordConverter = $this->createMock(WordConverter::class);
-        $wordConverter->method('convert')->willReturnCallback(
+        $wordFormatter = $this->createMock(WordFormatter::class);
+        $wordFormatter->method('apply')->willReturnCallback(
             static function ($word) {
                 yield str_replace(['I', 'B'], ['1', '8'], $word);
             }
         );
 
-        $rule = new GuessableData([], [$wordConverter]);
+        $rule = new GuessableData([], [$wordFormatter]);
 
         self::assertFalse($rule->test(new Password('foo2B/II/1Bbar', [new DateTime('2018-11-28')])));
         self::assertTrue($rule->test(new Password('fooZB/I!/1Bbar', [new DateTime('2018-11-28')])));
@@ -155,23 +155,23 @@ final class GuessableDataTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testStringIsRecognizedAfterMultipleWordConverters(): void
+    public function testStringIsRecognizedAfterMultipleWordFormatters(): void
     {
-        $wordConverter1 = $this->createMock(WordConverter::class);
-        $wordConverter1->method('convert')->willReturnCallback(
+        $wordFormatter1 = $this->createMock(WordFormatter::class);
+        $wordFormatter1->method('apply')->willReturnCallback(
             static function ($word) {
                 yield str_replace(['4'], ['a'], $word);
             }
         );
 
-        $wordConverter2 = $this->createMock(WordConverter::class);
-        $wordConverter2->method('convert')->willReturnCallback(
+        $wordFormatter2 = $this->createMock(WordFormatter::class);
+        $wordFormatter2->method('apply')->willReturnCallback(
             static function ($word) {
                 yield str_replace(['€'], ['e'], $word);
             }
         );
 
-        $rule = new GuessableData([], [$wordConverter1, $wordConverter2]);
+        $rule = new GuessableData([], [$wordFormatter1, $wordFormatter2]);
 
         self::assertTrue($rule->test(new Password('pine4ppl€jack', ['apple'])));
         self::assertFalse($rule->test(new Password('pineappl€jack', ['apple'])));
@@ -181,23 +181,23 @@ final class GuessableDataTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testDateIsRecognizedAfterMultipleWordConverters(): void
+    public function testDateIsRecognizedAfterMultipleWordFormatters(): void
     {
-        $wordConverter1 = $this->createMock(WordConverter::class);
-        $wordConverter1->method('convert')->willReturnCallback(
+        $wordFormatter1 = $this->createMock(WordFormatter::class);
+        $wordFormatter1->method('apply')->willReturnCallback(
             static function ($word) {
                 yield str_replace(['I'], ['1'], $word);
             }
         );
 
-        $wordConverter2 = $this->createMock(WordConverter::class);
-        $wordConverter2->method('convert')->willReturnCallback(
+        $wordFormatter2 = $this->createMock(WordFormatter::class);
+        $wordFormatter2->method('apply')->willReturnCallback(
             static function ($word) {
                 yield str_replace(['B'], ['8'], $word);
             }
         );
 
-        $rule = new GuessableData([], [$wordConverter1, $wordConverter2]);
+        $rule = new GuessableData([], [$wordFormatter1, $wordFormatter2]);
 
         self::assertTrue($rule->test(new Password('foo2B/I!/1Bbar', [new DateTime('2018-11-28')])));
         self::assertFalse($rule->test(new Password('foo28/II/18bar', [new DateTime('2018-11-28')])));

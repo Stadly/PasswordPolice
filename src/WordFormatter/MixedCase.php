@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Stadly\PasswordPolice\WordConverter;
+namespace Stadly\PasswordPolice\WordFormatter;
 
-use Stadly\PasswordPolice\WordConverter;
+use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class MixedCase implements WordConverter
+final class MixedCase implements WordFormatter
 {
     /**
      * {@inheritDoc}
      */
-    public function convert(string $word): Traversable
+    public function apply(string $word): Traversable
     {
         if ($word === '') {
             yield '';
@@ -29,9 +29,9 @@ final class MixedCase implements WordConverter
             $chars[] = mb_strtoupper($char);
         }
 
-        foreach ($this->convert(mb_substr($word, 1)) as $suffix) {
-            foreach ($chars as $convertedChar) {
-                yield $convertedChar.$suffix;
+        foreach ($this->apply(mb_substr($word, 1)) as $suffix) {
+            foreach ($chars as $formattedChar) {
+                yield $formattedChar.$suffix;
             }
         }
     }

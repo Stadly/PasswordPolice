@@ -9,7 +9,7 @@ use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
-use Stadly\PasswordPolice\WordConverter;
+use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
 final class GuessableData implements Rule
@@ -61,9 +61,9 @@ final class GuessableData implements Rule
     private $guessableData;
 
     /**
-     * @var WordConverter[] Word converters.
+     * @var WordFormatter[] Word formatters.
      */
-    private $wordConverters;
+    private $wordFormatters;
 
     /**
      * @var int Constraint weight.
@@ -72,13 +72,13 @@ final class GuessableData implements Rule
 
     /**
      * @param (string|DateTimeInterface)[] $guessableData Guessable data.
-     * @param WordConverter[] $wordConverters Word converters.
+     * @param WordFormatter[] $wordFormatters Word formatters.
      * @param int $weight Constraint weight.
      */
-    public function __construct(array $guessableData = [], array $wordConverters = [], int $weight = 1)
+    public function __construct(array $guessableData = [], array $wordFormatters = [], int $weight = 1)
     {
         $this->guessableData = $guessableData;
-        $this->wordConverters = $wordConverters;
+        $this->wordFormatters = $wordFormatters;
         $this->weight = $weight;
     }
 
@@ -150,7 +150,7 @@ final class GuessableData implements Rule
      */
     private function getWordsToCheck(string $word): Traversable
     {
-        yield from $this->getUniqueWords($this->getConvertedWords($word));
+        yield from $this->getUniqueWords($this->getFormattedWords($word));
     }
 
     /**
@@ -171,16 +171,16 @@ final class GuessableData implements Rule
     }
 
     /**
-     * @param string $word Word to convert.
-     * @return Traversable<string> Converted words. May contain duplicates.
+     * @param string $word Word to format.
+     * @return Traversable<string> Formatted words. May contain duplicates.
      */
-    private function getConvertedWords(string $word): Traversable
+    private function getFormattedWords(string $word): Traversable
     {
         yield $word;
 
-        foreach ($this->wordConverters as $wordConverter) {
-            foreach ($wordConverter->convert($word) as $converted) {
-                yield $converted;
+        foreach ($this->wordFormatters as $wordFormatter) {
+            foreach ($wordFormatter->apply($word) as $formatted) {
+                yield $formatted;
             }
         }
     }

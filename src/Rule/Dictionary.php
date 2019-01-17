@@ -9,7 +9,7 @@ use RuntimeException;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
-use Stadly\PasswordPolice\WordConverter;
+use Stadly\PasswordPolice\WordFormatter;
 use Stadly\PasswordPolice\WordList;
 use Traversable;
 
@@ -31,9 +31,9 @@ final class Dictionary implements Rule
     private $maxWordLength;
 
     /**
-     * @var WordConverter[] Word converters.
+     * @var WordFormatter[] Word formatters.
      */
-    private $wordConverters;
+    private $wordFormatters;
 
     /**
      * @var int Constraint weight.
@@ -44,14 +44,14 @@ final class Dictionary implements Rule
      * @param WordList $wordList Word list for the dictionary.
      * @param int $minWordLength Ignore words shorter than this.
      * @param int|null $maxWordLength Ignore words longer than this.
-     * @param WordConverter[] $wordConverters Word converters.
+     * @param WordFormatter[] $wordFormatters Word formatters.
      * @param int $weight Constraint weight.
      */
     public function __construct(
         WordList $wordList,
         int $minWordLength = 3,
         ?int $maxWordLength = 25,
-        array $wordConverters = [],
+        array $wordFormatters = [],
         int $weight = 1
     ) {
         if ($minWordLength < 1) {
@@ -64,7 +64,7 @@ final class Dictionary implements Rule
         $this->wordList = $wordList;
         $this->minWordLength = $minWordLength;
         $this->maxWordLength = $maxWordLength;
-        $this->wordConverters = $wordConverters;
+        $this->wordFormatters = $wordFormatters;
         $this->weight = $weight;
     }
 
@@ -154,13 +154,13 @@ final class Dictionary implements Rule
      */
     private function getWordsToCheck(string $word): Traversable
     {
-        $convertedWords = $this->getUniqueWords($this->getConvertedWords($word));
+        $formattedWords = $this->getUniqueWords($this->getFormattedWords($word));
 
-        foreach ($convertedWords as $convertedWord) {
-            if ($this->minWordLength <= mb_strlen($convertedWord) &&
-               ($this->maxWordLength === null || mb_strlen($convertedWord) <= $this->maxWordLength)
+        foreach ($formattedWords as $formattedWord) {
+            if ($this->minWordLength <= mb_strlen($formattedWord) &&
+               ($this->maxWordLength === null || mb_strlen($formattedWord) <= $this->maxWordLength)
             ) {
-                yield $convertedWord;
+                yield $formattedWord;
             }
         }
     }
@@ -183,16 +183,16 @@ final class Dictionary implements Rule
     }
 
     /**
-     * @param string $word Word to convert.
-     * @return Traversable<string> Converted words. May contain duplicates.
+     * @param string $word Word to format.
+     * @return Traversable<string> Formatted words. May contain duplicates.
      */
-    private function getConvertedWords(string $word): Traversable
+    private function getFormattedWords(string $word): Traversable
     {
         yield $word;
 
-        foreach ($this->wordConverters as $wordConverter) {
-            foreach ($wordConverter->convert($word) as $converted) {
-                yield $converted;
+        foreach ($this->wordFormatters as $wordFormatter) {
+            foreach ($wordFormatter->apply($word) as $formatted) {
+                yield $formatted;
             }
         }
     }

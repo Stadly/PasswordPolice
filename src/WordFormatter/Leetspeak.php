@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Stadly\PasswordPolice\WordConverter;
+namespace Stadly\PasswordPolice\WordFormatter;
 
-use Stadly\PasswordPolice\WordConverter;
+use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class Leetspeak implements WordConverter
+final class Leetspeak implements WordFormatter
 {
     /**
      * @var array<string, string[]>
@@ -70,7 +70,7 @@ final class Leetspeak implements WordConverter
     /**
      * {@inheritDoc}
      */
-    public function convert(string $word): Traversable
+    public function apply(string $word): Traversable
     {
         if ($word === '') {
             yield '';
@@ -78,7 +78,7 @@ final class Leetspeak implements WordConverter
         }
 
         foreach ($this->getDecodeMap($word) as $encodedChar => $chars) {
-            foreach ($this->convert(mb_substr($word, mb_strlen((string)$encodedChar))) as $suffix) {
+            foreach ($this->apply(mb_substr($word, mb_strlen((string)$encodedChar))) as $suffix) {
                 foreach ($chars as $char) {
                     yield $char.$suffix;
                 }

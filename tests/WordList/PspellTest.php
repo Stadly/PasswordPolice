@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use Stadly\PasswordPolice\WordConverter;
+use Stadly\PasswordPolice\WordFormatter;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\WordList\Pspell
@@ -153,16 +153,16 @@ final class PspellTest extends TestCase
     /**
      * @covers ::contains
      */
-    public function testWordListCanContainWordsAfterSingleWordConverter(): void
+    public function testWordListCanContainWordsAfterSingleWordFormatter(): void
     {
-        $wordConverter = $this->createMock(WordConverter::class);
-        $wordConverter->method('convert')->willReturnCallback(
+        $wordFormatter = $this->createMock(WordFormatter::class);
+        $wordFormatter->method('apply')->willReturnCallback(
             static function ($word) {
                 yield mb_strtolower($word);
             }
         );
 
-        $pspell = Pspell::fromLocale('en', $wordConverter);
+        $pspell = Pspell::fromLocale('en', $wordFormatter);
 
         self::assertTrue($pspell->contains('HUSband'));
         self::assertFalse($pspell->contains('Usa'));
@@ -173,23 +173,23 @@ final class PspellTest extends TestCase
     /**
      * @covers ::contains
      */
-    public function testWordListCanContainWordsAfterMultipleWordConverters(): void
+    public function testWordListCanContainWordsAfterMultipleWordFormatters(): void
     {
-        $wordConverter1 = $this->createMock(WordConverter::class);
-        $wordConverter1->method('convert')->willReturnCallback(
+        $wordFormatter1 = $this->createMock(WordFormatter::class);
+        $wordFormatter1->method('apply')->willReturnCallback(
             static function ($word) {
                 yield mb_strtolower($word);
             }
         );
 
-        $wordConverter2 = $this->createMock(WordConverter::class);
-        $wordConverter2->method('convert')->willReturnCallback(
+        $wordFormatter2 = $this->createMock(WordFormatter::class);
+        $wordFormatter2->method('apply')->willReturnCallback(
             static function ($word) {
                 yield mb_strtoupper($word);
             }
         );
 
-        $pspell = Pspell::fromLocale('en', $wordConverter1, $wordConverter2);
+        $pspell = Pspell::fromLocale('en', $wordFormatter1, $wordFormatter2);
 
         self::assertTrue($pspell->contains('HUSband'));
         self::assertTrue($pspell->contains('Usa'));

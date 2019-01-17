@@ -9,7 +9,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Stadly\PasswordPolice\ValidationError;
-use Stadly\PasswordPolice\WordConverter;
+use Stadly\PasswordPolice\WordFormatter;
 use Stadly\PasswordPolice\WordList;
 
 /**
@@ -246,16 +246,16 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testWordIsRecognizedAfterSingleWordConverter(): void
+    public function testWordIsRecognizedAfterSingleWordFormatter(): void
     {
-        $wordConverter = $this->createMock(WordConverter::class);
-        $wordConverter->method('convert')->willReturnCallback(
+        $wordFormatter = $this->createMock(WordFormatter::class);
+        $wordFormatter->method('apply')->willReturnCallback(
             static function ($word) {
                 yield str_replace(['4', '€'], ['a', 'e'], $word);
             }
         );
 
-        $rule = new Dictionary($this->wordList, 1, null, [$wordConverter]);
+        $rule = new Dictionary($this->wordList, 1, null, [$wordFormatter]);
 
         self::assertFalse($rule->test('4ppl€'));
         self::assertTrue($rule->test('pine4ppl€jack'));
@@ -264,23 +264,23 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testWordIsRecognizedAfterMultipleWordConverters(): void
+    public function testWordIsRecognizedAfterMultipleWordFormatters(): void
     {
-        $wordConverter1 = $this->createMock(WordConverter::class);
-        $wordConverter1->method('convert')->willReturnCallback(
+        $wordFormatter1 = $this->createMock(WordFormatter::class);
+        $wordFormatter1->method('apply')->willReturnCallback(
             static function ($word) {
                 yield str_replace(['4'], ['a'], $word);
             }
         );
 
-        $wordConverter2 = $this->createMock(WordConverter::class);
-        $wordConverter2->method('convert')->willReturnCallback(
+        $wordFormatter2 = $this->createMock(WordFormatter::class);
+        $wordFormatter2->method('apply')->willReturnCallback(
             static function ($word) {
                 yield str_replace(['€'], ['e'], $word);
             }
         );
 
-        $rule = new Dictionary($this->wordList, 1, null, [$wordConverter1, $wordConverter2]);
+        $rule = new Dictionary($this->wordList, 1, null, [$wordFormatter1, $wordFormatter2]);
 
         self::assertTrue($rule->test('4ppl€'));
         self::assertTrue($rule->test('pine4ppl€jack'));

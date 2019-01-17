@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Stadly\PasswordPolice\WordConverter;
+namespace Stadly\PasswordPolice\WordFormatter;
 
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\WordConverter\MixedCase
+ * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\MixedCase
  * @covers ::<protected>
  * @covers ::<private>
  */
 final class MixedCaseTest extends TestCase
 {
     /**
-     * @covers ::convert
+     * @covers ::apply
      */
-    public function testCanConvertWord(): void
+    public function testCanFormatWord(): void
     {
-        $converter = new MixedCase();
+        $formatter = new MixedCase();
 
         self::assertEquals([
             'f1O2o',
@@ -29,15 +29,15 @@ final class MixedCaseTest extends TestCase
             'F1O2O',
             'f1o2O',
             'F1o2O',
-        ], iterator_to_array($converter->convert('f1O2o')), '', 0, 10, true);
+        ], iterator_to_array($formatter->apply('f1O2o')), '', 0, 10, true);
     }
 
     /**
-     * @covers ::convert
+     * @covers ::apply
      */
-    public function testCanConvertUtf8Characters(): void
+    public function testCanFormatUtf8Characters(): void
     {
-        $converter = new MixedCase();
+        $formatter = new MixedCase();
 
         self::assertEquals([
             'Á1æ2Ë',
@@ -48,6 +48,6 @@ final class MixedCaseTest extends TestCase
             'á1æ2ë',
             'Á1Æ2ë',
             'á1Æ2ë',
-        ], iterator_to_array($converter->convert('Á1æ2Ë')), '', 0, 10, true);
+        ], iterator_to_array($formatter->apply('Á1æ2Ë')), '', 0, 10, true);
     }
 }
