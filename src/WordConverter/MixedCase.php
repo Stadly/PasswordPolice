@@ -30,8 +30,8 @@ final class MixedCase implements WordConverter
         }
 
         foreach ($this->convert(mb_substr($word, 1)) as $suffix) {
-            foreach ($chars as $char) {
-                yield $char.$suffix;
+            foreach ($chars as $convertedChar) {
+                yield $convertedChar.$suffix;
             }
         }
     }
