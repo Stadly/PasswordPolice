@@ -37,7 +37,7 @@ final class Leetspeak implements WordConverter
     ];
 
     /**
-     * @var array<string, string[]>
+     * @var array<string|int, string[]>
      */
     private $decodeMap = [];
 
@@ -52,7 +52,7 @@ final class Leetspeak implements WordConverter
 
     /**
      * @param string $word Word to get decode map for.
-     * @return array<string, string[]> Map for decoding the word prefix.
+     * @return array<string|int, string[]> Map for decoding the word prefix.
      */
     private function getDecodeMap(string $word): array
     {
