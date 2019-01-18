@@ -18,6 +18,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - The convert method of word formatters has been renamed apply.
 - The apply method of word formatters take multiple words instead of a single word.
 - Word length can no longer be specified for the dictionary rule. Use the length filter word formatter instead.
+- The dictionary rule, guessable data rule, and pspell word list no longer filter unique words automatically. Use the unique filter word formatter instead.
 
 ### Fixed
 - Nothing

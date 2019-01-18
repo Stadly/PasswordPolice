@@ -74,7 +74,7 @@ final class Pspell implements WordList
      */
     public function contains(string $word): bool
     {
-        foreach ($this->getWordsToCheck($word) as $wordVariant) {
+        foreach ($this->getFormattedWords($word) as $wordVariant) {
             set_error_handler([self::class, 'errorHandler']);
             try {
                 $check = pspell_check($this->pspell, $wordVariant);
@@ -94,32 +94,6 @@ final class Pspell implements WordList
         }
 
         return false;
-    }
-
-    /**
-     * @param string $word Word to check.
-     * @return Traversable<string> Variants of the word to check.
-     */
-    private function getWordsToCheck(string $word): Traversable
-    {
-        yield from $this->getUniqueWords($this->getFormattedWords($word));
-    }
-
-    /**
-     * @param iterable<string> $words Words to filter.
-     * @return Traversable<string> Unique words.
-     */
-    private function getUniqueWords(iterable $words): Traversable
-    {
-        $checked = [];
-        foreach ($words as $word) {
-            if (isset($checked[$word])) {
-                continue;
-            }
-
-            $checked[$word] = true;
-            yield $word;
-        }
     }
 
     /**

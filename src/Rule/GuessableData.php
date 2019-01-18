@@ -133,7 +133,7 @@ final class GuessableData implements Rule
             $guessableData = array_merge($guessableData, $password->getGuessableData());
         }
 
-        foreach ($this->getWordsToCheck((string)$password) as $word) {
+        foreach ($this->getFormattedWords((string)$password) as $word) {
             foreach ($guessableData as $data) {
                 if ($this->contains($word, $data)) {
                     return $data;
@@ -142,32 +142,6 @@ final class GuessableData implements Rule
         }
 
         return null;
-    }
-
-    /**
-     * @param string $word Word to check.
-     * @return Traversable<string> Variants of the word to check.
-     */
-    private function getWordsToCheck(string $word): Traversable
-    {
-        yield from $this->getUniqueWords($this->getFormattedWords($word));
-    }
-
-    /**
-     * @param iterable<string> $words Words to filter.
-     * @return Traversable<string> Unique words.
-     */
-    private function getUniqueWords(iterable $words): Traversable
-    {
-        $checked = [];
-        foreach ($words as $word) {
-            if (isset($checked[$word])) {
-                continue;
-            }
-
-            $checked[$word] = true;
-            yield $word;
-        }
     }
 
     /**
