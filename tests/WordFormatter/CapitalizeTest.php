@@ -22,6 +22,7 @@ final class CapitalizeTest extends TestCase
 
         self::assertSame(['Foobar'], iterator_to_array($formatter->apply(['fOoBaR']), false));
     }
+
     /**
      * @covers ::apply
      */

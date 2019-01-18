@@ -22,6 +22,7 @@ final class UpperCaseTest extends TestCase
 
         self::assertSame(['FOOBAR'], iterator_to_array($formatter->apply(['fOoBaR']), false));
     }
+
     /**
      * @covers ::apply
      */
