@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use Carbon\CarbonInterval;
 use DateTime;
 use DateTimeInterface;
 use StableSort\StableSort;
-use Stadly\Date\Interval;
 use Stadly\PasswordPolice\Constraint\Date;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
