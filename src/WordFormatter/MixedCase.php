@@ -10,7 +10,8 @@ use Traversable;
 final class MixedCase implements WordFormatter
 {
     /**
-     * {@inheritDoc}
+     * @param iterable<string> $words Words to format.
+     * @return Traversable<string> Variants of the words with all combinations of upper case and lower case characters.
      */
     public function apply(iterable $words): Traversable
     {
@@ -21,7 +22,7 @@ final class MixedCase implements WordFormatter
 
     /**
      * @param string $word Word to format.
-     * @return Traversable<string> Formatted words. May contain duplicates.
+     * @return Traversable<string> Variants of the word with all combinations of upper case and lower case characters.
      */
     private function formatWord(string $word): Traversable
     {

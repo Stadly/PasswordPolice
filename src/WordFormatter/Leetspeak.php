@@ -68,7 +68,8 @@ final class Leetspeak implements WordFormatter
     }
 
     /**
-     * {@inheritDoc}
+     * @param iterable<string> $words Words to format.
+     * @return Traversable<string> Leetspeak-decoded variants of the words.
      */
     public function apply(iterable $words): Traversable
     {
@@ -79,7 +80,7 @@ final class Leetspeak implements WordFormatter
 
     /**
      * @param string $word Word to format.
-     * @return Traversable<string> Formatted words. May contain duplicates.
+     * @return Traversable<string> Leetspeak-decoded variants of the word.
      */
     private function formatWord(string $word): Traversable
     {

@@ -10,7 +10,8 @@ use Traversable;
 final class LowerCase implements WordFormatter
 {
     /**
-     * {@inheritDoc}
+     * @param iterable<string> $words Words to format.
+     * @return Traversable<string> The words with all characters in lower case.
      */
     public function apply(iterable $words): Traversable
     {

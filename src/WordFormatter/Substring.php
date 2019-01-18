@@ -38,7 +38,8 @@ final class Substring implements WordFormatter
     }
 
     /**
-     * {@inheritDoc}
+     * @param iterable<string> $words Words to format.
+     * @return Traversable<string> All substrings of the words. May contain duplicates.
      */
     public function apply(iterable $words): Traversable
     {
@@ -49,7 +50,7 @@ final class Substring implements WordFormatter
 
     /**
      * @param string $word Word to format.
-     * @return Traversable<string> Formatted words. May contain duplicates.
+     * @return Traversable<string> All substrings of the word. May contain duplicates.
      */
     private function formatWord(string $word): Traversable
     {

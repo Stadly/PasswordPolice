@@ -10,7 +10,8 @@ use Traversable;
 final class Capitalize implements WordFormatter
 {
     /**
-     * {@inheritDoc}
+     * @param iterable<string> $words Words to format.
+     * @return Traversable<string> The words with the first character in upper case and the rest in lower case.
      */
     public function apply(iterable $words): Traversable
     {

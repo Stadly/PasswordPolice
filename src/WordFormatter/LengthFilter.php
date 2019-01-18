@@ -38,7 +38,8 @@ final class LengthFilter implements WordFormatter
     }
 
     /**
-     * {@inheritDoc}
+     * @param iterable<string> $words Words to filter.
+     * @return Traversable<string> The words that match the length criteria.
      */
     public function apply(iterable $words): Traversable
     {
