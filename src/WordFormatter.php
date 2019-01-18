@@ -16,4 +16,14 @@ interface WordFormatter
      * @return Traversable<string> Formatted words. May contain duplicates.
      */
     public function apply(iterable $words): Traversable;
+
+    /**
+     * @param WordFormatter|null $next Word formatter to apply after this one.
+     */
+    public function setNext(?WordFormatter $next): void;
+
+    /**
+     * @return WordFormatter|null Next word formatter in the chain.
+     */
+    public function getNext(): ?WordFormatter;
 }

@@ -7,7 +7,7 @@ namespace Stadly\PasswordPolice\WordFormatter;
 use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class Series implements WordFormatter
+final class Series extends ChainableFormatter
 {
     /**
      * @var WordFormatter[] Word formatters.
@@ -25,7 +25,7 @@ final class Series implements WordFormatter
     /**
      * {@inheritDoc}
      */
-    public function apply(iterable $words): Traversable
+    protected function applyCurrent(iterable $words): Traversable
     {
         yield from $this->formatWord($words, $this->wordFormatters);
     }

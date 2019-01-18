@@ -6,6 +6,8 @@ namespace Stadly\PasswordPolice\WordFormatter;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Stadly\PasswordPolice\WordFormatter;
+use Traversable;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\LengthFilter
@@ -194,6 +196,36 @@ final class LengthFilterTest extends TestCase
         self::assertEquals([
             'ab',
             'ef',
+        ], iterator_to_array($formatter->apply([
+            'a',
+            'ab',
+            'abc',
+            'abcd',
+            'ef',
+        ]), false), '', 0, 10, true);
+    }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanApplyFormatterChain(): void
+    {
+        $formatter = new LengthFilter(2, 2);
+
+        $next = $this->createMock(WordFormatter::class);
+        $next->method('apply')->willReturnCallback(
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield strrev($word);
+                }
+            }
+        );
+
+        $formatter->setNext($next);
+
+        self::assertEquals([
+            'ba',
+            'fe',
         ], iterator_to_array($formatter->apply([
             'a',
             'ab',

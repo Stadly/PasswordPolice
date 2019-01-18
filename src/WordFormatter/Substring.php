@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\WordFormatter;
 
 use InvalidArgumentException;
-use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class Substring implements WordFormatter
+final class Substring extends ChainableFormatter
 {
     /**
      * @var int Minimum substring length.
@@ -41,7 +40,7 @@ final class Substring implements WordFormatter
      * @param iterable<string> $words Words to format.
      * @return Traversable<string> All substrings of the words. May contain duplicates.
      */
-    public function apply(iterable $words): Traversable
+    protected function applyCurrent(iterable $words): Traversable
     {
         foreach ($words as $word) {
             yield from $this->formatWord($word);

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\WordFormatter;
 
-use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class Leetspeak implements WordFormatter
+final class Leetspeak extends ChainableFormatter
 {
     /**
      * @var array<string, string[]>
@@ -71,7 +70,7 @@ final class Leetspeak implements WordFormatter
      * @param iterable<string> $words Words to format.
      * @return Traversable<string> Leetspeak-decoded variants of the words.
      */
-    public function apply(iterable $words): Traversable
+    protected function applyCurrent(iterable $words): Traversable
     {
         foreach ($words as $word) {
             yield from $this->formatWord($word);

@@ -146,4 +146,30 @@ final class SeriesTest extends TestCase
             'i337',
         ], iterator_to_array($formatter->apply(['h4113', '1337']), false), '', 0, 10, true);
     }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanApplyFormatterChain(): void
+    {
+        $formatter = new Series($this->wordFormatter1);
+
+        $next = $this->createMock(WordFormatter::class);
+        $next->method('apply')->willReturnCallback(
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield strrev($word);
+                }
+            }
+        );
+
+        $formatter->setNext($next);
+
+        self::assertEquals([
+            'o11ah',
+            'oii4h',
+            '7331',
+            '733i',
+        ], iterator_to_array($formatter->apply(['h411o', '1337']), false), '', 0, 10, true);
+    }
 }

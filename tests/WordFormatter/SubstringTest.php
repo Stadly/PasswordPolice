@@ -6,6 +6,8 @@ namespace Stadly\PasswordPolice\WordFormatter;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Stadly\PasswordPolice\WordFormatter;
+use Traversable;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\Substring
@@ -173,5 +175,38 @@ final class SubstringTest extends TestCase
             'ab',
             'bc',
         ], iterator_to_array($formatter->apply(['abc']), false), '', 0, 10, true);
+    }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanApplyFormatterChain(): void
+    {
+        $formatter = new Substring(1, null);
+        $next = $this->createMock(WordFormatter::class);
+        $next->method('apply')->willReturnCallback(
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield strrev($word);
+                }
+            }
+        );
+
+        $formatter->setNext($next);
+
+        self::assertEquals([
+            'cba',
+            'ba',
+            'cb',
+            'a',
+            'b',
+            'c',
+            'fed',
+            'ed',
+            'fe',
+            'd',
+            'e',
+            'f',
+        ], iterator_to_array($formatter->apply(['abc', 'def']), false), '', 0, 10, true);
     }
 }

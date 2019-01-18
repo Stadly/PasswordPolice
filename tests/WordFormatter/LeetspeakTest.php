@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\WordFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Stadly\PasswordPolice\WordFormatter;
+use Traversable;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\Leetspeak
@@ -64,5 +66,27 @@ final class LeetspeakTest extends TestCase
 
         self::assertContains('LEET', iterator_to_array($formatter->apply(['1337', '5P34K']), false));
         self::assertContains('SPEAK', iterator_to_array($formatter->apply(['1337', '5P34K']), false));
+    }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanApplyFormatterChain(): void
+    {
+        $formatter = new Leetspeak();
+
+        $next = $this->createMock(WordFormatter::class);
+        $next->method('apply')->willReturnCallback(
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield strrev($word);
+                }
+            }
+        );
+
+        $formatter->setNext($next);
+
+        self::assertContains('TEEL', iterator_to_array($formatter->apply(['1337', '5P34K']), false));
+        self::assertContains('KAEPS', iterator_to_array($formatter->apply(['1337', '5P34K']), false));
     }
 }

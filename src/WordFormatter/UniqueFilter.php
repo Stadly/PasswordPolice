@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\WordFormatter;
 
-use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class UniqueFilter implements WordFormatter
+final class UniqueFilter extends ChainableFormatter
 {
     /**
      * @param iterable<string> $words Words to filter.
      * @return Traversable<string> Unique words.
      */
-    public function apply(iterable $words): Traversable
+    protected function applyCurrent(iterable $words): Traversable
     {
         $unique = [];
         foreach ($words as $word) {

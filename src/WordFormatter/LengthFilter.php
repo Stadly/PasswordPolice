@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\WordFormatter;
 
 use InvalidArgumentException;
-use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class LengthFilter implements WordFormatter
+final class LengthFilter extends ChainableFormatter
 {
     /**
      * @var int Minimum word length.
@@ -41,7 +40,7 @@ final class LengthFilter implements WordFormatter
      * @param iterable<string> $words Words to filter.
      * @return Traversable<string> The words that match the length criteria.
      */
-    public function apply(iterable $words): Traversable
+    protected function applyCurrent(iterable $words): Traversable
     {
         foreach ($words as $word) {
             if ($this->minLength <= mb_strlen($word) &&

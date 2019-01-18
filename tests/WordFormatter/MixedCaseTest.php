@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\WordFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Stadly\PasswordPolice\WordFormatter;
+use Traversable;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\MixedCase
@@ -66,5 +68,33 @@ final class MixedCaseTest extends TestCase
             'Á1Æ2ë',
             'á1Æ2ë',
         ], iterator_to_array($formatter->apply(['Á1æ2Ë']), false), '', 0, 10, true);
+    }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanApplyFormatterChain(): void
+    {
+        $formatter = new MixedCase();
+
+        $next = $this->createMock(WordFormatter::class);
+        $next->method('apply')->willReturnCallback(
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield strrev($word);
+                }
+            }
+        );
+
+        $formatter->setNext($next);
+
+        self::assertEquals([
+            'O1f',
+            'O1F',
+            'o1f',
+            'o1F',
+            'o2',
+            'O2',
+        ], iterator_to_array($formatter->apply(['f1O', '2o']), false), '', 0, 10, true);
     }
 }
