@@ -16,6 +16,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Word converters have been renamed word formatters.
 - The convert method of word formatters has been renamed apply.
 - The apply method of word formatters take multiple words instead of a single word.
+- Word length can no longer be specified for the dictionary rule. Use the length filter word formatter instead.
 
 ### Fixed
 - Nothing

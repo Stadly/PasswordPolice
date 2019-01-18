@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use InvalidArgumentException;
 use RuntimeException;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
@@ -21,16 +20,6 @@ final class Dictionary implements Rule
     private $wordList;
 
     /**
-     * @var int Minimum word length to consider.
-     */
-    private $minWordLength;
-
-    /**
-     * @var int|null Maximum word length to consider.
-     */
-    private $maxWordLength;
-
-    /**
      * @var WordFormatter[] Word formatters.
      */
     private $wordFormatters;
@@ -42,28 +31,15 @@ final class Dictionary implements Rule
 
     /**
      * @param WordList $wordList Word list for the dictionary.
-     * @param int $minWordLength Ignore words shorter than this.
-     * @param int|null $maxWordLength Ignore words longer than this.
      * @param WordFormatter[] $wordFormatters Word formatters.
      * @param int $weight Constraint weight.
      */
     public function __construct(
         WordList $wordList,
-        int $minWordLength = 3,
-        ?int $maxWordLength = 25,
         array $wordFormatters = [],
         int $weight = 1
     ) {
-        if ($minWordLength < 1) {
-            throw new InvalidArgumentException('Minimum word length must be positive.');
-        }
-        if ($maxWordLength !== null && $maxWordLength < $minWordLength) {
-            throw new InvalidArgumentException('Maximum word length cannot be smaller than mininum word length.');
-        }
-
         $this->wordList = $wordList;
-        $this->minWordLength = $minWordLength;
-        $this->maxWordLength = $maxWordLength;
         $this->wordFormatters = $wordFormatters;
         $this->weight = $weight;
     }
@@ -74,22 +50,6 @@ final class Dictionary implements Rule
     public function getWordList(): WordList
     {
         return $this->wordList;
-    }
-
-    /**
-     * @return int Minimum word length to consider.
-     */
-    public function getMinWordLength(): int
-    {
-        return $this->minWordLength;
-    }
-
-    /**
-     * @return int|null Maximum word length to consider.
-     */
-    public function getMaxWordLength(): ?int
-    {
-        return $this->maxWordLength;
     }
 
     /**
@@ -154,15 +114,7 @@ final class Dictionary implements Rule
      */
     private function getWordsToCheck(string $word): Traversable
     {
-        $formattedWords = $this->getUniqueWords($this->getFormattedWords($word));
-
-        foreach ($formattedWords as $formattedWord) {
-            if ($this->minWordLength <= mb_strlen($formattedWord) &&
-               ($this->maxWordLength === null || mb_strlen($formattedWord) <= $this->maxWordLength)
-            ) {
-                yield $formattedWord;
-            }
-        }
+        yield from $this->getUniqueWords($this->getFormattedWords($word));
     }
 
     /**

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -44,99 +43,13 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCanConstructRuleWithMinWordLengthConstraint(): void
+    public function testCanConstructRule(): void
     {
-        $rule = new Dictionary($this->wordList, 5, null);
+        $rule = new Dictionary($this->wordList);
 
         // Force generation of code coverage
-        $ruleConstruct = new Dictionary($this->wordList, 5, null);
+        $ruleConstruct = new Dictionary($this->wordList);
         self::assertEquals($rule, $ruleConstruct);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructRuleWithMaxWordLengthConstraint(): void
-    {
-        $rule = new Dictionary($this->wordList, 1, 10);
-
-        // Force generation of code coverage
-        $ruleConstruct = new Dictionary($this->wordList, 1, 10);
-        self::assertEquals($rule, $ruleConstruct);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructRuleWithBothMinWordLengthAndMaxWordLengthConstraint(): void
-    {
-        $rule = new Dictionary($this->wordList, 5, 10);
-
-        // Force generation of code coverage
-        $ruleConstruct = new Dictionary($this->wordList, 5, 10);
-        self::assertEquals($rule, $ruleConstruct);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testCannotConstructRuleWithMinWordLengthConstraintEqualToZero(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        $rule = new Dictionary($this->wordList, 0, null);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testCannotConstructRuleWithNegativeMinWordLengthConstraint(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        $rule = new Dictionary($this->wordList, -10, null);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testCannotConstructRuleWithMaxWordLengthConstraintSmallerThanMinWordLengthConstraint(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        $rule = new Dictionary($this->wordList, 10, 5);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructRuleWithMinWordLengthConstraintEqualToMaxWordLengthConstraint(): void
-    {
-        $rule = new Dictionary($this->wordList, 5, 5);
-
-        // Force generation of code coverage
-        $ruleConstruct = new Dictionary($this->wordList, 5, 5);
-        self::assertEquals($rule, $ruleConstruct);
-    }
-
-    /**
-     * @covers ::getMinWordLength
-     */
-    public function testCanGetMinWordLengthConstraint(): void
-    {
-        $rule = new Dictionary($this->wordList, 5, 10);
-
-        self::assertSame(5, $rule->getMinWordLength());
-    }
-
-    /**
-     * @covers ::getMaxWordLength
-     */
-    public function testCanGetMaxWordLengthConstraint(): void
-    {
-        $rule = new Dictionary($this->wordList, 5, 10);
-
-        self::assertSame(10, $rule->getMaxWordLength());
     }
 
     /**
@@ -152,39 +65,19 @@ final class DictionaryTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testMinWordLengthConstraintCanBeSatisfied(): void
+    public function testRuleCanBeSatisfied(): void
     {
-        $rule = new Dictionary($this->wordList, 3, null);
+        $rule = new Dictionary($this->wordList);
 
-        self::assertTrue($rule->test('be'));
+        self::assertTrue($rule->test('test'));
     }
 
     /**
      * @covers ::test
      */
-    public function testMinWordLengthConstraintCanBeUnsatisfied(): void
+    public function testRuleCanBeUnsatisfied(): void
     {
-        $rule = new Dictionary($this->wordList, 2, null);
-
-        self::assertFalse($rule->test('be'));
-    }
-
-    /**
-     * @covers ::test
-     */
-    public function testMaxWordLengthConstraintCanBeSatisfied(): void
-    {
-        $rule = new Dictionary($this->wordList, 1, 4);
-
-        self::assertTrue($rule->test('apple'));
-    }
-
-    /**
-     * @covers ::test
-     */
-    public function testMaxWordLengthConstraintCanBeUnsatisfied(): void
-    {
-        $rule = new Dictionary($this->wordList, 1, 5);
+        $rule = new Dictionary($this->wordList);
 
         self::assertFalse($rule->test('apple'));
     }
@@ -194,9 +87,9 @@ final class DictionaryTest extends TestCase
      */
     public function testPrefixWordIsNotRecognized(): void
     {
-        $rule = new Dictionary($this->wordList, 1, null);
+        $rule = new Dictionary($this->wordList);
 
-        self::assertTrue($rule->test('pineapple'));
+        self::assertTrue($rule->test('applejack'));
     }
 
     /**
@@ -204,7 +97,7 @@ final class DictionaryTest extends TestCase
      */
     public function testInfixWordIsNotRecognized(): void
     {
-        $rule = new Dictionary($this->wordList, 1, null);
+        $rule = new Dictionary($this->wordList);
 
         self::assertTrue($rule->test('pineapplejack'));
     }
@@ -214,9 +107,9 @@ final class DictionaryTest extends TestCase
      */
     public function testPostfixWordIsNotRecognized(): void
     {
-        $rule = new Dictionary($this->wordList, 1, null);
+        $rule = new Dictionary($this->wordList);
 
-        self::assertTrue($rule->test('applejack'));
+        self::assertTrue($rule->test('pineapple'));
     }
 
     /**
@@ -224,7 +117,7 @@ final class DictionaryTest extends TestCase
      */
     public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
     {
-        $rule = new Dictionary($this->wordList, 1, 5, [], 1);
+        $rule = new Dictionary($this->wordList, [], 1);
 
         self::assertTrue($rule->test('apple', 2));
     }
@@ -258,7 +151,7 @@ final class DictionaryTest extends TestCase
             }
         );
 
-        $rule = new Dictionary($this->wordList, 1, null, [$wordFormatter]);
+        $rule = new Dictionary($this->wordList, [$wordFormatter]);
 
         self::assertFalse($rule->test('4ppl€'));
         self::assertTrue($rule->test('pine4ppl€jack'));
@@ -287,7 +180,7 @@ final class DictionaryTest extends TestCase
             }
         );
 
-        $rule = new Dictionary($this->wordList, 1, null, [$wordFormatter1, $wordFormatter2]);
+        $rule = new Dictionary($this->wordList, [$wordFormatter1, $wordFormatter2]);
 
         self::assertTrue($rule->test('4ppl€'));
         self::assertTrue($rule->test('pine4ppl€jack'));
@@ -302,7 +195,7 @@ final class DictionaryTest extends TestCase
      */
     public function testRuleCanBeValidated(): void
     {
-        $rule = new Dictionary($this->wordList, 1, null);
+        $rule = new Dictionary($this->wordList);
 
         self::assertNull($rule->validate('foo'));
     }
@@ -312,7 +205,7 @@ final class DictionaryTest extends TestCase
      */
     public function testRuleCanBeInvalidated(): void
     {
-        $rule = new Dictionary($this->wordList, 1, null);
+        $rule = new Dictionary($this->wordList);
 
         self::assertEquals(
             new ValidationError('Must not contain dictionary words.', 'apple', $rule, 1),

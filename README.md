@@ -45,7 +45,7 @@ $policy->addRules(new GuessableData(['company']));  // Password must not contain
 $policy->addRules(new HaveIBeenPwned());            // Password must not be exposed in data breaches.
 $policy->addRules(new NoReuse(new PasswordHash())); // Password must not have been used earlier.
 $pspell = Pspell::fromLocale('en', new LowerCaseConverter(), new UpperCaseConverter());
-$dictionary = new Dictionary($pspell, 3, 25, [new Leetspeak()]);
+$dictionary = new Dictionary($pspell, [new Leetspeak()]);
 $policy->addRules($dictionary));                    // Password must not contain dictionary words.
 
 $validationErrors = $policy->validate('password');
