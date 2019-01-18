@@ -10,6 +10,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Possible to specify guessable data for the rule, that applies to all passwords.
 - Word formatter generating substrings of the word.
 - Word formatter applying other word formatter in series. The output for the first word formatter is used as input for the second word formatter, etc.
+- Word formatter filtering words by length.
 
 ### Changed
 - Word converters have been renamed word formatters.
