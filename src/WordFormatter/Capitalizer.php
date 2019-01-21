@@ -6,7 +6,7 @@ namespace Stadly\PasswordPolice\WordFormatter;
 
 use Traversable;
 
-final class Capitalize extends ChainableFormatter
+final class Capitalizer extends ChainableFormatter
 {
     /**
      * @param iterable<string> $words Words to format.

@@ -23,6 +23,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - The pspell word list takes an array of word formatters instead of a variadic list.
 - Renamed all constraints to include constraint in the class name.
 - Renamed `PasswordHash` hash function to `PasswordHasher`.
+- Renamed `Capitalize` rule to `Capitalizer`.
 
 ### Fixed
 - Nothing

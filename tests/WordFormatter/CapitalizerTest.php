@@ -9,18 +9,18 @@ use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\Capitalize
+ * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\Capitalizer
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class CapitalizeTest extends TestCase
+final class CapitalizerTest extends TestCase
 {
     /**
      * @covers ::apply
      */
     public function testCanFormatWord(): void
     {
-        $formatter = new Capitalize();
+        $formatter = new Capitalizer();
 
         self::assertSame(['Foobar'], iterator_to_array($formatter->apply(['fOoBaR']), false));
     }
@@ -30,7 +30,7 @@ final class CapitalizeTest extends TestCase
      */
     public function testCanFormatWords(): void
     {
-        $formatter = new Capitalize();
+        $formatter = new Capitalizer();
 
         self::assertSame(['Foo', 'Bar'], iterator_to_array($formatter->apply(['fOo', 'BaR']), false));
     }
@@ -40,7 +40,7 @@ final class CapitalizeTest extends TestCase
      */
     public function testCanFormatUtf8Characters(): void
     {
-        $formatter = new Capitalize();
+        $formatter = new Capitalizer();
 
         self::assertSame(['Ááæøôëñ'], iterator_to_array($formatter->apply(['áÁæØôËñ']), false));
     }
@@ -50,7 +50,7 @@ final class CapitalizeTest extends TestCase
      */
     public function testCanApplyFormatterChain(): void
     {
-        $formatter = new Capitalize();
+        $formatter = new Capitalizer();
 
         $next = $this->createMock(WordFormatter::class);
         $next->method('apply')->willReturnCallback(
