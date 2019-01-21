@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class CountTest extends TestCase
+final class CountConstraintTest extends TestCase
 {
     /**
      * @covers ::__construct

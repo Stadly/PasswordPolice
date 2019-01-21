@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class DateTest extends TestCase
+final class DateConstraintTest extends TestCase
 {
     /**
      * @covers ::__construct
