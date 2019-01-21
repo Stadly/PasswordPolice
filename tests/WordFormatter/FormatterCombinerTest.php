@@ -172,4 +172,51 @@ final class FormatterCombinerTest extends TestCase
             'bar',
         ]), false), '', 0, 10, true);
     }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanApplyFormatterChain(): void
+    {
+        $formatter = new FormatterCombiner([$this->wordFormatter1, $this->wordFormatter2], true, false);
+        $next = $this->createMock(WordFormatter::class);
+        $next->method('apply')->willReturnCallback(
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield strrev($word);
+                }
+            }
+        );
+
+        $formatter->setNext($next);
+
+        self::assertEquals([
+            'oOf',
+            'RaB',
+            'BaR',
+            'OOF',
+            'rab',
+            'OOF',
+            'RAB',
+            'BAR',
+            'OOF',
+            'RAB',
+            'fOo',
+            'BaR',
+            'RaB',
+            'FOO',
+            'bar',
+            'oof',
+            'rab',
+            'bar',
+            'oof',
+            'rab',
+        ], iterator_to_array($formatter->apply([
+            'fOo',
+            'BaR',
+            'RaB',
+            'FOO',
+            'bar',
+        ]), false), '', 0, 10, true);
+    }
 }
