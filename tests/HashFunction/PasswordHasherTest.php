@@ -8,21 +8,21 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\HashFunction\PasswordHash
+ * @coversDefaultClass \Stadly\PasswordPolice\HashFunction\PasswordHasher
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class PasswordHashTest extends TestCase
+final class PasswordHasherTest extends TestCase
 {
     /**
      * @covers ::__construct
      */
     public function testCanConstructHashFunction(): void
     {
-        $hashFunction = new PasswordHash(PASSWORD_BCRYPT);
+        $hashFunction = new PasswordHasher(PASSWORD_BCRYPT);
 
         // Force generation of code coverage
-        $hashFunctionConstruct = new PasswordHash(PASSWORD_BCRYPT);
+        $hashFunctionConstruct = new PasswordHasher(PASSWORD_BCRYPT);
         self::assertEquals($hashFunction, $hashFunctionConstruct);
     }
 
@@ -31,7 +31,7 @@ final class PasswordHashTest extends TestCase
      */
     public function testCanHashPassword(): void
     {
-        $hashFunction = new PasswordHash(PASSWORD_BCRYPT);
+        $hashFunction = new PasswordHasher(PASSWORD_BCRYPT);
 
         self::assertTrue(password_verify('foo', $hashFunction->hash('foo')));
     }
@@ -41,7 +41,7 @@ final class PasswordHashTest extends TestCase
      */
     public function testHashCanThrowException(): void
     {
-        $hashFunction = new PasswordHash(-1);
+        $hashFunction = new PasswordHasher(-1);
 
         $this->expectException(RuntimeException::class);
 
@@ -53,7 +53,7 @@ final class PasswordHashTest extends TestCase
      */
     public function testCanCompareSamePassword(): void
     {
-        $hashFunction = new PasswordHash(PASSWORD_BCRYPT);
+        $hashFunction = new PasswordHasher(PASSWORD_BCRYPT);
 
         self::assertTrue($hashFunction->compare('foo', '$2y$10$iLpUEjxm56NyXfcYlU8GbOa3aD45x2FEQQEtnbVu4pUWN01.dpxPW'));
     }
@@ -63,7 +63,7 @@ final class PasswordHashTest extends TestCase
      */
     public function testCanCompareOtherPassword(): void
     {
-        $hashFunction = new PasswordHash(PASSWORD_BCRYPT);
+        $hashFunction = new PasswordHasher(PASSWORD_BCRYPT);
 
         self::assertFalse($hashFunction->compare('foo', ''));
     }

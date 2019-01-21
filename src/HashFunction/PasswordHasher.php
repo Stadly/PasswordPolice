@@ -8,7 +8,7 @@ use ErrorException;
 use RuntimeException;
 use Stadly\PasswordPolice\HashFunction;
 
-final class PasswordHash implements HashFunction
+final class PasswordHasher implements HashFunction
 {
     /**
      * @var int Algorithm.

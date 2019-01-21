@@ -22,6 +22,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - The dictionary rule, guessable data rule, and pspell word list no longer filter unique words automatically. Use the unique filter word formatter instead.
 - The pspell word list takes an array of word formatters instead of a variadic list.
 - Renamed all constraints to include constraint in the class name.
+- Renamed `PasswordHash` hash function to `PasswordHasher`.
 
 ### Fixed
 - Nothing
