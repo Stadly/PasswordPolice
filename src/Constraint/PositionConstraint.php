@@ -6,7 +6,7 @@ namespace Stadly\PasswordPolice\Constraint;
 
 use InvalidArgumentException;
 
-final class Position
+final class PositionConstraint
 {
     /**
      * @var int First position.

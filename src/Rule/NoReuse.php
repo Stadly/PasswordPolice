@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use StableSort\StableSort;
-use Stadly\PasswordPolice\Constraint\Position;
+use Stadly\PasswordPolice\Constraint\PositionConstraint;
 use Stadly\PasswordPolice\HashFunction;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
@@ -20,7 +20,7 @@ final class NoReuse implements Rule
     private $hashFunction;
 
     /**
-     * @var Position[] Rule constraints.
+     * @var PositionConstraint[] Rule constraints.
      */
     private $constraints;
 
@@ -44,9 +44,9 @@ final class NoReuse implements Rule
      */
     public function addConstraint(?int $count = null, int $first = 0, int $weight = 1): self
     {
-        $this->constraints[] = new Position($first, $count, $weight);
+        $this->constraints[] = new PositionConstraint($first, $count, $weight);
 
-        StableSort::usort($this->constraints, static function (Position $a, Position $b): int {
+        StableSort::usort($this->constraints, static function (PositionConstraint $a, PositionConstraint $b): int {
             return $b->getWeight() <=> $a->getWeight();
         });
 
@@ -102,9 +102,9 @@ final class NoReuse implements Rule
     /**
      * @param int[] $positions Positions of former passwords matching the password.
      * @param int|null $weight Don't consider constraints with lower weights.
-     * @return Position|null Constraint violated by the position.
+     * @return PositionConstraint|null Constraint violated by the position.
      */
-    private function getViolation(array $positions, ?int $weight = null): ?Position
+    private function getViolation(array $positions, ?int $weight = null): ?PositionConstraint
     {
         foreach ($this->constraints as $constraint) {
             if ($weight !== null && $constraint->getWeight() < $weight) {
@@ -141,10 +141,10 @@ final class NoReuse implements Rule
     }
 
     /**
-     * @param Position $constraint Constraint that is violated.
+     * @param PositionConstraint $constraint Constraint that is violated.
      * @return string Message explaining the violation.
      */
-    private function getMessage(Position $constraint): string
+    private function getMessage(PositionConstraint $constraint): string
     {
         $translator = Policy::getTranslator();
 

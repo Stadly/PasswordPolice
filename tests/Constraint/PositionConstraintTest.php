@@ -8,21 +8,21 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\Constraint\Position
+ * @coversDefaultClass \Stadly\PasswordPolice\Constraint\PositionConstraint
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class PositionTest extends TestCase
+final class PositionConstraintTest extends TestCase
 {
     /**
      * @covers ::__construct
      */
     public function testCanConstructConstraintWithFirstConstraint(): void
     {
-        $constraint = new Position(5, null);
+        $constraint = new PositionConstraint(5, null);
 
         // Force generation of code coverage
-        $constraintConstruct = new Position(5, null);
+        $constraintConstruct = new PositionConstraint(5, null);
         self::assertEquals($constraint, $constraintConstruct);
     }
 
@@ -31,10 +31,10 @@ final class PositionTest extends TestCase
      */
     public function testCanConstructConstraintWithCountConstraint(): void
     {
-        $constraint = new Position(0, 10);
+        $constraint = new PositionConstraint(0, 10);
 
         // Force generation of code coverage
-        $constraintConstruct = new Position(0, 10);
+        $constraintConstruct = new PositionConstraint(0, 10);
         self::assertEquals($constraint, $constraintConstruct);
     }
 
@@ -43,10 +43,10 @@ final class PositionTest extends TestCase
      */
     public function testCanConstructConstraintWithBothFirstAndCountConstraint(): void
     {
-        $constraint = new Position(5, 10);
+        $constraint = new PositionConstraint(5, 10);
 
         // Force generation of code coverage
-        $constraintConstruct = new Position(5, 10);
+        $constraintConstruct = new PositionConstraint(5, 10);
         self::assertEquals($constraint, $constraintConstruct);
     }
 
@@ -57,7 +57,7 @@ final class PositionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $constraint = new Position(-10, null);
+        $constraint = new PositionConstraint(-10, null);
     }
 
     /**
@@ -67,7 +67,7 @@ final class PositionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $constraint = new Position(0, 0);
+        $constraint = new PositionConstraint(0, 0);
     }
 
     /**
@@ -77,7 +77,7 @@ final class PositionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $constraint = new Position(0, -10);
+        $constraint = new PositionConstraint(0, -10);
     }
 
     /**
@@ -85,10 +85,10 @@ final class PositionTest extends TestCase
      */
     public function testCanConstructUnconstrainedConstraint(): void
     {
-        $constraint = new Position(0, null);
+        $constraint = new PositionConstraint(0, null);
 
         // Force generation of code coverage
-        $constraintConstruct = new Position(0, null);
+        $constraintConstruct = new PositionConstraint(0, null);
         self::assertEquals($constraint, $constraintConstruct);
     }
 
@@ -97,10 +97,10 @@ final class PositionTest extends TestCase
      */
     public function testCanConstructConstraintWithFirstConstraintEqualToCountConstraint(): void
     {
-        $constraint = new Position(5, 5);
+        $constraint = new PositionConstraint(5, 5);
 
         // Force generation of code coverage
-        $constraintConstruct = new Position(5, 5);
+        $constraintConstruct = new PositionConstraint(5, 5);
         self::assertEquals($constraint, $constraintConstruct);
     }
 
@@ -109,10 +109,10 @@ final class PositionTest extends TestCase
      */
     public function testCanConstructConstraintWithNegativeWeight(): void
     {
-        $constraint = new Position(5, 5, -5);
+        $constraint = new PositionConstraint(5, 5, -5);
 
         // Force generation of code coverage
-        $constraintConstruct = new Position(5, 5, -5);
+        $constraintConstruct = new PositionConstraint(5, 5, -5);
         self::assertEquals($constraint, $constraintConstruct);
     }
 
@@ -121,7 +121,7 @@ final class PositionTest extends TestCase
      */
     public function testCanGetFirstConstraint(): void
     {
-        $constraint = new Position(5, 10);
+        $constraint = new PositionConstraint(5, 10);
 
         self::assertSame(5, $constraint->getFirst());
     }
@@ -131,7 +131,7 @@ final class PositionTest extends TestCase
      */
     public function testCanGetCountConstraint(): void
     {
-        $constraint = new Position(5, 10);
+        $constraint = new PositionConstraint(5, 10);
 
         self::assertSame(10, $constraint->getCount());
     }
@@ -141,7 +141,7 @@ final class PositionTest extends TestCase
      */
     public function testCanGetWeight(): void
     {
-        $constraint = new Position(5, 10, 2);
+        $constraint = new PositionConstraint(5, 10, 2);
 
         self::assertSame(2, $constraint->getWeight());
     }
@@ -151,7 +151,7 @@ final class PositionTest extends TestCase
      */
     public function testFirstConstraintCanBeSatisfied(): void
     {
-        $constraint = new Position(2, null);
+        $constraint = new PositionConstraint(2, null);
 
         self::assertTrue($constraint->test(3));
     }
@@ -161,7 +161,7 @@ final class PositionTest extends TestCase
      */
     public function testFirstConstraintCanBeUnsatisfied(): void
     {
-        $constraint = new Position(2, null);
+        $constraint = new PositionConstraint(2, null);
 
         self::assertFalse($constraint->test(0));
     }
@@ -171,7 +171,7 @@ final class PositionTest extends TestCase
      */
     public function testCountConstraintCanBeSatisfied(): void
     {
-        $constraint = new Position(3, 3);
+        $constraint = new PositionConstraint(3, 3);
 
         self::assertTrue($constraint->test(3));
     }
@@ -181,7 +181,7 @@ final class PositionTest extends TestCase
      */
     public function testCountConstraintCanBeUnsatisfied(): void
     {
-        $constraint = new Position(3, 3);
+        $constraint = new PositionConstraint(3, 3);
 
         self::assertFalse($constraint->test(6));
     }
