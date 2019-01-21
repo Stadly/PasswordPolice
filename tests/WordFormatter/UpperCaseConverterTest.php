@@ -9,18 +9,18 @@ use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\UpperCase
+ * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\UpperCaseConverter
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class UpperCaseTest extends TestCase
+final class UpperCaseConverterTest extends TestCase
 {
     /**
      * @covers ::apply
      */
     public function testCanFormatWord(): void
     {
-        $formatter = new UpperCase();
+        $formatter = new UpperCaseConverter();
 
         self::assertSame(['FOOBAR'], iterator_to_array($formatter->apply(['fOoBaR']), false));
     }
@@ -30,7 +30,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanFormatWords(): void
     {
-        $formatter = new UpperCase();
+        $formatter = new UpperCaseConverter();
 
         self::assertSame(['FOO', 'BAR'], iterator_to_array($formatter->apply(['fOo' ,'BaR']), false));
     }
@@ -40,7 +40,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanFormatUtf8Characters(): void
     {
-        $formatter = new UpperCase();
+        $formatter = new UpperCaseConverter();
 
         self::assertSame(['ÁÁÆØÔËÑ'], iterator_to_array($formatter->apply(['áÁæØôËñ']), false));
     }
@@ -50,7 +50,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanApplyFormatterChain(): void
     {
-        $formatter = new UpperCase();
+        $formatter = new UpperCaseConverter();
 
         $next = $this->createMock(WordFormatter::class);
         $next->method('apply')->willReturnCallback(

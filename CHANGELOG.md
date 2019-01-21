@@ -30,6 +30,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Renamed `Leetspeak` word formatter to `LeetDecoder`.
 - Renamed `LowerCase` word formatter to `LowerCaseConverter`.
 - Renamed `MixedCase` word formatter to `MixedCaseConverter`.
+- Renamed `UpperCase` word formatter to `UpperCaseConverter`.
 
 ### Fixed
 - Nothing
