@@ -6,7 +6,7 @@ namespace Stadly\PasswordPolice\Rule;
 
 use InvalidArgumentException;
 use StableSort\StableSort;
-use Stadly\PasswordPolice\Constraint\Count;
+use Stadly\PasswordPolice\Constraint\CountConstraint;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
@@ -19,7 +19,7 @@ abstract class CharacterClass implements Rule
     protected $characters;
 
     /**
-     * @var Count[] Rule constraints.
+     * @var CountConstraint[] Rule constraints.
      */
     private $constraints;
 
@@ -47,9 +47,9 @@ abstract class CharacterClass implements Rule
      */
     public function addConstraint(int $min = 1, ?int $max = null, int $weight = 1): self
     {
-        $this->constraints[] = new Count($min, $max, $weight);
+        $this->constraints[] = new CountConstraint($min, $max, $weight);
 
-        StableSort::usort($this->constraints, static function (Count $a, Count $b): int {
+        StableSort::usort($this->constraints, static function (CountConstraint $a, CountConstraint $b): int {
             return $b->getWeight() <=> $a->getWeight();
         });
 
@@ -105,9 +105,9 @@ abstract class CharacterClass implements Rule
     /**
      * @param int $count Number of characters matching the rule.
      * @param int|null $weight Don't consider constraints with lower weights.
-     * @return Count|null Constraint violated by the count.
+     * @return CountConstraint|null Constraint violated by the count.
      */
-    private function getViolation(int $count, ?int $weight = null): ?Count
+    private function getViolation(int $count, ?int $weight = null): ?CountConstraint
     {
         foreach ($this->constraints as $constraint) {
             if ($weight !== null && $constraint->getWeight() < $weight) {
@@ -135,9 +135,9 @@ abstract class CharacterClass implements Rule
     }
 
     /**
-     * @param Count $constraint Constraint that is violated.
+     * @param CountConstraint $constraint Constraint that is violated.
      * @param int $count Count that violates the constraint.
      * @return string Message explaining the violation.
      */
-    abstract protected function getMessage(Count $constraint, int $count): string;
+    abstract protected function getMessage(CountConstraint $constraint, int $count): string;
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use Stadly\PasswordPolice\Constraint\Count;
+use Stadly\PasswordPolice\Constraint\CountConstraint;
 use Stadly\PasswordPolice\Policy;
 
 final class Symbol extends CharacterClass
@@ -12,7 +12,7 @@ final class Symbol extends CharacterClass
     /**
      * {@inheritDoc}
      */
-    protected function getMessage(Count $constraint, int $count): string
+    protected function getMessage(CountConstraint $constraint, int $count): string
     {
         $translator = Policy::getTranslator();
 

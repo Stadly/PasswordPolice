@@ -6,7 +6,7 @@ namespace Stadly\PasswordPolice\Constraint;
 
 use InvalidArgumentException;
 
-final class Count
+final class CountConstraint
 {
     /**
      * @var int Minimum count.
