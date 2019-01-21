@@ -6,7 +6,7 @@ namespace Stadly\PasswordPolice\WordFormatter;
 
 use Traversable;
 
-final class Leetspeak extends ChainableFormatter
+final class LeetDecoder extends ChainableFormatter
 {
     /**
      * @var array<string, string[]>

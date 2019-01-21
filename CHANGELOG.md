@@ -27,6 +27,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Renamed `Position` constraint to `PositionConstraint`.
 - Renamed `PasswordHash` hash function to `PasswordHasher`.
 - Renamed `Capitalize` word formatter to `Capitalizer`.
+- Renamed `Leetspeak` word formatter to `LeetDecoder`.
 
 ### Fixed
 - Nothing
