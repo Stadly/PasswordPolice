@@ -44,7 +44,7 @@ $policy->addRules(new DigitRule());                 // Password must contain dig
 $policy->addRules(new GuessableData(['company']));  // Password must not contain data that is easy to guess.
 $policy->addRules(new HaveIBeenPwned());            // Password must not be exposed in data breaches.
 $policy->addRules(new NoReuse(new PasswordHash())); // Password must not have been used earlier.
-$pspell = Pspell::fromLocale('en', new LowerCaseConverter(), new UpperCaseConverter());
+$pspell = Pspell::fromLocale('en', [new LowerCaseConverter(), new UpperCaseConverter()]);
 $dictionary = new Dictionary($pspell, [new Leetspeak()]);
 $policy->addRules($dictionary));                    // Password must not contain dictionary words.
 
