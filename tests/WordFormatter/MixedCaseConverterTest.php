@@ -9,18 +9,18 @@ use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\MixedCase
+ * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\MixedCaseConverter
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class MixedCaseTest extends TestCase
+final class MixedCaseConverterTest extends TestCase
 {
     /**
      * @covers ::apply
      */
     public function testCanFormatWord(): void
     {
-        $formatter = new MixedCase();
+        $formatter = new MixedCaseConverter();
 
         self::assertEquals([
             'f1O2o',
@@ -39,7 +39,7 @@ final class MixedCaseTest extends TestCase
      */
     public function testCanFormatWords(): void
     {
-        $formatter = new MixedCase();
+        $formatter = new MixedCaseConverter();
 
         self::assertEquals([
             'f1O',
@@ -56,7 +56,7 @@ final class MixedCaseTest extends TestCase
      */
     public function testCanFormatUtf8Characters(): void
     {
-        $formatter = new MixedCase();
+        $formatter = new MixedCaseConverter();
 
         self::assertEquals([
             'Á1æ2Ë',
@@ -75,7 +75,7 @@ final class MixedCaseTest extends TestCase
      */
     public function testCanApplyFormatterChain(): void
     {
-        $formatter = new MixedCase();
+        $formatter = new MixedCaseConverter();
 
         $next = $this->createMock(WordFormatter::class);
         $next->method('apply')->willReturnCallback(

@@ -6,7 +6,7 @@ namespace Stadly\PasswordPolice\WordFormatter;
 
 use Traversable;
 
-final class MixedCase extends ChainableFormatter
+final class MixedCaseConverter extends ChainableFormatter
 {
     /**
      * @param iterable<string> $words Words to format.

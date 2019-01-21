@@ -29,6 +29,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Renamed `Capitalize` word formatter to `Capitalizer`.
 - Renamed `Leetspeak` word formatter to `LeetDecoder`.
 - Renamed `LowerCase` word formatter to `LowerCaseConverter`.
+- Renamed `MixedCase` word formatter to `MixedCaseConverter`.
 
 ### Fixed
 - Nothing
