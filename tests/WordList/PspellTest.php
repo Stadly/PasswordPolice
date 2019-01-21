@@ -165,7 +165,7 @@ final class PspellTest extends TestCase
             }
         );
 
-        $pspell = Pspell::fromLocale('en', $wordFormatter);
+        $pspell = Pspell::fromLocale('en', [$wordFormatter]);
 
         self::assertTrue($pspell->contains('HUSband'));
         self::assertFalse($pspell->contains('Usa'));
@@ -196,7 +196,7 @@ final class PspellTest extends TestCase
             }
         );
 
-        $pspell = Pspell::fromLocale('en', $wordFormatter1, $wordFormatter2);
+        $pspell = Pspell::fromLocale('en', [$wordFormatter1, $wordFormatter2]);
 
         self::assertTrue($pspell->contains('HUSband'));
         self::assertTrue($pspell->contains('Usa'));
