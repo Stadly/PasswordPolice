@@ -13,7 +13,7 @@ use Traversable;
  * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\FormatterCombiner
  * @covers ::<protected>
  * @covers ::<private>
-     * @covers ::__construct
+ * @covers ::__construct
  */
 final class FormatterCombinerTest extends TestCase
 {
