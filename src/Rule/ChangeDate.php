@@ -7,7 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use DateTime;
 use DateTimeInterface;
 use StableSort\StableSort;
-use Stadly\PasswordPolice\Constraint\Date;
+use Stadly\PasswordPolice\Constraint\DateConstraint;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
@@ -16,7 +16,7 @@ use Stadly\PasswordPolice\ValidationError;
 final class ChangeDate implements Rule
 {
     /**
-     * @var Date[] Rule constraints.
+     * @var DateConstraint[] Rule constraints.
      */
     private $constraints;
 
@@ -38,9 +38,9 @@ final class ChangeDate implements Rule
      */
     public function addConstraint(?DateTimeInterface $min, ?DateTimeInterface $max = null, int $weight = 1): self
     {
-        $this->constraints[] = new Date($min, $max, $weight);
+        $this->constraints[] = new DateConstraint($min, $max, $weight);
 
-        StableSort::usort($this->constraints, static function (Date $a, Date $b): int {
+        StableSort::usort($this->constraints, static function (DateConstraint $a, DateConstraint $b): int {
             return $b->getWeight() <=> $a->getWeight();
         });
 
@@ -89,9 +89,9 @@ final class ChangeDate implements Rule
     /**
      * @param DateTimeInterface|null $date When the password was last changed.
      * @param int|null $weight Don't consider constraints with lower weights.
-     * @return Date|null Constraint violated by the count.
+     * @return DateConstraint|null Constraint violated by the count.
      */
-    private function getViolation(?DateTimeInterface $date, ?int $weight = null): ?Date
+    private function getViolation(?DateTimeInterface $date, ?int $weight = null): ?DateConstraint
     {
         if ($date === null) {
             return null;
@@ -126,11 +126,11 @@ final class ChangeDate implements Rule
     }
 
     /**
-     * @param Date $constraint Constraint that is violated.
+     * @param DateConstraint $constraint Constraint that is violated.
      * @param DateTimeInterface $date Date that violates the constraint.
      * @return string Message explaining the violation.
      */
-    private function getMessage(Date $constraint, DateTimeInterface $date): string
+    private function getMessage(DateConstraint $constraint, DateTimeInterface $date): string
     {
         $translator = Policy::getTranslator();
         $minString = $constraint->getMin() === null ? '' : $constraint->getMin()->format('Y-m-d H:i:s');

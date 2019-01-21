@@ -7,7 +7,7 @@ namespace Stadly\PasswordPolice\Constraint;
 use DateTimeInterface;
 use InvalidArgumentException;
 
-final class Date
+final class DateConstraint
 {
     /**
      * @var DateTimeInterface|null Minimum date.

@@ -9,7 +9,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\Constraint\Date
+ * @coversDefaultClass \Stadly\PasswordPolice\Constraint\DateConstraint
  * @covers ::<protected>
  * @covers ::<private>
  */
@@ -20,10 +20,10 @@ final class DateTest extends TestCase
      */
     public function testCanConstructConstraintWithMinConstraint(): void
     {
-        $constraint = new Date(new DateTime('2001-02-03'), null);
+        $constraint = new DateConstraint(new DateTime('2001-02-03'), null);
 
         // Force generation of code coverage
-        $constraintConstruct = new Date(new DateTime('2001-02-03'), null);
+        $constraintConstruct = new DateConstraint(new DateTime('2001-02-03'), null);
         self::assertEquals($constraint, $constraintConstruct);
     }
 
@@ -32,10 +32,10 @@ final class DateTest extends TestCase
      */
     public function testCanConstructConstraintWithMaxConstraint(): void
     {
-        $constraint = new Date(null, new DateTime('2002-03-04'));
+        $constraint = new DateConstraint(null, new DateTime('2002-03-04'));
 
         // Force generation of code coverage
-        $constraintConstruct = new Date(null, new DateTime('2002-03-04'));
+        $constraintConstruct = new DateConstraint(null, new DateTime('2002-03-04'));
         self::assertEquals($constraint, $constraintConstruct);
     }
 
@@ -44,10 +44,10 @@ final class DateTest extends TestCase
      */
     public function testCanConstructConstraintWithBothMinAndMaxConstraint(): void
     {
-        $constraint = new Date(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
+        $constraint = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
 
         // Force generation of code coverage
-        $constraintConstruct = new Date(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
+        $constraintConstruct = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
         self::assertEquals($constraint, $constraintConstruct);
     }
 
@@ -58,7 +58,7 @@ final class DateTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $constraint = new Date(new DateTime('2002-03-04'), new DateTime('2001-02-03'));
+        $constraint = new DateConstraint(new DateTime('2002-03-04'), new DateTime('2001-02-03'));
     }
 
     /**
@@ -66,10 +66,10 @@ final class DateTest extends TestCase
      */
     public function testCanConstructUnconstrainedConstraint(): void
     {
-        $constraint = new Date(null, null);
+        $constraint = new DateConstraint(null, null);
 
         // Force generation of code coverage
-        $constraintConstruct = new Date(null, null);
+        $constraintConstruct = new DateConstraint(null, null);
         self::assertEquals($constraint, $constraintConstruct);
     }
 
@@ -78,10 +78,10 @@ final class DateTest extends TestCase
      */
     public function testCanConstructConstraintWithMinConstraintEqualToMaxConstraint(): void
     {
-        $constraint = new Date(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
+        $constraint = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
 
         // Force generation of code coverage
-        $constraintConstruct = new Date(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
+        $constraintConstruct = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
         self::assertEquals($constraint, $constraintConstruct);
     }
 
@@ -90,10 +90,10 @@ final class DateTest extends TestCase
      */
     public function testCanConstructConstraintWithNegativeWeight(): void
     {
-        $constraint = new Date(new DateTime('2001-02-03'), new DateTime('2001-02-03'), -5);
+        $constraint = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'), -5);
 
         // Force generation of code coverage
-        $constraintConstruct = new Date(new DateTime('2001-02-03'), new DateTime('2001-02-03'), -5);
+        $constraintConstruct = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'), -5);
         self::assertEquals($constraint, $constraintConstruct);
     }
 
@@ -104,7 +104,7 @@ final class DateTest extends TestCase
     {
         $min = new DateTime('2001-02-03');
         $max = new DateTime('2002-03-04');
-        $rule = new Date($min, $max);
+        $rule = new DateConstraint($min, $max);
 
         self::assertSame($min, $rule->getMin());
     }
@@ -116,7 +116,7 @@ final class DateTest extends TestCase
     {
         $min = new DateTime('2001-02-03');
         $max = new DateTime('2002-03-04');
-        $rule = new Date($min, $max);
+        $rule = new DateConstraint($min, $max);
 
         self::assertSame($max, $rule->getMax());
     }
@@ -126,7 +126,7 @@ final class DateTest extends TestCase
      */
     public function testCanGetWeight(): void
     {
-        $constraint = new Date(new DateTime('2001-02-03'), new DateTime('2002-03-04'), 2);
+        $constraint = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2002-03-04'), 2);
 
         self::assertSame(2, $constraint->getWeight());
     }
@@ -136,7 +136,7 @@ final class DateTest extends TestCase
      */
     public function testMinConstraintCanBeSatisfied(): void
     {
-        $constraint = new Date(new DateTime('2001-02-03'), null);
+        $constraint = new DateConstraint(new DateTime('2001-02-03'), null);
 
         self::assertTrue($constraint->test(new DateTime('2001-02-04')));
     }
@@ -146,7 +146,7 @@ final class DateTest extends TestCase
      */
     public function testMinConstraintCanBeUnsatisfied(): void
     {
-        $constraint = new Date(new DateTime('2001-02-03'), null);
+        $constraint = new DateConstraint(new DateTime('2001-02-03'), null);
 
         self::assertFalse($constraint->test(new DateTime('2001-02-02')));
     }
@@ -156,7 +156,7 @@ final class DateTest extends TestCase
      */
     public function testMaxConstraintCanBeSatisfied(): void
     {
-        $constraint = new Date(null, new DateTime('2002-03-04'));
+        $constraint = new DateConstraint(null, new DateTime('2002-03-04'));
 
         self::assertTrue($constraint->test(new DateTime('2002-03-03')));
     }
@@ -166,7 +166,7 @@ final class DateTest extends TestCase
      */
     public function testMaxConstraintCanBeUnsatisfied(): void
     {
-        $constraint = new Date(null, new DateTime('2002-03-04'));
+        $constraint = new DateConstraint(null, new DateTime('2002-03-04'));
 
         self::assertFalse($constraint->test(new DateTime('2002-03-05')));
     }
