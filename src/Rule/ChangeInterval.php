@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use Carbon\CarbonInterval;
-use DateInterval as PhpDateInterval;
+use DateInterval;
 use DateTimeInterface;
 use StableSort\StableSort;
 use Stadly\Date\Interval;
-use Stadly\PasswordPolice\Constraint\DateInterval;
+use Stadly\PasswordPolice\Constraint\DateIntervalConstraint;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
@@ -18,31 +18,34 @@ use Stadly\PasswordPolice\ValidationError;
 final class ChangeInterval implements Rule
 {
     /**
-     * @var DateInterval[] Rule constraints.
+     * @var DateIntervalConstraint[] Rule constraints.
      */
     private $constraints;
 
     /**
-     * @param PhpDateInterval $min Minimum time since last password change.
-     * @param PhpDateInterval|null $max Maximum time since last password change.
+     * @param DateInterval $min Minimum time since last password change.
+     * @param DateInterval|null $max Maximum time since last password change.
      * @param int $weight Constraint weight.
      */
-    public function __construct(PhpDateInterval $min, ?PhpDateInterval $max = null, int $weight = 1)
+    public function __construct(DateInterval $min, ?DateInterval $max = null, int $weight = 1)
     {
         $this->addConstraint($min, $max, $weight);
     }
 
     /**
-     * @param PhpDateInterval $min Minimum time since last password change.
-     * @param PhpDateInterval|null $max Maximum time since last password change.
+     * @param DateInterval $min Minimum time since last password change.
+     * @param DateInterval|null $max Maximum time since last password change.
      * @param int $weight Constraint weight.
      * @return $this
      */
-    public function addConstraint(PhpDateInterval $min, ?PhpDateInterval $max = null, int $weight = 1): self
+    public function addConstraint(DateInterval $min, ?DateInterval $max = null, int $weight = 1): self
     {
-        $this->constraints[] = new DateInterval($min, $max, $weight);
+        $this->constraints[] = new DateIntervalConstraint($min, $max, $weight);
 
-        StableSort::usort($this->constraints, static function (DateInterval $a, DateInterval $b): int {
+        StableSort::usort($this->constraints, static function (
+            DateIntervalConstraint $a,
+            DateIntervalConstraint $b
+        ): int {
             return $b->getWeight() <=> $a->getWeight();
         });
 
@@ -91,9 +94,9 @@ final class ChangeInterval implements Rule
     /**
      * @param DateTimeInterface|null $date When the password was last changed.
      * @param int|null $weight Don't consider constraints with lower weights.
-     * @return DateInterval|null Constraint violated by the count.
+     * @return DateIntervalConstraint|null Constraint violated by the count.
      */
-    private function getViolation(?DateTimeInterface $date, ?int $weight = null): ?DateInterval
+    private function getViolation(?DateTimeInterface $date, ?int $weight = null): ?DateIntervalConstraint
     {
         if ($date === null) {
             return null;
@@ -128,11 +131,11 @@ final class ChangeInterval implements Rule
     }
 
     /**
-     * @param DateInterval $constraint Constraint that is violated.
+     * @param DateIntervalConstraint $constraint Constraint that is violated.
      * @param DateTimeInterface $date Date that violates the constraint.
      * @return string Message explaining the violation.
      */
-    private function getMessage(DateInterval $constraint, DateTimeInterface $date): string
+    private function getMessage(DateIntervalConstraint $constraint, DateTimeInterface $date): string
     {
         $translator = Policy::getTranslator();
         $locale = $translator->getLocale();
@@ -152,7 +155,7 @@ final class ChangeInterval implements Rule
         $max->locale($locale);
         $maxString = $max->forHumans(['join' => true]);
 
-        if (Interval::compare(new PhpDateInterval('PT0S'), $constraint->getMin()) === 0) {
+        if (Interval::compare(new DateInterval('PT0S'), $constraint->getMin()) === 0) {
             return $translator->trans(
                 'Must be at most %interval% between password changes.',
                 ['%interval%' => $maxString]
