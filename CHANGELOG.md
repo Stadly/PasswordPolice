@@ -28,6 +28,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Renamed `PasswordHash` hash function to `PasswordHasher`.
 - Renamed `Capitalize` word formatter to `Capitalizer`.
 - Renamed `Leetspeak` word formatter to `LeetDecoder`.
+- Renamed `LowerCase` word formatter to `LowerCaseConverter`.
 
 ### Fixed
 - Nothing
