@@ -104,9 +104,9 @@ final class DateTest extends TestCase
     {
         $min = new DateTime('2001-02-03');
         $max = new DateTime('2002-03-04');
-        $rule = new DateConstraint($min, $max);
+        $constraint = new DateConstraint($min, $max);
 
-        self::assertSame($min, $rule->getMin());
+        self::assertSame($min, $constraint->getMin());
     }
 
     /**
@@ -116,9 +116,9 @@ final class DateTest extends TestCase
     {
         $min = new DateTime('2001-02-03');
         $max = new DateTime('2002-03-04');
-        $rule = new DateConstraint($min, $max);
+        $constraint = new DateConstraint($min, $max);
 
-        self::assertSame($max, $rule->getMax());
+        self::assertSame($max, $constraint->getMax());
     }
 
     /**
