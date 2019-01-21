@@ -13,45 +13,10 @@ use Traversable;
  * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\Substring
  * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::__construct
  */
 final class SubstringTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructFormatterWithMinLengthConstraint(): void
-    {
-        $formatter = new Substring(5, null);
-
-        // Force generation of code coverage
-        $formatterConstruct = new Substring(5, null);
-        self::assertEquals($formatter, $formatterConstruct);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructFormatterWithMaxLengthConstraint(): void
-    {
-        $formatter = new Substring(1, 10);
-
-        // Force generation of code coverage
-        $formatterConstruct = new Substring(1, 10);
-        self::assertEquals($formatter, $formatterConstruct);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructFormatterWithBothMinLengthAndMaxLengthConstraint(): void
-    {
-        $formatter = new Substring(5, 10);
-
-        // Force generation of code coverage
-        $formatterConstruct = new Substring(5, 10);
-        self::assertEquals($formatter, $formatterConstruct);
-    }
-
     /**
      * @covers ::__construct
      */
@@ -84,97 +49,67 @@ final class SubstringTest extends TestCase
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructFormatterWithMinLengthConstraintEqualToMaxLengthConstraint(): void
     {
         $formatter = new Substring(5, 5);
-
-        // Force generation of code coverage
-        $formatterConstruct = new Substring(5, 5);
-        self::assertEquals($formatter, $formatterConstruct);
     }
 
     /**
      * @covers ::apply
      */
-    public function testCanFormatWord(): void
+    public function testCanFormatWordsWhenFilteringUnique(): void
     {
-        $formatter = new Substring(1, null);
+        $formatter = new Substring(2, 3, true);
 
         self::assertEquals([
-            'abc',
-            'ab',
-            'bc',
-            'a',
-            'b',
-            'c',
-        ], iterator_to_array($formatter->apply(['abc']), false), '', 0, 10, true);
+            'Foo',
+            'Fo',
+            'oo',
+            'bar',
+            'ba',
+            'ar',
+            'foo',
+            'oob',
+            'oba',
+            'fo',
+            'ob',
+        ], iterator_to_array($formatter->apply([
+            'Foo',
+            'bar',
+            'foobar',
+        ]), false), '', 0, 10, true);
     }
 
     /**
      * @covers ::apply
      */
-    public function testCanFormatWords(): void
+    public function testCanFormatWordsWhenNotFilteringUnique(): void
     {
-        $formatter = new Substring(1, null);
+        $formatter = new Substring(2, 3, false);
 
         self::assertEquals([
-            'abc',
-            'ab',
-            'bc',
-            'a',
-            'b',
-            'c',
-            'def',
-            'de',
-            'ef',
-            'd',
-            'e',
-            'f',
-        ], iterator_to_array($formatter->apply(['abc', 'def']), false), '', 0, 10, true);
-    }
-
-    /**
-     * @covers ::apply
-     */
-    public function testCanFormatWordWithMinLengthConstraint(): void
-    {
-        $formatter = new Substring(2, null);
-
-        self::assertEquals([
-            'abc',
-            'ab',
-            'bc',
-        ], iterator_to_array($formatter->apply(['abc']), false), '', 0, 10, true);
-    }
-
-    /**
-     * @covers ::apply
-     */
-    public function testCanFormatWordWithMaxLengthConstraint(): void
-    {
-        $formatter = new Substring(1, 2);
-
-        self::assertEquals([
-            'ab',
-            'bc',
-            'a',
-            'b',
-            'c',
-        ], iterator_to_array($formatter->apply(['abc']), false), '', 0, 10, true);
-    }
-
-    /**
-     * @covers ::apply
-     */
-    public function testCanFormatWordWithBothMinAndMaxLengthConstraint(): void
-    {
-        $formatter = new Substring(2, 2);
-
-        self::assertEquals([
-            'ab',
-            'bc',
-        ], iterator_to_array($formatter->apply(['abc']), false), '', 0, 10, true);
+            'Foo',
+            'Fo',
+            'oo',
+            'bar',
+            'ba',
+            'ar',
+            'foo',
+            'oob',
+            'oba',
+            'bar',
+            'fo',
+            'oo',
+            'ob',
+            'ba',
+            'ar',
+        ], iterator_to_array($formatter->apply([
+            'Foo',
+            'bar',
+            'foobar',
+        ]), false), '', 0, 10, true);
     }
 
     /**
@@ -207,6 +142,9 @@ final class SubstringTest extends TestCase
             'd',
             'e',
             'f',
-        ], iterator_to_array($formatter->apply(['abc', 'def']), false), '', 0, 10, true);
+        ], iterator_to_array($formatter->apply([
+            'abc',
+            'def',
+        ]), false), '', 0, 10, true);
     }
 }
