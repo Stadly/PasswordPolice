@@ -7,7 +7,7 @@ namespace Stadly\PasswordPolice\WordFormatter;
 use InvalidArgumentException;
 use Traversable;
 
-final class Substring extends ChainableFormatter
+final class SubstringGenerator extends ChainableFormatter
 {
     /**
      * @var int Minimum substring length.

@@ -10,12 +10,12 @@ use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\Substring
+ * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\SubstringGenerator
  * @covers ::<protected>
  * @covers ::<private>
  * @covers ::__construct
  */
-final class SubstringTest extends TestCase
+final class SubstringGeneratorTest extends TestCase
 {
     /**
      * @covers ::__construct
@@ -24,7 +24,7 @@ final class SubstringTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $formatter = new Substring(0, null);
+        $formatter = new SubstringGenerator(0, null);
     }
 
     /**
@@ -34,7 +34,7 @@ final class SubstringTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $formatter = new Substring(-10, null);
+        $formatter = new SubstringGenerator(-10, null);
     }
 
     /**
@@ -44,7 +44,7 @@ final class SubstringTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $formatter = new Substring(10, 5);
+        $formatter = new SubstringGenerator(10, 5);
     }
 
     /**
@@ -53,7 +53,7 @@ final class SubstringTest extends TestCase
      */
     public function testCanConstructFormatterWithMinLengthConstraintEqualToMaxLengthConstraint(): void
     {
-        $formatter = new Substring(5, 5);
+        $formatter = new SubstringGenerator(5, 5);
     }
 
     /**
@@ -61,7 +61,7 @@ final class SubstringTest extends TestCase
      */
     public function testCanFormatWordsWhenFilteringUnique(): void
     {
-        $formatter = new Substring(2, 3, true);
+        $formatter = new SubstringGenerator(2, 3, true);
 
         self::assertEquals([
             'Foo',
@@ -87,7 +87,7 @@ final class SubstringTest extends TestCase
      */
     public function testCanFormatWordsWhenNotFilteringUnique(): void
     {
-        $formatter = new Substring(2, 3, false);
+        $formatter = new SubstringGenerator(2, 3, false);
 
         self::assertEquals([
             'Foo',
@@ -117,7 +117,7 @@ final class SubstringTest extends TestCase
      */
     public function testCanApplyFormatterChain(): void
     {
-        $formatter = new Substring(1, null);
+        $formatter = new SubstringGenerator(1, null);
         $next = $this->createMock(WordFormatter::class);
         $next->method('apply')->willReturnCallback(
             static function (iterable $words): Traversable {
