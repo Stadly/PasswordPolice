@@ -12,6 +12,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Word formatter filtering words by length.
 - Word formatter filtering unique words.
 - Word formatters can be chained. The output from one word formatter is used as input for the next word formatter in the chaine.
+- Word formatter combining the results from multiple word formatters.
 
 ### Changed
 - Word converters have been renamed word formatters.
