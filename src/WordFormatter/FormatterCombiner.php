@@ -15,11 +15,6 @@ final class FormatterCombiner extends ChainableFormatter
     private $wordFormatters;
 
     /**
-     * @var bool Whether the result should also include the words unformatted.
-     */
-    private $includeUnformatted;
-
-    /**
      * @var bool Whether the result should only contain unique words.
      */
     private $filterUnique;
@@ -31,8 +26,11 @@ final class FormatterCombiner extends ChainableFormatter
      */
     public function __construct(array $wordFormatters, bool $includeUnformatted = true, bool $filterUnique = true)
     {
+        if ($includeUnformatted) {
+            $wordFormatters[] = new Unformatter();
+        }
+
         $this->wordFormatters = $wordFormatters;
-        $this->includeUnformatted = $includeUnformatted;
         $this->filterUnique = $filterUnique;
     }
 
@@ -58,10 +56,6 @@ final class FormatterCombiner extends ChainableFormatter
      */
     private function applyFormatters(iterable $words): Traversable
     {
-        if ($this->includeUnformatted) {
-            yield from $words;
-        }
-
         foreach ($this->wordFormatters as $wordFormatter) {
             yield from $wordFormatter->apply($words);
         }
