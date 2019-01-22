@@ -16,7 +16,7 @@ use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 
-final class HaveIBeenPwned implements Rule
+final class HaveIBeenPwnedRule implements Rule
 {
     /**
      * @var CountConstraint[] Rule constraints.
