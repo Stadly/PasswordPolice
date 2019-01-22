@@ -31,7 +31,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Renamed `LowerCase` word formatter to `LowerCaseConverter`.
 - Renamed `MixedCase` word formatter to `MixedCaseConverter`.
 - Renamed `UpperCase` word formatter to `UpperCaseConverter`.
-- Renamed `ChangeDate` rule to `ChangedOnDateRule`.
+- Renamed `ChangeDate` rule to `ChangeOnDateRule`.
 
 ### Fixed
 - Nothing
