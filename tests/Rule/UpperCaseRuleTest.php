@@ -9,21 +9,21 @@ use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\ValidationError;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\Rule\UpperCase
+ * @coversDefaultClass \Stadly\PasswordPolice\Rule\UpperCaseRule
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class UpperCaseTest extends TestCase
+final class UpperCaseRuleTest extends TestCase
 {
     /**
      * @covers ::__construct
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new UpperCase(5, null);
+        $rule = new UpperCaseRule(5, null);
 
         // Force generation of code coverage
-        $ruleConstruct = new UpperCase(5, null);
+        $ruleConstruct = new UpperCaseRule(5, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -32,10 +32,10 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = new UpperCase(0, 10);
+        $rule = new UpperCaseRule(0, 10);
 
         // Force generation of code coverage
-        $ruleConstruct = new UpperCase(0, 10);
+        $ruleConstruct = new UpperCaseRule(0, 10);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -44,10 +44,10 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new UpperCase(5, 10);
+        $rule = new UpperCaseRule(5, 10);
 
         // Force generation of code coverage
-        $ruleConstruct = new UpperCase(5, 10);
+        $ruleConstruct = new UpperCaseRule(5, 10);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -58,7 +58,7 @@ final class UpperCaseTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new UpperCase(-10, null);
+        $rule = new UpperCaseRule(-10, null);
     }
 
     /**
@@ -68,7 +68,7 @@ final class UpperCaseTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new UpperCase(10, 5);
+        $rule = new UpperCaseRule(10, 5);
     }
 
     /**
@@ -76,10 +76,10 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanConstructUnconstrainedRule(): void
     {
-        $rule = new UpperCase(0, null);
+        $rule = new UpperCaseRule(0, null);
 
         // Force generation of code coverage
-        $ruleConstruct = new UpperCase(0, null);
+        $ruleConstruct = new UpperCaseRule(0, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -88,10 +88,10 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $rule = new UpperCase(5, 5);
+        $rule = new UpperCaseRule(5, 5);
 
         // Force generation of code coverage
-        $ruleConstruct = new UpperCase(5, 5);
+        $ruleConstruct = new UpperCaseRule(5, 5);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -100,11 +100,11 @@ final class UpperCaseTest extends TestCase
      */
     public function testCanAddConstraint(): void
     {
-        $rule = new UpperCase(5, 5, 1);
+        $rule = new UpperCaseRule(5, 5, 1);
         $rule->addConstraint(10, 10, 1);
 
         // Force generation of code coverage
-        $ruleConstruct = new UpperCase(5, 5, 1);
+        $ruleConstruct = new UpperCaseRule(5, 5, 1);
         $ruleConstruct->addConstraint(10, 10, 1);
         self::assertEquals($rule, $ruleConstruct);
     }
@@ -114,10 +114,10 @@ final class UpperCaseTest extends TestCase
      */
     public function testConstraintsAreOrdered(): void
     {
-        $rule = new UpperCase(5, 5, 1);
+        $rule = new UpperCaseRule(5, 5, 1);
         $rule->addConstraint(10, 10, 2);
 
-        $ruleConstruct = new UpperCase(10, 10, 2);
+        $ruleConstruct = new UpperCaseRule(10, 10, 2);
         $ruleConstruct->addConstraint(5, 5, 1);
         self::assertEquals($rule, $ruleConstruct);
     }
@@ -127,7 +127,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testMinConstraintCanBeSatisfied(): void
     {
-        $rule = new UpperCase(2, null);
+        $rule = new UpperCaseRule(2, null);
 
         self::assertTrue($rule->test('foo BAR'));
     }
@@ -137,7 +137,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testMinConstraintCanBeUnsatisfied(): void
     {
-        $rule = new UpperCase(2, null);
+        $rule = new UpperCaseRule(2, null);
 
         self::assertFalse($rule->test('foo bar'));
     }
@@ -147,7 +147,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testMaxConstraintCanBeSatisfied(): void
     {
-        $rule = new UpperCase(0, 3);
+        $rule = new UpperCaseRule(0, 3);
 
         self::assertTrue($rule->test('foo BAR'));
     }
@@ -157,7 +157,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testMaxConstraintCanBeUnsatisfied(): void
     {
-        $rule = new UpperCase(0, 3);
+        $rule = new UpperCaseRule(0, 3);
 
         self::assertFalse($rule->test('FOO BAR'));
     }
@@ -167,7 +167,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testUpperCaseUtf8IsCounted(): void
     {
-        $rule = new UpperCase(1, null);
+        $rule = new UpperCaseRule(1, null);
 
         self::assertTrue($rule->test('Á'));
     }
@@ -177,7 +177,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testLowerCaseUtf8IsNotCounted(): void
     {
-        $rule = new UpperCase(1, null);
+        $rule = new UpperCaseRule(1, null);
 
         self::assertFalse($rule->test('á'));
     }
@@ -187,7 +187,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
     {
-        $rule = new UpperCase(0, 3, 1);
+        $rule = new UpperCaseRule(0, 3, 1);
 
         self::assertTrue($rule->test('FOO BAR', 2));
     }
@@ -197,7 +197,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testRuleCanBeValidated(): void
     {
-        $rule = new UpperCase(1, null);
+        $rule = new UpperCaseRule(1, null);
 
         self::assertNull($rule->validate('FOO'));
     }
@@ -207,7 +207,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testRuleWithMinConstraintCanBeInvalidated(): void
     {
-        $rule = new UpperCase(5, null);
+        $rule = new UpperCaseRule(5, null);
 
         self::assertEquals(
             new ValidationError('There must be at least 5 upper case characters.', 'FOo', $rule, 1),
@@ -220,7 +220,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testRuleWithMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new UpperCase(0, 10);
+        $rule = new UpperCaseRule(0, 10);
 
         self::assertEquals(
             new ValidationError('There must be at most 10 upper case characters.', 'FOo BAR QWERTY', $rule, 1),
@@ -233,7 +233,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testRuleWithBothMinAndMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new UpperCase(5, 10);
+        $rule = new UpperCaseRule(5, 10);
 
         self::assertEquals(
             new ValidationError('There must be between 5 and 10 upper case characters.', 'FOo', $rule, 1),
@@ -246,7 +246,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testRuleWithMaxConstraintEqualToZeroCanBeInvalidated(): void
     {
-        $rule = new UpperCase(0, 0);
+        $rule = new UpperCaseRule(0, 0);
 
         self::assertEquals(
             new ValidationError('There must be no upper case characters.', 'FOo', $rule, 1),
@@ -259,7 +259,7 @@ final class UpperCaseTest extends TestCase
      */
     public function testRuleWithMinConstraintEqualToMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new UpperCase(3, 3);
+        $rule = new UpperCaseRule(3, 3);
 
         self::assertEquals(
             new ValidationError('There must be exactly 3 upper case characters.', 'FOo', $rule, 1),

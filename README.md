@@ -34,7 +34,7 @@ use Stadly\PasswordPolice\Rule\HaveIBeenPwnedRule;
 use Stadly\PasswordPolice\Rule\LengthRule;
 use Stadly\PasswordPolice\Rule\LowerCaseRule;
 use Stadly\PasswordPolice\Rule\NoReuseRule;
-use Stadly\PasswordPolice\Rule\UpperCase as UpperCaseRule;
+use Stadly\PasswordPolice\Rule\UpperCaseRule;
 
 $policy = new Policy();
 $policy->addRules(new LengthRule(8));                     // Password must be at least 8 characters long.
