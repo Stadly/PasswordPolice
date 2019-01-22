@@ -10,6 +10,7 @@ use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 use Stadly\PasswordPolice\WordFormatter;
+use Stadly\PasswordPolice\WordFormatter\FormatterCombiner;
 use Traversable;
 
 final class GuessableDataRule implements Rule
@@ -61,9 +62,9 @@ final class GuessableDataRule implements Rule
     private $guessableData;
 
     /**
-     * @var WordFormatter[] Word formatters.
+     * @var WordFormatter Word formatter.
      */
-    private $wordFormatters;
+    private $wordFormatter;
 
     /**
      * @var int Constraint weight.
@@ -78,7 +79,7 @@ final class GuessableDataRule implements Rule
     public function __construct(array $guessableData = [], array $wordFormatters = [], int $weight = 1)
     {
         $this->guessableData = $guessableData;
-        $this->wordFormatters = $wordFormatters;
+        $this->wordFormatter = new FormatterCombiner($wordFormatters);
         $this->weight = $weight;
     }
 
@@ -133,7 +134,7 @@ final class GuessableDataRule implements Rule
             $guessableData = array_merge($guessableData, $password->getGuessableData());
         }
 
-        foreach ($this->getFormattedWords((string)$password) as $word) {
+        foreach ($this->wordFormatter->apply([(string)$password]) as $word) {
             foreach ($guessableData as $data) {
                 if ($this->contains($word, $data)) {
                     return $data;
@@ -142,19 +143,6 @@ final class GuessableDataRule implements Rule
         }
 
         return null;
-    }
-
-    /**
-     * @param string $word Word to format.
-     * @return Traversable<string> Formatted words. May contain duplicates.
-     */
-    private function getFormattedWords(string $word): Traversable
-    {
-        yield $word;
-
-        foreach ($this->wordFormatters as $wordFormatter) {
-            yield from $wordFormatter->apply([$word]);
-        }
     }
 
     /**
