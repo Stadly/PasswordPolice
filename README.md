@@ -32,7 +32,7 @@ use Stadly\PasswordPolice\Rule\DictionaryRule;
 use Stadly\PasswordPolice\Rule\GuessableDataRule;
 use Stadly\PasswordPolice\Rule\HaveIBeenPwnedRule;
 use Stadly\PasswordPolice\Rule\LengthRule;
-use Stadly\PasswordPolice\Rule\LowerCase as LowerCaseRule;
+use Stadly\PasswordPolice\Rule\LowerCaseRule;
 use Stadly\PasswordPolice\Rule\NoReuse;
 use Stadly\PasswordPolice\Rule\UpperCase as UpperCaseRule;
 

@@ -39,6 +39,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Renamed `GuessableData` rule to `GuessableDataRule`.
 - Renamed `HaveIBeenPwned` rule to `HaveIBeenPwnedRule`.
 - Renamed `Length` rule to `LengthRule`.
+- Renamed `LowerCase` rule to `LowerCaseRule`.
 
 ### Fixed
 - Nothing

@@ -11,7 +11,7 @@ use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 
-final class LowerCase implements Rule
+final class LowerCaseRule implements Rule
 {
     /**
      * @var CountConstraint[] Rule constraints.
