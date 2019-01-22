@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.14.0...HEAD)
 
 ### Added
-- Nothing
+- Date formatters for formatting dates. Date formatters can be chained with word formatters. The output from the date formatter is used as input for the next formatter in the chain.
 
 ### Changed
 - Nothing
