@@ -218,6 +218,26 @@ final class GuessableDataRuleTest extends TestCase
     }
 
     /**
+     * @covers ::test
+     */
+    public function testUnformattedStringIsRecognizedAfterWordFormatter(): void
+    {
+        $wordFormatter = $this->createMock(WordFormatter::class);
+        $wordFormatter->method('apply')->willReturnCallback(
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield str_replace('a', 'f', $word);
+                }
+            }
+        );
+
+        $rule = new GuessableDataRule([], [$wordFormatter]);
+
+        self::assertFalse($rule->test(new Password('apple', ['apple'])));
+        self::assertFalse($rule->test(new Password('apple', ['fpple'])));
+    }
+
+    /**
      * @covers ::validate
      */
     public function testRuleCanBeValidated(): void
