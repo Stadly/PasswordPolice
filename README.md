@@ -23,10 +23,10 @@ composer require stadly/password-police
 use Stadly\PasswordPolice\FormerPassword;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
-use Stadly\PasswordPolice\WordFormatter\Leetspeak;
-use Stadly\PasswordPolice\WordFormatter\LowerCase as LowerCaseConverter;
-use Stadly\PasswordPolice\WordFormatter\UpperCase as UpperCaseConverter;
-use Stadly\PasswordPolice\HashFunction\PasswordHash;
+use Stadly\PasswordPolice\WordFormatter\LeetDecoder;
+use Stadly\PasswordPolice\WordFormatter\LowerCaseConverter;
+use Stadly\PasswordPolice\WordFormatter\UpperCaseConverter;
+use Stadly\PasswordPolice\HashFunction\PasswordHasher;
 use Stadly\PasswordPolice\Rule\Digit as DigitRule;
 use Stadly\PasswordPolice\Rule\Dictionary;
 use Stadly\PasswordPolice\Rule\GuessableData;
@@ -37,16 +37,16 @@ use Stadly\PasswordPolice\Rule\NoReuse;
 use Stadly\PasswordPolice\Rule\UpperCase as UpperCaseRule;
 
 $policy = new Policy();
-$policy->addRules(new LengthRule(8));               // Password must be at least 8 characters long.
-$policy->addRules(new LowerCaseRule());             // Password must contain lower case letters.
-$policy->addRules(new UpperCaseRule());             // Password must contain upper case letters.
-$policy->addRules(new DigitRule());                 // Password must contain digits.
-$policy->addRules(new GuessableData(['company']));  // Password must not contain data that is easy to guess.
-$policy->addRules(new HaveIBeenPwned());            // Password must not be exposed in data breaches.
-$policy->addRules(new NoReuse(new PasswordHash())); // Password must not have been used earlier.
+$policy->addRules(new LengthRule(8));                 // Password must be at least 8 characters long.
+$policy->addRules(new LowerCaseRule());               // Password must contain lower case letters.
+$policy->addRules(new UpperCaseRule());               // Password must contain upper case letters.
+$policy->addRules(new DigitRule());                   // Password must contain digits.
+$policy->addRules(new GuessableData(['company']));    // Password must not contain data that is easy to guess.
+$policy->addRules(new HaveIBeenPwned());              // Password must not be exposed in data breaches.
+$policy->addRules(new NoReuse(new PasswordHasher())); // Password must not have been used earlier.
 $pspell = Pspell::fromLocale('en', [new LowerCaseConverter(), new UpperCaseConverter()]);
-$dictionary = new Dictionary($pspell, [new Leetspeak()]);
-$policy->addRules($dictionary));                    // Password must not contain dictionary words.
+$dictionary = new Dictionary($pspell, [new LeetDecoder()]);
+$policy->addRules($dictionary));                      // Password must not contain dictionary words.
 
 $validationErrors = $policy->validate('password');
 if (empty($validationErrors)) {
