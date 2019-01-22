@@ -12,7 +12,7 @@ use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 
-final class NoReuse implements Rule
+final class NoReuseRule implements Rule
 {
     /**
      * @var HashFunction Hash function.

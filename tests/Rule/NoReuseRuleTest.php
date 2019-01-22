@@ -14,11 +14,11 @@ use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\ValidationError;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\Rule\NoReuse
+ * @coversDefaultClass \Stadly\PasswordPolice\Rule\NoReuseRule
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class NoReuseTest extends TestCase
+final class NoReuseRuleTest extends TestCase
 {
     /**
      * @var MockObject&HashFunction
@@ -54,10 +54,10 @@ final class NoReuseTest extends TestCase
      */
     public function testCanConstructRuleWithCountConstraint(): void
     {
-        $rule = new NoReuse($this->hashFunction, 5, 0);
+        $rule = new NoReuseRule($this->hashFunction, 5, 0);
 
         // Force generation of code coverage
-        $ruleConstruct = new NoReuse($this->hashFunction, 5, 0);
+        $ruleConstruct = new NoReuseRule($this->hashFunction, 5, 0);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -66,10 +66,10 @@ final class NoReuseTest extends TestCase
      */
     public function testCanConstructRuleWithFirstConstraint(): void
     {
-        $rule = new NoReuse($this->hashFunction, null, 10);
+        $rule = new NoReuseRule($this->hashFunction, null, 10);
 
         // Force generation of code coverage
-        $ruleConstruct = new NoReuse($this->hashFunction, null, 10);
+        $ruleConstruct = new NoReuseRule($this->hashFunction, null, 10);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -78,10 +78,10 @@ final class NoReuseTest extends TestCase
      */
     public function testCanConstructRuleWithBothCountAndFirstConstraint(): void
     {
-        $rule = new NoReuse($this->hashFunction, 5, 10);
+        $rule = new NoReuseRule($this->hashFunction, 5, 10);
 
         // Force generation of code coverage
-        $ruleConstruct = new NoReuse($this->hashFunction, 5, 10);
+        $ruleConstruct = new NoReuseRule($this->hashFunction, 5, 10);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -92,7 +92,7 @@ final class NoReuseTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new NoReuse($this->hashFunction, 0, 0);
+        $rule = new NoReuseRule($this->hashFunction, 0, 0);
     }
 
     /**
@@ -102,7 +102,7 @@ final class NoReuseTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new NoReuse($this->hashFunction, -10, 0);
+        $rule = new NoReuseRule($this->hashFunction, -10, 0);
     }
 
     /**
@@ -110,10 +110,10 @@ final class NoReuseTest extends TestCase
      */
     public function testCanConstructRuleWithFirstConstraintEqualToZero(): void
     {
-        $rule = new NoReuse($this->hashFunction, null, 0);
+        $rule = new NoReuseRule($this->hashFunction, null, 0);
 
         // Force generation of code coverage
-        $ruleConstruct = new NoReuse($this->hashFunction, null, 0);
+        $ruleConstruct = new NoReuseRule($this->hashFunction, null, 0);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -124,7 +124,7 @@ final class NoReuseTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new NoReuse($this->hashFunction, null, -5);
+        $rule = new NoReuseRule($this->hashFunction, null, -5);
     }
 
     /**
@@ -132,7 +132,7 @@ final class NoReuseTest extends TestCase
      */
     public function testCanGetHashFunction(): void
     {
-        $rule = new NoReuse($this->hashFunction);
+        $rule = new NoReuseRule($this->hashFunction);
 
         self::assertSame($this->hashFunction, $rule->getHashFunction());
     }
@@ -142,11 +142,11 @@ final class NoReuseTest extends TestCase
      */
     public function testCanAddConstraint(): void
     {
-        $rule = new NoReuse($this->hashFunction, 5, 5, 1);
+        $rule = new NoReuseRule($this->hashFunction, 5, 5, 1);
         $rule->addConstraint(10, 10, 1);
 
         // Force generation of code coverage
-        $ruleConstruct = new NoReuse($this->hashFunction, 5, 5, 1);
+        $ruleConstruct = new NoReuseRule($this->hashFunction, 5, 5, 1);
         $ruleConstruct->addConstraint(10, 10, 1);
         self::assertEquals($rule, $ruleConstruct);
     }
@@ -156,10 +156,10 @@ final class NoReuseTest extends TestCase
      */
     public function testConstraintsAreOrdered(): void
     {
-        $rule = new NoReuse($this->hashFunction, 5, 5, 1);
+        $rule = new NoReuseRule($this->hashFunction, 5, 5, 1);
         $rule->addConstraint(10, 10, 2);
 
-        $ruleConstruct = new NoReuse($this->hashFunction, 10, 10, 2);
+        $ruleConstruct = new NoReuseRule($this->hashFunction, 10, 10, 2);
         $ruleConstruct->addConstraint(5, 5, 1);
         self::assertEquals($rule, $ruleConstruct);
     }
@@ -169,7 +169,7 @@ final class NoReuseTest extends TestCase
      */
     public function testRuleIsSatisfiedWhenPasswordIsString(): void
     {
-        $rule = new NoReuse($this->hashFunction, null, 0);
+        $rule = new NoReuseRule($this->hashFunction, null, 0);
 
         self::assertTrue($rule->test('foobar'));
     }
@@ -179,7 +179,7 @@ final class NoReuseTest extends TestCase
      */
     public function testCountConstraintCanBeSatisfied(): void
     {
-        $rule = new NoReuse($this->hashFunction, 3, 0);
+        $rule = new NoReuseRule($this->hashFunction, 3, 0);
 
         self::assertTrue($rule->test($this->password));
     }
@@ -189,7 +189,7 @@ final class NoReuseTest extends TestCase
      */
     public function testCountConstraintCanBeUnsatisfied(): void
     {
-        $rule = new NoReuse($this->hashFunction, 4, 0);
+        $rule = new NoReuseRule($this->hashFunction, 4, 0);
 
         self::assertFalse($rule->test($this->password));
     }
@@ -199,7 +199,7 @@ final class NoReuseTest extends TestCase
      */
     public function testFirstConstraintCanBeSatisfied(): void
     {
-        $rule = new NoReuse($this->hashFunction, null, 4);
+        $rule = new NoReuseRule($this->hashFunction, null, 4);
 
         self::assertTrue($rule->test($this->password));
     }
@@ -209,7 +209,7 @@ final class NoReuseTest extends TestCase
      */
     public function testFirstConstraintCanBeUnsatisfied(): void
     {
-        $rule = new NoReuse($this->hashFunction, null, 3);
+        $rule = new NoReuseRule($this->hashFunction, null, 3);
 
         self::assertFalse($rule->test($this->password));
     }
@@ -219,7 +219,7 @@ final class NoReuseTest extends TestCase
      */
     public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
     {
-        $rule = new NoReuse($this->hashFunction, null, 3, 1);
+        $rule = new NoReuseRule($this->hashFunction, null, 3, 1);
 
         self::assertTrue($rule->test($this->password, 2));
     }
@@ -229,7 +229,7 @@ final class NoReuseTest extends TestCase
      */
     public function testRuleCanBeValidated(): void
     {
-        $rule = new NoReuse($this->hashFunction, 1, 0);
+        $rule = new NoReuseRule($this->hashFunction, 1, 0);
 
         self::assertNull($rule->validate($this->password));
     }
@@ -239,7 +239,7 @@ final class NoReuseTest extends TestCase
      */
     public function testRuleCanBeInvalidated(): void
     {
-        $rule = new NoReuse($this->hashFunction, null, 0);
+        $rule = new NoReuseRule($this->hashFunction, null, 0);
 
         self::assertEquals(
             new ValidationError('Cannot reuse former passwords.', $this->password, $rule, 1),

@@ -40,6 +40,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Renamed `HaveIBeenPwned` rule to `HaveIBeenPwnedRule`.
 - Renamed `Length` rule to `LengthRule`.
 - Renamed `LowerCase` rule to `LowerCaseRule`.
+- Renamed `NoReuse` rule to `NoReuseRule`.
 
 ### Fixed
 - Nothing

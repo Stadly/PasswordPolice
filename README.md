@@ -33,20 +33,20 @@ use Stadly\PasswordPolice\Rule\GuessableDataRule;
 use Stadly\PasswordPolice\Rule\HaveIBeenPwnedRule;
 use Stadly\PasswordPolice\Rule\LengthRule;
 use Stadly\PasswordPolice\Rule\LowerCaseRule;
-use Stadly\PasswordPolice\Rule\NoReuse;
+use Stadly\PasswordPolice\Rule\NoReuseRule;
 use Stadly\PasswordPolice\Rule\UpperCase as UpperCaseRule;
 
 $policy = new Policy();
-$policy->addRules(new LengthRule(8));                  // Password must be at least 8 characters long.
-$policy->addRules(new LowerCaseRule());                // Password must contain lower case letters.
-$policy->addRules(new UpperCaseRule());                // Password must contain upper case letters.
-$policy->addRules(new DigitRule());                    // Password must contain digits.
-$policy->addRules(new GuessableDataRule(['company'])); // Password must not contain data that is easy to guess.
-$policy->addRules(new HaveIBeenPwnedRule());           // Password must not be exposed in data breaches.
-$policy->addRules(new NoReuse(new PasswordHasher()));  // Password must not have been used earlier.
+$policy->addRules(new LengthRule(8));                     // Password must be at least 8 characters long.
+$policy->addRules(new LowerCaseRule());                   // Password must contain lower case letters.
+$policy->addRules(new UpperCaseRule());                   // Password must contain upper case letters.
+$policy->addRules(new DigitRule());                       // Password must contain digits.
+$policy->addRules(new GuessableDataRule(['company']));    // Password must not contain data that is easy to guess.
+$policy->addRules(new HaveIBeenPwnedRule());              // Password must not be exposed in data breaches.
+$policy->addRules(new NoReuseRule(new PasswordHasher())); // Password must not have been used earlier.
 $pspell = Pspell::fromLocale('en', [new LowerCaseConverter(), new UpperCaseConverter()]);
 $dictionary = new DictionaryRule($pspell, [new LeetDecoder()]);
-$policy->addRules($dictionary));                       // Password must not contain dictionary words.
+$policy->addRules($dictionary));                          // Password must not contain dictionary words.
 
 $validationErrors = $policy->validate('password');
 if (empty($validationErrors)) {
