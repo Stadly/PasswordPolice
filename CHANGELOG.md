@@ -4,7 +4,7 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.14.0...HEAD)
+## [v0.15.0](https://github.com/Stadly/PasswordPolice/compare/v0.14.0...v0.15.0) - 2019-01-22
 
 ### Added
 - Date formatters for formatting dates. Date formatters can be chained with word formatters. The output from the date formatter is used as input for the next formatter in the chain.
@@ -14,18 +14,6 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 - Constraint weight for guessable data rules is now argument number 4 instead of number 3. Date formatter is argument number 3.
-
-### Fixed
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ## [v0.14.0](https://github.com/Stadly/PasswordPolice/compare/v0.13.0...v0.14.0) - 2019-01-22
 
