@@ -13,11 +13,11 @@ use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\ValidationError;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\Rule\ChangeInterval
+ * @coversDefaultClass \Stadly\PasswordPolice\Rule\ChangeWithIntervalRule
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class ChangeIntervalTest extends TestCase
+final class ChangeWithIntervalRuleTest extends TestCase
 {
     /**
      * @var Password
@@ -38,10 +38,10 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new ChangeInterval(new DateInterval('P5D'), null);
+        $rule = new ChangeWithIntervalRule(new DateInterval('P5D'), null);
 
         // Force generation of code coverage
-        $ruleConstruct = new ChangeInterval(new DateInterval('P5D'), null);
+        $ruleConstruct = new ChangeWithIntervalRule(new DateInterval('P5D'), null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -50,10 +50,10 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = new ChangeInterval(new DateInterval('PT0S'), new DateInterval('P10D'));
+        $rule = new ChangeWithIntervalRule(new DateInterval('PT0S'), new DateInterval('P10D'));
 
         // Force generation of code coverage
-        $ruleConstruct = new ChangeInterval(new DateInterval('PT0S'), new DateInterval('P10D'));
+        $ruleConstruct = new ChangeWithIntervalRule(new DateInterval('PT0S'), new DateInterval('P10D'));
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -62,10 +62,10 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new ChangeInterval(new DateInterval('P5D'), new DateInterval('P10D'));
+        $rule = new ChangeWithIntervalRule(new DateInterval('P5D'), new DateInterval('P10D'));
 
         // Force generation of code coverage
-        $ruleConstruct = new ChangeInterval(new DateInterval('P5D'), new DateInterval('P10D'));
+        $ruleConstruct = new ChangeWithIntervalRule(new DateInterval('P5D'), new DateInterval('P10D'));
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -76,7 +76,7 @@ final class ChangeIntervalTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new ChangeInterval(DateInterval::createFromDateString('-5 days'), null);
+        $rule = new ChangeWithIntervalRule(DateInterval::createFromDateString('-5 days'), null);
     }
 
     /**
@@ -86,7 +86,7 @@ final class ChangeIntervalTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new ChangeInterval(new DateInterval('P10D'), new DateInterval('P5D'));
+        $rule = new ChangeWithIntervalRule(new DateInterval('P10D'), new DateInterval('P5D'));
     }
 
     /**
@@ -94,10 +94,10 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testCanConstructUnconstrainedRule(): void
     {
-        $rule = new ChangeInterval(new DateInterval('PT0S'), null);
+        $rule = new ChangeWithIntervalRule(new DateInterval('PT0S'), null);
 
         // Force generation of code coverage
-        $ruleConstruct = new ChangeInterval(new DateInterval('PT0S'), null);
+        $ruleConstruct = new ChangeWithIntervalRule(new DateInterval('PT0S'), null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -106,10 +106,10 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $rule = new ChangeInterval(new DateInterval('P5D'), new DateInterval('P5D'));
+        $rule = new ChangeWithIntervalRule(new DateInterval('P5D'), new DateInterval('P5D'));
 
         // Force generation of code coverage
-        $ruleConstruct = new ChangeInterval(new DateInterval('P5D'), new DateInterval('P5D'));
+        $ruleConstruct = new ChangeWithIntervalRule(new DateInterval('P5D'), new DateInterval('P5D'));
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -118,11 +118,11 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testCanAddConstraint(): void
     {
-        $rule = new ChangeInterval(new DateInterval('P5D'), new DateInterval('P5D'), 1);
+        $rule = new ChangeWithIntervalRule(new DateInterval('P5D'), new DateInterval('P5D'), 1);
         $rule->addConstraint(new DateInterval('P10D'), new DateInterval('P10D'), 1);
 
         // Force generation of code coverage
-        $ruleConstruct = new ChangeInterval(new DateInterval('P5D'), new DateInterval('P5D'), 1);
+        $ruleConstruct = new ChangeWithIntervalRule(new DateInterval('P5D'), new DateInterval('P5D'), 1);
         $ruleConstruct->addConstraint(new DateInterval('P10D'), new DateInterval('P10D'), 1);
         self::assertEquals($rule, $ruleConstruct);
     }
@@ -132,10 +132,10 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testConstraintsAreOrdered(): void
     {
-        $rule = new ChangeInterval(new DateInterval('P5D'), new DateInterval('P5D'), 1);
+        $rule = new ChangeWithIntervalRule(new DateInterval('P5D'), new DateInterval('P5D'), 1);
         $rule->addConstraint(new DateInterval('P10D'), new DateInterval('P10D'), 2);
 
-        $ruleConstruct = new ChangeInterval(new DateInterval('P10D'), new DateInterval('P10D'), 2);
+        $ruleConstruct = new ChangeWithIntervalRule(new DateInterval('P10D'), new DateInterval('P10D'), 2);
         $ruleConstruct->addConstraint(new DateInterval('P5D'), new DateInterval('P5D'), 1);
         self::assertEquals($rule, $ruleConstruct);
     }
@@ -145,7 +145,7 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testRuleIsSatisfiedWhenPasswordIsString(): void
     {
-        $rule = new ChangeInterval(new DateInterval('P10D'), null);
+        $rule = new ChangeWithIntervalRule(new DateInterval('P10D'), null);
 
         self::assertTrue($rule->test('foobar'));
     }
@@ -155,7 +155,7 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testMinConstraintCanBeSatisfied(): void
     {
-        $rule = new ChangeInterval(new DateInterval('P5D'), null);
+        $rule = new ChangeWithIntervalRule(new DateInterval('P5D'), null);
 
         self::assertTrue($rule->test($this->password));
     }
@@ -165,7 +165,7 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testMinConstraintCanBeUnsatisfied(): void
     {
-        $rule = new ChangeInterval(new DateInterval('P10D'), null);
+        $rule = new ChangeWithIntervalRule(new DateInterval('P10D'), null);
 
         self::assertFalse($rule->test($this->password));
     }
@@ -175,7 +175,7 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testMaxConstraintCanBeSatisfied(): void
     {
-        $rule = new ChangeInterval(new DateInterval('PT0S'), new DateInterval('P10D'));
+        $rule = new ChangeWithIntervalRule(new DateInterval('PT0S'), new DateInterval('P10D'));
 
         self::assertTrue($rule->test($this->password));
     }
@@ -185,7 +185,7 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testMaxConstraintCanBeUnsatisfied(): void
     {
-        $rule = new ChangeInterval(new DateInterval('PT0S'), new DateInterval('P5D'));
+        $rule = new ChangeWithIntervalRule(new DateInterval('PT0S'), new DateInterval('P5D'));
 
         self::assertFalse($rule->test($this->password));
     }
@@ -195,7 +195,7 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
     {
-        $rule = new ChangeInterval(new DateInterval('PT0S'), new DateInterval('P5D'), 1);
+        $rule = new ChangeWithIntervalRule(new DateInterval('PT0S'), new DateInterval('P5D'), 1);
 
         self::assertTrue($rule->test($this->password, 2));
     }
@@ -205,7 +205,7 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testRuleCanBeValidated(): void
     {
-        $rule = new ChangeInterval(new DateInterval('P5D'), null);
+        $rule = new ChangeWithIntervalRule(new DateInterval('P5D'), null);
 
         self::assertNull($rule->validate($this->password));
     }
@@ -215,7 +215,7 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testRuleWithMinConstraintCanBeInvalidated(): void
     {
-        $rule = new ChangeInterval(new DateInterval('P7D'), null);
+        $rule = new ChangeWithIntervalRule(new DateInterval('P7D'), null);
 
         self::assertEquals(
             new ValidationError(
@@ -233,7 +233,7 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testRuleWithMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new ChangeInterval(new DateInterval('PT0S'), new DateInterval('P5D'));
+        $rule = new ChangeWithIntervalRule(new DateInterval('PT0S'), new DateInterval('P5D'));
 
         self::assertEquals(
             new ValidationError(
@@ -251,7 +251,7 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testRuleWithBothMinAndMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new ChangeInterval(new DateInterval('P14D'), new DateInterval('P1M'));
+        $rule = new ChangeWithIntervalRule(new DateInterval('P14D'), new DateInterval('P1M'));
 
         self::assertEquals(
             new ValidationError(
@@ -269,7 +269,7 @@ final class ChangeIntervalTest extends TestCase
      */
     public function testRuleWithMinConstraintEqualToMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new ChangeInterval(new DateInterval('P6D'), new DateInterval('PT144H'));
+        $rule = new ChangeWithIntervalRule(new DateInterval('P6D'), new DateInterval('PT144H'));
 
         self::assertEquals(
             new ValidationError(
