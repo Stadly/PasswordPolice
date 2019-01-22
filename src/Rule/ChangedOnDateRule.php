@@ -21,8 +21,8 @@ final class ChangedOnDateRule implements Rule
     private $constraints;
 
     /**
-     * @param DateTimeInterface|null $min Minimum time for when the password was last changed.
-     * @param DateTimeInterface|null $max Maximum time for when the password was last changed.
+     * @param DateTimeInterface|null $min Minimum date for when the password was last changed.
+     * @param DateTimeInterface|null $max Maximum date for when the password was last changed.
      * @param int $weight Constraint weight.
      */
     public function __construct(?DateTimeInterface $min, ?DateTimeInterface $max = null, int $weight = 1)
@@ -31,8 +31,8 @@ final class ChangedOnDateRule implements Rule
     }
 
     /**
-     * @param DateTimeInterface|null $min Minimum time for when the password was last changed.
-     * @param DateTimeInterface|null $max Maximum time for when the password was last changed.
+     * @param DateTimeInterface|null $min Minimum date for when the password was last changed.
+     * @param DateTimeInterface|null $max Maximum date for when the password was last changed.
      * @param int $weight Constraint weight.
      * @return $this
      */
