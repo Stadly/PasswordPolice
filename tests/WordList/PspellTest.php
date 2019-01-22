@@ -207,6 +207,32 @@ final class PspellTest extends TestCase
     /**
      * @covers ::contains
      */
+    public function testWordListCanContainUnformattedWordsAfterWordFormatter(): void
+    {
+        $wordFormatter = $this->createMock(WordFormatter::class);
+        $wordFormatter->method('apply')->willReturnCallback(
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield mb_strtolower($word);
+                }
+            }
+        );
+
+        $pspell = Pspell::fromLocale('en', [$wordFormatter]);
+
+        self::assertTrue($pspell->contains('HUSband'));
+        self::assertTrue($pspell->contains('husband'));
+        self::assertFalse($pspell->contains('Usa'));
+        self::assertTrue($pspell->contains('USA'));
+        self::assertFalse($pspell->contains('europe'));
+        self::assertTrue($pspell->contains('Europe'));
+        self::assertFalse($pspell->contains('iPHONE'));
+        self::assertTrue($pspell->contains('iPhone'));
+    }
+
+    /**
+     * @covers ::contains
+     */
     public function testErrorHandlerIsRestoredWhenContainsSucceeds(): void
     {
         $pspell = Pspell::fromLocale('en');
