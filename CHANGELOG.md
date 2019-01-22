@@ -4,7 +4,7 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.13.0...HEAD)
+## [v0.14.0](https://github.com/Stadly/PasswordPolice/compare/v0.13.0...v0.14.0) - 2019-01-22
 
 ### Added
 - Possible to specify guessable data for the rule, that applies to all passwords.
@@ -46,17 +46,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Renamed `UpperCase` rule to `UpperCaseRule`.
 - Renamed `Exception` rule exception to `RuleException`.
 
-### Fixed
-- Nothing
-
-### Deprecated
-- Nothing
-
 ### Removed
 - Whether to check all substrings or not can no longer be specified for dictionary rules. Use the substring word converter instead.
-
-### Security
-- Nothing
 
 ## [v0.13.0](https://github.com/Stadly/PasswordPolice/compare/v0.12.0...v0.13.0) - 2018-12-28
 
