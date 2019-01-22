@@ -9,6 +9,7 @@ use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 use Stadly\PasswordPolice\WordFormatter;
+use Stadly\PasswordPolice\WordFormatter\FormatterCombiner;
 use Stadly\PasswordPolice\WordList;
 use Traversable;
 
@@ -20,9 +21,9 @@ final class DictionaryRule implements Rule
     private $wordList;
 
     /**
-     * @var WordFormatter[] Word formatters.
+     * @var WordFormatter Word formatter.
      */
-    private $wordFormatters;
+    private $wordFormatter;
 
     /**
      * @var int Constraint weight.
@@ -34,13 +35,10 @@ final class DictionaryRule implements Rule
      * @param WordFormatter[] $wordFormatters Word formatters.
      * @param int $weight Constraint weight.
      */
-    public function __construct(
-        WordList $wordList,
-        array $wordFormatters = [],
-        int $weight = 1
-    ) {
+    public function __construct(WordList $wordList, array $wordFormatters = [], int $weight = 1)
+    {
         $this->wordList = $wordList;
-        $this->wordFormatters = $wordFormatters;
+        $this->wordFormatter = new FormatterCombiner($wordFormatters);
         $this->weight = $weight;
     }
 
@@ -92,7 +90,7 @@ final class DictionaryRule implements Rule
      */
     private function getDictionaryWord(string $password): ?string
     {
-        foreach ($this->getFormattedWords($password) as $word) {
+        foreach ($this->wordFormatter->apply([$password]) as $word) {
             try {
                 if ($this->wordList->contains($word)) {
                     return $word;
@@ -106,19 +104,6 @@ final class DictionaryRule implements Rule
             }
         }
         return null;
-    }
-
-    /**
-     * @param string $word Word to format.
-     * @return Traversable<string> Formatted words. May contain duplicates.
-     */
-    private function getFormattedWords(string $word): Traversable
-    {
-        yield $word;
-
-        foreach ($this->wordFormatters as $wordFormatter) {
-            yield from $wordFormatter->apply([$word]);
-        }
     }
 
     /**
