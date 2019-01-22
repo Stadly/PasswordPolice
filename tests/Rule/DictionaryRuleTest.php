@@ -191,6 +191,25 @@ final class DictionaryRuleTest extends TestCase
     }
 
     /**
+     * @covers ::test
+     */
+    public function testUnformattedWordIsRecognizedAfterWordFormatter(): void
+    {
+        $wordFormatter = $this->createMock(WordFormatter::class);
+        $wordFormatter->method('apply')->willReturnCallback(
+            static function (iterable $words): Traversable {
+                foreach ($words as $word) {
+                    yield str_replace('a', 'f', $word);
+                }
+            }
+        );
+
+        $rule = new DictionaryRule($this->wordList, [$wordFormatter]);
+
+        self::assertFalse($rule->test('apple'));
+    }
+
+    /**
      * @covers ::validate
      */
     public function testRuleCanBeValidated(): void
