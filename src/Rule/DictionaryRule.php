@@ -12,7 +12,7 @@ use Stadly\PasswordPolice\WordFormatter;
 use Stadly\PasswordPolice\WordList;
 use Traversable;
 
-final class Dictionary implements Rule
+final class DictionaryRule implements Rule
 {
     /**
      * @var WordList Word list for the dictionary.
@@ -87,7 +87,7 @@ final class Dictionary implements Rule
 
     /**
      * @param string $password Password to find dictionary words in.
-     * @return string|null Dictionary word in the password.
+     * @return string|null DictionaryRule word in the password.
      * @throws Exception If an error occurred.
      */
     private function getDictionaryWord(string $password): ?string

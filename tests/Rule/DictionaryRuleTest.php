@@ -13,11 +13,11 @@ use Stadly\PasswordPolice\WordList;
 use Traversable;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\Rule\Dictionary
+ * @coversDefaultClass \Stadly\PasswordPolice\Rule\DictionaryRule
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class DictionaryTest extends TestCase
+final class DictionaryRuleTest extends TestCase
 {
     /**
      * @var MockObject&WordList
@@ -45,10 +45,10 @@ final class DictionaryTest extends TestCase
      */
     public function testCanConstructRule(): void
     {
-        $rule = new Dictionary($this->wordList);
+        $rule = new DictionaryRule($this->wordList);
 
         // Force generation of code coverage
-        $ruleConstruct = new Dictionary($this->wordList);
+        $ruleConstruct = new DictionaryRule($this->wordList);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -57,7 +57,7 @@ final class DictionaryTest extends TestCase
      */
     public function testCanGetWordList(): void
     {
-        $rule = new Dictionary($this->wordList);
+        $rule = new DictionaryRule($this->wordList);
 
         self::assertSame($this->wordList, $rule->getWordList());
     }
@@ -67,7 +67,7 @@ final class DictionaryTest extends TestCase
      */
     public function testRuleCanBeSatisfied(): void
     {
-        $rule = new Dictionary($this->wordList);
+        $rule = new DictionaryRule($this->wordList);
 
         self::assertTrue($rule->test('test'));
     }
@@ -77,7 +77,7 @@ final class DictionaryTest extends TestCase
      */
     public function testRuleCanBeUnsatisfied(): void
     {
-        $rule = new Dictionary($this->wordList);
+        $rule = new DictionaryRule($this->wordList);
 
         self::assertFalse($rule->test('apple'));
     }
@@ -87,7 +87,7 @@ final class DictionaryTest extends TestCase
      */
     public function testPrefixWordIsNotRecognized(): void
     {
-        $rule = new Dictionary($this->wordList);
+        $rule = new DictionaryRule($this->wordList);
 
         self::assertTrue($rule->test('applejack'));
     }
@@ -97,7 +97,7 @@ final class DictionaryTest extends TestCase
      */
     public function testInfixWordIsNotRecognized(): void
     {
-        $rule = new Dictionary($this->wordList);
+        $rule = new DictionaryRule($this->wordList);
 
         self::assertTrue($rule->test('pineapplejack'));
     }
@@ -107,7 +107,7 @@ final class DictionaryTest extends TestCase
      */
     public function testPostfixWordIsNotRecognized(): void
     {
-        $rule = new Dictionary($this->wordList);
+        $rule = new DictionaryRule($this->wordList);
 
         self::assertTrue($rule->test('pineapple'));
     }
@@ -117,7 +117,7 @@ final class DictionaryTest extends TestCase
      */
     public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
     {
-        $rule = new Dictionary($this->wordList, [], 1);
+        $rule = new DictionaryRule($this->wordList, [], 1);
 
         self::assertTrue($rule->test('apple', 2));
     }
@@ -130,7 +130,7 @@ final class DictionaryTest extends TestCase
         $wordList = $this->createMock(WordList::class);
         $wordList->method('contains')->willThrowException(new RuntimeException());
 
-        $rule = new Dictionary($wordList);
+        $rule = new DictionaryRule($wordList);
 
         $this->expectException(Exception::class);
 
@@ -151,7 +151,7 @@ final class DictionaryTest extends TestCase
             }
         );
 
-        $rule = new Dictionary($this->wordList, [$wordFormatter]);
+        $rule = new DictionaryRule($this->wordList, [$wordFormatter]);
 
         self::assertFalse($rule->test('4ppl€'));
         self::assertTrue($rule->test('pine4ppl€jack'));
@@ -180,7 +180,7 @@ final class DictionaryTest extends TestCase
             }
         );
 
-        $rule = new Dictionary($this->wordList, [$wordFormatter1, $wordFormatter2]);
+        $rule = new DictionaryRule($this->wordList, [$wordFormatter1, $wordFormatter2]);
 
         self::assertTrue($rule->test('4ppl€'));
         self::assertTrue($rule->test('pine4ppl€jack'));
@@ -195,7 +195,7 @@ final class DictionaryTest extends TestCase
      */
     public function testRuleCanBeValidated(): void
     {
-        $rule = new Dictionary($this->wordList);
+        $rule = new DictionaryRule($this->wordList);
 
         self::assertNull($rule->validate('foo'));
     }
@@ -205,7 +205,7 @@ final class DictionaryTest extends TestCase
      */
     public function testRuleCanBeInvalidated(): void
     {
-        $rule = new Dictionary($this->wordList);
+        $rule = new DictionaryRule($this->wordList);
 
         self::assertEquals(
             new ValidationError('Must not contain dictionary words.', 'apple', $rule, 1),

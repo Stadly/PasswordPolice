@@ -28,7 +28,7 @@ use Stadly\PasswordPolice\WordFormatter\LowerCaseConverter;
 use Stadly\PasswordPolice\WordFormatter\UpperCaseConverter;
 use Stadly\PasswordPolice\HashFunction\PasswordHasher;
 use Stadly\PasswordPolice\Rule\Digit as DigitRule;
-use Stadly\PasswordPolice\Rule\Dictionary;
+use Stadly\PasswordPolice\Rule\DictionaryRule;
 use Stadly\PasswordPolice\Rule\GuessableData;
 use Stadly\PasswordPolice\Rule\HaveIBeenPwned;
 use Stadly\PasswordPolice\Rule\Length as LengthRule;
@@ -45,7 +45,7 @@ $policy->addRules(new GuessableData(['company']));    // Password must not conta
 $policy->addRules(new HaveIBeenPwned());              // Password must not be exposed in data breaches.
 $policy->addRules(new NoReuse(new PasswordHasher())); // Password must not have been used earlier.
 $pspell = Pspell::fromLocale('en', [new LowerCaseConverter(), new UpperCaseConverter()]);
-$dictionary = new Dictionary($pspell, [new LeetDecoder()]);
+$dictionary = new DictionaryRule($pspell, [new LeetDecoder()]);
 $policy->addRules($dictionary));                      // Password must not contain dictionary words.
 
 $validationErrors = $policy->validate('password');
