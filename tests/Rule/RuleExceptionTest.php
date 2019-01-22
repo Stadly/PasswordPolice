@@ -13,7 +13,7 @@ use Stadly\PasswordPolice\Rule;
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class ExceptionTest extends TestCase
+final class RuleExceptionTest extends TestCase
 {
     /**
      * @var MockObject&Rule
