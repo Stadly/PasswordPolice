@@ -8,10 +8,7 @@ use Traversable;
 
 final class LeetDecoder extends ChainableFormatter
 {
-    /**
-     * @var array<string, string[]>
-     */
-    private $encodeMap = [
+    private const ENCODE_MAP = [
         'A' => ['4', '@', '∂'],
         'B' => ['8', 'ß'],
         'C' => ['(', '¢', '<', '[', '©'],
@@ -42,7 +39,7 @@ final class LeetDecoder extends ChainableFormatter
 
     public function __construct()
     {
-        foreach ($this->encodeMap as $char => $encodedChars) {
+        foreach (self::ENCODE_MAP as $char => $encodedChars) {
             foreach ($encodedChars as $encodedChar) {
                 $this->decodeMap[$encodedChar][] = $char;
             }
