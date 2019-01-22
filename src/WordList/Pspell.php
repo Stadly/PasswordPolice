@@ -8,6 +8,7 @@ use ErrorException;
 use InvalidArgumentException;
 use RuntimeException;
 use Stadly\PasswordPolice\WordFormatter;
+use Stadly\PasswordPolice\WordFormatter\FormatterCombiner;
 use Stadly\PasswordPolice\WordList;
 use Traversable;
 
@@ -19,9 +20,9 @@ final class Pspell implements WordList
     private $pspell;
 
     /**
-     * @var WordFormatter[] Word formatters.
+     * @var WordFormatter Word formatter.
      */
-    private $wordFormatters;
+    private $wordFormatter;
 
     /**
      * Pspell dictionaries are case-sensitive.
@@ -33,7 +34,7 @@ final class Pspell implements WordList
     public function __construct(int $pspell, array $wordFormatters = [])
     {
         $this->pspell = $pspell;
-        $this->wordFormatters = $wordFormatters;
+        $this->wordFormatter = new FormatterCombiner($wordFormatters);
     }
 
     /**
@@ -74,7 +75,7 @@ final class Pspell implements WordList
      */
     public function contains(string $word): bool
     {
-        foreach ($this->getFormattedWords($word) as $wordVariant) {
+        foreach ($this->wordFormatter->apply([$word]) as $wordVariant) {
             set_error_handler([self::class, 'errorHandler']);
             try {
                 $check = pspell_check($this->pspell, $wordVariant);
@@ -94,19 +95,6 @@ final class Pspell implements WordList
         }
 
         return false;
-    }
-
-    /**
-     * @param string $word Word to format.
-     * @return Traversable<string> Formatted words. May contain duplicates.
-     */
-    private function getFormattedWords(string $word): Traversable
-    {
-        yield $word;
-
-        foreach ($this->wordFormatters as $wordFormatter) {
-            yield from $wordFormatter->apply([$word]);
-        }
     }
 
     /**
