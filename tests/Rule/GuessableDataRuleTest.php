@@ -6,6 +6,7 @@ namespace Stadly\PasswordPolice\Rule;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
+use Stadly\PasswordPolice\DateFormatter;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\ValidationError;
 use Stadly\PasswordPolice\WordFormatter;
@@ -111,7 +112,7 @@ final class GuessableDataRuleTest extends TestCase
      */
     public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
     {
-        $rule = new GuessableDataRule([], [], 1);
+        $rule = new GuessableDataRule([], [], null, 1);
         $password = new Password('foobar', ['oba']);
 
         self::assertTrue($rule->test($password, 2));
@@ -235,6 +236,26 @@ final class GuessableDataRuleTest extends TestCase
 
         self::assertFalse($rule->test(new Password('apple', ['apple'])));
         self::assertFalse($rule->test(new Password('apple', ['fpple'])));
+    }
+
+    /**
+     * @covers ::test
+     */
+    public function testDateFormatterCanBeCustomized(): void
+    {
+        $dateFormatter = $this->createMock(DateFormatter::class);
+        $dateFormatter->method('apply')->willReturnCallback(
+            static function (iterable $dates): Traversable {
+                foreach ($dates as $date) {
+                    yield $date->format('m\o\n\t\h');
+                }
+            }
+        );
+
+        $rule = new GuessableDataRule([], [], $dateFormatter);
+
+        self::assertFalse($rule->test(new Password('test 11onth foo', [new DateTime('2018-11-28')])));
+        self::assertTrue($rule->test(new Password('2018-11-28', [new DateTime('2018-11-28')])));
     }
 
     /**

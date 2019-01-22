@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use DateTimeInterface;
+use Stadly\PasswordPolice\DateFormatter;
+use Stadly\PasswordPolice\DateFormatter\DefaultFormatter;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
@@ -15,47 +17,6 @@ use Traversable;
 
 final class GuessableDataRule implements Rule
 {
-    private const DATE_FORMATS = [
-        // Year
-        ['Y'], // 2018
-
-        // Year month
-        ['y', 'n'], // 18 8
-        ['y', 'm'], // 18 08
-        ['y', 'M'], // 18 Aug
-        ['y', 'F'], // 18 August
-
-        // Month year
-        ['n', 'y'], // 8 18
-        ['M', 'y'], // Aug 18
-        ['F', 'y'], // August 18
-
-        // Day month
-        ['j', 'n'], // 4 8
-        ['j', 'm'], // 4 08
-        ['j', 'M'], // 4 Aug
-        ['j', 'F'], // 4 August
-
-        // Month day
-        ['n', 'j'], // 8 4
-        ['n', 'd'], // 8 04
-        ['M', 'j'], // Aug 4
-        ['M', 'd'], // Aug 04
-        ['F', 'j'], // August 4
-        ['F', 'd'], // August 04
-    ];
-
-    private const DATE_SEPARATORS = [
-        '',
-        '-',
-        ' ',
-        '/',
-        '.',
-        ',',
-        '. ',
-        ', ',
-    ];
-
     /**
      * @var (string|DateTimeInterface)[] Guessable data.
      */
@@ -67,6 +28,11 @@ final class GuessableDataRule implements Rule
     private $wordFormatter;
 
     /**
+     * @var DateFormatter Date formatter.
+     */
+    private $dateFormatter;
+
+    /**
      * @var int Constraint weight.
      */
     private $weight;
@@ -74,12 +40,18 @@ final class GuessableDataRule implements Rule
     /**
      * @param (string|DateTimeInterface)[] $guessableData Guessable data.
      * @param WordFormatter[] $wordFormatters Word formatters.
+     * @param DateFormatter|null $dateFormatter Date formatter.
      * @param int $weight Constraint weight.
      */
-    public function __construct(array $guessableData = [], array $wordFormatters = [], int $weight = 1)
-    {
+    public function __construct(
+        array $guessableData = [],
+        array $wordFormatters = [],
+        ?DateFormatter $dateFormatter = null,
+        int $weight = 1
+    ) {
         $this->guessableData = $guessableData;
         $this->wordFormatter = new FormatterCombiner($wordFormatters);
+        $this->dateFormatter = $dateFormatter ?? new DefaultFormatter();
         $this->weight = $weight;
     }
 
@@ -153,48 +125,18 @@ final class GuessableDataRule implements Rule
     private function contains(string $password, $data): bool
     {
         if ($data instanceof DateTimeInterface) {
-            return $this->containsDate($password, $data);
+            $strings = $this->dateFormatter->apply([$data]);
+        } else {
+            $strings = [$data];
         }
 
-        return $this->containsString($password, $data);
-    }
-
-    /**
-     * @param string $password Password to check.
-     * @param string $string String to check.
-     * @return bool Whether the password contains the string.
-     */
-    private function containsString(string $password, string $string): bool
-    {
-        return mb_stripos($password, $string) !== false;
-    }
-
-    /**
-     * @param string $password Password to check.
-     * @param DateTimeInterface $date Date to check.
-     * @return bool Whether the password contains the date.
-     */
-    private function containsDate(string $password, DateTimeInterface $date): bool
-    {
-        foreach ($this->getDateFormats() as $format) {
-            if ($this->containsString($password, $date->format($format))) {
+        foreach ($strings as $string) {
+            if (mb_stripos($password, $string) !== false) {
                 return true;
             }
         }
 
         return false;
-    }
-
-    /**
-     * @return iterable<string> Date formats.
-     */
-    private function getDateFormats(): iterable
-    {
-        foreach (self::DATE_FORMATS as $format) {
-            foreach (self::DATE_SEPARATORS as $separator) {
-                yield implode($separator, $format);
-            }
-        }
     }
 
     /**

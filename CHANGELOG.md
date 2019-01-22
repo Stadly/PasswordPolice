@@ -10,9 +10,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Date formatters for formatting dates. Date formatters can be chained with word formatters. The output from the date formatter is used as input for the next formatter in the chain.
 - Date formatter combining the results from multiple date formatters.
 - Default date formatter.
+- Possible to specify date formatter for guessable data rules.
 
 ### Changed
-- Nothing
+- Constraint weight for guessable data rules is now argument number 4 instead of number 3. Date formatter is argument number 3.
 
 ### Fixed
 - Nothing
