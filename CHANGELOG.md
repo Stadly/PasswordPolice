@@ -41,6 +41,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Renamed `Length` rule to `LengthRule`.
 - Renamed `LowerCase` rule to `LowerCaseRule`.
 - Renamed `NoReuse` rule to `NoReuseRule`.
+- Renamed `Symbol` rule to `SymbolRule`.
 
 ### Fixed
 - Nothing
