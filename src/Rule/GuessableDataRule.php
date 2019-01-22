@@ -12,7 +12,7 @@ use Stadly\PasswordPolice\ValidationError;
 use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class GuessableData implements Rule
+final class GuessableDataRule implements Rule
 {
     private const DATE_FORMATS = [
         // Year
