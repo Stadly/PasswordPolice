@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Date formatters for formatting dates. Date formatters can be chained with word formatters. The output from the date formatter is used as input for the next formatter in the chain.
+- Date formatter combining the results from multiple date formatters.
 
 ### Changed
 - Nothing
