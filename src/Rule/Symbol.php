@@ -7,7 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\Constraint\CountConstraint;
 use Stadly\PasswordPolice\Policy;
 
-final class Symbol extends CharacterClass
+final class Symbol extends CharacterClassRule
 {
     /**
      * {@inheritDoc}

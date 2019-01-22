@@ -7,7 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\Constraint\CountConstraint;
 use Stadly\PasswordPolice\Policy;
 
-final class Digit extends CharacterClass
+final class Digit extends CharacterClassRule
 {
     /**
      * @param int $min Minimum number of digits.

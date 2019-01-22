@@ -11,7 +11,7 @@ use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 
-abstract class CharacterClass implements Rule
+abstract class CharacterClassRule implements Rule
 {
     /**
      * @var string Characters matched by the rule.
