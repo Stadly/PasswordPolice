@@ -11,7 +11,7 @@ use Throwable;
 /**
  * Exception thrown if a rule caused an error.
  */
-final class Exception extends RuntimeException
+final class RuleException extends RuntimeException
 {
     /**
      * @var Rule Rule that caused the error.

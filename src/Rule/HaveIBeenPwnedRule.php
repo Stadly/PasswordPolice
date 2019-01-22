@@ -154,7 +154,7 @@ final class HaveIBeenPwnedRule implements Rule
     /**
      * @param string $password Password to check in breaches.
      * @return int Number of appearances in breaches.
-     * @throws Exception If an error occurred.
+     * @throws RuleException If an error occurred.
      */
     private function getCount(string $password): int
     {
@@ -179,7 +179,7 @@ final class HaveIBeenPwnedRule implements Rule
             }
             return 0;
         } catch (ClientExceptionInterface | RuntimeException $exception) {
-            throw new Exception(
+            throw new RuleException(
                 $this,
                 'An error occurred while using the Have I Been Pwned? service: '.$exception->getMessage(),
                 $exception

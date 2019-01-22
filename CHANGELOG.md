@@ -43,6 +43,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Renamed `NoReuse` rule to `NoReuseRule`.
 - Renamed `Symbol` rule to `SymbolRule`.
 - Renamed `UpperCase` rule to `UpperCaseRule`.
+- Renamed `Exception` rule exception to `RuleException`.
 
 ### Fixed
 - Nothing

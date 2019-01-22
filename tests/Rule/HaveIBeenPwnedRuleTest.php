@@ -253,7 +253,7 @@ final class HaveIBeenPwnedRuleTest extends TestCase
         $rule = new HaveIBeenPwnedRule(5, 0);
         $rule->setClient($client);
 
-        $this->expectException(Exception::class);
+        $this->expectException(RuleException::class);
 
         $rule->test('291vnnzrvtu9');
     }
