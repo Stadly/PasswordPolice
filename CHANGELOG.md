@@ -38,6 +38,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Renamed `Digit` rule to `DigitRule`.
 - Renamed `GuessableData` rule to `GuessableDataRule`.
 - Renamed `HaveIBeenPwned` rule to `HaveIBeenPwnedRule`.
+- Renamed `Length` rule to `LengthRule`.
 
 ### Fixed
 - Nothing

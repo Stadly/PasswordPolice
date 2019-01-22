@@ -11,7 +11,7 @@ use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 
-final class Length implements Rule
+final class LengthRule implements Rule
 {
     /**
      * @var CountConstraint[] Rule constraints.

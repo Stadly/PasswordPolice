@@ -9,21 +9,21 @@ use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\ValidationError;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\Rule\Length
+ * @coversDefaultClass \Stadly\PasswordPolice\Rule\LengthRule
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class LengthTest extends TestCase
+final class LengthRuleTest extends TestCase
 {
     /**
      * @covers ::__construct
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new Length(5, null);
+        $rule = new LengthRule(5, null);
 
         // Force generation of code coverage
-        $ruleConstruct = new Length(5, null);
+        $ruleConstruct = new LengthRule(5, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -32,10 +32,10 @@ final class LengthTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = new Length(0, 10);
+        $rule = new LengthRule(0, 10);
 
         // Force generation of code coverage
-        $ruleConstruct = new Length(0, 10);
+        $ruleConstruct = new LengthRule(0, 10);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -44,10 +44,10 @@ final class LengthTest extends TestCase
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new Length(5, 10);
+        $rule = new LengthRule(5, 10);
 
         // Force generation of code coverage
-        $ruleConstruct = new Length(5, 10);
+        $ruleConstruct = new LengthRule(5, 10);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -58,7 +58,7 @@ final class LengthTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new Length(-10, null);
+        $rule = new LengthRule(-10, null);
     }
 
     /**
@@ -68,7 +68,7 @@ final class LengthTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new Length(10, 5);
+        $rule = new LengthRule(10, 5);
     }
 
     /**
@@ -76,10 +76,10 @@ final class LengthTest extends TestCase
      */
     public function testCanConstructUnconstrainedRule(): void
     {
-        $rule = new Length(0, null);
+        $rule = new LengthRule(0, null);
 
         // Force generation of code coverage
-        $ruleConstruct = new Length(0, null);
+        $ruleConstruct = new LengthRule(0, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -88,10 +88,10 @@ final class LengthTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $rule = new Length(5, 5);
+        $rule = new LengthRule(5, 5);
 
         // Force generation of code coverage
-        $ruleConstruct = new Length(5, 5);
+        $ruleConstruct = new LengthRule(5, 5);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -100,11 +100,11 @@ final class LengthTest extends TestCase
      */
     public function testCanAddConstraint(): void
     {
-        $rule = new Length(5, 5, 1);
+        $rule = new LengthRule(5, 5, 1);
         $rule->addConstraint(10, 10, 1);
 
         // Force generation of code coverage
-        $ruleConstruct = new Length(5, 5, 1);
+        $ruleConstruct = new LengthRule(5, 5, 1);
         $ruleConstruct->addConstraint(10, 10, 1);
         self::assertEquals($rule, $ruleConstruct);
     }
@@ -114,10 +114,10 @@ final class LengthTest extends TestCase
      */
     public function testConstraintsAreOrdered(): void
     {
-        $rule = new Length(5, 5, 1);
+        $rule = new LengthRule(5, 5, 1);
         $rule->addConstraint(10, 10, 2);
 
-        $ruleConstruct = new Length(10, 10, 2);
+        $ruleConstruct = new LengthRule(10, 10, 2);
         $ruleConstruct->addConstraint(5, 5, 1);
         self::assertEquals($rule, $ruleConstruct);
     }
@@ -127,7 +127,7 @@ final class LengthTest extends TestCase
      */
     public function testMinConstraintCanBeSatisfied(): void
     {
-        $rule = new Length(2, null);
+        $rule = new LengthRule(2, null);
 
         self::assertTrue($rule->test('foo'));
     }
@@ -137,7 +137,7 @@ final class LengthTest extends TestCase
      */
     public function testMinConstraintCanBeUnsatisfied(): void
     {
-        $rule = new Length(2, null);
+        $rule = new LengthRule(2, null);
 
         self::assertFalse($rule->test('f'));
     }
@@ -147,7 +147,7 @@ final class LengthTest extends TestCase
      */
     public function testMaxConstraintCanBeSatisfied(): void
     {
-        $rule = new Length(0, 3);
+        $rule = new LengthRule(0, 3);
 
         self::assertTrue($rule->test('foo'));
     }
@@ -157,7 +157,7 @@ final class LengthTest extends TestCase
      */
     public function testMaxConstraintCanBeUnsatisfied(): void
     {
-        $rule = new Length(0, 3);
+        $rule = new LengthRule(0, 3);
 
         self::assertFalse($rule->test('foobar'));
     }
@@ -167,7 +167,7 @@ final class LengthTest extends TestCase
      */
     public function testUtf8IsTreatedAsSingleCharacter(): void
     {
-        $rule = new Length(2, 2);
+        $rule = new LengthRule(2, 2);
 
         self::assertTrue($rule->test('áÁ'));
     }
@@ -177,7 +177,7 @@ final class LengthTest extends TestCase
      */
     public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
     {
-        $rule = new Length(0, 3, 1);
+        $rule = new LengthRule(0, 3, 1);
 
         self::assertTrue($rule->test('foobar', 2));
     }
@@ -187,7 +187,7 @@ final class LengthTest extends TestCase
      */
     public function testRuleCanBeValidated(): void
     {
-        $rule = new Length(1, null);
+        $rule = new LengthRule(1, null);
 
         self::assertNull($rule->validate('foo'));
     }
@@ -197,7 +197,7 @@ final class LengthTest extends TestCase
      */
     public function testRuleWithMinConstraintCanBeInvalidated(): void
     {
-        $rule = new Length(5, null);
+        $rule = new LengthRule(5, null);
 
         self::assertEquals(
             new ValidationError('There must be at least 5 characters.', 'fo', $rule, 1),
@@ -210,7 +210,7 @@ final class LengthTest extends TestCase
      */
     public function testRuleWithMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new Length(0, 10);
+        $rule = new LengthRule(0, 10);
 
         self::assertEquals(
             new ValidationError('There must be at most 10 characters.', 'fo bar qwerty', $rule, 1),
@@ -223,7 +223,7 @@ final class LengthTest extends TestCase
      */
     public function testRuleWithBothMinAndMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new Length(5, 10);
+        $rule = new LengthRule(5, 10);
 
         self::assertEquals(
             new ValidationError('There must be between 5 and 10 characters.', 'fo', $rule, 1),
@@ -236,7 +236,7 @@ final class LengthTest extends TestCase
      */
     public function testRuleWithMaxConstraintEqualToZeroCanBeInvalidated(): void
     {
-        $rule = new Length(0, 0);
+        $rule = new LengthRule(0, 0);
 
         self::assertEquals(
             new ValidationError('There must be no characters.', 'fo', $rule, 1),
@@ -249,7 +249,7 @@ final class LengthTest extends TestCase
      */
     public function testRuleWithMinConstraintEqualToMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new Length(3, 3);
+        $rule = new LengthRule(3, 3);
 
         self::assertEquals(
             new ValidationError('There must be exactly 3 characters.', 'fo', $rule, 1),
