@@ -27,7 +27,7 @@ use Stadly\PasswordPolice\WordFormatter\LeetDecoder;
 use Stadly\PasswordPolice\WordFormatter\LowerCaseConverter;
 use Stadly\PasswordPolice\WordFormatter\UpperCaseConverter;
 use Stadly\PasswordPolice\HashFunction\PasswordHasher;
-use Stadly\PasswordPolice\Rule\Digit as DigitRule;
+use Stadly\PasswordPolice\Rule\DigitRule;
 use Stadly\PasswordPolice\Rule\DictionaryRule;
 use Stadly\PasswordPolice\Rule\GuessableData;
 use Stadly\PasswordPolice\Rule\HaveIBeenPwned;

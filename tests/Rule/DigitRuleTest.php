@@ -9,21 +9,21 @@ use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\ValidationError;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\Rule\Digit
+ * @coversDefaultClass \Stadly\PasswordPolice\Rule\DigitRule
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class DigitTest extends TestCase
+final class DigitRuleTest extends TestCase
 {
     /**
      * @covers ::__construct
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new Digit(5, null);
+        $rule = new DigitRule(5, null);
 
         // Force generation of code coverage
-        $ruleConstruct = new Digit(5, null);
+        $ruleConstruct = new DigitRule(5, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -32,10 +32,10 @@ final class DigitTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = new Digit(0, 10);
+        $rule = new DigitRule(0, 10);
 
         // Force generation of code coverage
-        $ruleConstruct = new Digit(0, 10);
+        $ruleConstruct = new DigitRule(0, 10);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -44,10 +44,10 @@ final class DigitTest extends TestCase
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new Digit(5, 10);
+        $rule = new DigitRule(5, 10);
 
         // Force generation of code coverage
-        $ruleConstruct = new Digit(5, 10);
+        $ruleConstruct = new DigitRule(5, 10);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -58,7 +58,7 @@ final class DigitTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new Digit(-10, null);
+        $rule = new DigitRule(-10, null);
     }
 
     /**
@@ -68,7 +68,7 @@ final class DigitTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new Digit(10, 5);
+        $rule = new DigitRule(10, 5);
     }
 
     /**
@@ -76,10 +76,10 @@ final class DigitTest extends TestCase
      */
     public function testCanConstructUnconstrainedRule(): void
     {
-        $rule = new Digit(0, null);
+        $rule = new DigitRule(0, null);
 
         // Force generation of code coverage
-        $ruleConstruct = new Digit(0, null);
+        $ruleConstruct = new DigitRule(0, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -88,10 +88,10 @@ final class DigitTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $rule = new Digit(5, 5);
+        $rule = new DigitRule(5, 5);
 
         // Force generation of code coverage
-        $ruleConstruct = new Digit(5, 5);
+        $ruleConstruct = new DigitRule(5, 5);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -100,11 +100,11 @@ final class DigitTest extends TestCase
      */
     public function testCanAddConstraint(): void
     {
-        $rule = new Digit(5, 5, 1);
+        $rule = new DigitRule(5, 5, 1);
         $rule->addConstraint(10, 10, 1);
 
         // Force generation of code coverage
-        $ruleConstruct = new Digit(5, 5, 1);
+        $ruleConstruct = new DigitRule(5, 5, 1);
         $ruleConstruct->addConstraint(10, 10, 1);
         self::assertEquals($rule, $ruleConstruct);
     }
@@ -114,10 +114,10 @@ final class DigitTest extends TestCase
      */
     public function testConstraintsAreOrdered(): void
     {
-        $rule = new Digit(5, 5, 1);
+        $rule = new DigitRule(5, 5, 1);
         $rule->addConstraint(10, 10, 2);
 
-        $ruleConstruct = new Digit(10, 10, 2);
+        $ruleConstruct = new DigitRule(10, 10, 2);
         $ruleConstruct->addConstraint(5, 5, 1);
         self::assertEquals($rule, $ruleConstruct);
     }
@@ -127,7 +127,7 @@ final class DigitTest extends TestCase
      */
     public function testMinConstraintCanBeSatisfied(): void
     {
-        $rule = new Digit(2, null);
+        $rule = new DigitRule(2, null);
 
         self::assertTrue($rule->test('FOO bar 059'));
     }
@@ -137,7 +137,7 @@ final class DigitTest extends TestCase
      */
     public function testMinConstraintCanBeUnsatisfied(): void
     {
-        $rule = new Digit(2, null);
+        $rule = new DigitRule(2, null);
 
         self::assertFalse($rule->test('FOO BAR 0'));
     }
@@ -147,7 +147,7 @@ final class DigitTest extends TestCase
      */
     public function testMaxConstraintCanBeSatisfied(): void
     {
-        $rule = new Digit(0, 3);
+        $rule = new DigitRule(0, 3);
 
         self::assertTrue($rule->test('FOO bar 059'));
     }
@@ -157,7 +157,7 @@ final class DigitTest extends TestCase
      */
     public function testMaxConstraintCanBeUnsatisfied(): void
     {
-        $rule = new Digit(0, 3);
+        $rule = new DigitRule(0, 3);
 
         self::assertFalse($rule->test('foo bar 0597'));
     }
@@ -167,7 +167,7 @@ final class DigitTest extends TestCase
      */
     public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
     {
-        $rule = new Digit(0, 3, 1);
+        $rule = new DigitRule(0, 3, 1);
 
         self::assertTrue($rule->test('foo bar 0597', 2));
     }
@@ -177,7 +177,7 @@ final class DigitTest extends TestCase
      */
     public function testRuleCanBeValidated(): void
     {
-        $rule = new Digit(1, null);
+        $rule = new DigitRule(1, null);
 
         self::assertNull($rule->validate('1'));
     }
@@ -187,7 +187,7 @@ final class DigitTest extends TestCase
      */
     public function testRuleWithMinConstraintCanBeInvalidated(): void
     {
-        $rule = new Digit(5, null);
+        $rule = new DigitRule(5, null);
 
         self::assertEquals(
             new ValidationError('There must be at least 5 digits.', 'foo 12', $rule, 1),
@@ -200,7 +200,7 @@ final class DigitTest extends TestCase
      */
     public function testRuleWithMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new Digit(0, 10);
+        $rule = new DigitRule(0, 10);
 
         self::assertEquals(
             new ValidationError('There must be at most 10 digits.', 'foo 123 456 123456', $rule, 1),
@@ -213,7 +213,7 @@ final class DigitTest extends TestCase
      */
     public function testRuleWithBothMinAndMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new Digit(5, 10);
+        $rule = new DigitRule(5, 10);
 
         self::assertEquals(
             new ValidationError('There must be between 5 and 10 digits.', 'foo 12', $rule, 1),
@@ -226,7 +226,7 @@ final class DigitTest extends TestCase
      */
     public function testRuleWithMaxConstraintEqualToZeroCanBeInvalidated(): void
     {
-        $rule = new Digit(0, 0);
+        $rule = new DigitRule(0, 0);
 
         self::assertEquals(
             new ValidationError('There must be no digits.', 'foo 12', $rule, 1),
@@ -239,7 +239,7 @@ final class DigitTest extends TestCase
      */
     public function testRuleWithMinConstraintEqualToMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new Digit(3, 3);
+        $rule = new DigitRule(3, 3);
 
         self::assertEquals(
             new ValidationError('There must be exactly 3 digits.', 'foo 12', $rule, 1),
