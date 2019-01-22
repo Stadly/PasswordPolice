@@ -13,7 +13,7 @@ use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 
-final class ChangeDate implements Rule
+final class ChangedOnDateRule implements Rule
 {
     /**
      * @var DateConstraint[] Rule constraints.

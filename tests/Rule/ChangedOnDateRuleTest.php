@@ -13,11 +13,11 @@ use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\ValidationError;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\Rule\ChangeDate
+ * @coversDefaultClass \Stadly\PasswordPolice\Rule\ChangedOnDateRule
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class ChangeDateTest extends TestCase
+final class ChangedOnDateRuleTest extends TestCase
 {
     /**
      * @var Password
@@ -38,10 +38,10 @@ final class ChangeDateTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new ChangeDate(new DateTime('2001-02-03'), null);
+        $rule = new ChangedOnDateRule(new DateTime('2001-02-03'), null);
 
         // Force generation of code coverage
-        $ruleConstruct = new ChangeDate(new DateTime('2001-02-03'), null);
+        $ruleConstruct = new ChangedOnDateRule(new DateTime('2001-02-03'), null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -50,10 +50,10 @@ final class ChangeDateTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = new ChangeDate(null, new DateTime('2002-03-04'));
+        $rule = new ChangedOnDateRule(null, new DateTime('2002-03-04'));
 
         // Force generation of code coverage
-        $ruleConstruct = new ChangeDate(null, new DateTime('2002-03-04'));
+        $ruleConstruct = new ChangedOnDateRule(null, new DateTime('2002-03-04'));
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -62,10 +62,10 @@ final class ChangeDateTest extends TestCase
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new ChangeDate(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
+        $rule = new ChangedOnDateRule(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
 
         // Force generation of code coverage
-        $ruleConstruct = new ChangeDate(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
+        $ruleConstruct = new ChangedOnDateRule(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -76,7 +76,7 @@ final class ChangeDateTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new ChangeDate(new DateTime('2002-03-04'), new DateTime('2001-02-03'));
+        $rule = new ChangedOnDateRule(new DateTime('2002-03-04'), new DateTime('2001-02-03'));
     }
 
     /**
@@ -84,10 +84,10 @@ final class ChangeDateTest extends TestCase
      */
     public function testCanConstructUnconstrainedRule(): void
     {
-        $rule = new ChangeDate(null, null);
+        $rule = new ChangedOnDateRule(null, null);
 
         // Force generation of code coverage
-        $ruleConstruct = new ChangeDate(null, null);
+        $ruleConstruct = new ChangedOnDateRule(null, null);
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -96,10 +96,10 @@ final class ChangeDateTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $rule = new ChangeDate(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
+        $rule = new ChangedOnDateRule(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
 
         // Force generation of code coverage
-        $ruleConstruct = new ChangeDate(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
+        $ruleConstruct = new ChangedOnDateRule(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
         self::assertEquals($rule, $ruleConstruct);
     }
 
@@ -108,11 +108,11 @@ final class ChangeDateTest extends TestCase
      */
     public function testCanAddConstraint(): void
     {
-        $rule = new ChangeDate(new DateTime('2001-02-03'), new DateTime('2001-02-03'), 1);
+        $rule = new ChangedOnDateRule(new DateTime('2001-02-03'), new DateTime('2001-02-03'), 1);
         $rule->addConstraint(new DateTime('2002-03-04'), new DateTime('2002-03-04'), 1);
 
         // Force generation of code coverage
-        $ruleConstruct = new ChangeDate(new DateTime('2001-02-03'), new DateTime('2001-02-03'), 1);
+        $ruleConstruct = new ChangedOnDateRule(new DateTime('2001-02-03'), new DateTime('2001-02-03'), 1);
         $ruleConstruct->addConstraint(new DateTime('2002-03-04'), new DateTime('2002-03-04'), 1);
         self::assertEquals($rule, $ruleConstruct);
     }
@@ -122,10 +122,10 @@ final class ChangeDateTest extends TestCase
      */
     public function testConstraintsAreOrdered(): void
     {
-        $rule = new ChangeDate(new DateTime('2001-02-03'), new DateTime('2001-02-03'), 1);
+        $rule = new ChangedOnDateRule(new DateTime('2001-02-03'), new DateTime('2001-02-03'), 1);
         $rule->addConstraint(new DateTime('2002-03-04'), new DateTime('2002-03-04'), 2);
 
-        $ruleConstruct = new ChangeDate(new DateTime('2002-03-04'), new DateTime('2002-03-04'), 2);
+        $ruleConstruct = new ChangedOnDateRule(new DateTime('2002-03-04'), new DateTime('2002-03-04'), 2);
         $ruleConstruct->addConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'), 1);
         self::assertEquals($rule, $ruleConstruct);
     }
@@ -135,7 +135,7 @@ final class ChangeDateTest extends TestCase
      */
     public function testRuleIsSatisfiedWhenPasswordIsString(): void
     {
-        $rule = new ChangeDate(new DateTime(), null);
+        $rule = new ChangedOnDateRule(new DateTime(), null);
 
         self::assertTrue($rule->test('foobar'));
     }
@@ -145,7 +145,7 @@ final class ChangeDateTest extends TestCase
      */
     public function testMinConstraintCanBeSatisfied(): void
     {
-        $rule = new ChangeDate(new DateTime('2003-04-04'), null);
+        $rule = new ChangedOnDateRule(new DateTime('2003-04-04'), null);
 
         self::assertTrue($rule->test($this->password));
     }
@@ -155,7 +155,7 @@ final class ChangeDateTest extends TestCase
      */
     public function testMinConstraintCanBeUnsatisfied(): void
     {
-        $rule = new ChangeDate(new DateTime('2003-04-06'), null);
+        $rule = new ChangedOnDateRule(new DateTime('2003-04-06'), null);
 
         self::assertFalse($rule->test($this->password));
     }
@@ -165,7 +165,7 @@ final class ChangeDateTest extends TestCase
      */
     public function testMaxConstraintCanBeSatisfied(): void
     {
-        $rule = new ChangeDate(null, new DateTime('2003-04-06'));
+        $rule = new ChangedOnDateRule(null, new DateTime('2003-04-06'));
 
         self::assertTrue($rule->test($this->password));
     }
@@ -175,7 +175,7 @@ final class ChangeDateTest extends TestCase
      */
     public function testMaxConstraintCanBeUnsatisfied(): void
     {
-        $rule = new ChangeDate(null, new DateTime('2003-04-04'));
+        $rule = new ChangedOnDateRule(null, new DateTime('2003-04-04'));
 
         self::assertFalse($rule->test($this->password));
     }
@@ -185,7 +185,7 @@ final class ChangeDateTest extends TestCase
      */
     public function testRuleIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
     {
-        $rule = new ChangeDate(null, new DateTime('2003-04-04'), 1);
+        $rule = new ChangedOnDateRule(null, new DateTime('2003-04-04'), 1);
 
         self::assertTrue($rule->test($this->password, 2));
     }
@@ -195,7 +195,7 @@ final class ChangeDateTest extends TestCase
      */
     public function testRuleCanBeValidated(): void
     {
-        $rule = new ChangeDate(new DateTime('2003-04-04'), null);
+        $rule = new ChangedOnDateRule(new DateTime('2003-04-04'), null);
 
         self::assertNull($rule->validate($this->password));
     }
@@ -205,7 +205,7 @@ final class ChangeDateTest extends TestCase
      */
     public function testRuleWithMinConstraintCanBeInvalidated(): void
     {
-        $rule = new ChangeDate(new DateTime('2003-04-06'), null);
+        $rule = new ChangedOnDateRule(new DateTime('2003-04-06'), null);
 
         self::assertEquals(
             new ValidationError(
@@ -223,7 +223,7 @@ final class ChangeDateTest extends TestCase
      */
     public function testRuleWithMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new ChangeDate(null, new DateTime('2003-04-04'));
+        $rule = new ChangedOnDateRule(null, new DateTime('2003-04-04'));
 
         self::assertEquals(
             new ValidationError(
@@ -241,7 +241,7 @@ final class ChangeDateTest extends TestCase
      */
     public function testRuleWithBothMinAndMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new ChangeDate(new DateTime('2003-04-06'), new DateTime('2003-04-07'));
+        $rule = new ChangedOnDateRule(new DateTime('2003-04-06'), new DateTime('2003-04-07'));
 
         self::assertEquals(
             new ValidationError(
@@ -259,7 +259,7 @@ final class ChangeDateTest extends TestCase
      */
     public function testRuleWithMinConstraintEqualToMaxConstraintCanBeInvalidated(): void
     {
-        $rule = new ChangeDate(new DateTime('2003-04-06'), new DateTime('2003-04-06'));
+        $rule = new ChangedOnDateRule(new DateTime('2003-04-06'), new DateTime('2003-04-06'));
 
         self::assertEquals(
             new ValidationError(
