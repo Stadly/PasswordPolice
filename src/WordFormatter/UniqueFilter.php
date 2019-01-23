@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\WordFormatter;
 
+use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class UniqueFilter extends ChainableFormatter
+final class UniqueFilter implements WordFormatter
 {
+    use FormatterChaining;
+
     /**
      * @param iterable<string> $words Words to filter.
      * @return Traversable<string> Unique words.

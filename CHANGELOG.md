@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 - Instead of using the abstract class `ChainableFormatter`, chaining of date formatters is implemented using the trait `FormatterChaining`.
+- Instead of using the abstract class `ChainableFormatter`, chaining of word formatters is implemented using the trait `FormatterChaining`.
 
 ### Fixed
 - Nothing

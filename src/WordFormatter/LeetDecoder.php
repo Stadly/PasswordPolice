@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\WordFormatter;
 
+use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class LeetDecoder extends ChainableFormatter
+final class LeetDecoder implements WordFormatter
 {
+    use FormatterChaining;
+
     private const ENCODE_MAP = [
         'A' => ['4', '@', '∂'],
         'B' => ['8', 'ß'],

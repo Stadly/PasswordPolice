@@ -7,7 +7,7 @@ namespace Stadly\PasswordPolice\WordFormatter;
 use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-abstract class ChainableFormatter implements WordFormatter
+trait FormatterChaining
 {
     /**
      * @var WordFormatter|null Next word formatter in the chain.

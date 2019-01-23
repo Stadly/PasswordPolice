@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\WordFormatter;
 
 use InvalidArgumentException;
+use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class SubstringGenerator extends ChainableFormatter
+final class SubstringGenerator implements WordFormatter
 {
+    use FormatterChaining;
+
     /**
      * @var int Minimum substring length.
      */

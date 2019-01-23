@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\WordFormatter;
 
+use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class LowerCaseConverter extends ChainableFormatter
+final class LowerCaseConverter implements WordFormatter
 {
+    use FormatterChaining;
+
     /**
      * @param iterable<string> $words Words to format.
      * @return Traversable<string> The words with all characters in lower case.

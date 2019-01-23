@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\WordFormatter;
 
+use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class MixedCaseConverter extends ChainableFormatter
+final class MixedCaseConverter implements WordFormatter
 {
+    use FormatterChaining;
+
     /**
      * @param iterable<string> $words Words to format.
      * @return Traversable<string> Variants of the words with all combinations of upper case and lower case characters.

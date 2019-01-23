@@ -7,8 +7,10 @@ namespace Stadly\PasswordPolice\WordFormatter;
 use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class FormatterCombiner extends ChainableFormatter
+final class FormatterCombiner implements WordFormatter
 {
+    use FormatterChaining;
+
     /**
      * @var WordFormatter[] Word formatters.
      */

@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\WordFormatter;
 
 use InvalidArgumentException;
+use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class LengthFilter extends ChainableFormatter
+final class LengthFilter implements WordFormatter
 {
+    use FormatterChaining;
+
     /**
      * @var int Minimum word length.
      */

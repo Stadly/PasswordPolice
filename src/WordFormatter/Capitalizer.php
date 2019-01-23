@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\WordFormatter;
 
+use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-final class Capitalizer extends ChainableFormatter
+final class Capitalizer implements WordFormatter
 {
+    use FormatterChaining;
+
     /**
      * @param iterable<string> $words Words to format.
      * @return Traversable<string> The words with the first character in upper case and the rest in lower case.

@@ -10,11 +10,11 @@ use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\ChainableFormatter
+ * @coversDefaultClass \Stadly\PasswordPolice\WordFormatter\FormatterChaining
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class ChainableFormatterTest extends TestCase
+final class FormatterChainingTest extends TestCase
 {
     /**
      * @var MockObject&WordFormatter
@@ -32,7 +32,10 @@ final class ChainableFormatterTest extends TestCase
      */
     public function testCanSetAndGetNext(): void
     {
-        $formatter = $this->getMockForAbstractClass(ChainableFormatter::class);
+        /**
+         * @var MockObject&FormatterChaining
+         */
+        $formatter = $this->getMockForTrait(FormatterChaining::class);
 
         $formatter->setNext($this->wordFormatter);
         self::assertSame($this->wordFormatter, $formatter->getNext());
@@ -44,7 +47,10 @@ final class ChainableFormatterTest extends TestCase
      */
     public function testCanGetWhenNoNextIsSet(): void
     {
-        $formatter = $this->getMockForAbstractClass(ChainableFormatter::class);
+        /**
+         * @var MockObject&FormatterChaining
+         */
+        $formatter = $this->getMockForTrait(FormatterChaining::class);
 
         $formatter->setNext($this->wordFormatter);
         $formatter->setNext(null);
@@ -57,7 +63,10 @@ final class ChainableFormatterTest extends TestCase
      */
     public function testCanApplyFormatter(): void
     {
-        $formatter = $this->getMockForAbstractClass(ChainableFormatter::class);
+        /**
+         * @var MockObject&FormatterChaining
+         */
+        $formatter = $this->getMockForTrait(FormatterChaining::class);
         $formatter->method('applyCurrent')->willReturnCallback(
             static function (iterable $words): Traversable {
                 foreach ($words as $word) {
@@ -74,7 +83,10 @@ final class ChainableFormatterTest extends TestCase
      */
     public function testCanApplyFormatterChain(): void
     {
-        $formatter = $this->getMockForAbstractClass(ChainableFormatter::class);
+        /**
+         * @var MockObject&FormatterChaining
+         */
+        $formatter = $this->getMockForTrait(FormatterChaining::class);
         $formatter->method('applyCurrent')->willReturnCallback(
             static function (iterable $words): Traversable {
                 foreach ($words as $word) {
