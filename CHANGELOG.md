@@ -10,7 +10,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Changed
-- Nothing
+- Instead of using the abstract class `ChainableFormatter`, chaining of date formatters is implemented using the trait `FormatterChaining`.
 
 ### Fixed
 - Nothing

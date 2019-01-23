@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\DateFormatter;
 
 use DateTimeInterface;
+use Stadly\PasswordPolice\DateFormatter;
 use Traversable;
 
-final class DefaultFormatter extends ChainableFormatter
+final class DefaultFormatter implements DateFormatter
 {
+    use FormatterChaining;
+
     private const DATE_FORMATS = [
         // Year
         ['Y'], // 2018

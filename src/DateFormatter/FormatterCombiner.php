@@ -9,8 +9,10 @@ use Stadly\PasswordPolice\DateFormatter;
 use Stadly\PasswordPolice\WordFormatter\UniqueFilter;
 use Traversable;
 
-final class FormatterCombiner extends ChainableFormatter
+final class FormatterCombiner implements DateFormatter
 {
+    use FormatterChaining;
+
     /**
      * @var DateFormatter[] Date formatters.
      */

@@ -9,7 +9,7 @@ use Stadly\PasswordPolice\DateFormatter;
 use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
-abstract class ChainableFormatter implements DateFormatter
+trait FormatterChaining
 {
     /**
      * @var WordFormatter|null Next formatter in the chain.
