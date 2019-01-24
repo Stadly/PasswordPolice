@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\DateFormatter;
 
 use DateTime;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Stadly\PasswordPolice\DateFormatter;
 use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
 
@@ -19,28 +17,17 @@ use Traversable;
 final class FormatterChainingTest extends TestCase
 {
     /**
-     * @var MockObject&WordFormatter
-     */
-    private $dateFormatter;
-
-    protected function setUp(): void
-    {
-        $this->dateFormatter = $this->createMock(WordFormatter::class);
-    }
-
-    /**
      * @covers ::setNext
      * @covers ::getNext
      */
     public function testCanSetAndGetNext(): void
     {
-        /**
-         * @var MockObject&FormatterChaining
-         */
-        $formatter = $this->getMockForTrait(FormatterChaining::class);
+        $formatter = new FormatterChainingClass();
 
-        $formatter->setNext($this->dateFormatter);
-        self::assertSame($this->dateFormatter, $formatter->getNext());
+        $next = $this->createMock(WordFormatter::class);
+
+        $formatter->setNext($next);
+        self::assertSame($next, $formatter->getNext());
     }
 
     /**
@@ -49,12 +36,11 @@ final class FormatterChainingTest extends TestCase
      */
     public function testCanGetWhenNoNextIsSet(): void
     {
-        /**
-         * @var MockObject&FormatterChaining
-         */
-        $formatter = $this->getMockForTrait(FormatterChaining::class);
+        $formatter = new FormatterChainingClass();
 
-        $formatter->setNext($this->dateFormatter);
+        $next = $this->createMock(WordFormatter::class);
+
+        $formatter->setNext($next);
         $formatter->setNext(null);
 
         self::assertNull($formatter->getNext());
@@ -65,17 +51,7 @@ final class FormatterChainingTest extends TestCase
      */
     public function testCanApplyFormatter(): void
     {
-        /**
-         * @var MockObject&FormatterChaining
-         */
-        $formatter = $this->getMockForTrait(FormatterChaining::class);
-        $formatter->method('applyCurrent')->willReturnCallback(
-            static function (iterable $dates): Traversable {
-                foreach ($dates as $date) {
-                    yield $date->format('d/m/Y');
-                }
-            }
-        );
+        $formatter = new FormatterChainingClass();
 
         self::assertSame([
             '03/02/2001',
@@ -91,17 +67,7 @@ final class FormatterChainingTest extends TestCase
      */
     public function testCanApplyFormatterChain(): void
     {
-        /**
-         * @var MockObject&FormatterChaining
-         */
-        $formatter = $this->getMockForTrait(FormatterChaining::class);
-        $formatter->method('applyCurrent')->willReturnCallback(
-            static function (iterable $dates): Traversable {
-                foreach ($dates as $date) {
-                    yield $date->format('d/m/Y');
-                }
-            }
-        );
+        $formatter = new FormatterChainingClass();
 
         $next = $this->createMock(WordFormatter::class);
         $next->method('apply')->willReturnCallback(
