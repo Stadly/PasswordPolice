@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\Rule;
 
@@ -16,24 +15,16 @@ use Stadly\PasswordPolice\Rule;
 final class RuleExceptionTest extends TestCase
 {
     /**
-     * @var MockObject&Rule
-     */
-    private $rule;
-
-    protected function setUp(): void
-    {
-        $this->rule = $this->createMock(Rule::class);
-    }
-
-    /**
      * @covers ::__construct
      */
     public function testCanConstructException(): void
     {
-        $exception = new RuleException($this->rule, 'foo');
+        $rule = $this->createMock(Rule::class);
+
+        $exception = new RuleException($rule, 'foo');
 
         // Force generation of code coverage
-        $exceptionConstruct = new RuleException($this->rule, 'foo');
+        $exceptionConstruct = new RuleException($rule, 'foo');
         self::assertEquals($exception, $exceptionConstruct);
     }
 
@@ -42,8 +33,10 @@ final class RuleExceptionTest extends TestCase
      */
     public function testCanGetRule(): void
     {
-        $exception = new RuleException($this->rule, 'foo');
+        $rule = $this->createMock(Rule::class);
 
-        self::assertSame($this->rule, $exception->getRule());
+        $exception = new RuleException($rule, 'foo');
+
+        self::assertSame($rule, $exception->getRule());
     }
 }

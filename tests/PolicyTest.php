@@ -31,11 +31,6 @@ final class PolicyTest extends TestCase
      */
     private $unsatisfiedRule;
 
-    /**
-     * @var MockObject&TranslatorInterface&LocaleAwareInterface
-     */
-    private $translator;
-
     protected function setUp(): void
     {
         $this->satisfiedRule1 = $this->createMock(Rule::class);
@@ -47,12 +42,6 @@ final class PolicyTest extends TestCase
         $this->unsatisfiedRule = $this->createMock(Rule::class);
         $validationError = new ValidationError('foo', '', $this->unsatisfiedRule, 1);
         $this->unsatisfiedRule->method('validate')->willReturn($validationError);
-
-        /**
-         * @var MockObject&TranslatorInterface&LocaleAwareInterface
-         */
-        $translator = $this->createMock([TranslatorInterface::class, LocaleAwareInterface::class]);
-        $this->translator = $translator;
     }
 
     /**
@@ -206,8 +195,13 @@ final class PolicyTest extends TestCase
      */
     public function testCanSetAndGetTranslator(): void
     {
-        Policy::setTranslator($this->translator);
-        self::assertSame($this->translator, Policy::getTranslator());
+        /**
+         * @var MockObject&TranslatorInterface&LocaleAwareInterface
+         */
+        $translator = $this->createMock([TranslatorInterface::class, LocaleAwareInterface::class]);
+
+        Policy::setTranslator($translator);
+        self::assertSame($translator, Policy::getTranslator());
         Policy::setTranslator(null);
     }
 
@@ -217,9 +211,14 @@ final class PolicyTest extends TestCase
      */
     public function testCanGetWhenNoTranslatorIsSet(): void
     {
-        Policy::setTranslator($this->translator);
+        /**
+         * @var MockObject&TranslatorInterface&LocaleAwareInterface
+         */
+        $translator = $this->createMock([TranslatorInterface::class, LocaleAwareInterface::class]);
+
+        Policy::setTranslator($translator);
         Policy::setTranslator(null);
 
-        self::assertNotSame($this->translator, Policy::getTranslator());
+        self::assertNotSame($translator, Policy::getTranslator());
     }
 }
