@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\WordFormatter;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\WordFormatter;
 use Traversable;
@@ -17,28 +16,18 @@ use Traversable;
 final class FormatterChainingTest extends TestCase
 {
     /**
-     * @var MockObject&WordFormatter
-     */
-    private $wordFormatter;
-
-    protected function setUp(): void
-    {
-        $this->wordFormatter = $this->createMock(WordFormatter::class);
-    }
-
-    /**
      * @covers ::setNext
      * @covers ::getNext
      */
     public function testCanSetAndGetNext(): void
     {
-        /**
-         * @var MockObject&FormatterChaining
-         */
-        $formatter = $this->getMockForTrait(FormatterChaining::class);
+        $formatter = new FormatterChainingClass();
 
-        $formatter->setNext($this->wordFormatter);
-        self::assertSame($this->wordFormatter, $formatter->getNext());
+        $next = $this->createMock(WordFormatter::class);
+
+        $formatter->setNext($next);
+
+        self::assertSame($next, $formatter->getNext());
     }
 
     /**
@@ -47,12 +36,11 @@ final class FormatterChainingTest extends TestCase
      */
     public function testCanGetWhenNoNextIsSet(): void
     {
-        /**
-         * @var MockObject&FormatterChaining
-         */
-        $formatter = $this->getMockForTrait(FormatterChaining::class);
+        $formatter = new FormatterChainingClass();
 
-        $formatter->setNext($this->wordFormatter);
+        $next = $this->createMock(WordFormatter::class);
+
+        $formatter->setNext($next);
         $formatter->setNext(null);
 
         self::assertNull($formatter->getNext());
@@ -63,17 +51,7 @@ final class FormatterChainingTest extends TestCase
      */
     public function testCanApplyFormatter(): void
     {
-        /**
-         * @var MockObject&FormatterChaining
-         */
-        $formatter = $this->getMockForTrait(FormatterChaining::class);
-        $formatter->method('applyCurrent')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield strrev($word);
-                }
-            }
-        );
+        $formatter = new FormatterChainingClass();
 
         self::assertSame(['cba', 'fed'], iterator_to_array($formatter->apply(['abc', 'def']), false));
     }
@@ -83,17 +61,7 @@ final class FormatterChainingTest extends TestCase
      */
     public function testCanApplyFormatterChain(): void
     {
-        /**
-         * @var MockObject&FormatterChaining
-         */
-        $formatter = $this->getMockForTrait(FormatterChaining::class);
-        $formatter->method('applyCurrent')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield strrev($word);
-                }
-            }
-        );
+        $formatter = new FormatterChainingClass();
 
         $next = $this->createMock(WordFormatter::class);
         $next->method('apply')->willReturnCallback(
