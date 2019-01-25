@@ -200,7 +200,12 @@ final class LengthRuleTest extends TestCase
         $rule = new LengthRule(5, null);
 
         self::assertEquals(
-            new ValidationError('There must be at least 5 characters.', 'fo', $rule, 1),
+            new ValidationError(
+                'The password must contain at least 5 characters.',
+                'fo',
+                $rule,
+                1
+            ),
             $rule->validate('fo')
         );
     }
@@ -213,7 +218,12 @@ final class LengthRuleTest extends TestCase
         $rule = new LengthRule(0, 10);
 
         self::assertEquals(
-            new ValidationError('There must be at most 10 characters.', 'fo bar qwerty', $rule, 1),
+            new ValidationError(
+                'The password must contain at most 10 characters.',
+                'fo bar qwerty',
+                $rule,
+                1
+            ),
             $rule->validate('fo bar qwerty')
         );
     }
@@ -226,7 +236,12 @@ final class LengthRuleTest extends TestCase
         $rule = new LengthRule(5, 10);
 
         self::assertEquals(
-            new ValidationError('There must be between 5 and 10 characters.', 'fo', $rule, 1),
+            new ValidationError(
+                'The password must contain between 5 and 10 characters.',
+                'fo',
+                $rule,
+                1
+            ),
             $rule->validate('fo')
         );
     }
@@ -239,7 +254,12 @@ final class LengthRuleTest extends TestCase
         $rule = new LengthRule(0, 0);
 
         self::assertEquals(
-            new ValidationError('There must be no characters.', 'fo', $rule, 1),
+            new ValidationError(
+                'The password cannot contain characters.',
+                'fo',
+                $rule,
+                1
+            ),
             $rule->validate('fo')
         );
     }
@@ -252,7 +272,12 @@ final class LengthRuleTest extends TestCase
         $rule = new LengthRule(3, 3);
 
         self::assertEquals(
-            new ValidationError('There must be exactly 3 characters.', 'fo', $rule, 1),
+            new ValidationError(
+                'The password must contain exactly 3 characters.',
+                'fo',
+                $rule,
+                1
+            ),
             $rule->validate('fo')
         );
     }
