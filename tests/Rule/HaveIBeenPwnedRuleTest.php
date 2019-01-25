@@ -304,7 +304,12 @@ final class HaveIBeenPwnedRuleTest extends TestCase
         $rule = new HaveIBeenPwnedRule(null, 5);
 
         self::assertEquals(
-            new ValidationError('Must appear at least 5 times in breaches.', '1397wpfk', $rule, 1),
+            new ValidationError(
+                'The password must appear at least 5 times in data breaches.',
+                '1397wpfk',
+                $rule,
+                1
+            ),
             $rule->validate('1397wpfk')
         );
     }
@@ -317,7 +322,12 @@ final class HaveIBeenPwnedRuleTest extends TestCase
         $rule = new HaveIBeenPwnedRule(10, 0);
 
         self::assertEquals(
-            new ValidationError('Must appear at most 10 times in breaches.', '6004468405', $rule, 1),
+            new ValidationError(
+                'The password must appear at most 10 times in data breaches.',
+                '6004468405',
+                $rule,
+                1
+            ),
             $rule->validate('6004468405')
         );
     }
@@ -330,7 +340,12 @@ final class HaveIBeenPwnedRuleTest extends TestCase
         $rule = new HaveIBeenPwnedRule(10, 5);
 
         self::assertEquals(
-            new ValidationError('Must appear between 5 and 10 times in breaches.', '1397wpfk', $rule, 1),
+            new ValidationError(
+                'The password must appear between 5 and 10 times in data breaches.',
+                '1397wpfk',
+                $rule,
+                1
+            ),
             $rule->validate('1397wpfk')
         );
     }
@@ -343,7 +358,12 @@ final class HaveIBeenPwnedRuleTest extends TestCase
         $rule = new HaveIBeenPwnedRule(0, 0);
 
         self::assertEquals(
-            new ValidationError('Must not appear in any breaches.', '1397wpfk', $rule, 1),
+            new ValidationError(
+                'The password cannot appear in data breaches.',
+                '1397wpfk',
+                $rule,
+                1
+            ),
             $rule->validate('1397wpfk')
         );
     }
@@ -356,7 +376,12 @@ final class HaveIBeenPwnedRuleTest extends TestCase
         $rule = new HaveIBeenPwnedRule(3, 3);
 
         self::assertEquals(
-            new ValidationError('Must appear exactly 3 times in breaches.', '1397wpfk', $rule, 1),
+            new ValidationError(
+                'The password must appear exactly 3 times in data breaches.',
+                '1397wpfk',
+                $rule,
+                1
+            ),
             $rule->validate('1397wpfk')
         );
     }

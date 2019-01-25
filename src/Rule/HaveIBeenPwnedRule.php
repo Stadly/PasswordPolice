@@ -198,36 +198,36 @@ final class HaveIBeenPwnedRule implements Rule
 
         if ($constraint->getMax() === null) {
             return $translator->trans(
-                'Must appear at least once in breaches.|'.
-                'Must appear at least %count% times in breaches.',
+                'The password must appear at least once in data breaches.|'.
+                'The password must appear at least %count% times in data breaches.',
                 ['%count%' => $constraint->getMin()]
             );
         }
 
         if ($constraint->getMax() === 0) {
             return $translator->trans(
-                'Must not appear in any breaches.'
+                'The password cannot appear in data breaches.'
             );
         }
 
         if ($constraint->getMin() === 0) {
             return $translator->trans(
-                'Must appear at most once in breaches.|'.
-                'Must appear at most %count% times in breaches.',
+                'The password must appear at most once in data breaches.|'.
+                'The password must appear at most %count% times in data breaches.',
                 ['%count%' => $constraint->getMax()]
             );
         }
 
         if ($constraint->getMin() === $constraint->getMax()) {
             return $translator->trans(
-                'Must appear exactly once in breaches.|'.
-                'Must appear exactly %count% times in breaches.',
+                'The password must appear exactly once in data breaches.|'.
+                'The password must appear exactly %count% times in data breaches.',
                 ['%count%' => $constraint->getMin()]
             );
         }
 
         return $translator->trans(
-            'Must appear between %min% and %max% times in breaches.',
+            'The password must appear between %min% and %max% times in data breaches.',
             ['%min%' => $constraint->getMin(), '%max%' => $constraint->getMax()]
         );
     }
