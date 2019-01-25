@@ -210,7 +210,12 @@ final class SymbolRuleTest extends TestCase
         $rule = new SymbolRule('$%&@!', 5, null);
 
         self::assertEquals(
-            new ValidationError('There must be at least 5 symbols ($%&@!).', 'foo bar $$@!', $rule, 1),
+            new ValidationError(
+                'The password must contain at least 5 symbols ($%&@!).',
+                'foo bar $$@!',
+                $rule,
+                1
+            ),
             $rule->validate('foo bar $$@!')
         );
     }
@@ -223,7 +228,12 @@ final class SymbolRuleTest extends TestCase
         $rule = new SymbolRule('$%&@!', 0, 10);
 
         self::assertEquals(
-            new ValidationError('There must be at most 10 symbols ($%&@!).', 'foo bar $$@! $$@! $$@!', $rule, 1),
+            new ValidationError(
+                'The password must contain at most 10 symbols ($%&@!).',
+                'foo bar $$@! $$@! $$@!',
+                $rule,
+                1
+            ),
             $rule->validate('foo bar $$@! $$@! $$@!')
         );
     }
@@ -236,7 +246,12 @@ final class SymbolRuleTest extends TestCase
         $rule = new SymbolRule('$%&@!', 5, 10);
 
         self::assertEquals(
-            new ValidationError('There must be between 5 and 10 symbols ($%&@!).', 'foo bar $$@!', $rule, 1),
+            new ValidationError(
+                'The password must contain between 5 and 10 symbols ($%&@!).',
+                'foo bar $$@!',
+                $rule,
+                1
+            ),
             $rule->validate('foo bar $$@!')
         );
     }
@@ -249,7 +264,12 @@ final class SymbolRuleTest extends TestCase
         $rule = new SymbolRule('$%&@!', 0, 0);
 
         self::assertEquals(
-            new ValidationError('There must be no symbols ($%&@!).', 'foo bar $$@!', $rule, 1),
+            new ValidationError(
+                'The password cannot contain symbols ($%&@!).',
+                'foo bar $$@!',
+                $rule,
+                1
+            ),
             $rule->validate('foo bar $$@!')
         );
     }
@@ -262,7 +282,12 @@ final class SymbolRuleTest extends TestCase
         $rule = new SymbolRule('$%&@!', 3, 3);
 
         self::assertEquals(
-            new ValidationError('There must be exactly 3 symbols ($%&@!).', 'foo bar $$@!', $rule, 1),
+            new ValidationError(
+                'The password must contain exactly 3 symbols ($%&@!).',
+                'foo bar $$@!',
+                $rule,
+                1
+            ),
             $rule->validate('foo bar $$@!')
         );
     }
