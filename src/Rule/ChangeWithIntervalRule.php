@@ -146,7 +146,7 @@ final class ChangeWithIntervalRule implements Rule
 
         if ($constraint->getMax() === null) {
             return $translator->trans(
-                'Must be at least %interval% between password changes.',
+                'There must be at least %interval% between password changes.',
                 ['%interval%' => $minString]
             );
         }
@@ -157,20 +157,20 @@ final class ChangeWithIntervalRule implements Rule
 
         if (Interval::compare(new DateInterval('PT0S'), $constraint->getMin()) === 0) {
             return $translator->trans(
-                'Must be at most %interval% between password changes.',
+                'There must be at most %interval% between password changes.',
                 ['%interval%' => $maxString]
             );
         }
 
         if (Interval::compare($constraint->getMin(), $constraint->getMax()) === 0) {
             return $translator->trans(
-                'Must be exactly %interval% between password changes.',
+                'There must be exactly %interval% between password changes.',
                 ['%interval%' => $minString]
             );
         }
 
         return $translator->trans(
-            'Must be between %min% and %max% between password changes.',
+            'There must be between %min% and %max% between password changes.',
             ['%min%' => $minString, '%max%' => $maxString]
         );
     }

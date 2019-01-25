@@ -219,7 +219,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
 
         self::assertEquals(
             new ValidationError(
-                'Must be at least 1 week between password changes.',
+                'There must be at least 1 week between password changes.',
                 $this->password,
                 $rule,
                 1
@@ -237,7 +237,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
 
         self::assertEquals(
             new ValidationError(
-                'Must be at most 5 days between password changes.',
+                'There must be at most 5 days between password changes.',
                 $this->password,
                 $rule,
                 1
@@ -255,7 +255,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
 
         self::assertEquals(
             new ValidationError(
-                'Must be between 2 weeks and 1 month between password changes.',
+                'There must be between 2 weeks and 1 month between password changes.',
                 $this->password,
                 $rule,
                 1
@@ -273,7 +273,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
 
         self::assertEquals(
             new ValidationError(
-                'Must be exactly 6 days between password changes.',
+                'There must be exactly 6 days between password changes.',
                 $this->password,
                 $rule,
                 1
