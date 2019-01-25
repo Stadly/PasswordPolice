@@ -148,7 +148,7 @@ final class GuessableDataRule implements Rule
         $translator = Policy::getTranslator();
 
         return $translator->trans(
-            'Must not contain guessable data.'
+            'The password cannot contain easily guessable data.'
         );
     }
 }
