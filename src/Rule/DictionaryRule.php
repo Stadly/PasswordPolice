@@ -115,7 +115,7 @@ final class DictionaryRule implements Rule
         $translator = Policy::getTranslator();
 
         return $translator->trans(
-            'Must not contain dictionary words.'
+            'The password cannot contain dictionary words.'
         );
     }
 }

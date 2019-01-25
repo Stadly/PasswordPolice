@@ -227,7 +227,12 @@ final class DictionaryRuleTest extends TestCase
         $rule = new DictionaryRule($this->wordList);
 
         self::assertEquals(
-            new ValidationError('Must not contain dictionary words.', 'apple', $rule, 1),
+            new ValidationError(
+                'The password cannot contain dictionary words.',
+                'apple',
+                $rule,
+                1
+            ),
             $rule->validate('apple')
         );
     }
