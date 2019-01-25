@@ -210,7 +210,12 @@ final class LowerCaseRuleTest extends TestCase
         $rule = new LowerCaseRule(5, null);
 
         self::assertEquals(
-            new ValidationError('There must be at least 5 lower case characters.', 'Foo', $rule, 1),
+            new ValidationError(
+                'The password must contain at least 5 lower case letters.',
+                'Foo',
+                $rule,
+                1
+            ),
             $rule->validate('Foo')
         );
     }
@@ -223,7 +228,12 @@ final class LowerCaseRuleTest extends TestCase
         $rule = new LowerCaseRule(0, 10);
 
         self::assertEquals(
-            new ValidationError('There must be at most 10 lower case characters.', 'Foo bar qwerty test', $rule, 1),
+            new ValidationError(
+                'The password must contain at most 10 lower case letters.',
+                'Foo bar qwerty test',
+                $rule,
+                1
+            ),
             $rule->validate('Foo bar qwerty test')
         );
     }
@@ -236,7 +246,12 @@ final class LowerCaseRuleTest extends TestCase
         $rule = new LowerCaseRule(5, 10);
 
         self::assertEquals(
-            new ValidationError('There must be between 5 and 10 lower case characters.', 'Foo', $rule, 1),
+            new ValidationError(
+                'The password must contain between 5 and 10 lower case letters.',
+                'Foo',
+                $rule,
+                1
+            ),
             $rule->validate('Foo')
         );
     }
@@ -249,7 +264,12 @@ final class LowerCaseRuleTest extends TestCase
         $rule = new LowerCaseRule(0, 0);
 
         self::assertEquals(
-            new ValidationError('There must be no lower case characters.', 'Foo', $rule, 1),
+            new ValidationError(
+                'The password cannot contain lower case letters.',
+                'Foo',
+                $rule,
+                1
+            ),
             $rule->validate('Foo')
         );
     }
@@ -262,7 +282,12 @@ final class LowerCaseRuleTest extends TestCase
         $rule = new LowerCaseRule(3, 3);
 
         self::assertEquals(
-            new ValidationError('There must be exactly 3 lower case characters.', 'Foo', $rule, 1),
+            new ValidationError(
+                'The password must contain exactly 3 lower case letters.',
+                'Foo',
+                $rule,
+                1
+            ),
             $rule->validate('Foo')
         );
     }

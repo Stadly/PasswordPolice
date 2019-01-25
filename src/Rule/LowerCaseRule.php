@@ -147,36 +147,36 @@ final class LowerCaseRule implements Rule
 
         if ($constraint->getMax() === null) {
             return $translator->trans(
-                'There must be at least one lower case character.|'.
-                'There must be at least %count% lower case characters.',
+                'The password must contain at least one lower case letter.|'.
+                'The password must contain at least %count% lower case letters.',
                 ['%count%' => $constraint->getMin()]
             );
         }
 
         if ($constraint->getMax() === 0) {
             return $translator->trans(
-                'There must be no lower case characters.'
+                'The password cannot contain lower case letters.'
             );
         }
 
         if ($constraint->getMin() === 0) {
             return $translator->trans(
-                'There must be at most one lower case character.|'.
-                'There must be at most %count% lower case characters.',
+                'The password must contain at most one lower case letter.|'.
+                'The password must contain at most %count% lower case letters.',
                 ['%count%' => $constraint->getMax()]
             );
         }
 
         if ($constraint->getMin() === $constraint->getMax()) {
             return $translator->trans(
-                'There must be exactly one lower case character.|'.
-                'There must be exactly %count% lower case characters.',
+                'The password must contain exactly one lower case letter.|'.
+                'The password must contain exactly %count% lower case letters.',
                 ['%count%' => $constraint->getMin()]
             );
         }
 
         return $translator->trans(
-            'There must be between %min% and %max% lower case characters.',
+            'The password must contain between %min% and %max% lower case letters.',
             ['%min%' => $constraint->getMin(), '%max%' => $constraint->getMax()]
         );
     }
