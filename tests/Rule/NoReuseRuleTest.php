@@ -237,12 +237,35 @@ final class NoReuseRuleTest extends TestCase
     /**
      * @covers ::validate
      */
-    public function testRuleCanBeInvalidated(): void
+    public function testRuleWithCountContraintCanBeInvalidated(): void
+    {
+        $rule = new NoReuseRule($this->hashFunction, 5, 0);
+
+        self::assertEquals(
+            new ValidationError(
+                'The 5 last previously used passwords cannot be reused.',
+                $this->password,
+                $rule,
+                1
+            ),
+            $rule->validate($this->password)
+        );
+    }
+
+    /**
+     * @covers ::validate
+     */
+    public function testRuleWithoutCountContraintCanBeInvalidated(): void
     {
         $rule = new NoReuseRule($this->hashFunction, null, 0);
 
         self::assertEquals(
-            new ValidationError('Cannot reuse former passwords.', $this->password, $rule, 1),
+            new ValidationError(
+                'Formerly used passwords cannot be reused.',
+                $this->password,
+                $rule,
+                1
+            ),
             $rule->validate($this->password)
         );
     }

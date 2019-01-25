@@ -148,8 +148,16 @@ final class NoReuseRule implements Rule
     {
         $translator = Policy::getTranslator();
 
+        if ($constraint->getCount() === null) {
+            return $translator->trans(
+                'Formerly used passwords cannot be reused.'
+            );
+        }
+
         return $translator->trans(
-            'Cannot reuse former passwords.'
+            'The previously used password cannot be reused.|'.
+            'The %count% last previously used passwords cannot be reused.',
+            ['%count%' => $constraint->getCount()]
         );
     }
 }
