@@ -155,8 +155,8 @@ final class NoReuseRule implements Rule
         }
 
         return $translator->trans(
-            'The previously used password cannot be reused.|'.
-            'The %count% last previously used passwords cannot be reused.',
+            'The most recently used password cannot be reused.|'.
+            'The %count% most recently used passwords cannot be reused.',
             ['%count%' => $constraint->getCount()]
         );
     }

@@ -243,7 +243,7 @@ final class NoReuseRuleTest extends TestCase
 
         self::assertEquals(
             new ValidationError(
-                'The 5 last previously used passwords cannot be reused.',
+                'The 5 most recently used passwords cannot be reused.',
                 $this->password,
                 $rule,
                 1
