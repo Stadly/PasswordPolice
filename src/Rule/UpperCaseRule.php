@@ -147,36 +147,36 @@ final class UpperCaseRule implements Rule
 
         if ($constraint->getMax() === null) {
             return $translator->trans(
-                'There must be at least one upper case character.|'.
-                'There must be at least %count% upper case characters.',
+                'The password must contain at least one upper case letter.|'.
+                'The password must contain at least %count% upper case letters.',
                 ['%count%' => $constraint->getMin()]
             );
         }
 
         if ($constraint->getMax() === 0) {
             return $translator->trans(
-                'There must be no upper case characters.'
+                'The password cannot contain upper case letters.'
             );
         }
 
         if ($constraint->getMin() === 0) {
             return $translator->trans(
-                'There must be at most one upper case character.|'.
-                'There must be at most %count% upper case characters.',
+                'The password must contain at most one upper case letter.|'.
+                'The password must contain at most %count% upper case letters.',
                 ['%count%' => $constraint->getMax()]
             );
         }
 
         if ($constraint->getMin() === $constraint->getMax()) {
             return $translator->trans(
-                'There must be exactly one upper case character.|'.
-                'There must be exactly %count% upper case characters.',
+                'The password must contain exactly one upper case letter.|'.
+                'The password must contain exactly %count% upper case letters.',
                 ['%count%' => $constraint->getMin()]
             );
         }
 
         return $translator->trans(
-            'There must be between %min% and %max% upper case characters.',
+            'The password must contain between %min% and %max% upper case letters.',
             ['%min%' => $constraint->getMin(), '%max%' => $constraint->getMax()]
         );
     }

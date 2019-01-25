@@ -210,7 +210,12 @@ final class UpperCaseRuleTest extends TestCase
         $rule = new UpperCaseRule(5, null);
 
         self::assertEquals(
-            new ValidationError('There must be at least 5 upper case characters.', 'FOo', $rule, 1),
+            new ValidationError(
+                'The password must contain at least 5 upper case letters.',
+                'FOo',
+                $rule,
+                1
+            ),
             $rule->validate('FOo')
         );
     }
@@ -223,7 +228,12 @@ final class UpperCaseRuleTest extends TestCase
         $rule = new UpperCaseRule(0, 10);
 
         self::assertEquals(
-            new ValidationError('There must be at most 10 upper case characters.', 'FOo BAR QWERTY', $rule, 1),
+            new ValidationError(
+                'The password must contain at most 10 upper case letters.',
+                'FOo BAR QWERTY',
+                $rule,
+                1
+            ),
             $rule->validate('FOo BAR QWERTY')
         );
     }
@@ -236,7 +246,12 @@ final class UpperCaseRuleTest extends TestCase
         $rule = new UpperCaseRule(5, 10);
 
         self::assertEquals(
-            new ValidationError('There must be between 5 and 10 upper case characters.', 'FOo', $rule, 1),
+            new ValidationError(
+                'The password must contain between 5 and 10 upper case letters.',
+                'FOo',
+                $rule,
+                1
+            ),
             $rule->validate('FOo')
         );
     }
@@ -249,7 +264,12 @@ final class UpperCaseRuleTest extends TestCase
         $rule = new UpperCaseRule(0, 0);
 
         self::assertEquals(
-            new ValidationError('There must be no upper case characters.', 'FOo', $rule, 1),
+            new ValidationError(
+                'The password cannot contain upper case letters.',
+                'FOo',
+                $rule,
+                1
+            ),
             $rule->validate('FOo')
         );
     }
@@ -262,7 +282,12 @@ final class UpperCaseRuleTest extends TestCase
         $rule = new UpperCaseRule(3, 3);
 
         self::assertEquals(
-            new ValidationError('There must be exactly 3 upper case characters.', 'FOo', $rule, 1),
+            new ValidationError(
+                'The password must contain exactly 3 upper case letters.',
+                'FOo',
+                $rule,
+                1
+            ),
             $rule->validate('FOo')
         );
     }
