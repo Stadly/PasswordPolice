@@ -190,7 +190,12 @@ final class DigitRuleTest extends TestCase
         $rule = new DigitRule(5, null);
 
         self::assertEquals(
-            new ValidationError('There must be at least 5 digits.', 'foo 12', $rule, 1),
+            new ValidationError(
+                'The password must contain at least 5 digits.',
+                'foo 12',
+                $rule,
+                1
+            ),
             $rule->validate('foo 12')
         );
     }
@@ -203,7 +208,12 @@ final class DigitRuleTest extends TestCase
         $rule = new DigitRule(0, 10);
 
         self::assertEquals(
-            new ValidationError('There must be at most 10 digits.', 'foo 123 456 123456', $rule, 1),
+            new ValidationError(
+                'The password must contain at most 10 digits.',
+                'foo 123 456 123456',
+                $rule,
+                1
+            ),
             $rule->validate('foo 123 456 123456')
         );
     }
@@ -216,7 +226,12 @@ final class DigitRuleTest extends TestCase
         $rule = new DigitRule(5, 10);
 
         self::assertEquals(
-            new ValidationError('There must be between 5 and 10 digits.', 'foo 12', $rule, 1),
+            new ValidationError(
+                'The password must contain between 5 and 10 digits.',
+                'foo 12',
+                $rule,
+                1
+            ),
             $rule->validate('foo 12')
         );
     }
@@ -229,7 +244,12 @@ final class DigitRuleTest extends TestCase
         $rule = new DigitRule(0, 0);
 
         self::assertEquals(
-            new ValidationError('There must be no digits.', 'foo 12', $rule, 1),
+            new ValidationError(
+                'The password cannot contain digits.',
+                'foo 12',
+                $rule,
+                1
+            ),
             $rule->validate('foo 12')
         );
     }
@@ -242,7 +262,12 @@ final class DigitRuleTest extends TestCase
         $rule = new DigitRule(3, 3);
 
         self::assertEquals(
-            new ValidationError('There must be exactly 3 digits.', 'foo 12', $rule, 1),
+            new ValidationError(
+                'The password must contain exactly 3 digits.',
+                'foo 12',
+                $rule,
+                1
+            ),
             $rule->validate('foo 12')
         );
     }

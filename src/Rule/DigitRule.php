@@ -28,36 +28,36 @@ final class DigitRule extends CharacterClassRule
 
         if ($constraint->getMax() === null) {
             return $translator->trans(
-                'There must be at least one digit.|'.
-                'There must be at least %count% digits.',
+                'The password must contain at least one digit.|'.
+                'The password must contain at least %count% digits.',
                 ['%count%' => $constraint->getMin()]
             );
         }
 
         if ($constraint->getMax() === 0) {
             return $translator->trans(
-                'There must be no digits.'
+                'The password cannot contain digits.'
             );
         }
 
         if ($constraint->getMin() === 0) {
             return $translator->trans(
-                'There must be at most one digit.|'.
-                'There must be at most %count% digits.',
+                'The password must contain at most one digit.|'.
+                'The password must contain at most %count% digits.',
                 ['%count%' => $constraint->getMax()]
             );
         }
 
         if ($constraint->getMin() === $constraint->getMax()) {
             return $translator->trans(
-                'There must be exactly one digit.|'.
-                'There must be exactly %count% digits.',
+                'The password must contain exactly one digit.|'.
+                'The password must contain exactly %count% digits.',
                 ['%count%' => $constraint->getMin()]
             );
         }
 
         return $translator->trans(
-            'There must be between %min% and %max% digits.',
+            'The password must contain between %min% and %max% digits.',
             ['%min%' => $constraint->getMin(), '%max%' => $constraint->getMax()]
         );
     }
