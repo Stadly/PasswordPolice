@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Rule;
 
-use DateTime;
-use DateTimeInterface;
-use StableSort\StableSort;
-use Stadly\PasswordPolice\Constraint\DateConstraint;
 use Stadly\PasswordPolice\Password;
-use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 
