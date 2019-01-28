@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.15.0...HEAD)
 
 ### Added
-- Nothing
+- Conditional rule that only invokes the rule if the condition is true. Useful for example for checking Have I Been Pwned? periodically.
 
 ### Changed
 - Instead of using the abstract class `ChainableFormatter`, chaining of date formatters is implemented using the trait `FormatterChaining`.
