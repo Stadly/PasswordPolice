@@ -4,7 +4,7 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.15.0...HEAD)
+## [v0.16.0](https://github.com/Stadly/PasswordPolice/compare/v0.15.0...v0.16.0) - 2019-01-28
 
 ### Added
 - Conditional rule that only invokes the rule if the condition is true. Useful for example for checking Have I Been Pwned? periodically.
@@ -12,18 +12,6 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
 - Instead of using the abstract class `ChainableFormatter`, chaining of date formatters is implemented using the trait `FormatterChaining`.
 - Instead of using the abstract class `ChainableFormatter`, chaining of word formatters is implemented using the trait `FormatterChaining`.
-
-### Fixed
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ## [v0.15.0](https://github.com/Stadly/PasswordPolice/compare/v0.14.0...v0.15.0) - 2019-01-22
 
