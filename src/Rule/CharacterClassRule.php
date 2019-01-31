@@ -21,7 +21,7 @@ abstract class CharacterClassRule implements Rule
     /**
      * @var CountConstraint[] Rule constraints.
      */
-    private $constraints;
+    private $constraints = [];
 
     /**
      * @param string $characters Characters matched by the rule.

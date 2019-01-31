@@ -66,7 +66,7 @@ final class PasswordHasher implements HashFunction
     /**
      * @throws ErrorException Error converted to an exception.
      */
-    private static function errorHandler(int $severity, string $message, string $filename, int $line): void
+    private static function errorHandler(int $severity, string $message, string $filename, int $line): bool
     {
         throw new ErrorException($message, /*code*/0, $severity, $filename, $line);
     }
