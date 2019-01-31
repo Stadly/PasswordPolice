@@ -4,25 +4,10 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.16.0...HEAD)
-
-### Added
-- Nothing
-
-### Changed
-- Nothing
+## [v0.16.1](https://github.com/Stadly/PasswordPolice/compare/v0.16.0...v0.16.1) - 2019-01-31
 
 ### Fixed
 - Error emitted for empty string in guessable data.
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ## [v0.16.0](https://github.com/Stadly/PasswordPolice/compare/v0.15.0...v0.16.0) - 2019-01-28
 
