@@ -88,6 +88,17 @@ final class GuessableDataRuleTest extends TestCase
     /**
      * @covers ::test
      */
+    public function testPasswordDoesNotContainEmptyString(): void
+    {
+        $rule = new GuessableDataRule(['']);
+        $password = new Password('foobar');
+
+        self::assertTrue($rule->test($password));
+    }
+
+    /**
+     * @covers ::test
+     */
     public function testPasswordCanContainGuessableDateInPassword(): void
     {
         $rule = new GuessableDataRule();

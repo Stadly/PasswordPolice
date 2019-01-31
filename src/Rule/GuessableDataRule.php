@@ -131,7 +131,7 @@ final class GuessableDataRule implements Rule
         }
 
         foreach ($strings as $string) {
-            if ('' !== $string && mb_stripos($password, $string) !== false) {
+            if ($string !== '' && mb_stripos($password, $string) !== false) {
                 return true;
             }
         }
