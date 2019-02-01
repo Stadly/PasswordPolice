@@ -16,7 +16,7 @@ final class ConditionalRule implements Rule
     private $rule;
 
     /**
-     * @var callable(Password|string):bool Condition function.
+     * @var callable(Password|string): bool Condition function.
      */
     private $condition;
 
