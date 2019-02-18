@@ -11,6 +11,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN apk add $PHPIZE_DEPS
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
+RUN echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini
 
 # Install pspell
 RUN apk add aspell-dev
