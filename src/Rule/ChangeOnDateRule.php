@@ -133,25 +133,29 @@ final class ChangeOnDateRule implements Rule
     private function getMessage(DateConstraint $constraint, DateTimeInterface $date): string
     {
         $translator = Policy::getTranslator();
-        $minString = $constraint->getMin() === null ? '' : $constraint->getMin()->format('Y-m-d H:i:s');
-        $maxString = $constraint->getMax() === null ? '' : $constraint->getMax()->format('Y-m-d H:i:s');
 
-        if ($constraint->getMax() === null) {
+        $constraintMin = $constraint->getMin();
+        $constraintMax = $constraint->getMax();
+
+        $minString = $constraintMin === null ? '' : $constraintMin->format('Y-m-d H:i:s');
+        $maxString = $constraintMax === null ? '' : $constraintMax->format('Y-m-d H:i:s');
+
+        if ($constraintMax === null) {
             return $translator->trans(
                 'The password must have been changed on or after %date%.',
                 ['%date%' => $minString]
             );
         }
 
-        if ($constraint->getMin() === null) {
+        if ($constraintMin === null) {
             return $translator->trans(
                 'The password must have been changed on or before %date%.',
                 ['%date%' => $maxString]
             );
         }
 
-        if ($constraint->getMin()->format(DateTime::RFC3339_EXTENDED)
-        === $constraint->getMax()->format(DateTime::RFC3339_EXTENDED)
+        if ($constraintMin->format(DateTime::RFC3339_EXTENDED)
+        === $constraintMax->format(DateTime::RFC3339_EXTENDED)
         ) {
             return $translator->trans(
                 'The password must have been changed at %date%.',

@@ -140,29 +140,32 @@ final class ChangeWithIntervalRule implements Rule
         $translator = Policy::getTranslator();
         $locale = $translator->getLocale();
 
-        $min = CarbonInterval::instance($constraint->getMin());
+        $constraintMin = $constraint->getMin();
+        $constraintMax = $constraint->getMax();
+
+        $min = CarbonInterval::instance($constraintMin);
         $min->locale($locale);
         $minString = $min->forHumans(['join' => true]);
 
-        if ($constraint->getMax() === null) {
+        if ($constraintMax === null) {
             return $translator->trans(
                 'There must be at least %interval% between password changes.',
                 ['%interval%' => $minString]
             );
         }
 
-        $max = CarbonInterval::instance($constraint->getMax());
+        $max = CarbonInterval::instance($constraintMax);
         $max->locale($locale);
         $maxString = $max->forHumans(['join' => true]);
 
-        if (Interval::compare(new DateInterval('PT0S'), $constraint->getMin()) === 0) {
+        if (Interval::compare(new DateInterval('PT0S'), $constraintMin) === 0) {
             return $translator->trans(
                 'There must be at most %interval% between password changes.',
                 ['%interval%' => $maxString]
             );
         }
 
-        if (Interval::compare($constraint->getMin(), $constraint->getMax()) === 0) {
+        if (Interval::compare($constraintMin, $constraintMax) === 0) {
             return $translator->trans(
                 'There must be exactly %interval% between password changes.',
                 ['%interval%' => $minString]
