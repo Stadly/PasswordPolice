@@ -36,9 +36,7 @@ final class CharTree implements IteratorAggregate
      */
     private function __construct(?string $root, array $branches)
     {
-        if ($root !== null && 1 < mb_strlen($root)) {
-            throw new InvalidArgumentException('Root must contain at most one character.');
-        }
+        assert($root === null || mb_strlen($root) <= 1, 'Root must contain at most one character.');
 
         $this->root = $root;
         $this->branches = $branches;
