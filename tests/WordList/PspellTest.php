@@ -8,8 +8,8 @@ use InvalidArgumentException;
 use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use Stadly\PasswordPolice\WordFormatter;
-use Traversable;
+use Stadly\PasswordPolice\CharTree;
+use Stadly\PasswordPolice\Formatter;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\WordList\Pspell
@@ -154,18 +154,20 @@ final class PspellTest extends TestCase
     /**
      * @covers ::contains
      */
-    public function testWordListCanContainWordsAfterSingleWordFormatter(): void
+    public function testWordListCanContainWordsAfterSingleFormatter(): void
     {
-        $wordFormatter = $this->createMock(WordFormatter::class);
-        $wordFormatter->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield mb_strtolower($word);
+        $formatter = $this->createMock(Formatter::class);
+        $formatter->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(mb_strtolower($string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $pspell = Pspell::fromLocale('en', [$wordFormatter]);
+        $pspell = Pspell::fromLocale('en', [$formatter]);
 
         self::assertTrue($pspell->contains('HUSband'));
         self::assertFalse($pspell->contains('Usa'));
@@ -176,27 +178,31 @@ final class PspellTest extends TestCase
     /**
      * @covers ::contains
      */
-    public function testWordListCanContainWordsAfterMultipleWordFormatters(): void
+    public function testWordListCanContainWordsAfterMultipleFormatters(): void
     {
-        $wordFormatter1 = $this->createMock(WordFormatter::class);
-        $wordFormatter1->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield mb_strtolower($word);
+        $formatter1 = $this->createMock(Formatter::class);
+        $formatter1->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(mb_strtolower($string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $wordFormatter2 = $this->createMock(WordFormatter::class);
-        $wordFormatter2->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield mb_strtoupper($word);
+        $formatter2 = $this->createMock(Formatter::class);
+        $formatter2->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(mb_strtoupper($string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $pspell = Pspell::fromLocale('en', [$wordFormatter1, $wordFormatter2]);
+        $pspell = Pspell::fromLocale('en', [$formatter1, $formatter2]);
 
         self::assertTrue($pspell->contains('HUSband'));
         self::assertTrue($pspell->contains('Usa'));
@@ -207,18 +213,20 @@ final class PspellTest extends TestCase
     /**
      * @covers ::contains
      */
-    public function testWordListCanContainUnformattedWordsAfterWordFormatter(): void
+    public function testWordListCanContainUnformattedWordsAfterFormatter(): void
     {
-        $wordFormatter = $this->createMock(WordFormatter::class);
-        $wordFormatter->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield mb_strtolower($word);
+        $formatter = $this->createMock(Formatter::class);
+        $formatter->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(mb_strtolower($string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $pspell = Pspell::fromLocale('en', [$wordFormatter]);
+        $pspell = Pspell::fromLocale('en', [$formatter]);
 
         self::assertTrue($pspell->contains('HUSband'));
         self::assertTrue($pspell->contains('husband'));

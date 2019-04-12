@@ -12,6 +12,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 - Dictionary rule uses character tree formatters instead of string formatters.
+- Pspell word list uses character tree formatters instead of string formatters.
 
 ### Fixed
 - Nothing
