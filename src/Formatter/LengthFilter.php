@@ -89,13 +89,9 @@ final class LengthFilter implements Formatter
      */
     private function filter(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
     {
-        if ($minLength === 0 && $maxLength === null) {
-            return $charTree;
-        }
-
         $root = $charTree->getRoot();
 
-        if ($root === null) {
+        if ($root === null || ($minLength === 0 && $maxLength === null)) {
             return $charTree;
         }
 
