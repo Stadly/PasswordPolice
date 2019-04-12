@@ -12,7 +12,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 - Dictionary rule uses character tree formatters instead of string formatters.
+- Guessable data rule uses character tree formatters instead of string formatters.
 - Pspell word list uses character tree formatters instead of string formatters.
+- Date formatters work on character trees, and use character tree formatters.
+- Renamed date formatter trait `FormatterChaining` to `Chaining`.
+- Renamed date formatter `FormatterCombiner` to `Combiner`.
 
 ### Fixed
 - Nothing

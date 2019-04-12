@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice;
 
 use DateTimeInterface;
-use Traversable;
 
 /**
  * Interface that must be implemented by all date formatters.
@@ -14,17 +13,17 @@ interface DateFormatter
 {
     /**
      * @param iterable<DateTimeInterface> $dates Dates to format.
-     * @return Traversable<string> Formatted dates.
+     * @return CharTree Formatted dates.
      */
-    public function apply(iterable $dates): Traversable;
+    public function apply(iterable $dates): CharTree;
 
     /**
-     * @param WordFormatter|null $next Word formatter to apply after this date formatter.
+     * @param Formatter|null $next Formatter to apply after this date formatter.
      */
-    public function setNext(?WordFormatter $next): void;
+    public function setNext(?Formatter $next): void;
 
     /**
-     * @return WordFormatter|null Next formatter in the chain.
+     * @return Formatter|null Next formatter in the chain.
      */
-    public function getNext(): ?WordFormatter;
+    public function getNext(): ?Formatter;
 }

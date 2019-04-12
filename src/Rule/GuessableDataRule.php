@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use DateTimeInterface;
+use Stadly\PasswordPolice\CharTree;
 use Stadly\PasswordPolice\DateFormatter;
 use Stadly\PasswordPolice\DateFormatter\DefaultFormatter;
+use Stadly\PasswordPolice\Formatter;
+use Stadly\PasswordPolice\Formatter\Combiner;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
-use Stadly\PasswordPolice\WordFormatter;
-use Stadly\PasswordPolice\WordFormatter\FormatterCombiner;
-use Traversable;
 
 final class GuessableDataRule implements Rule
 {
@@ -23,9 +23,9 @@ final class GuessableDataRule implements Rule
     private $guessableData;
 
     /**
-     * @var WordFormatter Word formatter.
+     * @var Formatter Formatter.
      */
-    private $wordFormatter;
+    private $formatter;
 
     /**
      * @var DateFormatter Date formatter.
@@ -39,18 +39,18 @@ final class GuessableDataRule implements Rule
 
     /**
      * @param (string|DateTimeInterface)[] $guessableData Guessable data.
-     * @param WordFormatter[] $wordFormatters Word formatters.
+     * @param Formatter[] $formatters Formatters.
      * @param DateFormatter|null $dateFormatter Date formatter.
      * @param int $weight Constraint weight.
      */
     public function __construct(
         array $guessableData = [],
-        array $wordFormatters = [],
+        array $formatters = [],
         ?DateFormatter $dateFormatter = null,
         int $weight = 1
     ) {
         $this->guessableData = $guessableData;
-        $this->wordFormatter = new FormatterCombiner($wordFormatters);
+        $this->formatter = new Combiner($formatters);
         $this->dateFormatter = $dateFormatter ?? new DefaultFormatter();
         $this->weight = $weight;
     }
@@ -106,9 +106,9 @@ final class GuessableDataRule implements Rule
             $guessableData = array_merge($guessableData, $password->getGuessableData());
         }
 
-        foreach ($this->wordFormatter->apply([(string)$password]) as $word) {
+        foreach ($this->formatter->apply(CharTree::fromString((string)$password)) as $formattedPassword) {
             foreach ($guessableData as $data) {
-                if ($this->contains($word, $data)) {
+                if ($this->contains($formattedPassword, $data)) {
                     return $data;
                 }
             }
@@ -125,12 +125,12 @@ final class GuessableDataRule implements Rule
     private function contains(string $password, $data): bool
     {
         if ($data instanceof DateTimeInterface) {
-            $strings = $this->dateFormatter->apply([$data]);
+            $charTree = $this->dateFormatter->apply([$data]);
         } else {
-            $strings = [$data];
+            $charTree = CharTree::fromString($data);
         }
 
-        foreach ($strings as $string) {
+        foreach ($charTree as $string) {
             if ($string !== '' && mb_stripos($password, $string) !== false) {
                 return true;
             }

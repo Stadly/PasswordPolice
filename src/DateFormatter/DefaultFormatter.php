@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\DateFormatter;
 
 use DateTimeInterface;
+use Stadly\PasswordPolice\CharTree;
 use Stadly\PasswordPolice\DateFormatter;
-use Traversable;
 
 final class DefaultFormatter implements DateFormatter
 {
-    use FormatterChaining;
+    use Chaining;
 
     private const DATE_FORMATS = [
         // Year
@@ -73,14 +73,18 @@ final class DefaultFormatter implements DateFormatter
 
     /**
      * @param iterable<DateTimeInterface> $dates Dates to format.
-     * @return Traversable<string> The formatted dates.
+     * @return CharTree The formatted dates.
      */
-    protected function applyCurrent(iterable $dates): Traversable
+    protected function applyCurrent(iterable $dates): CharTree
     {
+        $charTrees = [];
+
         foreach ($dates as $date) {
             foreach ($this->formats as $format) {
-                yield $date->format($format);
+                $charTrees[] = CharTree::fromString($date->format($format));
             }
         }
+
+        return CharTree::fromArray($charTrees);
     }
 }

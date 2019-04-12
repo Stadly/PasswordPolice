@@ -6,11 +6,11 @@ namespace Stadly\PasswordPolice\Rule;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
+use Stadly\PasswordPolice\CharTree;
 use Stadly\PasswordPolice\DateFormatter;
+use Stadly\PasswordPolice\Formatter;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\ValidationError;
-use Stadly\PasswordPolice\WordFormatter;
-use Traversable;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\GuessableDataRule
@@ -132,18 +132,20 @@ final class GuessableDataRuleTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testStringIsRecognizedAfterSingleWordFormatter(): void
+    public function testStringIsRecognizedAfterSingleFormatter(): void
     {
-        $wordFormatter = $this->createMock(WordFormatter::class);
-        $wordFormatter->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield str_replace(['4', '€'], ['a', 'e'], $word);
+        $formatter = $this->createMock(Formatter::class);
+        $formatter->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(str_replace(['4', '€'], ['a', 'e'], $string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $rule = new GuessableDataRule([], [$wordFormatter]);
+        $rule = new GuessableDataRule([], [$formatter]);
 
         self::assertFalse($rule->test(new Password('pine4ppl€jack', ['apple'])));
         self::assertTrue($rule->test(new Password('pine4pp1€jack', ['apple'])));
@@ -152,18 +154,20 @@ final class GuessableDataRuleTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testDateIsRecognizedAfterSingleWordFormatter(): void
+    public function testDateIsRecognizedAfterSingleFormatter(): void
     {
-        $wordFormatter = $this->createMock(WordFormatter::class);
-        $wordFormatter->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield str_replace(['I', 'B'], ['1', '8'], $word);
+        $formatter = $this->createMock(Formatter::class);
+        $formatter->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(str_replace(['I', 'B'], ['1', '8'], $string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $rule = new GuessableDataRule([], [$wordFormatter]);
+        $rule = new GuessableDataRule([], [$formatter]);
 
         self::assertFalse($rule->test(new Password('foo2B/II/1Bbar', [new DateTime('2018-11-28')])));
         self::assertTrue($rule->test(new Password('fooZB/I!/1Bbar', [new DateTime('2018-11-28')])));
@@ -172,27 +176,31 @@ final class GuessableDataRuleTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testStringIsRecognizedAfterMultipleWordFormatters(): void
+    public function testStringIsRecognizedAfterMultipleFormatters(): void
     {
-        $wordFormatter1 = $this->createMock(WordFormatter::class);
-        $wordFormatter1->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield str_replace(['4'], ['a'], $word);
+        $formatter1 = $this->createMock(Formatter::class);
+        $formatter1->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(str_replace(['4'], ['a'], $string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $wordFormatter2 = $this->createMock(WordFormatter::class);
-        $wordFormatter2->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield str_replace(['€'], ['e'], $word);
+        $formatter2 = $this->createMock(Formatter::class);
+        $formatter2->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(str_replace(['€'], ['e'], $string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $rule = new GuessableDataRule([], [$wordFormatter1, $wordFormatter2]);
+        $rule = new GuessableDataRule([], [$formatter1, $formatter2]);
 
         self::assertTrue($rule->test(new Password('pine4ppl€jack', ['apple'])));
         self::assertFalse($rule->test(new Password('pineappl€jack', ['apple'])));
@@ -202,27 +210,31 @@ final class GuessableDataRuleTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testDateIsRecognizedAfterMultipleWordFormatters(): void
+    public function testDateIsRecognizedAfterMultipleFormatters(): void
     {
-        $wordFormatter1 = $this->createMock(WordFormatter::class);
-        $wordFormatter1->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield str_replace(['I'], ['1'], $word);
+        $formatter1 = $this->createMock(Formatter::class);
+        $formatter1->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(str_replace(['I'], ['1'], $string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $wordFormatter2 = $this->createMock(WordFormatter::class);
-        $wordFormatter2->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield str_replace(['B'], ['8'], $word);
+        $formatter2 = $this->createMock(Formatter::class);
+        $formatter2->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(str_replace(['B'], ['8'], $string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $rule = new GuessableDataRule([], [$wordFormatter1, $wordFormatter2]);
+        $rule = new GuessableDataRule([], [$formatter1, $formatter2]);
 
         self::assertTrue($rule->test(new Password('foo2B/I!/1Bbar', [new DateTime('2018-11-28')])));
         self::assertFalse($rule->test(new Password('foo28/II/18bar', [new DateTime('2018-11-28')])));
@@ -232,18 +244,20 @@ final class GuessableDataRuleTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testUnformattedStringIsRecognizedAfterWordFormatter(): void
+    public function testUnformattedStringIsRecognizedAfterFormatter(): void
     {
-        $wordFormatter = $this->createMock(WordFormatter::class);
-        $wordFormatter->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield str_replace('a', 'f', $word);
+        $formatter = $this->createMock(Formatter::class);
+        $formatter->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(str_replace('a', 'f', $string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $rule = new GuessableDataRule([], [$wordFormatter]);
+        $rule = new GuessableDataRule([], [$formatter]);
 
         self::assertFalse($rule->test(new Password('apple', ['apple'])));
         self::assertFalse($rule->test(new Password('apple', ['fpple'])));
@@ -256,10 +270,12 @@ final class GuessableDataRuleTest extends TestCase
     {
         $dateFormatter = $this->createMock(DateFormatter::class);
         $dateFormatter->method('apply')->willReturnCallback(
-            static function (iterable $dates): Traversable {
+            static function (iterable $dates): CharTree {
+                $charTrees = [];
                 foreach ($dates as $date) {
-                    yield $date->format('m\o\n\t\h');
+                    $charTrees[] = CharTree::fromString($date->format('m\o\n\t\h'));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
