@@ -11,21 +11,10 @@ use RuntimeException;
  * @coversDefaultClass \Stadly\PasswordPolice\HashFunction\PasswordHasher
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class PasswordHasherTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructHashFunction(): void
-    {
-        $hashFunction = new PasswordHasher(PASSWORD_BCRYPT);
-
-        // Force generation of code coverage
-        $hashFunctionConstruct = new PasswordHasher(PASSWORD_BCRYPT);
-        self::assertEquals($hashFunction, $hashFunctionConstruct);
-    }
-
     /**
      * @covers ::hash
      */

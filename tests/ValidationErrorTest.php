@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
  * @coversDefaultClass \Stadly\PasswordPolice\ValidationError
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class ValidationErrorTest extends TestCase
 {
@@ -22,18 +23,6 @@ final class ValidationErrorTest extends TestCase
     protected function setUp(): void
     {
         $this->rule = $this->createMock(Rule::class);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructException(): void
-    {
-        $validationError = new ValidationError('foo', 'bar', $this->rule, 1);
-
-        // Force generation of code coverage
-        $validationErrorConstruct = new ValidationError('foo', 'bar', $this->rule, 1);
-        self::assertEquals($validationError, $validationErrorConstruct);
     }
 
     /**

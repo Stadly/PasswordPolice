@@ -17,6 +17,7 @@ use Stadly\PasswordPolice\ValidationError;
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\NoReuseRule
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class NoReuseRuleTest extends TestCase
 {
@@ -51,38 +52,29 @@ final class NoReuseRuleTest extends TestCase
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithCountConstraint(): void
     {
         $rule = new NoReuseRule($this->hashFunction, 5, 0);
-
-        // Force generation of code coverage
-        $ruleConstruct = new NoReuseRule($this->hashFunction, 5, 0);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithFirstConstraint(): void
     {
         $rule = new NoReuseRule($this->hashFunction, null, 10);
-
-        // Force generation of code coverage
-        $ruleConstruct = new NoReuseRule($this->hashFunction, null, 10);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithBothCountAndFirstConstraint(): void
     {
         $rule = new NoReuseRule($this->hashFunction, 5, 10);
-
-        // Force generation of code coverage
-        $ruleConstruct = new NoReuseRule($this->hashFunction, 5, 10);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
@@ -107,14 +99,11 @@ final class NoReuseRuleTest extends TestCase
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithFirstConstraintEqualToZero(): void
     {
         $rule = new NoReuseRule($this->hashFunction, null, 0);
-
-        // Force generation of code coverage
-        $ruleConstruct = new NoReuseRule($this->hashFunction, null, 0);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
@@ -142,26 +131,12 @@ final class NoReuseRuleTest extends TestCase
      */
     public function testCanAddConstraint(): void
     {
-        $rule = new NoReuseRule($this->hashFunction, 5, 5, 1);
-        $rule->addConstraint(10, 10, 1);
+        $rule1 = new NoReuseRule($this->hashFunction, 5, 5, 1);
+        $rule1->addConstraint(10, 10, 2);
 
-        // Force generation of code coverage
-        $ruleConstruct = new NoReuseRule($this->hashFunction, 5, 5, 1);
-        $ruleConstruct->addConstraint(10, 10, 1);
-        self::assertEquals($rule, $ruleConstruct);
-    }
-
-    /**
-     * @covers ::addConstraint
-     */
-    public function testConstraintsAreOrdered(): void
-    {
-        $rule = new NoReuseRule($this->hashFunction, 5, 5, 1);
-        $rule->addConstraint(10, 10, 2);
-
-        $ruleConstruct = new NoReuseRule($this->hashFunction, 10, 10, 2);
-        $ruleConstruct->addConstraint(5, 5, 1);
-        self::assertEquals($rule, $ruleConstruct);
+        $rule2 = new NoReuseRule($this->hashFunction, 10, 10, 2);
+        $rule2->addConstraint(5, 5, 1);
+        self::assertEquals($rule1, $rule2);
     }
 
     /**

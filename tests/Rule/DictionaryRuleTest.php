@@ -16,6 +16,7 @@ use Stadly\PasswordPolice\WordList;
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\DictionaryRule
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class DictionaryRuleTest extends TestCase
 {
@@ -38,18 +39,6 @@ final class DictionaryRuleTest extends TestCase
                 }
             }
         );
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructRule(): void
-    {
-        $rule = new DictionaryRule($this->wordList);
-
-        // Force generation of code coverage
-        $ruleConstruct = new DictionaryRule($this->wordList);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**

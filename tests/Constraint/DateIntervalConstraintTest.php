@@ -13,43 +13,35 @@ use PHPUnit\Framework\TestCase;
  * @coversDefaultClass \Stadly\PasswordPolice\Constraint\DateIntervalConstraint
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class DateIntervalConstraintTest extends TestCase
 {
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithMinConstraint(): void
     {
         $constraint = new DateIntervalConstraint(new DateInterval('P5D'), null);
-
-        // Force generation of code coverage
-        $constraintConstruct = new DateIntervalConstraint(new DateInterval('P5D'), null);
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithMaxConstraint(): void
     {
         $constraint = new DateIntervalConstraint(new DateInterval('PT0S'), new DateInterval('P10D'));
-
-        // Force generation of code coverage
-        $constraintConstruct = new DateIntervalConstraint(new DateInterval('PT0S'), new DateInterval('P10D'));
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithBothMinAndMaxConstraint(): void
     {
         $constraint = new DateIntervalConstraint(new DateInterval('P5D'), new DateInterval('P10D'));
-
-        // Force generation of code coverage
-        $constraintConstruct = new DateIntervalConstraint(new DateInterval('P5D'), new DateInterval('P10D'));
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
@@ -74,38 +66,29 @@ final class DateIntervalConstraintTest extends TestCase
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructUnconstrainedConstraint(): void
     {
         $constraint = new DateIntervalConstraint(new DateInterval('PT0S'), null);
-
-        // Force generation of code coverage
-        $constraintConstruct = new DateIntervalConstraint(new DateInterval('PT0S'), null);
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithMinConstraintEqualToMaxConstraint(): void
     {
         $constraint = new DateIntervalConstraint(new DateInterval('P5D'), new DateInterval('P5D'));
-
-        // Force generation of code coverage
-        $constraintConstruct = new DateIntervalConstraint(new DateInterval('P5D'), new DateInterval('P5D'));
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithNegativeWeight(): void
     {
         $constraint = new DateIntervalConstraint(new DateInterval('P5D'), new DateInterval('P5D'), -5);
-
-        // Force generation of code coverage
-        $constraintConstruct = new DateIntervalConstraint(new DateInterval('P5D'), new DateInterval('P5D'), -5);
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**

@@ -12,43 +12,35 @@ use Stadly\PasswordPolice\ValidationError;
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\LengthRule
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class LengthRuleTest extends TestCase
 {
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
         $rule = new LengthRule(5, null);
-
-        // Force generation of code coverage
-        $ruleConstruct = new LengthRule(5, null);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
         $rule = new LengthRule(0, 10);
-
-        // Force generation of code coverage
-        $ruleConstruct = new LengthRule(0, 10);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
         $rule = new LengthRule(5, 10);
-
-        // Force generation of code coverage
-        $ruleConstruct = new LengthRule(5, 10);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
@@ -73,26 +65,20 @@ final class LengthRuleTest extends TestCase
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructUnconstrainedRule(): void
     {
         $rule = new LengthRule(0, null);
-
-        // Force generation of code coverage
-        $ruleConstruct = new LengthRule(0, null);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
         $rule = new LengthRule(5, 5);
-
-        // Force generation of code coverage
-        $ruleConstruct = new LengthRule(5, 5);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
@@ -100,26 +86,12 @@ final class LengthRuleTest extends TestCase
      */
     public function testCanAddConstraint(): void
     {
-        $rule = new LengthRule(5, 5, 1);
-        $rule->addConstraint(10, 10, 1);
+        $rule1 = new LengthRule(5, 5, 1);
+        $rule1->addConstraint(10, 10, 2);
 
-        // Force generation of code coverage
-        $ruleConstruct = new LengthRule(5, 5, 1);
-        $ruleConstruct->addConstraint(10, 10, 1);
-        self::assertEquals($rule, $ruleConstruct);
-    }
-
-    /**
-     * @covers ::addConstraint
-     */
-    public function testConstraintsAreOrdered(): void
-    {
-        $rule = new LengthRule(5, 5, 1);
-        $rule->addConstraint(10, 10, 2);
-
-        $ruleConstruct = new LengthRule(10, 10, 2);
-        $ruleConstruct->addConstraint(5, 5, 1);
-        self::assertEquals($rule, $ruleConstruct);
+        $rule2 = new LengthRule(10, 10, 2);
+        $rule2->addConstraint(5, 5, 1);
+        self::assertEquals($rule1, $rule2);
     }
 
     /**

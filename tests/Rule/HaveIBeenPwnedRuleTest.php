@@ -19,6 +19,7 @@ use Stadly\PasswordPolice\ValidationError;
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\HaveIBeenPwnedRule
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class HaveIBeenPwnedRuleTest extends TestCase
 {
@@ -36,38 +37,29 @@ final class HaveIBeenPwnedRuleTest extends TestCase
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
         $rule = new HaveIBeenPwnedRule(null, 5);
-
-        // Force generation of code coverage
-        $ruleConstruct = new HaveIBeenPwnedRule(null, 5);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
         $rule = new HaveIBeenPwnedRule(10, 0);
-
-        // Force generation of code coverage
-        $ruleConstruct = new HaveIBeenPwnedRule(10, 0);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
         $rule = new HaveIBeenPwnedRule(10, 5);
-
-        // Force generation of code coverage
-        $ruleConstruct = new HaveIBeenPwnedRule(10, 5);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
@@ -92,26 +84,20 @@ final class HaveIBeenPwnedRuleTest extends TestCase
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructUnconstrainedRule(): void
     {
         $rule = new HaveIBeenPwnedRule(null, 0);
-
-        // Force generation of code coverage
-        $ruleConstruct = new HaveIBeenPwnedRule(null, 0);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
         $rule = new HaveIBeenPwnedRule(5, 5);
-
-        // Force generation of code coverage
-        $ruleConstruct = new HaveIBeenPwnedRule(5, 5);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
@@ -119,26 +105,12 @@ final class HaveIBeenPwnedRuleTest extends TestCase
      */
     public function testCanAddConstraint(): void
     {
-        $rule = new HaveIBeenPwnedRule(5, 5, 1);
-        $rule->addConstraint(10, 10, 1);
+        $rule1 = new HaveIBeenPwnedRule(5, 5, 1);
+        $rule1->addConstraint(10, 10, 2);
 
-        // Force generation of code coverage
-        $ruleConstruct = new HaveIBeenPwnedRule(5, 5, 1);
-        $ruleConstruct->addConstraint(10, 10, 1);
-        self::assertEquals($rule, $ruleConstruct);
-    }
-
-    /**
-     * @covers ::addConstraint
-     */
-    public function testConstraintsAreOrdered(): void
-    {
-        $rule = new HaveIBeenPwnedRule(5, 5, 1);
-        $rule->addConstraint(10, 10, 2);
-
-        $ruleConstruct = new HaveIBeenPwnedRule(10, 10, 2);
-        $ruleConstruct->addConstraint(5, 5, 1);
-        self::assertEquals($rule, $ruleConstruct);
+        $rule2 = new HaveIBeenPwnedRule(10, 10, 2);
+        $rule2->addConstraint(5, 5, 1);
+        self::assertEquals($rule1, $rule2);
     }
 
     /**
@@ -146,13 +118,16 @@ final class HaveIBeenPwnedRuleTest extends TestCase
      */
     public function testCanSetClient(): void
     {
-        $rule = new HaveIBeenPwnedRule(10, 5);
-        $ruleConstruct = new HaveIBeenPwnedRule(10, 5);
-        self::assertEquals($rule, $ruleConstruct);
+        $rule1 = new HaveIBeenPwnedRule(10, 5);
+        $rule2 = new HaveIBeenPwnedRule(10, 5);
+        self::assertEquals($rule1, $rule2);
 
         $client = $this->createMock(ClientInterface::class);
-        $rule->setClient($client);
-        self::assertNotEquals($rule, $ruleConstruct);
+        $rule1->setClient($client);
+        self::assertNotEquals($rule1, $rule2);
+
+        $rule2->setClient($client);
+        self::assertEquals($rule1, $rule2);
     }
 
     /**
@@ -160,13 +135,16 @@ final class HaveIBeenPwnedRuleTest extends TestCase
      */
     public function testCanSetRequestFactory(): void
     {
-        $rule = new HaveIBeenPwnedRule(10, 5);
-        $ruleConstruct = new HaveIBeenPwnedRule(10, 5);
-        self::assertEquals($rule, $ruleConstruct);
+        $rule1 = new HaveIBeenPwnedRule(10, 5);
+        $rule2 = new HaveIBeenPwnedRule(10, 5);
+        self::assertEquals($rule1, $rule2);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $rule->setRequestFactory($requestFactory);
-        self::assertNotEquals($rule, $ruleConstruct);
+        $rule1->setRequestFactory($requestFactory);
+        self::assertNotEquals($rule1, $rule2);
+
+        $rule2->setRequestFactory($requestFactory);
+        self::assertEquals($rule1, $rule2);
     }
 
     /**

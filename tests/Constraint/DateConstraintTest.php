@@ -12,43 +12,35 @@ use PHPUnit\Framework\TestCase;
  * @coversDefaultClass \Stadly\PasswordPolice\Constraint\DateConstraint
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class DateConstraintTest extends TestCase
 {
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithMinConstraint(): void
     {
         $constraint = new DateConstraint(new DateTime('2001-02-03'), null);
-
-        // Force generation of code coverage
-        $constraintConstruct = new DateConstraint(new DateTime('2001-02-03'), null);
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithMaxConstraint(): void
     {
         $constraint = new DateConstraint(null, new DateTime('2002-03-04'));
-
-        // Force generation of code coverage
-        $constraintConstruct = new DateConstraint(null, new DateTime('2002-03-04'));
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithBothMinAndMaxConstraint(): void
     {
         $constraint = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
-
-        // Force generation of code coverage
-        $constraintConstruct = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
@@ -63,38 +55,29 @@ final class DateConstraintTest extends TestCase
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructUnconstrainedConstraint(): void
     {
         $constraint = new DateConstraint(null, null);
-
-        // Force generation of code coverage
-        $constraintConstruct = new DateConstraint(null, null);
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithMinConstraintEqualToMaxConstraint(): void
     {
         $constraint = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
-
-        // Force generation of code coverage
-        $constraintConstruct = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithNegativeWeight(): void
     {
         $constraint = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'), -5);
-
-        // Force generation of code coverage
-        $constraintConstruct = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'), -5);
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**

@@ -15,11 +15,14 @@ use Stadly\PasswordPolice\Formatter;
  * @coversDefaultClass \Stadly\PasswordPolice\WordList\Pspell
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
+ * @covers ::fromLocale
  */
 final class PspellTest extends TestCase
 {
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructWordListFromPspellDirectoryLink(): void
     {
@@ -27,34 +30,24 @@ final class PspellTest extends TestCase
         assert($dictionary !== false);
 
         $pspell = new Pspell($dictionary);
-
-        // Force generation of code coverage
-        $pspellConstruct = new Pspell($dictionary);
-        self::assertEquals($pspell, $pspellConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructWordListFromInvalidPspellDirectoryLink(): void
     {
         $pspell = new Pspell(-1);
-
-        // Force generation of code coverage
-        $pspellConstruct = new Pspell(-1);
-        self::assertEquals($pspell, $pspellConstruct);
     }
 
     /**
      * @covers ::fromLocale
+     * @doesNotPerformAssertions
      */
-    public function testCanConstructWordListFromLocale(): void
+    public function testCanConstructWordListFromValidLocale(): void
     {
         $pspell = Pspell::fromLocale('en');
-
-        // Force generation of code coverage
-        $pspellConstruct = Pspell::fromLocale('en');
-        self::assertSame(get_class($pspell), get_class($pspellConstruct));
     }
 
     /**

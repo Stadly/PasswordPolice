@@ -11,49 +11,10 @@ use PHPUnit\Framework\TestCase;
  * @coversDefaultClass \Stadly\PasswordPolice\Password
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class PasswordTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructPassword(): void
-    {
-        $password = new Password('foo');
-
-        // Force generation of code coverage
-        $passwordConstruct = new Password('foo');
-        self::assertEquals($password, $passwordConstruct);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructPasswordWithGuessableData(): void
-    {
-        $date = new DateTimeImmutable();
-        $password = new Password('foo', ['bar', $date]);
-
-        // Force generation of code coverage
-        $passwordConstruct = new Password('foo', ['bar', $date]);
-        self::assertEquals($password, $passwordConstruct);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructPasswordWithFormerPasswords(): void
-    {
-        $formerPassword1 = new FormerPassword('bar', new DateTimeImmutable('2018-11-29'));
-        $formerPassword2 = new FormerPassword('baz', new DateTimeImmutable('2017-01-13'));
-
-        $password = new Password('foo', [], [$formerPassword1, $formerPassword2]);
-
-        // Force generation of code coverage
-        $passwordConstruct = new Password('foo', [], [$formerPassword1, $formerPassword2]);
-        self::assertEquals($password, $passwordConstruct);
-    }
-
     /**
      * @covers ::__toString
      */

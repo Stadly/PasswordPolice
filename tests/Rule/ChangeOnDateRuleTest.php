@@ -16,6 +16,7 @@ use Stadly\PasswordPolice\ValidationError;
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\ChangeOnDateRule
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class ChangeOnDateRuleTest extends TestCase
 {
@@ -35,38 +36,29 @@ final class ChangeOnDateRuleTest extends TestCase
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
         $rule = new ChangeOnDateRule(new DateTime('2001-02-03'), null);
-
-        // Force generation of code coverage
-        $ruleConstruct = new ChangeOnDateRule(new DateTime('2001-02-03'), null);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
         $rule = new ChangeOnDateRule(null, new DateTime('2002-03-04'));
-
-        // Force generation of code coverage
-        $ruleConstruct = new ChangeOnDateRule(null, new DateTime('2002-03-04'));
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
         $rule = new ChangeOnDateRule(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
-
-        // Force generation of code coverage
-        $ruleConstruct = new ChangeOnDateRule(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
@@ -81,26 +73,20 @@ final class ChangeOnDateRuleTest extends TestCase
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructUnconstrainedRule(): void
     {
         $rule = new ChangeOnDateRule(null, null);
-
-        // Force generation of code coverage
-        $ruleConstruct = new ChangeOnDateRule(null, null);
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
         $rule = new ChangeOnDateRule(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
-
-        // Force generation of code coverage
-        $ruleConstruct = new ChangeOnDateRule(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
-        self::assertEquals($rule, $ruleConstruct);
     }
 
     /**
@@ -108,26 +94,12 @@ final class ChangeOnDateRuleTest extends TestCase
      */
     public function testCanAddConstraint(): void
     {
-        $rule = new ChangeOnDateRule(new DateTime('2001-02-03'), new DateTime('2001-02-03'), 1);
-        $rule->addConstraint(new DateTime('2002-03-04'), new DateTime('2002-03-04'), 1);
+        $rule1 = new ChangeOnDateRule(new DateTime('2001-02-03'), new DateTime('2001-02-03'), 1);
+        $rule1->addConstraint(new DateTime('2002-03-04'), new DateTime('2002-03-04'), 2);
 
-        // Force generation of code coverage
-        $ruleConstruct = new ChangeOnDateRule(new DateTime('2001-02-03'), new DateTime('2001-02-03'), 1);
-        $ruleConstruct->addConstraint(new DateTime('2002-03-04'), new DateTime('2002-03-04'), 1);
-        self::assertEquals($rule, $ruleConstruct);
-    }
-
-    /**
-     * @covers ::addConstraint
-     */
-    public function testConstraintsAreOrdered(): void
-    {
-        $rule = new ChangeOnDateRule(new DateTime('2001-02-03'), new DateTime('2001-02-03'), 1);
-        $rule->addConstraint(new DateTime('2002-03-04'), new DateTime('2002-03-04'), 2);
-
-        $ruleConstruct = new ChangeOnDateRule(new DateTime('2002-03-04'), new DateTime('2002-03-04'), 2);
-        $ruleConstruct->addConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'), 1);
-        self::assertEquals($rule, $ruleConstruct);
+        $rule2 = new ChangeOnDateRule(new DateTime('2002-03-04'), new DateTime('2002-03-04'), 2);
+        $rule2->addConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'), 1);
+        self::assertEquals($rule1, $rule2);
     }
 
     /**

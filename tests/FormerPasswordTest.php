@@ -11,22 +11,10 @@ use PHPUnit\Framework\TestCase;
  * @coversDefaultClass \Stadly\PasswordPolice\FormerPassword
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class FormerPasswordTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructFormerPassword(): void
-    {
-        $date = new DateTimeImmutable('2018-11-28');
-        $password = new FormerPassword('foo', $date);
-
-        // Force generation of code coverage
-        $passwordConstruct = new FormerPassword('foo', $date);
-        self::assertEquals($password, $passwordConstruct);
-    }
-
     /**
      * @covers ::__toString
      */

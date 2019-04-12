@@ -11,43 +11,35 @@ use PHPUnit\Framework\TestCase;
  * @coversDefaultClass \Stadly\PasswordPolice\Constraint\PositionConstraint
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class PositionConstraintTest extends TestCase
 {
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithFirstConstraint(): void
     {
         $constraint = new PositionConstraint(5, null);
-
-        // Force generation of code coverage
-        $constraintConstruct = new PositionConstraint(5, null);
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithCountConstraint(): void
     {
         $constraint = new PositionConstraint(0, 10);
-
-        // Force generation of code coverage
-        $constraintConstruct = new PositionConstraint(0, 10);
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithBothFirstAndCountConstraint(): void
     {
         $constraint = new PositionConstraint(5, 10);
-
-        // Force generation of code coverage
-        $constraintConstruct = new PositionConstraint(5, 10);
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
@@ -82,38 +74,29 @@ final class PositionConstraintTest extends TestCase
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructUnconstrainedConstraint(): void
     {
         $constraint = new PositionConstraint(0, null);
-
-        // Force generation of code coverage
-        $constraintConstruct = new PositionConstraint(0, null);
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithFirstConstraintEqualToCountConstraint(): void
     {
         $constraint = new PositionConstraint(5, 5);
-
-        // Force generation of code coverage
-        $constraintConstruct = new PositionConstraint(5, 5);
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**
      * @covers ::__construct
+     * @doesNotPerformAssertions
      */
     public function testCanConstructConstraintWithNegativeWeight(): void
     {
         $constraint = new PositionConstraint(5, 5, -5);
-
-        // Force generation of code coverage
-        $constraintConstruct = new PositionConstraint(5, 5, -5);
-        self::assertEquals($constraint, $constraintConstruct);
     }
 
     /**

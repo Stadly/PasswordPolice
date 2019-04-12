@@ -16,21 +16,10 @@ use Stadly\PasswordPolice\ValidationError;
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\GuessableDataRule
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class GuessableDataRuleTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructRule(): void
-    {
-        $rule = new GuessableDataRule();
-
-        // Force generation of code coverage
-        $ruleConstruct = new GuessableDataRule();
-        self::assertEquals($rule, $ruleConstruct);
-    }
-
     /**
      * @covers ::test
      */

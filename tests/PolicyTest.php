@@ -13,6 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * @coversDefaultClass \Stadly\PasswordPolice\Policy
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class PolicyTest extends TestCase
 {
@@ -45,51 +46,15 @@ final class PolicyTest extends TestCase
     }
 
     /**
-     * @covers ::__construct
-     */
-    public function testCanConstructPolicyWithZeroRules(): void
-    {
-        $policy = new Policy();
-
-        // Force generation of code coverage
-        $policyConstruct = new Policy();
-        self::assertEquals($policy, $policyConstruct);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructPolicyWithSingleRule(): void
-    {
-        $policy = new Policy($this->satisfiedRule1);
-
-        // Force generation of code coverage
-        $policyConstruct = new Policy($this->satisfiedRule1);
-        self::assertEquals($policy, $policyConstruct);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testCanConstructPolicyWithMultipleRules(): void
-    {
-        $policy = new Policy($this->satisfiedRule1, $this->unsatisfiedRule);
-
-        // Force generation of code coverage
-        $policyConstruct = new Policy($this->satisfiedRule1, $this->unsatisfiedRule);
-        self::assertEquals($policy, $policyConstruct);
-    }
-
-    /**
      * @covers ::addRules
      */
     public function testCanAddZeroRules(): void
     {
-        $policy = new Policy($this->satisfiedRule1);
-        $policy->addRules();
+        $policy1 = new Policy($this->satisfiedRule1);
+        $policy1->addRules();
 
-        $policyConstruct = new Policy($this->satisfiedRule1);
-        self::assertEquals($policy, $policyConstruct);
+        $policy2 = new Policy($this->satisfiedRule1);
+        self::assertEquals($policy1, $policy2);
     }
 
     /**
@@ -97,11 +62,11 @@ final class PolicyTest extends TestCase
      */
     public function testCanAddSingleRule(): void
     {
-        $policy = new Policy($this->satisfiedRule1);
-        $policy->addRules($this->unsatisfiedRule);
+        $policy1 = new Policy($this->satisfiedRule1);
+        $policy1->addRules($this->unsatisfiedRule);
 
-        $policyConstruct = new Policy($this->satisfiedRule1, $this->unsatisfiedRule);
-        self::assertEquals($policy, $policyConstruct);
+        $policy2 = new Policy($this->satisfiedRule1, $this->unsatisfiedRule);
+        self::assertEquals($policy1, $policy2);
     }
 
     /**
@@ -109,11 +74,11 @@ final class PolicyTest extends TestCase
      */
     public function testCanAddMultipleRules(): void
     {
-        $policy = new Policy($this->satisfiedRule1);
-        $policy->addRules($this->unsatisfiedRule, $this->satisfiedRule2);
+        $policy1 = new Policy($this->satisfiedRule1);
+        $policy1->addRules($this->unsatisfiedRule, $this->satisfiedRule2);
 
-        $policyConstruct = new Policy($this->satisfiedRule1, $this->unsatisfiedRule, $this->satisfiedRule2);
-        self::assertEquals($policy, $policyConstruct);
+        $policy2 = new Policy($this->satisfiedRule1, $this->unsatisfiedRule, $this->satisfiedRule2);
+        self::assertEquals($policy1, $policy2);
     }
 
     /**
