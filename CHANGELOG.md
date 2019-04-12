@@ -4,7 +4,7 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.16.1...HEAD)
+## [v0.17.0](https://github.com/Stadly/PasswordPolice/compare/v0.16.1...v0.17.0) - 2019-04-12
 
 ### Added
 - Character tree, making formatting faster.
@@ -18,17 +18,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Renamed date formatter trait `FormatterChaining` to `Chaining`.
 - Renamed date formatter `FormatterCombiner` to `Combiner`.
 
-### Fixed
-- Nothing
-
-### Deprecated
-- Nothing
-
 ### Removed
 - Formatters working on strings.
-
-### Security
-- Nothing
 
 ## [v0.16.1](https://github.com/Stadly/PasswordPolice/compare/v0.16.0...v0.16.1) - 2019-01-31
 
