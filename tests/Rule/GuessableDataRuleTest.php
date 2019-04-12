@@ -295,7 +295,7 @@ final class GuessableDataRuleTest extends TestCase
 
         self::assertEquals(
             new ValidationError(
-                'The password cannot words that are easy to guess.',
+                'The password cannot contain words that are easy to guess.',
                 $password,
                 $rule,
                 1
