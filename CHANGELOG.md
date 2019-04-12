@@ -7,7 +7,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.16.1...HEAD)
 
 ### Added
-- Nothing
+- Character tree, making formatting faster.
+- Formatters working on character trees.
 
 ### Changed
 - Nothing
