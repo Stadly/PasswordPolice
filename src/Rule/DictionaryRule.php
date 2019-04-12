@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use RuntimeException;
+use Stadly\PasswordPolice\CharTree;
+use Stadly\PasswordPolice\Formatter;
+use Stadly\PasswordPolice\Formatter\Combiner;
 use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
-use Stadly\PasswordPolice\WordFormatter;
-use Stadly\PasswordPolice\WordFormatter\FormatterCombiner;
 use Stadly\PasswordPolice\WordList;
-use Traversable;
 
 final class DictionaryRule implements Rule
 {
@@ -21,9 +21,9 @@ final class DictionaryRule implements Rule
     private $wordList;
 
     /**
-     * @var WordFormatter Word formatter.
+     * @var Formatter Formatter.
      */
-    private $wordFormatter;
+    private $formatter;
 
     /**
      * @var int Constraint weight.
@@ -32,13 +32,13 @@ final class DictionaryRule implements Rule
 
     /**
      * @param WordList $wordList Word list for the dictionary.
-     * @param WordFormatter[] $wordFormatters Word formatters.
+     * @param Formatter[] $formatters Formatters.
      * @param int $weight Constraint weight.
      */
-    public function __construct(WordList $wordList, array $wordFormatters = [], int $weight = 1)
+    public function __construct(WordList $wordList, array $formatters = [], int $weight = 1)
     {
         $this->wordList = $wordList;
-        $this->wordFormatter = new FormatterCombiner($wordFormatters);
+        $this->formatter = new Combiner($formatters);
         $this->weight = $weight;
     }
 
@@ -90,10 +90,10 @@ final class DictionaryRule implements Rule
      */
     private function getDictionaryWord(string $password): ?string
     {
-        foreach ($this->wordFormatter->apply([$password]) as $word) {
+        foreach ($this->formatter->apply(CharTree::fromString($password)) as $formattedPassword) {
             try {
-                if ($this->wordList->contains($word)) {
-                    return $word;
+                if ($this->wordList->contains($formattedPassword)) {
+                    return $formattedPassword;
                 }
             } catch (RuntimeException $exception) {
                 throw new RuleException(

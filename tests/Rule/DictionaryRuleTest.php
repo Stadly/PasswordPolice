@@ -7,10 +7,10 @@ namespace Stadly\PasswordPolice\Rule;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
+use Stadly\PasswordPolice\CharTree;
+use Stadly\PasswordPolice\Formatter;
 use Stadly\PasswordPolice\ValidationError;
-use Stadly\PasswordPolice\WordFormatter;
 use Stadly\PasswordPolice\WordList;
-use Traversable;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\DictionaryRule
@@ -140,18 +140,20 @@ final class DictionaryRuleTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testWordIsRecognizedAfterSingleWordFormatter(): void
+    public function testWordIsRecognizedAfterSingleFormatter(): void
     {
-        $wordFormatter = $this->createMock(WordFormatter::class);
-        $wordFormatter->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield str_replace(['4', '€'], ['a', 'e'], $word);
+        $formatter = $this->createMock(Formatter::class);
+        $formatter->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(str_replace(['4', '€'], ['a', 'e'], $string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $rule = new DictionaryRule($this->wordList, [$wordFormatter]);
+        $rule = new DictionaryRule($this->wordList, [$formatter]);
 
         self::assertFalse($rule->test('4ppl€'));
         self::assertTrue($rule->test('pine4ppl€jack'));
@@ -160,27 +162,31 @@ final class DictionaryRuleTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testWordIsRecognizedAfterMultipleWordFormatters(): void
+    public function testWordIsRecognizedAfterMultipleFormatters(): void
     {
-        $wordFormatter1 = $this->createMock(WordFormatter::class);
-        $wordFormatter1->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield str_replace(['4'], ['a'], $word);
+        $formatter1 = $this->createMock(Formatter::class);
+        $formatter1->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(str_replace(['4'], ['a'], $string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $wordFormatter2 = $this->createMock(WordFormatter::class);
-        $wordFormatter2->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield str_replace(['€'], ['e'], $word);
+        $formatter2 = $this->createMock(Formatter::class);
+        $formatter2->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(str_replace(['€'], ['e'], $string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $rule = new DictionaryRule($this->wordList, [$wordFormatter1, $wordFormatter2]);
+        $rule = new DictionaryRule($this->wordList, [$formatter1, $formatter2]);
 
         self::assertTrue($rule->test('4ppl€'));
         self::assertTrue($rule->test('pine4ppl€jack'));
@@ -193,18 +199,20 @@ final class DictionaryRuleTest extends TestCase
     /**
      * @covers ::test
      */
-    public function testUnformattedWordIsRecognizedAfterWordFormatter(): void
+    public function testUnformattedWordIsRecognizedAfterFormatter(): void
     {
-        $wordFormatter = $this->createMock(WordFormatter::class);
-        $wordFormatter->method('apply')->willReturnCallback(
-            static function (iterable $words): Traversable {
-                foreach ($words as $word) {
-                    yield str_replace('a', 'f', $word);
+        $formatter = $this->createMock(Formatter::class);
+        $formatter->method('apply')->willReturnCallback(
+            static function (CharTree $charTree): CharTree {
+                $charTrees = [];
+                foreach ($charTree as $string) {
+                    $charTrees[] = CharTree::fromString(str_replace('a', 'f', $string));
                 }
+                return CharTree::fromArray($charTrees);
             }
         );
 
-        $rule = new DictionaryRule($this->wordList, [$wordFormatter]);
+        $rule = new DictionaryRule($this->wordList, [$formatter]);
 
         self::assertFalse($rule->test('apple'));
     }

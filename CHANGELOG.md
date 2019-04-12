@@ -11,7 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Formatters working on character trees.
 
 ### Changed
-- Nothing
+- Dictionary rule uses character tree formatters instead of string formatters.
 
 ### Fixed
 - Nothing
