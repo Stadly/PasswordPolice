@@ -10,8 +10,8 @@ use Stadly\PasswordPolice\ValidationError;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\LengthRule
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class LengthRuleTest extends TestCase
 {

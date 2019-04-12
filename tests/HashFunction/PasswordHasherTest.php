@@ -9,8 +9,8 @@ use RuntimeException;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\HashFunction\PasswordHasher
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class PasswordHasherTest extends TestCase
 {

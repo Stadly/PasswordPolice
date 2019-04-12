@@ -10,8 +10,8 @@ use Stadly\PasswordPolice\ValidationError;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\SymbolRule
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class SymbolRuleTest extends TestCase
 {

@@ -11,8 +11,8 @@ use Stadly\PasswordPolice\Formatter;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\DateFormatter\DefaultFormatter
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  * @covers ::__construct
  */
 final class DefaultFormatterTest extends TestCase

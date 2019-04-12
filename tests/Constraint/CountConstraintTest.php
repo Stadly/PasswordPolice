@@ -9,8 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Constraint\CountConstraint
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class CountConstraintTest extends TestCase
 {

@@ -11,8 +11,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Constraint\DateIntervalConstraint
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class DateIntervalConstraintTest extends TestCase
 {

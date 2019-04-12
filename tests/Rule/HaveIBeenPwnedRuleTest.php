@@ -17,8 +17,8 @@ use Stadly\PasswordPolice\ValidationError;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\HaveIBeenPwnedRule
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class HaveIBeenPwnedRuleTest extends TestCase
 {

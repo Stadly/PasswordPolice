@@ -14,8 +14,8 @@ use Stadly\PasswordPolice\ValidationError;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\ChangeOnDateRule
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class ChangeOnDateRuleTest extends TestCase
 {

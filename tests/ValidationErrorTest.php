@@ -9,8 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\ValidationError
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class ValidationErrorTest extends TestCase
 {

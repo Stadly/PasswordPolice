@@ -12,8 +12,8 @@ use Stadly\PasswordPolice\ValidationError;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\ConditionalRule
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  * @covers ::__construct
  */
 final class ConditionalRuleTest extends TestCase

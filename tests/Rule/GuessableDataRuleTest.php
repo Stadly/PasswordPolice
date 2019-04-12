@@ -14,8 +14,8 @@ use Stadly\PasswordPolice\ValidationError;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\GuessableDataRule
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class GuessableDataRuleTest extends TestCase
 {

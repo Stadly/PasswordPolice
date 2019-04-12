@@ -10,8 +10,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Constraint\DateConstraint
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class DateConstraintTest extends TestCase
 {

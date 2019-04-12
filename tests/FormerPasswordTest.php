@@ -9,8 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\FormerPassword
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class FormerPasswordTest extends TestCase
 {

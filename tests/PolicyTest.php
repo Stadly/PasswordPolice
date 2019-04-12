@@ -11,8 +11,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Policy
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class PolicyTest extends TestCase
 {

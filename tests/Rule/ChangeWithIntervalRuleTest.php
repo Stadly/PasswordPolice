@@ -14,8 +14,8 @@ use Stadly\PasswordPolice\ValidationError;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\ChangeWithIntervalRule
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class ChangeWithIntervalRuleTest extends TestCase
 {

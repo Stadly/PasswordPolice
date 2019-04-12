@@ -14,8 +14,8 @@ use Stadly\PasswordPolice\WordList;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\DictionaryRule
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class DictionaryRuleTest extends TestCase
 {

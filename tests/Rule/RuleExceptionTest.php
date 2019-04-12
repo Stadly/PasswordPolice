@@ -9,8 +9,8 @@ use Stadly\PasswordPolice\Rule;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\RuleException
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class RuleExceptionTest extends TestCase
 {

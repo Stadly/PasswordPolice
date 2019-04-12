@@ -9,8 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Constraint\PositionConstraint
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class PositionConstraintTest extends TestCase
 {

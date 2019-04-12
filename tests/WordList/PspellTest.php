@@ -13,8 +13,8 @@ use Stadly\PasswordPolice\Formatter;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\WordList\Pspell
- * @covers ::<protected>
  * @covers ::<private>
+ * @covers ::<protected>
  */
 final class PspellTest extends TestCase
 {
