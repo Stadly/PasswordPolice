@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Formatter;
 
-use ArrayObject;
 use InvalidArgumentException;
-use SplObjectStorage;
 use Stadly\PasswordPolice\CharTree;
 use Stadly\PasswordPolice\Formatter;
 
@@ -25,14 +23,14 @@ final class SubstringGenerator implements Formatter
     private $maxLength;
 
     /**
-     * @var SplObjectStorage Memoization for already filtered character trees.
+     * @var CharTree[] Memoization for already filtered character trees.
      */
-    private $substringMemoization;
+    private $substringMemoization = [];
 
     /**
-     * @var SplObjectStorage Memoization for already filtered character trees.
+     * @var CharTree[] Memoization for already filtered character trees.
      */
-    private $startsWithMemoization;
+    private $startsWithMemoization = [];
 
     /**
      * @param int $minLength Ignore substrings shorter than this.
@@ -49,8 +47,6 @@ final class SubstringGenerator implements Formatter
 
         $this->minLength = $minLength;
         $this->maxLength = $maxLength;
-        $this->substringMemoization = new SplObjectStorage();
-        $this->startsWithMemoization = new SplObjectStorage();
     }
 
     /**
@@ -70,21 +66,14 @@ final class SubstringGenerator implements Formatter
      */
     private function applyInternal(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
     {
-        if (!isset($this->substringMemoization[$charTree])) {
-            $this->substringMemoization[$charTree] = new ArrayObject();
+        // When PHP 7.1 is no longer supported, change to using spl_object_id.
+        $hash = spl_object_hash($charTree).';'.$minLength.';'.$maxLength;
+
+        if (!isset($this->substringMemoization[$hash])) {
+            $this->substringMemoization[$hash] = $this->generate($charTree, $minLength, $maxLength);
         }
 
-        $memoization1 = $this->substringMemoization[$charTree];
-        if (!isset($memoization1[$minLength])) {
-            $memoization1[$minLength] = new ArrayObject();
-        }
-
-        $memoization2 = $memoization1[$minLength];
-        if (!isset($memoization2[$maxLength ?? ''])) {
-            $memoization2[$maxLength ?? ''] = $this->generate($charTree, $minLength, $maxLength);
-        }
-
-        return $memoization2[$maxLength ?? ''];
+        return $this->substringMemoization[$hash];
     }
 
     /**
@@ -153,21 +142,14 @@ final class SubstringGenerator implements Formatter
      */
     private function applyInternalStartsWith(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
     {
-        if (!isset($this->startsWithMemoization[$charTree])) {
-            $this->startsWithMemoization[$charTree] = new ArrayObject();
+        // When PHP 7.1 is no longer supported, change to using spl_object_id.
+        $hash = spl_object_hash($charTree).';'.$minLength.';'.$maxLength;
+
+        if (!isset($this->startsWithMemoization[$hash])) {
+            $this->startsWithMemoization[$hash] = $this->generateStartsWith($charTree, $minLength, $maxLength);
         }
 
-        $memoization1 = $this->startsWithMemoization[$charTree];
-        if (!isset($memoization1[$minLength])) {
-            $memoization1[$minLength] = new ArrayObject();
-        }
-
-        $memoization2 = $memoization1[$minLength];
-        if (!isset($memoization2[$maxLength ?? ''])) {
-            $memoization2[$maxLength ?? ''] = $this->generateStartsWith($charTree, $minLength, $maxLength);
-        }
-
-        return $memoization2[$maxLength ?? ''];
+        return $this->startsWithMemoization[$hash];
     }
 
     /**
