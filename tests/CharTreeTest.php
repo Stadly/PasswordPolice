@@ -253,7 +253,6 @@ final class CharTreeTest extends TestCase
     public function testCanGetTreeTrimmedToZeroLength(): void
     {
         $charTree = CharTree::fromArray([
-            CharTree::fromString(''),
             CharTree::fromString('ab'),
             CharTree::fromString('ac'),
         ]);
@@ -266,14 +265,26 @@ final class CharTreeTest extends TestCase
     /**
      * @covers ::getTreeTrimmedToLength
      */
-    public function testCanGetEmptyTreeTrimmedToZeroLength(): void
+    public function testCanGetShorterTreeTrimmedToZeroLength(): void
     {
         $charTree = CharTree::fromArray([
-            CharTree::fromString('ab'),
-            CharTree::fromString('ac'),
         ]);
 
         self::assertEquals(CharTree::fromArray([
+        ]), $charTree->getTreeTrimmedToLength(0));
+    }
+
+    /**
+     * @covers ::getTreeTrimmedToLength
+     */
+    public function testCanGetEmptyStringTreeTrimmedToZeroLength(): void
+    {
+        $charTree = CharTree::fromArray([
+            CharTree::fromString(''),
+        ]);
+
+        self::assertEquals(CharTree::fromArray([
+            CharTree::fromString(''),
         ]), $charTree->getTreeTrimmedToLength(0));
     }
 
@@ -301,7 +312,7 @@ final class CharTreeTest extends TestCase
     /**
      * @covers ::getTreeTrimmedToLength
      */
-    public function testCanGetEmptyTreeTrimmedToPositiveLength(): void
+    public function testCanGetShorterTreeTrimmedToPositiveLength(): void
     {
         $charTree = CharTree::fromArray([
             CharTree::fromString('a'),
