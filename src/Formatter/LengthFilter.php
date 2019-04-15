@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Formatter;
 
-use ArrayObject;
 use InvalidArgumentException;
-use SplObjectStorage;
 use Stadly\PasswordPolice\CharTree;
 use Stadly\PasswordPolice\Formatter;
 
@@ -25,9 +23,9 @@ final class LengthFilter implements Formatter
     private $maxLength;
 
     /**
-     * @var SplObjectStorage Memoization for already filtered character trees.
+     * @var CharTree[] Memoization for already filtered character trees.
      */
-    private $filterMemoization;
+    private $filterMemoization = [];
 
     /**
      * @param int $minLength Minimum string length.
@@ -44,7 +42,7 @@ final class LengthFilter implements Formatter
 
         $this->minLength = $minLength;
         $this->maxLength = $maxLength;
-        $this->filterMemoization = new SplObjectStorage();
+        $this->filterMemoization;
     }
 
     /**
@@ -64,21 +62,14 @@ final class LengthFilter implements Formatter
      */
     private function applyInternal(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
     {
-        if (!isset($this->filterMemoization[$charTree])) {
-            $this->filterMemoization[$charTree] = new ArrayObject();
+        // When PHP 7.1 is no longer supported, change to using spl_object_id.
+        $hash = spl_object_hash($charTree).';'.$minLength.';'.$maxLength;
+
+        if (!isset($this->filterMemoization[$hash])) {
+            $this->filterMemoization[$hash] = $this->filter($charTree, $minLength, $maxLength);
         }
 
-        $memoization1 = $this->filterMemoization[$charTree];
-        if (!isset($memoization1[$minLength])) {
-            $memoization1[$minLength] = new ArrayObject();
-        }
-
-        $memoization2 = $memoization1[$minLength];
-        if (!isset($memoization2[$maxLength ?? ''])) {
-            $memoization2[$maxLength ?? ''] = $this->filter($charTree, $minLength, $maxLength);
-        }
-
-        return $memoization2[$maxLength ?? ''];
+        return $this->filterMemoization[$hash];
     }
 
     /**
