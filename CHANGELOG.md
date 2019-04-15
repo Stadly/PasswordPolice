@@ -4,25 +4,13 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.17.0...HEAD)
+## [v0.18.0](https://github.com/Stadly/PasswordPolice/compare/v0.17.0...v0.18.0) - 2019-04-15
 
 ### Added
 - Character trees are now memoized. When trying to create a character tree identical to one that has been generated previously, the previously created character tree is used. This makes formatters faster, as memoized results are not recalculated for identical character trees.
 
-### Changed
-- Nothing
-
 ### Fixed
 - Empty string character tree was converted to empty character tree in some cases.
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ## [v0.17.0](https://github.com/Stadly/PasswordPolice/compare/v0.16.1...v0.17.0) - 2019-04-12
 
