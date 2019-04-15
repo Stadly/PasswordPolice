@@ -550,7 +550,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('abc'),
             CharTree::fromString('acd'),
             CharTree::fromString('foobar'),
-            CharTree::fromString('k'),
+            CharTree::fromString('t'),
         ]);
 
         self::assertTrue($charTree->startsWith('ac'));
@@ -567,7 +567,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('abc'),
             CharTree::fromString('acd'),
             CharTree::fromString('foobar'),
-            CharTree::fromString('k'),
+            CharTree::fromString('t'),
         ]);
 
         self::assertFalse($charTree->startsWith('oba'));
@@ -584,7 +584,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('abc'),
             CharTree::fromString('acd'),
             CharTree::fromString('foobar'),
-            CharTree::fromString('k'),
+            CharTree::fromString('t'),
         ]);
 
         self::assertFalse($charTree->startsWith('bc'));
@@ -601,7 +601,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('abc'),
             CharTree::fromString('acd'),
             CharTree::fromString('foobar'),
-            CharTree::fromString('k'),
+            CharTree::fromString('t'),
         ]);
 
         self::assertTrue($charTree->startsWith('acd'));
@@ -618,7 +618,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('abc'),
             CharTree::fromString('acd'),
             CharTree::fromString('foobar'),
-            CharTree::fromString('k'),
+            CharTree::fromString('t'),
         ]);
 
         self::assertFalse($charTree->startsWith('baz'));
