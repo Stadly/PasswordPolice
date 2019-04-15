@@ -38,14 +38,14 @@ final class Coder implements Formatter
      */
     protected function applyCurrent(CharTree $charTree): CharTree
     {
-        return CharTree::fromArray($this->applyInternal($charTree));
+        return $this->applyInternal($charTree);
     }
 
     /**
      * @param CharTree $charTree Character tree to format.
-     * @return CharTree[] Coded variants of the character tree.
+     * @return CharTree Coded variant of the character tree.
      */
-    private function applyInternal(CharTree $charTree): array
+    private function applyInternal(CharTree $charTree): CharTree
     {
         if (!isset($this->codeMemoization[$charTree])) {
             $this->codeMemoization[$charTree] = $this->code($charTree);
@@ -56,20 +56,20 @@ final class Coder implements Formatter
 
     /**
      * @param CharTree $charTree Character tree to format.
-     * @return CharTree[] Coded variants of the character tree. Memoization is not used.
+     * @return CharTree Coded variant of the character tree. Memoization is not used.
      */
-    private function code(CharTree $charTree): array
+    private function code(CharTree $charTree): CharTree
     {
         $charTrees = [];
 
         foreach ($this->codeMap->getMap($charTree) as $char => $codedChars) {
-            $branches = $this->applyInternal($charTree->getBranchesAfterRoot((string)$char));
+            $branch = $this->applyInternal($charTree->getBranchesAfterRoot((string)$char));
 
             foreach ($codedChars as $codedChar) {
-                $charTrees[] = CharTree::fromString($codedChar, $branches);
+                $charTrees[] = CharTree::fromString($codedChar, [$branch]);
             }
         }
 
-        return $charTrees;
+        return CharTree::fromArray($charTrees);
     }
 }
