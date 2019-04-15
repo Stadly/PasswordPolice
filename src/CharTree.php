@@ -58,13 +58,13 @@ final class CharTree implements IteratorAggregate
         $branches = self::combineDuplicateRoots($branches);
 
         if (count($branches) === 1) {
-            if ($string === '') {
-                // If root is empty and only one branch, use it.
-                return reset($branches);
-            }
-            if (reset($branches)->root === null) {
+            $branch = reset($branches);
+            if ($branch->root === null) {
                 // If only one branch and its root is null, throw it away.
                 $branches = [];
+            } elseif ($string === '') {
+                // If root is empty string and only one branch, use it.
+                return $branch;
             }
         }
 

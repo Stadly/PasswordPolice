@@ -13,7 +13,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Fixed
-- Nothing
+- Empty string character tree was converted to empty character tree in some cases.
 
 ### Deprecated
 - Nothing
