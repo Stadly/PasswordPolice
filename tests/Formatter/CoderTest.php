@@ -43,7 +43,7 @@ final class CoderTest extends TestCase
     {
         $formatter = new Coder($this->codeMap);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('gPpCbS'),
         ]), $formatter->apply(CharTree::fromArray([
             CharTree::fromString('fOoBaR'),
@@ -57,7 +57,7 @@ final class CoderTest extends TestCase
     {
         $formatter = new Coder($this->codeMap);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('gPp'),
             CharTree::fromString('CbS'),
             CharTree::fromString('Cb{'),
@@ -90,7 +90,7 @@ final class CoderTest extends TestCase
 
         $formatter->setNext($next);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('pPg'),
             CharTree::fromString('SbC'),
         ]), $formatter->apply(CharTree::fromArray([

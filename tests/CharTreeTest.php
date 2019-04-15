@@ -46,7 +46,7 @@ final class CharTreeTest extends TestCase
     {
         $charTree = CharTree::fromString('fo');
 
-        self::assertEquals(CharTree::fromString('f', [
+        self::assertSame(CharTree::fromString('f', [
             CharTree::fromString('o'),
         ]), $charTree);
     }
@@ -60,7 +60,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString(''),
         ]);
 
-        self::assertEquals(CharTree::fromString(''), $charTree);
+        self::assertSame(CharTree::fromString(''), $charTree);
     }
 
     /**
@@ -72,7 +72,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('a'),
         ]);
 
-        self::assertEquals(CharTree::fromString('a'), $charTree);
+        self::assertSame(CharTree::fromString('a'), $charTree);
     }
 
     /**
@@ -85,7 +85,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('ab'),
         ]);
 
-        self::assertEquals(CharTree::fromString('a', [
+        self::assertSame(CharTree::fromString('a', [
             CharTree::fromString('b'),
         ]), $charTree);
     }
@@ -99,7 +99,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString(''),
         ]);
 
-        self::assertEquals(CharTree::fromString('a'), $charTree);
+        self::assertSame(CharTree::fromString('a'), $charTree);
     }
 
     /**
@@ -115,7 +115,7 @@ final class CharTreeTest extends TestCase
             ]),
         ]);
 
-        self::assertEquals(CharTree::fromString('a', [
+        self::assertSame(CharTree::fromString('a', [
             CharTree::fromString(''),
             CharTree::fromString('b'),
             CharTree::fromString('c'),
@@ -135,7 +135,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('b'),
         ]);
 
-        self::assertEquals(CharTree::fromString('a', [
+        self::assertSame(CharTree::fromString('a', [
             CharTree::fromString('b', [
                 CharTree::fromString(''),
                 CharTree::fromString('c'),
@@ -163,7 +163,7 @@ final class CharTreeTest extends TestCase
     {
         $charTree = CharTree::fromArray([]);
 
-        self::assertEquals(CharTree::fromNothing(), $charTree);
+        self::assertSame(CharTree::fromNothing(), $charTree);
     }
 
     /**
@@ -176,7 +176,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('ac'),
         ]);
 
-        self::assertEquals(CharTree::fromString('a', [
+        self::assertSame(CharTree::fromString('a', [
             CharTree::fromString('b'),
             CharTree::fromString('c'),
         ]), $charTree);
@@ -191,7 +191,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromNothing(),
         ]);
 
-        self::assertEquals(CharTree::fromNothing(), $charTree);
+        self::assertSame(CharTree::fromNothing(), $charTree);
     }
 
     /**
@@ -203,7 +203,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString(''),
         ]);
 
-        self::assertEquals(CharTree::fromString(''), $charTree);
+        self::assertSame(CharTree::fromString(''), $charTree);
     }
 
     /**
@@ -257,7 +257,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('ac'),
         ]);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString(''),
         ]), $charTree->getTreeTrimmedToLength(0));
     }
@@ -270,7 +270,7 @@ final class CharTreeTest extends TestCase
         $charTree = CharTree::fromArray([
         ]);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
         ]), $charTree->getTreeTrimmedToLength(0));
     }
 
@@ -283,7 +283,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString(''),
         ]);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString(''),
         ]), $charTree->getTreeTrimmedToLength(0));
     }
@@ -302,7 +302,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('k'),
         ]);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('ab'),
             CharTree::fromString('ac'),
             CharTree::fromString('fo'),
@@ -320,7 +320,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('k'),
         ]);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
         ]), $charTree->getTreeTrimmedToLength(3));
     }
 
@@ -338,7 +338,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('k'),
         ]);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('a'),
             CharTree::fromString('ab'),
             CharTree::fromString('abc'),
@@ -362,7 +362,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('k'),
         ]);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString(''),
             CharTree::fromString('b'),
             CharTree::fromString('bc'),
@@ -384,7 +384,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('k'),
         ]);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString(''),
             CharTree::fromString('c'),
         ]), $charTree->getBranchesAfterRoot('ab'));
@@ -405,7 +405,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('k'),
         ]);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString(''),
             CharTree::fromString('bar'),
         ]), $charTree->getBranchesAfterRoot('foo'));
@@ -423,7 +423,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('acd'),
         ]);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
         ]), $charTree->getBranchesAfterRoot('f'));
     }
 
@@ -441,7 +441,7 @@ final class CharTreeTest extends TestCase
             CharTree::fromString('k'),
         ]);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
         ]), $charTree->getBranchesAfterRoot('fu'));
     }
 
@@ -452,7 +452,7 @@ final class CharTreeTest extends TestCase
     {
         $charTree = CharTree::fromNothing();
 
-        self::assertEquals(CharTree::fromNothing(), $charTree->getBranchesAfterRoot(''));
+        self::assertSame(CharTree::fromNothing(), $charTree->getBranchesAfterRoot(''));
     }
 
     /**
@@ -462,7 +462,7 @@ final class CharTreeTest extends TestCase
     {
         $charTree = CharTree::fromString('');
 
-        self::assertEquals(CharTree::fromString(''), $charTree->getBranchesAfterRoot(''));
+        self::assertSame(CharTree::fromString(''), $charTree->getBranchesAfterRoot(''));
     }
 
     /**

@@ -23,7 +23,7 @@ final class UpperCaseConverterTest extends TestCase
     {
         $formatter = new UpperCaseConverter();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('FOOBAR'),
         ]), $formatter->apply(CharTree::fromArray([
             CharTree::fromString('fOoBaR'),
@@ -37,7 +37,7 @@ final class UpperCaseConverterTest extends TestCase
     {
         $formatter = new UpperCaseConverter();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('FOO'),
             CharTree::fromString('BAR'),
             CharTree::fromString('BAZ'),
@@ -57,7 +57,7 @@ final class UpperCaseConverterTest extends TestCase
     {
         $formatter = new UpperCaseConverter();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('ÁÁÆØÔËÑ'),
         ]), $formatter->apply(CharTree::fromArray([
             CharTree::fromString('áÁæØôËñ'),
@@ -71,7 +71,7 @@ final class UpperCaseConverterTest extends TestCase
     {
         $formatter = new UpperCaseConverter();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('FOO'),
         ]), $formatter->apply(CharTree::fromArray([
             CharTree::fromString('foo'),
@@ -105,7 +105,7 @@ final class UpperCaseConverterTest extends TestCase
 
         $formatter->setNext($next);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('OOF'),
             CharTree::fromString('RAB'),
         ]), $formatter->apply(CharTree::fromArray([

@@ -31,15 +31,52 @@ final class CharTree implements IteratorAggregate
     private $containsMemoization = [];
 
     /**
+     * @var CharTree[]
+     */
+    private static $charTreeMemoization = [];
+
+    /**
      * @param string|null $root Root of the character tree. No more than 1 character long.
      * @param self[] $branches Branches of the character tree.
      */
     private function __construct(?string $root, array $branches)
     {
+        assert($root !== null || $branches === [], 'Empty tree cannot have branches.');
         assert($root === null || mb_strlen($root) <= 1, 'Root must contain at most one character.');
 
         $this->root = $root;
         $this->branches = $branches;
+    }
+
+    /**
+     * @param string|null $root Root of the character tree. No more than 1 character long.
+     * @param self[] $branches Branches of the character tree.
+     */
+    private static function construct(?string $root, array $branches): self
+    {
+        if ($root === null) {
+            assert($branches === [], 'Empty tree cannot have branches.');
+            if (!isset(self::$charTreeMemoization['null'])) {
+                self::$charTreeMemoization['null'] = new self($root, $branches);
+            }
+            return self::$charTreeMemoization['null'];
+        }
+
+        assert(mb_strlen($root) <= 1, 'Root must contain at most one character.');
+
+        $hash = $root;
+        ksort($branches, SORT_STRING);
+        foreach ($branches as $branch) {
+            // When PHP 7.1 is no longer supported, change to using spl_object_id.
+            $branchHash = spl_object_hash($branch);
+            $hash .= ';'.$branchHash;
+        }
+
+        if (!isset(self::$charTreeMemoization[$hash])) {
+            self::$charTreeMemoization[$hash] = new self($root, $branches);
+        }
+
+        return self::$charTreeMemoization[$hash];
     }
 
     /**
@@ -68,7 +105,7 @@ final class CharTree implements IteratorAggregate
             }
         }
 
-        return new self($string, $branches);
+        return self::construct($string, $branches);
     }
 
     /**
@@ -90,7 +127,7 @@ final class CharTree implements IteratorAggregate
      */
     public static function fromNothing(): self
     {
-        return new self(null, []);
+        return self::construct(null, []);
     }
 
     /**

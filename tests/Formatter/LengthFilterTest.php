@@ -92,7 +92,7 @@ final class LengthFilterTest extends TestCase
     {
         $formatter = new LengthFilter(0, 0);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString(''),
         ]), $formatter->apply(CharTree::fromArray([
             CharTree::fromString('fOo'),
@@ -112,7 +112,7 @@ final class LengthFilterTest extends TestCase
     {
         $formatter = new LengthFilter(0, 0);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
         ]), $formatter->apply(CharTree::fromArray([
             CharTree::fromString('fOo'),
             CharTree::fromString('Ba'),
@@ -130,7 +130,7 @@ final class LengthFilterTest extends TestCase
     {
         $formatter = new LengthFilter(1, 2);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('Ba'),
             CharTree::fromString('1'),
         ]), $formatter->apply(CharTree::fromArray([
@@ -164,7 +164,7 @@ final class LengthFilterTest extends TestCase
 
         $formatter->setNext($next);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('oOf'),
             CharTree::fromString('RaB'),
             CharTree::fromString('zaB'),

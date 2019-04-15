@@ -23,7 +23,7 @@ final class MixedCaseConverterTest extends TestCase
     {
         $formatter = new MixedCaseConverter();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('foo'),
             CharTree::fromString('foO'),
             CharTree::fromString('fOo'),
@@ -44,7 +44,7 @@ final class MixedCaseConverterTest extends TestCase
     {
         $formatter = new MixedCaseConverter();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('foo'),
             CharTree::fromString('foO'),
             CharTree::fromString('fOo'),
@@ -85,7 +85,7 @@ final class MixedCaseConverterTest extends TestCase
     {
         $formatter = new MixedCaseConverter();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('áøñ'),
             CharTree::fromString('áøÑ'),
             CharTree::fromString('áØñ'),
@@ -106,7 +106,7 @@ final class MixedCaseConverterTest extends TestCase
     {
         $formatter = new MixedCaseConverter();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('foo'),
             CharTree::fromString('foO'),
             CharTree::fromString('fOo'),
@@ -147,7 +147,7 @@ final class MixedCaseConverterTest extends TestCase
 
         $formatter->setNext($next);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('oof'),
             CharTree::fromString('Oof'),
             CharTree::fromString('oOf'),

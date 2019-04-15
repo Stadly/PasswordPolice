@@ -23,7 +23,7 @@ final class CapitalizerTest extends TestCase
     {
         $formatter = new Capitalizer();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('Foobar'),
         ]), $formatter->apply(CharTree::fromArray([
             CharTree::fromString('fOoBaR'),
@@ -37,7 +37,7 @@ final class CapitalizerTest extends TestCase
     {
         $formatter = new Capitalizer();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('Foo'),
             CharTree::fromString('Bar'),
             CharTree::fromString('Baz'),
@@ -57,7 +57,7 @@ final class CapitalizerTest extends TestCase
     {
         $formatter = new Capitalizer();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('Ááæøôëñ'),
         ]), $formatter->apply(CharTree::fromArray([
             CharTree::fromString('áÁæØôËñ'),
@@ -71,7 +71,7 @@ final class CapitalizerTest extends TestCase
     {
         $formatter = new Capitalizer();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('Foo'),
         ]), $formatter->apply(CharTree::fromArray([
             CharTree::fromString('foo'),
@@ -105,7 +105,7 @@ final class CapitalizerTest extends TestCase
 
         $formatter->setNext($next);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('ooF'),
             CharTree::fromString('raB'),
         ]), $formatter->apply(CharTree::fromArray([

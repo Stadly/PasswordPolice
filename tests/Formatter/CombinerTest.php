@@ -59,7 +59,7 @@ final class CombinerTest extends TestCase
     {
         $formatter = new Combiner([$this->formatter1, $this->formatter2], false);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('oOf'),
             CharTree::fromString('RaB'),
             CharTree::fromString('foo'),
@@ -79,7 +79,7 @@ final class CombinerTest extends TestCase
     {
         $formatter = new Combiner([$this->formatter1, $this->formatter2], true);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('fOo'),
             CharTree::fromString('BaR'),
             CharTree::fromString('oOf'),
@@ -114,7 +114,7 @@ final class CombinerTest extends TestCase
 
         $formatter->setNext($next);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('fOo'),
             CharTree::fromString('BaR'),
             CharTree::fromString('oof'),

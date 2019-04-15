@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.17.0...HEAD)
 
 ### Added
-- Nothing
+- Character trees are now memoized. When trying to create a character tree identical to one that has been generated previously, the previously created character tree is used. This makes formatters faster, as memoized results are not recalculated for identical character trees.
 
 ### Changed
 - Nothing

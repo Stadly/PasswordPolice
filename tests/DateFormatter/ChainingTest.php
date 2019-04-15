@@ -67,7 +67,7 @@ final class ChainingTest extends TestCase
 
         $formatter->setNext($next);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('1002/20/30'),
             CharTree::fromString('7891/20/90'),
         ]), $formatter->apply([

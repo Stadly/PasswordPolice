@@ -63,7 +63,7 @@ final class CombinerTest extends TestCase
     {
         $formatter = new Combiner([$this->dateFormatter1, $this->dateFormatter2]);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('03/02/2001'),
             CharTree::fromString('02/03/01'),
             CharTree::fromString('07:11:19'),
@@ -97,7 +97,7 @@ final class CombinerTest extends TestCase
 
         $formatter->setNext($next);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('1002/20/30'),
             CharTree::fromString('10/30/20'),
             CharTree::fromString('91:11:70'),

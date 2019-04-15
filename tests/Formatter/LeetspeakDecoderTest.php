@@ -23,7 +23,7 @@ final class LeetspeakDecoderTest extends TestCase
     {
         $formatter = new LeetspeakDecoder();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('fOo 1337'),
             CharTree::fromString('fOo 133T'),
             CharTree::fromString('fOo 13E7'),
@@ -60,7 +60,7 @@ final class LeetspeakDecoderTest extends TestCase
     {
         $formatter = new LeetspeakDecoder();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('fXx'),
             CharTree::fromString('fXK'),
             CharTree::fromString('fKx'),
@@ -87,7 +87,7 @@ final class LeetspeakDecoderTest extends TestCase
     {
         $formatter = new LeetspeakDecoder();
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('ƒ00'),
             CharTree::fromString('ƒ0O'),
             CharTree::fromString('ƒO0'),
@@ -128,7 +128,7 @@ final class LeetspeakDecoderTest extends TestCase
 
         $formatter->setNext($next);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('xXf'),
             CharTree::fromString('KXf'),
             CharTree::fromString('xKf'),

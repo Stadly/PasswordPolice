@@ -62,7 +62,7 @@ final class SubstringGeneratorTest extends TestCase
     {
         $formatter = new SubstringGenerator(2, 3);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('fO'),
             CharTree::fromString('fOo'),
             CharTree::fromString('Oo'),
@@ -84,7 +84,7 @@ final class SubstringGeneratorTest extends TestCase
     {
         $formatter = new SubstringGenerator(1, 2);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('f'),
             CharTree::fromString('fO'),
             CharTree::fromString('O'),
@@ -118,7 +118,7 @@ final class SubstringGeneratorTest extends TestCase
     {
         $formatter = new SubstringGenerator(0, 1);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString(''),
             CharTree::fromString('f'),
             CharTree::fromString('O'),
@@ -151,7 +151,7 @@ final class SubstringGeneratorTest extends TestCase
 
         $formatter->setNext($next);
 
-        self::assertEquals(CharTree::fromArray([
+        self::assertSame(CharTree::fromArray([
             CharTree::fromString('o'),
             CharTree::fromString('oO'),
             CharTree::fromString('oOf'),
