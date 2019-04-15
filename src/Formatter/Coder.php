@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\Formatter;
 
-use SplObjectStorage;
 use Stadly\PasswordPolice\CharTree;
 use Stadly\PasswordPolice\CodeMap;
 use Stadly\PasswordPolice\Formatter;
@@ -19,9 +18,9 @@ final class Coder implements Formatter
     private $codeMap;
 
     /**
-     * @var SplObjectStorage Memoization for already coded character trees.
+     * @var CharTree[] Memoization for already coded character trees.
      */
-    private $codeMemoization;
+    private $codeMemoization = [];
 
     /**
      * @param CodeMap $codeMap Code map for coding character trees.
@@ -29,7 +28,6 @@ final class Coder implements Formatter
     public function __construct(CodeMap $codeMap)
     {
         $this->codeMap = $codeMap;
-        $this->codeMemoization = new SplObjectStorage();
     }
 
     /**
@@ -47,11 +45,14 @@ final class Coder implements Formatter
      */
     private function applyInternal(CharTree $charTree): CharTree
     {
-        if (!isset($this->codeMemoization[$charTree])) {
-            $this->codeMemoization[$charTree] = $this->code($charTree);
+        // When PHP 7.1 is no longer supported, change to using spl_object_id.
+        $hash = spl_object_hash($charTree);
+
+        if (!isset($this->codeMemoization[$hash])) {
+            $this->codeMemoization[$hash] = $this->code($charTree);
         }
 
-        return $this->codeMemoization[$charTree];
+        return $this->codeMemoization[$hash];
     }
 
     /**
