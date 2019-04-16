@@ -14,6 +14,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Fixed
 - Capitalizer discarded empty strings.
+- Coder discarded empty strings.
 
 ### Deprecated
 - Nothing

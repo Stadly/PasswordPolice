@@ -61,16 +61,20 @@ final class Coder implements Formatter
      */
     private function code(CharTree $charTree): CharTree
     {
-        $charTrees = [];
+        if ($charTree->getRoot() === null) {
+            return $charTree;
+        }
+
+        $branches = [];
 
         foreach ($this->codeMap->getMap($charTree) as $char => $codedChars) {
             $branch = $this->applyInternal($charTree->getBranchesAfterRoot((string)$char));
 
             foreach ($codedChars as $codedChar) {
-                $charTrees[] = CharTree::fromString($codedChar, [$branch]);
+                $branches[] = CharTree::fromString($codedChar, [$branch]);
             }
         }
 
-        return CharTree::fromArray($charTrees);
+        return CharTree::fromString('', $branches);
     }
 }
