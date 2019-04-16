@@ -6,16 +6,10 @@ namespace Stadly\PasswordPolice\Formatter;
 
 use Stadly\PasswordPolice\CharTree;
 use Stadly\PasswordPolice\CodeMap\MixedCaseMap;
-use Stadly\PasswordPolice\Formatter;
 
-final class MixedCaseConverter implements Formatter
+final class MixedCaseConverter extends Coder
 {
     use Chaining;
-
-    /**
-     * @var Coder Mixed case coder.
-     */
-    private $mixedCaseCoder;
 
     /**
      * @var CharTree[] Memoization of formatted character trees.
@@ -24,7 +18,7 @@ final class MixedCaseConverter implements Formatter
 
     public function __construct()
     {
-        $this->mixedCaseCoder = new Coder(new MixedCaseMap());
+        parent::__construct(new MixedCaseMap());
     }
 
     /**
@@ -37,7 +31,7 @@ final class MixedCaseConverter implements Formatter
         $hash = spl_object_hash($charTree);
 
         if (!isset(self::$memoization[$hash])) {
-            self::$memoization[$hash] = $this->mixedCaseCoder->apply($charTree);
+            self::$memoization[$hash] = $this->format($charTree);
         }
 
         return self::$memoization[$hash];
