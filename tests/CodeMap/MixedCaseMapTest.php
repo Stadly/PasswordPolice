@@ -11,6 +11,7 @@ use Stadly\PasswordPolice\CharTree;
  * @coversDefaultClass \Stadly\PasswordPolice\CodeMap\MixedCaseMap
  * @covers ::<private>
  * @covers ::<protected>
+ * @covers ::__construct
  */
 final class MixedCaseMapTest extends TestCase
 {
