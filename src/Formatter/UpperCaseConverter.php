@@ -6,16 +6,10 @@ namespace Stadly\PasswordPolice\Formatter;
 
 use Stadly\PasswordPolice\CharTree;
 use Stadly\PasswordPolice\CodeMap\UpperCaseMap;
-use Stadly\PasswordPolice\Formatter;
 
-final class UpperCaseConverter implements Formatter
+final class UpperCaseConverter extends Coder
 {
     use Chaining;
-
-    /**
-     * @var Coder Upper case coder.
-     */
-    private $upperCaseCoder;
 
     /**
      * @var CharTree[] Memoization of formatted character trees.
@@ -24,7 +18,7 @@ final class UpperCaseConverter implements Formatter
 
     public function __construct()
     {
-        $this->upperCaseCoder = new Coder(new UpperCaseMap());
+        parent::__construct(new UpperCaseMap());
     }
 
     /**
@@ -37,7 +31,7 @@ final class UpperCaseConverter implements Formatter
         $hash = spl_object_hash($charTree);
 
         if (!isset(self::$memoization[$hash])) {
-            self::$memoization[$hash] = $this->upperCaseCoder->apply($charTree);
+            self::$memoization[$hash] = $this->format($charTree);
         }
 
         return self::$memoization[$hash];
