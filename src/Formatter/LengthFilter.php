@@ -65,7 +65,7 @@ final class LengthFilter implements Formatter
         $hash = spl_object_hash($charTree).';'.$minLength.';'.$maxLength;
 
         if (!isset(self::$memoization[$hash])) {
-            self::$memoization[$hash] = $this->filter($charTree, $minLength, $maxLength);
+            self::$memoization[$hash] = $this->format($charTree, $minLength, $maxLength);
         }
 
         return self::$memoization[$hash];
@@ -77,7 +77,7 @@ final class LengthFilter implements Formatter
      * @param int|null $maxLength Maximum string length.
      * @return CharTree Length filtered variant of the character tree. Memoization is not used.
      */
-    private function filter(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
+    private function format(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
     {
         $root = $charTree->getRoot();
 
