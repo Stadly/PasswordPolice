@@ -41,4 +41,31 @@ final class UpperCaseMapTest extends TestCase
             'Ë' => ['Ë'],
         ], $codeMap->getMap($charTree), '', 0, 10, true);
     }
+
+    /**
+     * @covers ::getMap
+     */
+    public function testCanGetCodeMapForEmpty(): void
+    {
+        $codeMap = new UpperCaseMap();
+
+        $charTree = CharTree::fromArray([
+        ]);
+        self::assertEquals([
+        ], $codeMap->getMap($charTree), '', 0, 10, true);
+    }
+
+    /**
+     * @covers ::getMap
+     */
+    public function testCanGetCodeMapForEmptyString(): void
+    {
+        $codeMap = new UpperCaseMap();
+
+        $charTree = CharTree::fromArray([
+            CharTree::fromString(''),
+        ]);
+        self::assertEquals([
+        ], $codeMap->getMap($charTree), '', 0, 10, true);
+    }
 }

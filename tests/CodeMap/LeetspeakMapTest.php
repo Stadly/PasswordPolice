@@ -70,4 +70,58 @@ final class LeetspeakMapTest extends TestCase
             'Ë' => ['Ë'],
         ], $codeMap->getMap($charTree), '', 0, 10, true);
     }
+
+    /**
+     * @covers ::getMap
+     */
+    public function testCanGetEncodeMapForEmpty(): void
+    {
+        $codeMap = new LeetspeakMap(/*encode*/true);
+
+        $charTree = CharTree::fromArray([
+        ]);
+        self::assertEquals([
+        ], $codeMap->getMap($charTree), '', 0, 10, true);
+    }
+
+    /**
+     * @covers ::getMap
+     */
+    public function testCanGetEncodeMapForEmptyString(): void
+    {
+        $codeMap = new LeetspeakMap(/*encode*/true);
+
+        $charTree = CharTree::fromArray([
+            CharTree::fromString(''),
+        ]);
+        self::assertEquals([
+        ], $codeMap->getMap($charTree), '', 0, 10, true);
+    }
+
+    /**
+     * @covers ::getMap
+     */
+    public function testCanGetDecodeMapForEmpty(): void
+    {
+        $codeMap = new LeetspeakMap(/*encode*/false);
+
+        $charTree = CharTree::fromArray([
+        ]);
+        self::assertEquals([
+        ], $codeMap->getMap($charTree), '', 0, 10, true);
+    }
+
+    /**
+     * @covers ::getMap
+     */
+    public function testCanGetDecodeMapForEmptyString(): void
+    {
+        $codeMap = new LeetspeakMap(/*encode*/false);
+
+        $charTree = CharTree::fromArray([
+            CharTree::fromString(''),
+        ]);
+        self::assertEquals([
+        ], $codeMap->getMap($charTree), '', 0, 10, true);
+    }
 }
