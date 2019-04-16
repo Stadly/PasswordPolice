@@ -17,9 +17,15 @@ final class Capitalizer implements Formatter
      */
     private $lowerCaseCoder;
 
+    /**
+     * @var Truncator Formatter for extracting the first character.
+     */
+    private $charExtractor;
+
     public function __construct()
     {
         $this->lowerCaseCoder = new Coder(new LowerCaseMap());
+        $this->charExtractor = new Truncator(1);
     }
 
     /**
@@ -30,7 +36,7 @@ final class Capitalizer implements Formatter
     {
         $formatted = [];
 
-        foreach ($charTree->getTreeTrimmedToLength(1) as $char) {
+        foreach ($this->charExtractor->apply($charTree) as $char) {
             $branches = [$this->lowerCaseCoder->apply($charTree->getBranchesAfterRoot($char))];
             $formatted[] = CharTree::fromString(mb_strtoupper($char), $branches);
         }
