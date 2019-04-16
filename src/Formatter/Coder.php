@@ -38,7 +38,7 @@ class Coder implements Formatter
      * @param CharTree $charTree Character tree to format.
      * @return CharTree Coded variant of the character tree. Memoization is not used.
      */
-    private function format(CharTree $charTree): CharTree
+    protected function format(CharTree $charTree): CharTree
     {
         if ($charTree->getRoot() === null) {
             return $charTree;
