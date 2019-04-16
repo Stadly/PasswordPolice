@@ -33,7 +33,7 @@ final class CharTree implements IteratorAggregate
     /**
      * @var CharTree[] Memoization of constructed character trees.
      */
-    private static $charTreeMemoization = [];
+    private static $constructMemoization = [];
 
     /**
      * @param string|null $root Root of the character tree. No more than 1 character long.
@@ -56,10 +56,10 @@ final class CharTree implements IteratorAggregate
     {
         if ($root === null) {
             assert($branches === [], 'Empty tree cannot have branches.');
-            if (!isset(self::$charTreeMemoization['null'])) {
-                self::$charTreeMemoization['null'] = new self($root, $branches);
+            if (!isset(self::$constructMemoization['null'])) {
+                self::$constructMemoization['null'] = new self($root, $branches);
             }
-            return self::$charTreeMemoization['null'];
+            return self::$constructMemoization['null'];
         }
 
         assert(mb_strlen($root) <= 1, 'Root must contain at most one character.');
@@ -72,11 +72,11 @@ final class CharTree implements IteratorAggregate
             $hash .= ';'.$branchHash;
         }
 
-        if (!isset(self::$charTreeMemoization[$hash])) {
-            self::$charTreeMemoization[$hash] = new self($root, $branches);
+        if (!isset(self::$constructMemoization[$hash])) {
+            self::$constructMemoization[$hash] = new self($root, $branches);
         }
 
-        return self::$charTreeMemoization[$hash];
+        return self::$constructMemoization[$hash];
     }
 
     /**
