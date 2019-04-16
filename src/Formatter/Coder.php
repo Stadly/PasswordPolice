@@ -18,9 +18,9 @@ final class Coder implements Formatter
     private $codeMap;
 
     /**
-     * @var CharTree[] Memoization for already coded character trees.
+     * @var CharTree[] Memoization of formatted character trees.
      */
-    private $codeMemoization = [];
+    private $memoization = [];
 
     /**
      * @param CodeMap $codeMap Code map for coding character trees.
@@ -48,11 +48,11 @@ final class Coder implements Formatter
         // When PHP 7.1 is no longer supported, change to using spl_object_id.
         $hash = spl_object_hash($charTree);
 
-        if (!isset($this->codeMemoization[$hash])) {
-            $this->codeMemoization[$hash] = $this->code($charTree);
+        if (!isset($this->memoization[$hash])) {
+            $this->memoization[$hash] = $this->code($charTree);
         }
 
-        return $this->codeMemoization[$hash];
+        return $this->memoization[$hash];
     }
 
     /**
