@@ -10,7 +10,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Truncator formatter truncating strings that are longer than the length limit.
 
 ### Changed
-- Nothing
+- Memoization for length filter is done across instances.
 
 ### Fixed
 - Capitalizer discarded empty strings.

@@ -25,7 +25,7 @@ final class LengthFilter implements Formatter
     /**
      * @var CharTree[] Memoization for already filtered character trees.
      */
-    private $filterMemoization = [];
+    private static $filterMemoization = [];
 
     /**
      * @param int $minLength Minimum string length.
@@ -64,11 +64,11 @@ final class LengthFilter implements Formatter
         // When PHP 7.1 is no longer supported, change to using spl_object_id.
         $hash = spl_object_hash($charTree).';'.$minLength.';'.$maxLength;
 
-        if (!isset($this->filterMemoization[$hash])) {
-            $this->filterMemoization[$hash] = $this->filter($charTree, $minLength, $maxLength);
+        if (!isset(self::$filterMemoization[$hash])) {
+            self::$filterMemoization[$hash] = $this->filter($charTree, $minLength, $maxLength);
         }
 
-        return $this->filterMemoization[$hash];
+        return self::$filterMemoization[$hash];
     }
 
     /**
