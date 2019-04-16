@@ -77,7 +77,7 @@ final class LengthFilterTest extends TestCase
     /**
      * @covers ::apply
      */
-    public function testTheSameIsReturnedWhenFilteringNull(): void
+    public function testTheSameIsReturnedWhenFilteringEmpty(): void
     {
         $formatter = new LengthFilter(0, 2);
 
@@ -88,7 +88,7 @@ final class LengthFilterTest extends TestCase
     /**
      * @covers ::apply
      */
-    public function testEmptyStringIsReturnedWhenMaxLenghtIsNullAndCharTreeContainsEmptyString(): void
+    public function testEmptyStringIsReturnedWhenMaxLengthIsZeroAndCharTreeContainsEmptyString(): void
     {
         $formatter = new LengthFilter(0, 0);
 
@@ -108,7 +108,7 @@ final class LengthFilterTest extends TestCase
     /**
      * @covers ::apply
      */
-    public function testNothingIsReturnedWhenMaxLenghtIsNullAndCharTreeDoesNotContainEmptyString(): void
+    public function testNothingIsReturnedWhenMaxLengthIsZeroAndCharTreeDoesNotContainEmptyString(): void
     {
         $formatter = new LengthFilter(0, 0);
 
