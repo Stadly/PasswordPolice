@@ -58,6 +58,32 @@ final class SubstringGeneratorTest extends TestCase
     /**
      * @covers ::apply
      */
+    public function testCanFormatEmptyCharacterTree(): void
+    {
+        $formatter = new SubstringGenerator(0, null);
+
+        self::assertSame(CharTree::fromArray([
+        ]), $formatter->apply(CharTree::fromArray([
+        ])));
+    }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanFormatEmptyStringCharacterTree(): void
+    {
+        $formatter = new SubstringGenerator(0, null);
+
+        self::assertSame(CharTree::fromArray([
+            CharTree::fromString(''),
+        ]), $formatter->apply(CharTree::fromArray([
+            CharTree::fromString(''),
+        ])));
+    }
+
+    /**
+     * @covers ::apply
+     */
     public function testCanFormatCharacterPath(): void
     {
         $formatter = new SubstringGenerator(2, 3);
