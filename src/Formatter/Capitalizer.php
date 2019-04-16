@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Formatter;
 
 use Stadly\PasswordPolice\CharTree;
-use Stadly\PasswordPolice\CodeMap\LowerCaseMap;
 use Stadly\PasswordPolice\Formatter;
 
 final class Capitalizer implements Formatter
@@ -13,9 +12,9 @@ final class Capitalizer implements Formatter
     use Chaining;
 
     /**
-     * @var Coder Lower case coder.
+     * @var LowerCaseConverter Lower case converter.
      */
-    private $lowerCaseCoder;
+    private $lowerCaseConverter;
 
     /**
      * @var Truncator Formatter for extracting the first character.
@@ -24,7 +23,7 @@ final class Capitalizer implements Formatter
 
     public function __construct()
     {
-        $this->lowerCaseCoder = new Coder(new LowerCaseMap());
+        $this->lowerCaseConverter = new LowerCaseConverter();
         $this->charExtractor = new Truncator(1);
     }
 
@@ -37,7 +36,7 @@ final class Capitalizer implements Formatter
         $formatted = [];
 
         foreach ($this->charExtractor->apply($charTree) as $char) {
-            $branches = [$this->lowerCaseCoder->apply($charTree->getBranchesAfterRoot($char))];
+            $branches = [$this->lowerCaseConverter->apply($charTree->getBranchesAfterRoot($char))];
             $formatted[] = CharTree::fromString(mb_strtoupper($char), $branches);
         }
 
