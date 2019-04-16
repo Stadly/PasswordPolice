@@ -49,7 +49,7 @@ final class Coder implements Formatter
         $hash = spl_object_hash($charTree);
 
         if (!isset($this->memoization[$hash])) {
-            $this->memoization[$hash] = $this->code($charTree);
+            $this->memoization[$hash] = $this->format($charTree);
         }
 
         return $this->memoization[$hash];
@@ -59,7 +59,7 @@ final class Coder implements Formatter
      * @param CharTree $charTree Character tree to format.
      * @return CharTree Coded variant of the character tree. Memoization is not used.
      */
-    private function code(CharTree $charTree): CharTree
+    private function format(CharTree $charTree): CharTree
     {
         if ($charTree->getRoot() === null) {
             return $charTree;
