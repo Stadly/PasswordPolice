@@ -17,6 +17,11 @@ final class MixedCaseConverter implements Formatter
      */
     private $mixedCaseCoder;
 
+    /**
+     * @var CharTree[] Memoization of formatted character trees.
+     */
+    private static $memoization = [];
+
     public function __construct()
     {
         $this->mixedCaseCoder = new Coder(new MixedCaseMap());
@@ -28,6 +33,13 @@ final class MixedCaseConverter implements Formatter
      */
     protected function applyCurrent(CharTree $charTree): CharTree
     {
-        return $this->mixedCaseCoder->apply($charTree);
+        // When PHP 7.1 is no longer supported, change to using spl_object_id.
+        $hash = spl_object_hash($charTree);
+
+        if (!isset($this->memoization[$hash])) {
+            $this->memoization[$hash] = $this->mixedCaseCoder->apply($charTree);
+        }
+
+        return $this->memoization[$hash];
     }
 }
