@@ -11,27 +11,27 @@ use Traversable;
 final class CharTree implements IteratorAggregate
 {
     /**
-     * @var string|null
+     * @var string|null Root of the character tree. No more than 1 character long.
      */
     private $root;
 
     /**
-     * @var self[]
+     * @var self[] Branches of the character tree.
      */
     private $branches = [];
 
     /**
-     * @var bool[]
+     * @var bool[] Memoization of startsWith().
      */
     private $startsWithMemoization = [];
 
     /**
-     * @var bool[]
+     * @var bool[] Memoization of contains().
      */
     private $containsMemoization = [];
 
     /**
-     * @var CharTree[]
+     * @var CharTree[] Memoization of constructed character trees.
      */
     private static $charTreeMemoization = [];
 
