@@ -8,7 +8,7 @@ use Stadly\PasswordPolice\CharTree;
 use Stadly\PasswordPolice\CodeMap;
 use Stadly\PasswordPolice\Formatter;
 
-final class Coder implements Formatter
+class Coder implements Formatter
 {
     use Chaining;
 
