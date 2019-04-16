@@ -17,6 +17,11 @@ final class LowerCaseConverter implements Formatter
      */
     private $lowerCaseCoder;
 
+    /**
+     * @var CharTree[] Memoization of formatted character trees.
+     */
+    private static $memoization = [];
+
     public function __construct()
     {
         $this->lowerCaseCoder = new Coder(new LowerCaseMap());
@@ -28,6 +33,13 @@ final class LowerCaseConverter implements Formatter
      */
     protected function applyCurrent(CharTree $charTree): CharTree
     {
-        return $this->lowerCaseCoder->apply($charTree);
+        // When PHP 7.1 is no longer supported, change to using spl_object_id.
+        $hash = spl_object_hash($charTree);
+
+        if (!isset($this->memoization[$hash])) {
+            $this->memoization[$hash] = $this->lowerCaseCoder->apply($charTree);
+        }
+
+        return $this->memoization[$hash];
     }
 }

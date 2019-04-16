@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - Truncator formatter truncating strings that are longer than the length limit.
 - Memoization for leetspeak decoder.
+- Memoization for lower case converter.
 
 ### Changed
 - Memoization for length filter is done across instances.
