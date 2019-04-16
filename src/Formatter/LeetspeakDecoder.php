@@ -6,16 +6,10 @@ namespace Stadly\PasswordPolice\Formatter;
 
 use Stadly\PasswordPolice\CharTree;
 use Stadly\PasswordPolice\CodeMap\LeetspeakMap;
-use Stadly\PasswordPolice\Formatter;
 
-final class LeetspeakDecoder implements Formatter
+final class LeetspeakDecoder extends Coder
 {
     use Chaining;
-
-    /**
-     * @var Coder Leetspeak coder.
-     */
-    private $leetspeakCoder;
 
     /**
      * @var CharTree[] Memoization of formatted character trees.
@@ -24,7 +18,7 @@ final class LeetspeakDecoder implements Formatter
 
     public function __construct()
     {
-        $this->leetspeakCoder = new Coder(new LeetspeakMap());
+        parent::__construct(new LeetspeakMap());
     }
 
     /**
@@ -37,7 +31,7 @@ final class LeetspeakDecoder implements Formatter
         $hash = spl_object_hash($charTree);
 
         if (!isset(self::$memoization[$hash])) {
-            self::$memoization[$hash] = $this->leetspeakCoder->apply($charTree);
+            self::$memoization[$hash] = $this->format($charTree);
         }
 
         return self::$memoization[$hash];
