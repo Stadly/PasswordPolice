@@ -198,43 +198,6 @@ final class CharTree implements IteratorAggregate
     }
 
     /**
-     * @param int $length Length of each string in the character tree.
-     * @return self Character tree containing the $length first characters of this character tree.
-     */
-    public function getTreeTrimmedToLength(int $length): self
-    {
-        if ($length < 0) {
-            throw new InvalidArgumentException('Length must be non-negative.');
-        }
-
-        if ($this->root === null) {
-            return $this;
-        }
-
-        if ($length === 0) {
-            return self::fromString('');
-        }
-
-        $branches = [];
-        $rootLength = mb_strlen($this->root);
-        if ($rootLength < $length) {
-            $branchLength = $length-$rootLength;
-            foreach ($this->branches as $branch) {
-                $branchTree = $branch->getTreeTrimmedToLength($branchLength);
-                if ($branchTree->root !== null) {
-                    $branches[] = $branchTree;
-                }
-            }
-
-            if ($branches === []) {
-                return self::fromNothing();
-            }
-        }
-
-        return self::fromString($this->root, $branches);
-    }
-
-    /**
      * @param string $root Root that comes before the brances.
      * @return self Character tree containing the branches of this character tree that come after $root.
      */

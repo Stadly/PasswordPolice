@@ -24,7 +24,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Removed
-- Nothing
+- `CharTree::getTreeTrimmedToLength`. Use truncator combined with length filter instead.
 
 ### Security
 - Nothing
