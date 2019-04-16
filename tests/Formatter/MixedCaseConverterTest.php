@@ -19,6 +19,32 @@ final class MixedCaseConverterTest extends TestCase
     /**
      * @covers ::apply
      */
+    public function testCanFormatEmptyCharacterTree(): void
+    {
+        $formatter = new MixedCaseConverter();
+
+        self::assertSame(CharTree::fromArray([
+        ]), $formatter->apply(CharTree::fromArray([
+        ])));
+    }
+
+    /**
+     * @covers ::apply
+     */
+    public function testCanFormatEmptyStringCharacterTree(): void
+    {
+        $formatter = new MixedCaseConverter();
+
+        self::assertSame(CharTree::fromArray([
+            CharTree::fromString(''),
+        ]), $formatter->apply(CharTree::fromArray([
+            CharTree::fromString(''),
+        ])));
+    }
+
+    /**
+     * @covers ::apply
+     */
     public function testCanFormatCharacterPath(): void
     {
         $formatter = new MixedCaseConverter();
