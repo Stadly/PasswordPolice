@@ -15,6 +15,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Fixed
 - Capitalizer discarded empty strings.
 - Coder discarded empty strings.
+- Leetspeak decoder discarded empty strings.
+- Lower case converter discarded empty strings.
+- Mixed case converter discarded empty strings.
+- Upper case converter discarded empty strings.
 
 ### Deprecated
 - Nothing
