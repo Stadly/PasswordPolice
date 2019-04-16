@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Memoization for leetspeak decoder.
 - Memoization for lower case converter.
 - Memoization for mixed case converter.
+- Memoization for upper case converter.
 
 ### Changed
 - Memoization for length filter is done across instances.

@@ -17,6 +17,11 @@ final class UpperCaseConverter implements Formatter
      */
     private $upperCaseCoder;
 
+    /**
+     * @var CharTree[] Memoization of formatted character trees.
+     */
+    private static $memoization = [];
+
     public function __construct()
     {
         $this->upperCaseCoder = new Coder(new UpperCaseMap());
@@ -28,6 +33,13 @@ final class UpperCaseConverter implements Formatter
      */
     protected function applyCurrent(CharTree $charTree): CharTree
     {
-        return $this->upperCaseCoder->apply($charTree);
+        // When PHP 7.1 is no longer supported, change to using spl_object_id.
+        $hash = spl_object_hash($charTree);
+
+        if (!isset($this->memoization[$hash])) {
+            $this->memoization[$hash] = $this->upperCaseCoder->apply($charTree);
+        }
+
+        return $this->memoization[$hash];
     }
 }
