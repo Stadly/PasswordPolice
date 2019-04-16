@@ -42,7 +42,6 @@ final class LengthFilter implements Formatter
 
         $this->minLength = $minLength;
         $this->maxLength = $maxLength;
-        $this->filterMemoization;
     }
 
     /**

@@ -48,7 +48,6 @@ final class LeetspeakMap implements CodeMap
                 $this->codeMap[mb_strlen($char)][mb_strtoupper($char)] = $codedChars;
             }
         } else {
-            $codeMap = [];
             foreach (self::ENCODE_MAP as $char => $codedChars) {
                 foreach ($codedChars as $codedChar) {
                     $this->codeMap[mb_strlen($codedChar)][mb_strtoupper($codedChar)][] = $char;
