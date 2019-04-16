@@ -28,8 +28,11 @@ final class CoderTest extends TestCase
         $this->codeMap->method('getMap')->willReturnCallback(
             static function (CharTree $charTree): array {
                 $codeMap = [];
-                foreach ($charTree->getTreeTrimmedToLength(1) as $char) {
-                    $codeMap[$char] = [chr(ord($char)+1)];
+                foreach ($charTree as $string) {
+                    $char = mb_substr($string, 0, 1);
+                    if ($char !== '') {
+                        $codeMap[$char] = [chr(ord($char)+1)];
+                    }
                 }
                 return $codeMap;
             }
