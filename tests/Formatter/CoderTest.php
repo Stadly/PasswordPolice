@@ -44,7 +44,7 @@ final class CoderTest extends TestCase
      */
     public function testCanFormatEmptyCharacterTree(): void
     {
-        $formatter = new Coder($this->codeMap);
+        $formatter = new CoderClass($this->codeMap);
 
         self::assertSame(CharTree::fromArray([
         ]), $formatter->apply(CharTree::fromArray([
@@ -56,7 +56,7 @@ final class CoderTest extends TestCase
      */
     public function testCanFormatEmptyStringCharacterTree(): void
     {
-        $formatter = new Coder($this->codeMap);
+        $formatter = new CoderClass($this->codeMap);
 
         self::assertSame(CharTree::fromArray([
             CharTree::fromString(''),
@@ -70,7 +70,7 @@ final class CoderTest extends TestCase
      */
     public function testCanFormatCharacterPath(): void
     {
-        $formatter = new Coder($this->codeMap);
+        $formatter = new CoderClass($this->codeMap);
 
         self::assertSame(CharTree::fromArray([
             CharTree::fromString('gPpCbS'),
@@ -84,7 +84,7 @@ final class CoderTest extends TestCase
      */
     public function testCanFormatCharacterTree(): void
     {
-        $formatter = new Coder($this->codeMap);
+        $formatter = new CoderClass($this->codeMap);
 
         self::assertSame(CharTree::fromArray([
             CharTree::fromString('gPp'),
@@ -104,7 +104,7 @@ final class CoderTest extends TestCase
      */
     public function testCanApplyFormatterChain(): void
     {
-        $formatter = new Coder($this->codeMap);
+        $formatter = new CoderClass($this->codeMap);
 
         $next = $this->createMock(Formatter::class);
         $next->method('apply')->willReturnCallback(

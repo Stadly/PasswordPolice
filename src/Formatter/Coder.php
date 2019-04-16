@@ -8,10 +8,8 @@ use Stadly\PasswordPolice\CharTree;
 use Stadly\PasswordPolice\CodeMap;
 use Stadly\PasswordPolice\Formatter;
 
-class Coder implements Formatter
+abstract class Coder implements Formatter
 {
-    use Chaining;
-
     /**
      * @var CodeMap Code map for coding character trees.
      */
@@ -29,10 +27,7 @@ class Coder implements Formatter
      * @param CharTree $charTree Character tree to format.
      * @return CharTree Coded variant of the character tree.
      */
-    protected function applyCurrent(CharTree $charTree): CharTree
-    {
-        return $this->format($charTree);
-    }
+    abstract protected function applyCurrent(CharTree $charTree): CharTree;
 
     /**
      * @param CharTree $charTree Character tree to format.
