@@ -63,7 +63,7 @@ final class LeetspeakMap implements CodeMap
         }
         foreach (array_keys($this->codeMap + [1 => true]) as $length) {
             $truncator = new Truncator($length);
-            $truncator->setNext(new LengthFilter($length));
+            $truncator->setNext(new LengthFilter($length, $length));
             $this->charExtractors[$length] = $truncator;
         }
     }

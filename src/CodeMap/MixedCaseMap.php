@@ -19,7 +19,7 @@ final class MixedCaseMap implements CodeMap
     public function __construct()
     {
         $this->charExtractor = new Truncator(1);
-        $this->charExtractor->setNext(new LengthFilter(1));
+        $this->charExtractor->setNext(new LengthFilter(1, 1));
     }
 
     /**
