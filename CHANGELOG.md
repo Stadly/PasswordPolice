@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 - Memoization for length filter is done across instances.
+- Memoization for substring generator is done across instances.
 
 ### Fixed
 - Capitalizer discarded empty strings.

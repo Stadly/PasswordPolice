@@ -25,12 +25,12 @@ final class SubstringGenerator implements Formatter
     /**
      * @var CharTree[] Memoization for already filtered character trees.
      */
-    private $substringMemoization = [];
+    private static $substringMemoization = [];
 
     /**
      * @var CharTree[] Memoization for already filtered character trees.
      */
-    private $startsWithMemoization = [];
+    private static $startsWithMemoization = [];
 
     /**
      * @param int $minLength Ignore substrings shorter than this.
@@ -69,11 +69,11 @@ final class SubstringGenerator implements Formatter
         // When PHP 7.1 is no longer supported, change to using spl_object_id.
         $hash = spl_object_hash($charTree).';'.$minLength.';'.$maxLength;
 
-        if (!isset($this->substringMemoization[$hash])) {
-            $this->substringMemoization[$hash] = $this->generate($charTree, $minLength, $maxLength);
+        if (!isset(self::$substringMemoization[$hash])) {
+            self::$substringMemoization[$hash] = $this->generate($charTree, $minLength, $maxLength);
         }
 
-        return $this->substringMemoization[$hash];
+        return self::$substringMemoization[$hash];
     }
 
     /**
@@ -145,11 +145,11 @@ final class SubstringGenerator implements Formatter
         // When PHP 7.1 is no longer supported, change to using spl_object_id.
         $hash = spl_object_hash($charTree).';'.$minLength.';'.$maxLength;
 
-        if (!isset($this->startsWithMemoization[$hash])) {
-            $this->startsWithMemoization[$hash] = $this->generateStartsWith($charTree, $minLength, $maxLength);
+        if (!isset(self::$startsWithMemoization[$hash])) {
+            self::$startsWithMemoization[$hash] = $this->generateStartsWith($charTree, $minLength, $maxLength);
         }
 
-        return $this->startsWithMemoization[$hash];
+        return self::$startsWithMemoization[$hash];
     }
 
     /**
