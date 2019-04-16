@@ -36,10 +36,10 @@ final class LowerCaseConverter implements Formatter
         // When PHP 7.1 is no longer supported, change to using spl_object_id.
         $hash = spl_object_hash($charTree);
 
-        if (!isset($this->memoization[$hash])) {
-            $this->memoization[$hash] = $this->lowerCaseCoder->apply($charTree);
+        if (!isset(self::$memoization[$hash])) {
+            self::$memoization[$hash] = $this->lowerCaseCoder->apply($charTree);
         }
 
-        return $this->memoization[$hash];
+        return self::$memoization[$hash];
     }
 }
