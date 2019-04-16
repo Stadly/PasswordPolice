@@ -17,6 +17,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Memoization for length filter is done across instances.
 - Memoization for substring generator is done across instances.
 - Memoization for truncator is done across instances.
+- Coder does no longer have memoization.
 
 ### Fixed
 - Capitalizer discarded empty strings.
