@@ -54,7 +54,7 @@ final class Truncator implements Formatter
         $hash = spl_object_hash($charTree).';'.$length;
 
         if (!isset(self::$memoization[$hash])) {
-            self::$memoization[$hash] = $this->truncate($charTree, $length);
+            self::$memoization[$hash] = $this->format($charTree, $length);
         }
 
         return self::$memoization[$hash];
@@ -65,7 +65,7 @@ final class Truncator implements Formatter
      * @param int $length Maximum string length.
      * @return CharTree Truncated variant of the character tree. Memoization is not used.
      */
-    private function truncate(CharTree $charTree, int $length): CharTree
+    private function format(CharTree $charTree, int $length): CharTree
     {
         $root = $charTree->getRoot();
 
