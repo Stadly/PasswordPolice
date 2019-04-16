@@ -23,12 +23,12 @@ final class SubstringGenerator implements Formatter
     private $maxLength;
 
     /**
-     * @var CharTree[] Memoization for already filtered character trees.
+     * @var CharTree[] Memoization of formatted character trees.
      */
-    private static $substringMemoization = [];
+    private static $memoization = [];
 
     /**
-     * @var CharTree[] Memoization for already filtered character trees.
+     * @var CharTree[] Memoization of intermediate results of formatted character trees.
      */
     private static $startsWithMemoization = [];
 
@@ -69,11 +69,11 @@ final class SubstringGenerator implements Formatter
         // When PHP 7.1 is no longer supported, change to using spl_object_id.
         $hash = spl_object_hash($charTree).';'.$minLength.';'.$maxLength;
 
-        if (!isset(self::$substringMemoization[$hash])) {
-            self::$substringMemoization[$hash] = $this->generate($charTree, $minLength, $maxLength);
+        if (!isset(self::$memoization[$hash])) {
+            self::$memoization[$hash] = $this->generate($charTree, $minLength, $maxLength);
         }
 
-        return self::$substringMemoization[$hash];
+        return self::$memoization[$hash];
     }
 
     /**
