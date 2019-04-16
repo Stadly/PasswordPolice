@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.18.0...HEAD)
 
 ### Added
-- Nothing
+- Truncator formatter truncating strings that are longer than the length limit.
 
 ### Changed
 - Nothing
