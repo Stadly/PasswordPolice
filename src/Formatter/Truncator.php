@@ -18,9 +18,9 @@ final class Truncator implements Formatter
     private $length;
 
     /**
-     * @var CharTree[] Memoization for already truncated character trees.
+     * @var CharTree[] Memoization of formatted character trees.
      */
-    private static $truncateMemoization = [];
+    private static $memoization = [];
 
     /**
      * @param int $length Maximum string length.
@@ -53,11 +53,11 @@ final class Truncator implements Formatter
         // When PHP 7.1 is no longer supported, change to using spl_object_id.
         $hash = spl_object_hash($charTree).';'.$length;
 
-        if (!isset(self::$truncateMemoization[$hash])) {
-            self::$truncateMemoization[$hash] = $this->truncate($charTree, $length);
+        if (!isset(self::$memoization[$hash])) {
+            self::$memoization[$hash] = $this->truncate($charTree, $length);
         }
 
-        return self::$truncateMemoization[$hash];
+        return self::$memoization[$hash];
     }
 
     /**
