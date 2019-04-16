@@ -104,7 +104,7 @@ final class LengthFilter implements Formatter
                 if ($branchMinLength === 0) {
                     $filteredBranches[] = $branch;
                 }
-            } elseif (0 < $branchMaxLength) {
+            } elseif ($branchMaxLength === null || 0 < $branchMaxLength) {
                 $filteredBranch = $this->applyInternal($branch, $branchMinLength, $branchMaxLength);
                 if ($filteredBranch->getRoot() !== null) {
                     $filteredBranches[] = $filteredBranch;

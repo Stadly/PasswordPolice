@@ -126,6 +126,30 @@ final class LengthFilterTest extends TestCase
     /**
      * @covers ::apply
      */
+    public function testCanFormatCharacterTreeWhenMaxLengthIsUnbounded(): void
+    {
+        $formatter = new LengthFilter(2, null);
+
+        self::assertSame(CharTree::fromArray([
+            CharTree::fromString('fOo'),
+            CharTree::fromString('Ba'),
+            CharTree::fromString('BaR'),
+            CharTree::fromString('Baz'),
+            CharTree::fromString('123'),
+        ]), $formatter->apply(CharTree::fromArray([
+            CharTree::fromString('fOo'),
+            CharTree::fromString('Ba'),
+            CharTree::fromString('BaR'),
+            CharTree::fromString('Baz'),
+            CharTree::fromString(''),
+            CharTree::fromString('1'),
+            CharTree::fromString('123'),
+        ])));
+    }
+
+    /**
+     * @covers ::apply
+     */
     public function testCanFormatCharacterTree(): void
     {
         $formatter = new LengthFilter(1, 2);
