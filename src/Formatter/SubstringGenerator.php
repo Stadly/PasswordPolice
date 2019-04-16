@@ -70,7 +70,7 @@ final class SubstringGenerator implements Formatter
         $hash = spl_object_hash($charTree).';'.$minLength.';'.$maxLength;
 
         if (!isset(self::$memoization[$hash])) {
-            self::$memoization[$hash] = $this->generate($charTree, $minLength, $maxLength);
+            self::$memoization[$hash] = $this->format($charTree, $minLength, $maxLength);
         }
 
         return self::$memoization[$hash];
@@ -82,18 +82,18 @@ final class SubstringGenerator implements Formatter
      * @param int|null $maxLength Maximum substring length.
      * @return CharTree Substrings of the character tree. Memoization is not used.
      */
-    private function generate(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
+    private function format(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
     {
         $charTrees = [];
 
-        $containsCharTree = $this->generateContains($charTree, $minLength, $maxLength);
-        if ($containsCharTree->getRoot() !== null) {
-            $charTrees[] = $containsCharTree;
+        $notStartingWithRoot = $this->generateNotStartingWithRoot($charTree, $minLength, $maxLength);
+        if ($notStartingWithRoot->getRoot() !== null) {
+            $charTrees[] = $notStartingWithRoot;
         }
 
-        $startsWithCharTree = $this->applyInternalStartsWith($charTree, $minLength, $maxLength);
-        if ($startsWithCharTree->getRoot() !== null) {
-            $charTrees[] = $startsWithCharTree;
+        $startingWithRoot = $this->applyInternalStartingWithRoot($charTree, $minLength, $maxLength);
+        if ($startingWithRoot->getRoot() !== null) {
+            $charTrees[] = $startingWithRoot;
         }
 
         return CharTree::fromArray($charTrees);
@@ -105,7 +105,7 @@ final class SubstringGenerator implements Formatter
      * @param int|null $maxLength Maximum substring length.
      * @return CharTree Substrings of the character tree not starting with root.
      */
-    private function generateContains(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
+    private function generateNotStartingWithRoot(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
     {
         $root = $charTree->getRoot();
 
@@ -140,13 +140,13 @@ final class SubstringGenerator implements Formatter
      * @param int|null $maxLength Maximum substring length.
      * @return CharTree Substrings of the character tree starting with root.
      */
-    private function applyInternalStartsWith(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
+    private function applyInternalStartingWithRoot(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
     {
         // When PHP 7.1 is no longer supported, change to using spl_object_id.
         $hash = spl_object_hash($charTree).';'.$minLength.';'.$maxLength;
 
         if (!isset(self::$startsWithMemoization[$hash])) {
-            self::$startsWithMemoization[$hash] = $this->generateStartsWith($charTree, $minLength, $maxLength);
+            self::$startsWithMemoization[$hash] = $this->generateStartingWithRoot($charTree, $minLength, $maxLength);
         }
 
         return self::$startsWithMemoization[$hash];
@@ -158,7 +158,7 @@ final class SubstringGenerator implements Formatter
      * @param int|null $maxLength Maximum substring length.
      * @return CharTree Substrings of the character tree starting with root. Memoization is not used.
      */
-    private function generateStartsWith(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
+    private function generateStartingWithRoot(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
     {
         $root = $charTree->getRoot();
 
@@ -174,7 +174,7 @@ final class SubstringGenerator implements Formatter
 
             $substringBranches = [];
             foreach ($branches as $branch) {
-                $substringBranch = $this->applyInternalStartsWith($branch, $branchMinLength, $branchMaxLength);
+                $substringBranch = $this->applyInternalStartingWithRoot($branch, $branchMinLength, $branchMaxLength);
                 if ($substringBranch->getRoot() !== null) {
                     $substringBranches[] = $substringBranch;
                 }
