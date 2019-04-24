@@ -21,7 +21,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Removed
-- Nothing
+- Possibility to get code map for root of character tree.
 
 ### Security
 - Nothing

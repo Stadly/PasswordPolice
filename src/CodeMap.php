@@ -10,12 +10,6 @@ namespace Stadly\PasswordPolice;
 interface CodeMap
 {
     /**
-     * @param CharTree $charTree Character tree to get code map for.
-     * @return array<string|int, string[]> Map for coding the root of the character tree.
-     */
-    public function getMap(CharTree $charTree): array;
-
-    /**
      * @return int[] Distinct lengths of entries in the code map.
      */
     public function getLengths(): array;
