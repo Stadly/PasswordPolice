@@ -151,7 +151,7 @@ final class PolicyTest extends TestCase
 
         self::assertEquals([
             new ValidationError('foo', '', $this->unsatisfiedRule, 1),
-        ], $policy->validate(''));
+        ], $policy->validate(''), '', 0, 10, /*Canonicalization does not work*/false);
     }
 
     /**
