@@ -25,16 +25,11 @@ final class CoderTest extends TestCase
     protected function setUp(): void
     {
         $this->codeMap = $this->createMock(CodeMap::class);
-        $this->codeMap->method('getMap')->willReturnCallback(
-            static function (CharTree $charTree): array {
-                $codeMap = [];
-                foreach ($charTree as $string) {
-                    $char = mb_substr($string, 0, 1);
-                    if ($char !== '') {
-                        $codeMap[$char] = [chr(ord($char)+1)];
-                    }
-                }
-                return $codeMap;
+        $this->codeMap->method('getLengths')->willReturn([1]);
+        $this->codeMap->method('code')->willReturnCallback(
+            static function (string $string): array {
+                $char = mb_substr($string, 0, 1);
+                return [chr(ord($char)+1)];
             }
         );
     }
