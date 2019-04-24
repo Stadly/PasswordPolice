@@ -91,4 +91,12 @@ final class LeetspeakMap implements CodeMap
 
         return $codeMap;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLengths(): array
+    {
+        return array_keys($this->codeMap);
+    }
 }

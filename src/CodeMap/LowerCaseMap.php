@@ -33,4 +33,12 @@ final class LowerCaseMap implements CodeMap
         }
         return $codeMap;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLengths(): array
+    {
+        return [1];
+    }
 }

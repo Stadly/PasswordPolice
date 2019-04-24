@@ -14,4 +14,9 @@ interface CodeMap
      * @return array<string|int, string[]> Map for coding the root of the character tree.
      */
     public function getMap(CharTree $charTree): array;
+
+    /**
+     * @return int[] Distinct lengths of entries in the code map.
+     */
+    public function getLengths(): array;
 }

@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Character tree cutter separating a string root of specified length from the rest of the tree.
+- Possible to get length of entries in code maps.
 
 ### Changed
 - Nothing

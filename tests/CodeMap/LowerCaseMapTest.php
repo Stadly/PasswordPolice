@@ -69,4 +69,16 @@ final class LowerCaseMapTest extends TestCase
         self::assertEquals([
         ], $codeMap->getMap($charTree), '', 0, 10, true);
     }
+
+    /**
+     * @covers ::getLengths
+     */
+    public function testCanGetLengths(): void
+    {
+        $codeMap = new LowerCaseMap();
+
+        self::assertEquals([
+            1,
+        ], $codeMap->getLengths(), '', 0, 10, true);
+    }
 }

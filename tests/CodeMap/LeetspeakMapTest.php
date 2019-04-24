@@ -124,4 +124,29 @@ final class LeetspeakMapTest extends TestCase
         self::assertEquals([
         ], $codeMap->getMap($charTree), '', 0, 10, true);
     }
+
+    /**
+     * @covers ::getLengths
+     */
+    public function testCanGetEncodeLengths(): void
+    {
+        $codeMap = new LeetspeakMap(/*encode*/true);
+
+        self::assertEquals([
+            1,
+        ], $codeMap->getLengths(), '', 0, 10, true);
+    }
+
+    /**
+     * @covers ::getLengths
+     */
+    public function testCanGetDecodeLengths(): void
+    {
+        $codeMap = new LeetspeakMap(/*encode*/false);
+
+        self::assertEquals([
+            1,
+            2,
+        ], $codeMap->getLengths(), '', 0, 10, true);
+    }
 }

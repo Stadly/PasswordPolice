@@ -69,4 +69,16 @@ final class UpperCaseMapTest extends TestCase
         self::assertEquals([
         ], $codeMap->getMap($charTree), '', 0, 10, true);
     }
+
+    /**
+     * @covers ::getLengths
+     */
+    public function testCanGetLengths(): void
+    {
+        $codeMap = new UpperCaseMap();
+
+        self::assertEquals([
+            1,
+        ], $codeMap->getLengths(), '', 0, 10, true);
+    }
 }
