@@ -4,7 +4,7 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.18.0...HEAD)
+## [v0.19.0](https://github.com/Stadly/PasswordPolice/compare/v0.18.0...v0.19.0) - 2019-04-24
 
 ### Added
 - Truncator formatter truncating strings that are longer than the length limit.
@@ -28,14 +28,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Mixed case converter discarded empty strings.
 - Upper case converter discarded empty strings.
 
-### Deprecated
-- Nothing
-
 ### Removed
 - `CharTree::getTreeTrimmedToLength`. Use truncator combined with length filter instead.
-
-### Security
-- Nothing
 
 ## [v0.18.0](https://github.com/Stadly/PasswordPolice/compare/v0.17.0...v0.18.0) - 2019-04-15
 
