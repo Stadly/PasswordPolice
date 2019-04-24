@@ -149,9 +149,9 @@ final class PolicyTest extends TestCase
     {
         $policy = new Policy($this->unsatisfiedRule);
 
-        self::assertEquals([
+        self::assertSame([
             new ValidationError('foo', '', $this->unsatisfiedRule, 1),
-        ], $policy->validate(''), '', 0, 10, true);
+        ], $policy->validate(''));
     }
 
     /**
