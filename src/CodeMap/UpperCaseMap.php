@@ -41,4 +41,12 @@ final class UpperCaseMap implements CodeMap
     {
         return [1];
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function code(string $string): array
+    {
+        return [mb_strtoupper($string)];
+    }
 }

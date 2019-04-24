@@ -99,4 +99,18 @@ final class LeetspeakMap implements CodeMap
     {
         return array_keys($this->codeMap);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function code(string $string): array
+    {
+        // Add coded characters.
+        $codeMap = $this->codeMap[mb_strlen($string)][mb_strtoupper($string)] ?? [];
+
+        // Add uncoded character.
+        $codeMap[] = $string;
+
+        return $codeMap;
+    }
 }

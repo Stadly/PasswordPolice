@@ -48,4 +48,20 @@ final class MixedCaseMap implements CodeMap
     {
         return [1];
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function code(string $string): array
+    {
+        $lowerCase = mb_strtolower($string);
+        $upperCase = mb_strtoupper($string);
+
+        $codeMap = [$lowerCase];
+        if ($lowerCase !== $upperCase) {
+            $codeMap[] = $upperCase;
+        }
+
+        return $codeMap;
+    }
 }
