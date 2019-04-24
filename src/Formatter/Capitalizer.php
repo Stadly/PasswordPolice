@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Formatter;
 
 use Stadly\PasswordPolice\CharTree;
+use Stadly\PasswordPolice\CharTree\Cutter;
 use Stadly\PasswordPolice\Formatter;
 
 final class Capitalizer implements Formatter
@@ -17,14 +18,14 @@ final class Capitalizer implements Formatter
     private $lowerCaseConverter;
 
     /**
-     * @var Truncator Formatter for extracting the first character.
+     * @var Cutter Character tree cutter for extracting the first character.
      */
     private $charExtractor;
 
     public function __construct()
     {
         $this->lowerCaseConverter = new LowerCaseConverter();
-        $this->charExtractor = new Truncator(1);
+        $this->charExtractor = new Cutter();
     }
 
     /**
@@ -33,13 +34,20 @@ final class Capitalizer implements Formatter
      */
     protected function applyCurrent(CharTree $charTree): CharTree
     {
-        $formatted = [];
-
-        foreach ($this->charExtractor->apply($charTree) as $char) {
-            $branches = [$this->lowerCaseConverter->apply($charTree->getBranchesAfterRoot($char))];
-            $formatted[] = CharTree::fromString(mb_strtoupper($char), $branches);
+        if ($charTree->getRoot() === null) {
+            return $charTree;
         }
 
-        return CharTree::fromArray($formatted);
+        $formatted = [];
+
+        foreach ($this->charExtractor->cut($charTree, 1) as [$root, $tree]) {
+            assert(is_string($root));
+            assert(is_object($tree));
+
+            $branches = [$this->lowerCaseConverter->apply($tree)];
+            $formatted[] = CharTree::fromString(mb_strtoupper($root), $branches);
+        }
+
+        return CharTree::fromString('', $formatted);
     }
 }
