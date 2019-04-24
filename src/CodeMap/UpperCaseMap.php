@@ -40,4 +40,5 @@ final class UpperCaseMap implements CodeMap
     public function getLengths(): array
     {
         return [1];
+    }
 }
