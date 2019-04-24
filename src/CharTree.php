@@ -197,34 +197,6 @@ final class CharTree implements IteratorAggregate
     }
 
     /**
-     * @param string $root Root that comes before the brances.
-     * @return self Character tree containing the branches of this character tree that come after $root.
-     */
-    public function getBranchesAfterRoot(string $root): self
-    {
-        if ($this->root === null || $root === '') {
-            return $this;
-        }
-
-        if ($this->root === $root) {
-            return self::fromString('', $this->branches);
-        }
-
-        if ($this->root !== mb_substr($root, 0, mb_strlen($this->root))) {
-            return self::fromNothing();
-        }
-
-        $rootTail = mb_substr($root, mb_strlen($this->root));
-        $rootHead = mb_substr($rootTail, 0, 1);
-
-        if (!isset($this->branches[$rootHead])) {
-            return self::fromNothing();
-        }
-
-        return $this->branches[$rootHead]->getBranchesAfterRoot($rootTail);
-    }
-
-    /**
      * @param string $string String to check.
      * @return bool Whether the character tree contains the string.
      */

@@ -22,6 +22,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Removed
 - Possibility to get code map for root of character tree.
+- `CharTree::getBranchesAfterRoot`. Use character treee cutter instead.
 
 ### Security
 - Nothing
