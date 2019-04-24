@@ -24,7 +24,7 @@ final class CharTreeTest extends TestCase
 
         self::assertSame('', $charTree->getRoot());
         self::assertEquals([
-        ], $charTree->getBranches());
+        ], $charTree->getBranches(), '', 0, 10, true);
     }
 
     /**
@@ -36,7 +36,7 @@ final class CharTreeTest extends TestCase
 
         self::assertSame('f', $charTree->getRoot());
         self::assertEquals([
-        ], $charTree->getBranches());
+        ], $charTree->getBranches(), '', 0, 10, true);
     }
 
     /**
@@ -153,7 +153,7 @@ final class CharTreeTest extends TestCase
 
         self::assertNull($charTree->getRoot());
         self::assertEquals([
-        ], $charTree->getBranches());
+        ], $charTree->getBranches(), '', 0, 10, true);
     }
 
     /**

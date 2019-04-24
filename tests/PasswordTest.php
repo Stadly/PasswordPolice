@@ -55,7 +55,10 @@ final class PasswordTest extends TestCase
         $date = new DateTimeImmutable();
         $password = new Password('foo', ['bar', $date]);
 
-        self::assertSame(['bar', $date], $password->getGuessableData());
+        self::assertEquals([
+            'bar',
+            $date,
+        ], $password->getGuessableData(), '', 0, 10, true);
     }
 
     /**
@@ -93,7 +96,10 @@ final class PasswordTest extends TestCase
 
         $password = new Password('foo', [], [$formerPassword1, $formerPassword2]);
 
-        self::assertSame([$formerPassword1, $formerPassword2], $password->getFormerPasswords());
+        self::assertEquals([
+            $formerPassword1,
+            $formerPassword2,
+        ], $password->getFormerPasswords(), '', 0, 10, true);
     }
 
     /**
@@ -106,7 +112,10 @@ final class PasswordTest extends TestCase
 
         $password = new Password('foo', [], [$formerPassword2, $formerPassword1]);
 
-        self::assertSame([$formerPassword1, $formerPassword2], $password->getFormerPasswords());
+        self::assertEquals([
+            $formerPassword1,
+            $formerPassword2,
+        ], $password->getFormerPasswords(), '', 0, 10, true);
     }
 
     /**
@@ -120,7 +129,10 @@ final class PasswordTest extends TestCase
         $password = new Password('foo');
         $password->addFormerPasswords($formerPassword2, $formerPassword1);
 
-        self::assertSame([$formerPassword1, $formerPassword2], $password->getFormerPasswords());
+        self::assertEquals([
+            $formerPassword1,
+            $formerPassword2,
+        ], $password->getFormerPasswords(), '', 0, 10, true);
     }
 
     /**
