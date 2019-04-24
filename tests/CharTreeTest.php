@@ -146,6 +146,7 @@ final class CharTreeTest extends TestCase
 
     /**
      * @covers ::fromNothing
+     * @runInSeparateProcess Code coverage for empty character tree memoized in other tests.
      */
     public function testCanConstructCharTreeFromNothing(): void
     {
