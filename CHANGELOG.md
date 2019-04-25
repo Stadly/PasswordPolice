@@ -4,28 +4,16 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.19.0...HEAD)
+## [v0.20.0](https://github.com/Stadly/PasswordPolice/compare/v0.19.0...v0.20.0) - 2019-04-25
 
 ### Added
 - Character tree cutter separating a string root of specified length from the rest of the tree.
 - Possible to get length of entries in code maps.
 - Possible to code string in code maps.
 
-### Changed
-- Nothing
-
-### Fixed
-- Nothing
-
-### Deprecated
-- Nothing
-
 ### Removed
 - Possibility to get code map for root of character tree.
 - `CharTree::getBranchesAfterRoot`. Use character treee cutter instead.
-
-### Security
-- Nothing
 
 ## [v0.19.0](https://github.com/Stadly/PasswordPolice/compare/v0.18.0...v0.19.0) - 2019-04-24
 
