@@ -16,7 +16,7 @@ final class LengthRule implements Rule
     /**
      * @var CountConstraint[] Rule constraints.
      */
-    private $constraints;
+    private $constraints = [];
 
     /**
      * @param int $min Minimum password length.

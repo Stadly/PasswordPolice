@@ -20,7 +20,7 @@ final class ChangeWithIntervalRule implements Rule
     /**
      * @var DateIntervalConstraint[] Rule constraints.
      */
-    private $constraints;
+    private $constraints = [];
 
     /**
      * @param DateInterval $min Minimum time since last password change.

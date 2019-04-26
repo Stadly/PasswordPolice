@@ -19,7 +19,7 @@ final class Policy
     /**
      * @var (TranslatorInterface&LocaleAwareInterface)|null Translator for translating messages.
      */
-    private static $translator;
+    private static $translator = null;
 
     /**
      * @param Rule ...$rules Policy rules.

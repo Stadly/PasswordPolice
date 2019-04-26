@@ -12,7 +12,7 @@ trait Chaining
     /**
      * @var Formatter|null Next character tree formatter in the chain.
      */
-    private $next;
+    private $next = null;
 
     /**
      * {@inheritDoc}

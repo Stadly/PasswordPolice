@@ -21,17 +21,17 @@ final class HaveIBeenPwnedRule implements Rule
     /**
      * @var CountConstraint[] Rule constraints.
      */
-    private $constraints;
+    private $constraints = [];
 
     /**
      * @var ClientInterface|null HTTP client for sending requests.
      */
-    private $client;
+    private $client = null;
 
     /**
      * @var RequestFactoryInterface|null Request factory for generating HTTP requests.
      */
-    private $requestFactory;
+    private $requestFactory = null;
 
     /**
      * @param int|null $max Maximum number of appearances in breaches.

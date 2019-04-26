@@ -16,7 +16,7 @@ final class LowerCaseRule implements Rule
     /**
      * @var CountConstraint[] Rule constraints.
      */
-    private $constraints;
+    private $constraints = [];
 
     /**
      * @param int $min Minimum number of lower case letters.

@@ -22,7 +22,7 @@ final class NoReuseRule implements Rule
     /**
      * @var PositionConstraint[] Rule constraints.
      */
-    private $constraints;
+    private $constraints = [];
 
     /**
      * @param HashFunction $hashFunction Hash function to use when comparing passwords.

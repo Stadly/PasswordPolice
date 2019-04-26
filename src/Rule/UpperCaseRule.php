@@ -16,7 +16,7 @@ final class UpperCaseRule implements Rule
     /**
      * @var CountConstraint[] Rule constraints.
      */
-    private $constraints;
+    private $constraints = [];
 
     /**
      * @param int $min Minimum number of upper case letters.

@@ -18,7 +18,7 @@ final class ChangeOnDateRule implements Rule
     /**
      * @var DateConstraint[] Rule constraints.
      */
-    private $constraints;
+    private $constraints = [];
 
     /**
      * @param DateTimeInterface|null $min Minimum date for when the password was last changed.
