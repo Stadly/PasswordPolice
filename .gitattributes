@@ -11,3 +11,7 @@
 /phpstan.neon.dist          export-ignore
 /phpstan.tests.neon.dist    export-ignore
 /phpunit.xml.dist           export-ignore
+
+# Set line endings.
+* text=auto
+*.php text eol=lf
