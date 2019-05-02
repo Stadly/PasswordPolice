@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 - Require translator for translating messages when validating rules.
+- Translator can be set for each policy instance, instead of being the same for all policies.
 
 ### Fixed
 - Nothing

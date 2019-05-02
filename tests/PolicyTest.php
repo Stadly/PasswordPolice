@@ -160,14 +160,16 @@ final class PolicyTest extends TestCase
      */
     public function testCanSetAndGetTranslator(): void
     {
+        $policy = new Policy();
+
         /**
          * @var MockObject&TranslatorInterface&LocaleAwareInterface
          */
         $translator = $this->createMock([TranslatorInterface::class, LocaleAwareInterface::class]);
 
-        Policy::setTranslator($translator);
-        self::assertSame($translator, Policy::getTranslator());
-        Policy::setTranslator(null);
+        $policy->setTranslator($translator);
+        self::assertSame($translator, $policy->getTranslator());
+        $policy->setTranslator(null);
     }
 
     /**
@@ -176,14 +178,16 @@ final class PolicyTest extends TestCase
      */
     public function testCanGetWhenNoTranslatorIsSet(): void
     {
+        $policy = new Policy();
+
         /**
          * @var MockObject&TranslatorInterface&LocaleAwareInterface
          */
         $translator = $this->createMock([TranslatorInterface::class, LocaleAwareInterface::class]);
 
-        Policy::setTranslator($translator);
-        Policy::setTranslator(null);
+        $policy->setTranslator($translator);
+        $policy->setTranslator(null);
 
-        self::assertNotSame($translator, Policy::getTranslator());
+        self::assertNotSame($translator, $policy->getTranslator());
     }
 }

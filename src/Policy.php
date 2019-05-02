@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice;
 
 use Stadly\PasswordPolice\Rule\RuleException;
+use Symfony\Component\Translation\Loader\PoFileLoader;
 use Symfony\Component\Translation\Translator;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -19,7 +20,7 @@ final class Policy
     /**
      * @var (TranslatorInterface&LocaleAwareInterface)|null Translator for translating messages.
      */
-    private static $translator = null;
+    private $translator = null;
 
     /**
      * @param Rule ...$rules Policy rules.
@@ -69,7 +70,7 @@ final class Policy
         $validationErrors = [];
 
         foreach ($this->rules as $rule) {
-            $validationError = $rule->validate($password, self::getTranslator());
+            $validationError = $rule->validate($password, $this->getTranslator());
 
             if ($validationError !== null) {
                 $validationErrors[] = $validationError;
@@ -82,19 +83,20 @@ final class Policy
     /**
      * @param (TranslatorInterface&LocaleAwareInterface)|null $translator Translator for translating messages.
      */
-    public static function setTranslator($translator): void
+    public function setTranslator(?TranslatorInterface $translator): void
     {
-        self::$translator = $translator;
+        $this->translator = $translator;
     }
 
     /**
-     * @return TranslatorInterface&LocaleAwareInterface Translator for translating messages.
+     * @return TranslatorInterface&LocaleAwareInterface Translator to use for the current instance.
      */
-    public static function getTranslator()
+    public function getTranslator(): TranslatorInterface
     {
-        if (self::$translator === null) {
-            self::$translator = new Translator('en_US');
+        if ($this->translator === null) {
+            $this->translator = new Translator('en_US');
         }
-        return self::$translator;
+
+        return $this->translator;
     }
 }
