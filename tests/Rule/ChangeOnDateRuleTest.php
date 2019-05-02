@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\FormerPassword;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\ChangeOnDateRule
@@ -169,7 +170,7 @@ final class ChangeOnDateRuleTest extends TestCase
     {
         $rule = new ChangeOnDateRule(new DateTime('2003-04-04'), null);
 
-        self::assertNull($rule->validate($this->password));
+        self::assertNull($rule->validate($this->password, new Translator('en_US')));
     }
 
     /**
@@ -186,7 +187,7 @@ final class ChangeOnDateRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate($this->password)
+            $rule->validate($this->password, new Translator('en_US'))
         );
     }
 
@@ -204,7 +205,7 @@ final class ChangeOnDateRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate($this->password)
+            $rule->validate($this->password, new Translator('en_US'))
         );
     }
 
@@ -222,7 +223,7 @@ final class ChangeOnDateRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate($this->password)
+            $rule->validate($this->password, new Translator('en_US'))
         );
     }
 
@@ -240,7 +241,7 @@ final class ChangeOnDateRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate($this->password)
+            $rule->validate($this->password, new Translator('en_US'))
         );
     }
 }

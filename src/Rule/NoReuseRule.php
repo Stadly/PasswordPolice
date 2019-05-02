@@ -8,9 +8,10 @@ use StableSort\StableSort;
 use Stadly\PasswordPolice\Constraint\PositionConstraint;
 use Stadly\PasswordPolice\HashFunction;
 use Stadly\PasswordPolice\Password;
-use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class NoReuseRule implements Rule
 {
@@ -80,16 +81,17 @@ final class NoReuseRule implements Rule
      * Validate that a password is in compliance with the rule.
      *
      * @param Password|string $password Password to validate.
+     * @param TranslatorInterface&LocaleAwareInterface $translator Translator for translating messages.
      * @return ValidationError|null Validation error describing why the password is not in compliance with the rule.
      */
-    public function validate($password): ?ValidationError
+    public function validate($password, TranslatorInterface $translator): ?ValidationError
     {
         $positions = $this->getPositions($password);
         $constraint = $this->getViolation($positions);
 
         if ($constraint !== null) {
             return new ValidationError(
-                $this->getMessage($constraint),
+                $this->getMessage($constraint, $translator),
                 $password,
                 $this,
                 $constraint->getWeight()
@@ -142,12 +144,11 @@ final class NoReuseRule implements Rule
 
     /**
      * @param PositionConstraint $constraint Constraint that is violated.
+     * @param TranslatorInterface&LocaleAwareInterface $translator Translator for translating messages.
      * @return string Message explaining the violation.
      */
-    private function getMessage(PositionConstraint $constraint): string
+    private function getMessage(PositionConstraint $constraint, TranslatorInterface $translator): string
     {
-        $translator = Policy::getTranslator();
-
         if ($constraint->getCount() === null) {
             return $translator->trans(
                 'Formerly used passwords cannot be reused.'

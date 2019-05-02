@@ -14,6 +14,7 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use RuntimeException;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\HaveIBeenPwnedRule
@@ -271,7 +272,7 @@ final class HaveIBeenPwnedRuleTest extends TestCase
     {
         $rule = new HaveIBeenPwnedRule(null, 2);
 
-        self::assertNull($rule->validate('1397wpfk'));
+        self::assertNull($rule->validate('1397wpfk', new Translator('en_US')));
     }
 
     /**
@@ -288,7 +289,7 @@ final class HaveIBeenPwnedRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('1397wpfk')
+            $rule->validate('1397wpfk', new Translator('en_US'))
         );
     }
 
@@ -306,7 +307,7 @@ final class HaveIBeenPwnedRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('6004468405')
+            $rule->validate('6004468405', new Translator('en_US'))
         );
     }
 
@@ -324,7 +325,7 @@ final class HaveIBeenPwnedRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('1397wpfk')
+            $rule->validate('1397wpfk', new Translator('en_US'))
         );
     }
 
@@ -342,7 +343,7 @@ final class HaveIBeenPwnedRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('1397wpfk')
+            $rule->validate('1397wpfk', new Translator('en_US'))
         );
     }
 
@@ -360,7 +361,7 @@ final class HaveIBeenPwnedRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('1397wpfk')
+            $rule->validate('1397wpfk', new Translator('en_US'))
         );
     }
 }

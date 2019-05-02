@@ -11,6 +11,7 @@ use Stadly\PasswordPolice\DateFormatter;
 use Stadly\PasswordPolice\Formatter;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\GuessableDataRule
@@ -282,7 +283,7 @@ final class GuessableDataRuleTest extends TestCase
         $rule = new GuessableDataRule();
         $password = new Password('test', ['oba', new DateTime('2018-11-28')]);
 
-        self::assertNull($rule->validate($password));
+        self::assertNull($rule->validate($password, new Translator('en_US')));
     }
 
     /**
@@ -300,7 +301,7 @@ final class GuessableDataRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate($password)
+            $rule->validate($password, new Translator('en_US'))
         );
     }
 }

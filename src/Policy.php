@@ -69,7 +69,7 @@ final class Policy
         $validationErrors = [];
 
         foreach ($this->rules as $rule) {
-            $validationError = $rule->validate($password);
+            $validationError = $rule->validate($password, self::getTranslator());
 
             if ($validationError !== null) {
                 $validationErrors[] = $validationError;

@@ -7,6 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\SymbolRule
@@ -171,7 +172,7 @@ final class SymbolRuleTest extends TestCase
     {
         $rule = new SymbolRule('$%&@!', 1, null);
 
-        self::assertNull($rule->validate('&'));
+        self::assertNull($rule->validate('&', new Translator('en_US')));
     }
 
     /**
@@ -188,7 +189,7 @@ final class SymbolRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('foo bar $$@!')
+            $rule->validate('foo bar $$@!', new Translator('en_US'))
         );
     }
 
@@ -206,7 +207,7 @@ final class SymbolRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('foo bar $$@! $$@! $$@!')
+            $rule->validate('foo bar $$@! $$@! $$@!', new Translator('en_US'))
         );
     }
 
@@ -224,7 +225,7 @@ final class SymbolRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('foo bar $$@!')
+            $rule->validate('foo bar $$@!', new Translator('en_US'))
         );
     }
 
@@ -242,7 +243,7 @@ final class SymbolRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('foo bar $$@!')
+            $rule->validate('foo bar $$@!', new Translator('en_US'))
         );
     }
 
@@ -260,7 +261,7 @@ final class SymbolRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('foo bar $$@!')
+            $rule->validate('foo bar $$@!', new Translator('en_US'))
         );
     }
 }

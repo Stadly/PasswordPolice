@@ -8,10 +8,11 @@ use RuntimeException;
 use Stadly\PasswordPolice\CharTree;
 use Stadly\PasswordPolice\Formatter;
 use Stadly\PasswordPolice\Formatter\Combiner;
-use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
 use Stadly\PasswordPolice\WordList;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class DictionaryRule implements Rule
 {
@@ -67,13 +68,13 @@ final class DictionaryRule implements Rule
     /**
      * {@inheritDoc}
      */
-    public function validate($password): ?ValidationError
+    public function validate($password, TranslatorInterface $translator): ?ValidationError
     {
         $word = $this->getDictionaryWord((string)$password);
 
         if ($word !== null) {
             return new ValidationError(
-                $this->getMessage($word),
+                $this->getMessage($word, $translator),
                 $password,
                 $this,
                 $this->weight
@@ -108,12 +109,11 @@ final class DictionaryRule implements Rule
 
     /**
      * @param string $word Word that violates the constraint.
+     * @param TranslatorInterface&LocaleAwareInterface $translator Translator for translating messages.
      * @return string Message explaining the violation.
      */
-    private function getMessage(string $word): string
+    private function getMessage(string $word, TranslatorInterface $translator): string
     {
-        $translator = Policy::getTranslator();
-
         return $translator->trans(
             'The password cannot contain dictionary words.'
         );

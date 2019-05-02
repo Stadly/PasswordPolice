@@ -7,6 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\LowerCaseRule
@@ -171,7 +172,7 @@ final class LowerCaseRuleTest extends TestCase
     {
         $rule = new LowerCaseRule(1, null);
 
-        self::assertNull($rule->validate('foo'));
+        self::assertNull($rule->validate('foo', new Translator('en_US')));
     }
 
     /**
@@ -188,7 +189,7 @@ final class LowerCaseRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('Foo')
+            $rule->validate('Foo', new Translator('en_US'))
         );
     }
 
@@ -206,7 +207,7 @@ final class LowerCaseRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('Foo bar qwerty test')
+            $rule->validate('Foo bar qwerty test', new Translator('en_US'))
         );
     }
 
@@ -224,7 +225,7 @@ final class LowerCaseRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('Foo')
+            $rule->validate('Foo', new Translator('en_US'))
         );
     }
 
@@ -242,7 +243,7 @@ final class LowerCaseRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('Foo')
+            $rule->validate('Foo', new Translator('en_US'))
         );
     }
 
@@ -260,7 +261,7 @@ final class LowerCaseRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('Foo')
+            $rule->validate('Foo', new Translator('en_US'))
         );
     }
 }

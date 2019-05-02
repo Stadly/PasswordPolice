@@ -7,6 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\CharacterClassRule
@@ -171,7 +172,7 @@ final class CharacterClassRuleTest extends TestCase
     {
         $rule = new CharacterClassRuleClass('$%&@!', 1, null);
 
-        self::assertNull($rule->validate('&'));
+        self::assertNull($rule->validate('&', new Translator('en_US')));
     }
 
     /**
@@ -183,7 +184,7 @@ final class CharacterClassRuleTest extends TestCase
 
         self::assertEquals(
             new ValidationError('foo', '€', $rule, 1),
-            $rule->validate('€')
+            $rule->validate('€', new Translator('en_US'))
         );
     }
 }

@@ -7,6 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\LengthRule
@@ -161,7 +162,7 @@ final class LengthRuleTest extends TestCase
     {
         $rule = new LengthRule(1, null);
 
-        self::assertNull($rule->validate('foo'));
+        self::assertNull($rule->validate('foo', new Translator('en_US')));
     }
 
     /**
@@ -178,7 +179,7 @@ final class LengthRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('fo')
+            $rule->validate('fo', new Translator('en_US'))
         );
     }
 
@@ -196,7 +197,7 @@ final class LengthRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('fo bar qwerty')
+            $rule->validate('fo bar qwerty', new Translator('en_US'))
         );
     }
 
@@ -214,7 +215,7 @@ final class LengthRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('fo')
+            $rule->validate('fo', new Translator('en_US'))
         );
     }
 
@@ -232,7 +233,7 @@ final class LengthRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('fo')
+            $rule->validate('fo', new Translator('en_US'))
         );
     }
 
@@ -250,7 +251,7 @@ final class LengthRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('fo')
+            $rule->validate('fo', new Translator('en_US'))
         );
     }
 }

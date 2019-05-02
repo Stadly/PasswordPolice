@@ -8,6 +8,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\ConditionalRule
@@ -78,7 +79,7 @@ final class ConditionalRuleTest extends TestCase
 
         $this->rule->expects(self::never())->method('validate');
 
-        self::assertNull($rule->validate('foo'));
+        self::assertNull($rule->validate('foo', new Translator('en_US')));
     }
 
     /**
@@ -97,7 +98,7 @@ final class ConditionalRuleTest extends TestCase
 
         self::assertEquals(
             new ValidationError('bar', '', $this->rule, 1),
-            $rule->validate('foo')
+            $rule->validate('foo', new Translator('en_US'))
         );
     }
 }

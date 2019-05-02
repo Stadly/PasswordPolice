@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\FormerPassword;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\ChangeWithIntervalRule
@@ -179,7 +180,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
     {
         $rule = new ChangeWithIntervalRule(new DateInterval('P5D'), null);
 
-        self::assertNull($rule->validate($this->password));
+        self::assertNull($rule->validate($this->password, new Translator('en_US')));
     }
 
     /**
@@ -196,7 +197,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate($this->password)
+            $rule->validate($this->password, new Translator('en_US'))
         );
     }
 
@@ -214,7 +215,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate($this->password)
+            $rule->validate($this->password, new Translator('en_US'))
         );
     }
 
@@ -232,7 +233,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate($this->password)
+            $rule->validate($this->password, new Translator('en_US'))
         );
     }
 
@@ -250,7 +251,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate($this->password)
+            $rule->validate($this->password, new Translator('en_US'))
         );
     }
 }

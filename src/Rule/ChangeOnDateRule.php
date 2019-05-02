@@ -9,9 +9,10 @@ use DateTimeInterface;
 use StableSort\StableSort;
 use Stadly\PasswordPolice\Constraint\DateConstraint;
 use Stadly\PasswordPolice\Password;
-use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ChangeOnDateRule implements Rule
 {
@@ -66,9 +67,10 @@ final class ChangeOnDateRule implements Rule
      * Validate that a password is in compliance with the rule.
      *
      * @param Password|string $password Password to validate.
+     * @param TranslatorInterface&LocaleAwareInterface $translator Translator for translating messages.
      * @return ValidationError|null Validation error describing why the password is not in compliance with the rule.
      */
-    public function validate($password): ?ValidationError
+    public function validate($password, TranslatorInterface $translator): ?ValidationError
     {
         $date = $this->getDate($password);
         $constraint = $this->getViolation($date);
@@ -76,7 +78,7 @@ final class ChangeOnDateRule implements Rule
         if ($constraint !== null) {
             assert($date !== null);
             return new ValidationError(
-                $this->getMessage($constraint, $date),
+                $this->getMessage($constraint, $date, $translator),
                 $password,
                 $this,
                 $constraint->getWeight()
@@ -128,12 +130,14 @@ final class ChangeOnDateRule implements Rule
     /**
      * @param DateConstraint $constraint Constraint that is violated.
      * @param DateTimeInterface $date Date that violates the constraint.
+     * @param TranslatorInterface&LocaleAwareInterface $translator Translator for translating messages.
      * @return string Message explaining the violation.
      */
-    private function getMessage(DateConstraint $constraint, DateTimeInterface $date): string
-    {
-        $translator = Policy::getTranslator();
-
+    private function getMessage(
+        DateConstraint $constraint,
+        DateTimeInterface $date,
+        TranslatorInterface $translator
+    ): string {
         $constraintMin = $constraint->getMin();
         $constraintMax = $constraint->getMax();
 

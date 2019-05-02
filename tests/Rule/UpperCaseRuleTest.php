@@ -7,6 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\UpperCaseRule
@@ -171,7 +172,7 @@ final class UpperCaseRuleTest extends TestCase
     {
         $rule = new UpperCaseRule(1, null);
 
-        self::assertNull($rule->validate('FOO'));
+        self::assertNull($rule->validate('FOO', new Translator('en_US')));
     }
 
     /**
@@ -188,7 +189,7 @@ final class UpperCaseRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('FOo')
+            $rule->validate('FOo', new Translator('en_US'))
         );
     }
 
@@ -206,7 +207,7 @@ final class UpperCaseRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('FOo BAR QWERTY')
+            $rule->validate('FOo BAR QWERTY', new Translator('en_US'))
         );
     }
 
@@ -224,7 +225,7 @@ final class UpperCaseRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('FOo')
+            $rule->validate('FOo', new Translator('en_US'))
         );
     }
 
@@ -242,7 +243,7 @@ final class UpperCaseRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('FOo')
+            $rule->validate('FOo', new Translator('en_US'))
         );
     }
 
@@ -260,7 +261,7 @@ final class UpperCaseRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('FOo')
+            $rule->validate('FOo', new Translator('en_US'))
         );
     }
 }

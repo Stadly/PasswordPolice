@@ -7,6 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\DigitRule
@@ -151,7 +152,7 @@ final class DigitRuleTest extends TestCase
     {
         $rule = new DigitRule(1, null);
 
-        self::assertNull($rule->validate('1'));
+        self::assertNull($rule->validate('1', new Translator('en_US')));
     }
 
     /**
@@ -168,7 +169,7 @@ final class DigitRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('foo 12')
+            $rule->validate('foo 12', new Translator('en_US'))
         );
     }
 
@@ -186,7 +187,7 @@ final class DigitRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('foo 123 456 123456')
+            $rule->validate('foo 123 456 123456', new Translator('en_US'))
         );
     }
 
@@ -204,7 +205,7 @@ final class DigitRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('foo 12')
+            $rule->validate('foo 12', new Translator('en_US'))
         );
     }
 
@@ -222,7 +223,7 @@ final class DigitRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('foo 12')
+            $rule->validate('foo 12', new Translator('en_US'))
         );
     }
 
@@ -240,7 +241,7 @@ final class DigitRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('foo 12')
+            $rule->validate('foo 12', new Translator('en_US'))
         );
     }
 }

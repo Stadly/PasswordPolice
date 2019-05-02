@@ -7,6 +7,7 @@ namespace Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ConditionalRule implements Rule
 {
@@ -45,10 +46,10 @@ final class ConditionalRule implements Rule
     /**
      * {@inheritDoc}
      */
-    public function validate($password): ?ValidationError
+    public function validate($password, TranslatorInterface $translator): ?ValidationError
     {
         if (($this->condition)($password)) {
-            return $this->rule->validate($password);
+            return $this->rule->validate($password, $translator);
         }
 
         return null;

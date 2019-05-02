@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\Rule;
 
 use Stadly\PasswordPolice\Constraint\CountConstraint;
-use Stadly\PasswordPolice\Policy;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class DigitRule extends CharacterClassRule
 {
@@ -22,10 +22,8 @@ final class DigitRule extends CharacterClassRule
     /**
      * {@inheritDoc}
      */
-    protected function getMessage(CountConstraint $constraint, int $count): string
+    protected function getMessage(CountConstraint $constraint, int $count, TranslatorInterface $translator): string
     {
-        $translator = Policy::getTranslator();
-
         if ($constraint->getMax() === null) {
             return $translator->trans(
                 'The password must contain at least one digit.|'.

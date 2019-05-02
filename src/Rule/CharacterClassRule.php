@@ -10,6 +10,8 @@ use Stadly\PasswordPolice\Constraint\CountConstraint;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class CharacterClassRule implements Rule
 {
@@ -83,16 +85,17 @@ abstract class CharacterClassRule implements Rule
      * Validate that a password is in compliance with the rule.
      *
      * @param Password|string $password Password to validate.
+     * @param TranslatorInterface&LocaleAwareInterface $translator Translator for translating messages.
      * @return ValidationError|null Validation error describing why the password is not in compliance with the rule.
      */
-    public function validate($password): ?ValidationError
+    public function validate($password, TranslatorInterface $translator): ?ValidationError
     {
         $count = $this->getCount((string)$password);
         $constraint = $this->getViolation($count);
 
         if ($constraint !== null) {
             return new ValidationError(
-                $this->getMessage($constraint, $count),
+                $this->getMessage($constraint, $count, $translator),
                 $password,
                 $this,
                 $constraint->getWeight()
@@ -137,7 +140,12 @@ abstract class CharacterClassRule implements Rule
     /**
      * @param CountConstraint $constraint Constraint that is violated.
      * @param int $count Count that violates the constraint.
+     * @param TranslatorInterface&LocaleAwareInterface $translator Translator for translating messages.
      * @return string Message explaining the violation.
      */
-    abstract protected function getMessage(CountConstraint $constraint, int $count): string;
+    abstract protected function getMessage(
+        CountConstraint $constraint,
+        int $count,
+        TranslatorInterface $translator
+    ): string;
 }

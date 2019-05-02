@@ -11,9 +11,10 @@ use Stadly\PasswordPolice\DateFormatter\DefaultFormatter;
 use Stadly\PasswordPolice\Formatter;
 use Stadly\PasswordPolice\Formatter\Combiner;
 use Stadly\PasswordPolice\Password;
-use Stadly\PasswordPolice\Policy;
 use Stadly\PasswordPolice\Rule;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class GuessableDataRule implements Rule
 {
@@ -77,15 +78,16 @@ final class GuessableDataRule implements Rule
      * Validate that a password is in compliance with the rule.
      *
      * @param Password|string $password Password to validate.
+     * @param TranslatorInterface&LocaleAwareInterface $translator Translator for translating messages.
      * @return ValidationError|null Validation error describing why the password is not in compliance with the rule.
      */
-    public function validate($password): ?ValidationError
+    public function validate($password, TranslatorInterface $translator): ?ValidationError
     {
         $data = $this->getGuessableData($password);
 
         if ($data !== null) {
             return new ValidationError(
-                $this->getMessage($data),
+                $this->getMessage($data, $translator),
                 $password,
                 $this,
                 $this->weight
@@ -141,12 +143,11 @@ final class GuessableDataRule implements Rule
 
     /**
      * @param string|DateTimeInterface $data Data that violates the constraint.
+     * @param TranslatorInterface&LocaleAwareInterface $translator Translator for translating messages.
      * @return string Message explaining the violation.
      */
-    private function getMessage($data): string
+    private function getMessage($data, TranslatorInterface $translator): string
     {
-        $translator = Policy::getTranslator();
-
         return $translator->trans(
             'The password cannot contain words that are easy to guess.'
         );

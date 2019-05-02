@@ -11,6 +11,7 @@ use Stadly\PasswordPolice\CharTree;
 use Stadly\PasswordPolice\Formatter;
 use Stadly\PasswordPolice\ValidationError;
 use Stadly\PasswordPolice\WordList;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\DictionaryRule
@@ -213,7 +214,7 @@ final class DictionaryRuleTest extends TestCase
     {
         $rule = new DictionaryRule($this->wordList);
 
-        self::assertNull($rule->validate('foo'));
+        self::assertNull($rule->validate('foo', new Translator('en_US')));
     }
 
     /**
@@ -230,7 +231,7 @@ final class DictionaryRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate('apple')
+            $rule->validate('apple', new Translator('en_US'))
         );
     }
 }

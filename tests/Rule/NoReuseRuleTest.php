@@ -12,6 +12,7 @@ use Stadly\PasswordPolice\FormerPassword;
 use Stadly\PasswordPolice\HashFunction;
 use Stadly\PasswordPolice\Password;
 use Stadly\PasswordPolice\ValidationError;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\Rule\NoReuseRule
@@ -206,7 +207,7 @@ final class NoReuseRuleTest extends TestCase
     {
         $rule = new NoReuseRule($this->hashFunction, 1, 0);
 
-        self::assertNull($rule->validate($this->password));
+        self::assertNull($rule->validate($this->password, new Translator('en_US')));
     }
 
     /**
@@ -223,7 +224,7 @@ final class NoReuseRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate($this->password)
+            $rule->validate($this->password, new Translator('en_US'))
         );
     }
 
@@ -241,7 +242,7 @@ final class NoReuseRuleTest extends TestCase
                 $rule,
                 1
             ),
-            $rule->validate($this->password)
+            $rule->validate($this->password, new Translator('en_US'))
         );
     }
 }

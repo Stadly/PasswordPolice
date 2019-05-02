@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice;
 
 use Stadly\PasswordPolice\Rule\RuleException;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Interface that must be implemented by all rules.
@@ -25,8 +27,9 @@ interface Rule
      * Validate that a password is in compliance with the rule.
      *
      * @param Password|string $password Password to validate.
+     * @param TranslatorInterface&LocaleAwareInterface $translator Translator for translating messages.
      * @return ValidationError|null Validation error describing why the password is not in compliance with the rule.
      * @throws RuleException If an error occurred.
      */
-    public function validate($password): ?ValidationError;
+    public function validate($password, TranslatorInterface $translator): ?ValidationError;
 }
