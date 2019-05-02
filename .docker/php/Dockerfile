@@ -16,3 +16,7 @@ RUN echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)"
 RUN apk add aspell-dev
 RUN apk add aspell-en
 RUN docker-php-ext-install pspell
+
+# Install intl
+RUN apk add icu-dev
+RUN docker-php-ext-install intl
