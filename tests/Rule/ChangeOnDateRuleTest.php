@@ -182,7 +182,7 @@ final class ChangeOnDateRuleTest extends TestCase
 
         self::assertEquals(
             new ValidationError(
-                'The password must have been changed on or after 2003-04-06 00:00:00.',
+                'The password must last have been changed on or after 2003-04-06 00:00:00.',
                 $this->password,
                 $rule,
                 1
@@ -200,7 +200,7 @@ final class ChangeOnDateRuleTest extends TestCase
 
         self::assertEquals(
             new ValidationError(
-                'The password must have been changed on or before 2003-04-04 00:00:00.',
+                'The password must last have been changed on or before 2003-04-04 00:00:00.',
                 $this->password,
                 $rule,
                 1
@@ -218,7 +218,7 @@ final class ChangeOnDateRuleTest extends TestCase
 
         self::assertEquals(
             new ValidationError(
-                'The password must have been changed between 2003-04-06 00:00:00 and 2003-04-07 00:00:00.',
+                'The password must last have been changed between 2003-04-06 00:00:00 and 2003-04-07 00:00:00.',
                 $this->password,
                 $rule,
                 1
@@ -236,7 +236,7 @@ final class ChangeOnDateRuleTest extends TestCase
 
         self::assertEquals(
             new ValidationError(
-                'The password must have been changed at 2003-04-06 00:00:00.',
+                'The password must last have been changed at 2003-04-06 00:00:00.',
                 $this->password,
                 $rule,
                 1
