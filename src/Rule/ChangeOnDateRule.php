@@ -146,14 +146,14 @@ final class ChangeOnDateRule implements Rule
 
         if ($constraintMax === null) {
             return $translator->trans(
-                'The password must have been changed on or after %date%.',
+                'The password must last have been changed on or after %date%.',
                 ['%date%' => $minString]
             );
         }
 
         if ($constraintMin === null) {
             return $translator->trans(
-                'The password must have been changed on or before %date%.',
+                'The password must last have been changed on or before %date%.',
                 ['%date%' => $maxString]
             );
         }
@@ -162,13 +162,13 @@ final class ChangeOnDateRule implements Rule
         === $constraintMax->format(DateTime::RFC3339_EXTENDED)
         ) {
             return $translator->trans(
-                'The password must have been changed at %date%.',
+                'The password must last have been changed at %date%.',
                 ['%date%' => $minString]
             );
         }
 
         return $translator->trans(
-            'The password must have been changed between %min% and %max%.',
+            'The password must last have been changed between %min% and %max%.',
             ['%min%' => $minString, '%max%' => $maxString]
         );
     }
