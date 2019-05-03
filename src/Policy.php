@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice;
 
 use Stadly\PasswordPolice\Rule\RuleException;
-use Symfony\Component\Translation\Loader\PoFileLoader;
 use Symfony\Component\Translation\Translator;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
