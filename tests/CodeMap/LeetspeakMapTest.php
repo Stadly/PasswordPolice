@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Stadly\PasswordPolice\CodeMap;
 
 use PHPUnit\Framework\TestCase;
-use Stadly\PasswordPolice\CharTree;
 
 /**
  * @coversDefaultClass \Stadly\PasswordPolice\CodeMap\LeetspeakMap

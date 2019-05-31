@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
