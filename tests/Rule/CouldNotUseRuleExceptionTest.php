@@ -8,12 +8,12 @@ use PHPUnit\Framework\TestCase;
 use Stadly\PasswordPolice\Rule;
 
 /**
- * @coversDefaultClass \Stadly\PasswordPolice\Rule\RuleException
+ * @coversDefaultClass \Stadly\PasswordPolice\Rule\CouldNotUseRuleException
  * @covers ::<private>
  * @covers ::<protected>
  * @covers ::__construct
  */
-final class RuleExceptionTest extends TestCase
+final class CouldNotUseRuleExceptionTest extends TestCase
 {
     /**
      * @covers ::getRule
@@ -22,7 +22,7 @@ final class RuleExceptionTest extends TestCase
     {
         $rule = $this->createMock(Rule::class);
 
-        $exception = new RuleException($rule, 'foo');
+        $exception = new CouldNotUseRuleException($rule, 'foo');
 
         self::assertSame($rule, $exception->getRule());
     }

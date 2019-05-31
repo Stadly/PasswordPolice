@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice;
 
-use Stadly\PasswordPolice\Rule\RuleException;
+use Stadly\PasswordPolice\Rule\CouldNotUseRuleException;
 use Symfony\Component\Translation\Translator;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -44,7 +44,7 @@ final class Policy
      *
      * @param Password|string $password Password to check.
      * @return bool Whether the password is in compliance with the policy.
-     * @throws RuleException If an error occurred.
+     * @throws CouldNotUseRuleException If an error occurred.
      */
     public function test($password): bool
     {
@@ -62,7 +62,7 @@ final class Policy
      *
      * @param Password|string $password Password to validate.
      * @return array<ValidationError> Validation errors describing why the password isn't in compliance with the policy.
-     * @throws RuleException If an error occurred.
+     * @throws CouldNotUseRuleException If an error occurred.
      */
     public function validate($password): array
     {

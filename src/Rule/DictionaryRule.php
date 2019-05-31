@@ -87,7 +87,7 @@ final class DictionaryRule implements Rule
     /**
      * @param string $password Password to find dictionary words in.
      * @return string|null DictionaryRule word in the password.
-     * @throws RuleException If an error occurred.
+     * @throws CouldNotUseRuleException If an error occurred.
      */
     private function getDictionaryWord(string $password): ?string
     {
@@ -97,7 +97,7 @@ final class DictionaryRule implements Rule
                     return $formattedPassword;
                 }
             } catch (RuntimeException $exception) {
-                throw new RuleException(
+                throw new CouldNotUseRuleException(
                     $this,
                     'An error occurred while using the word list: '.$exception->getMessage(),
                     $exception

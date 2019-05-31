@@ -13,6 +13,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Require translator for translating messages when validating rules.
 - Translator can be set for each policy instance, instead of being the same for all policies.
 - Improved validation messages for change on date rule.
+- Renamed `RuleException` rule exception to `CouldNotUseRuleException`.
 
 ### Fixed
 - Nothing
