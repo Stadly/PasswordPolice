@@ -15,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class LengthRule implements Rule
 {
     /**
-     * @var CountConstraint[] Rule constraints.
+     * @var array<CountConstraint> Rule constraints.
      */
     private $constraints = [];
 

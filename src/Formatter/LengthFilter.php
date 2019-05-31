@@ -23,7 +23,7 @@ final class LengthFilter implements Formatter
     private $maxLength;
 
     /**
-     * @var CharTree[] Memoization of formatted character trees.
+     * @var array<CharTree> Memoization of formatted character trees.
      */
     private static $memoization = [];
 

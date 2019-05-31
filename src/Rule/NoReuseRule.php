@@ -21,7 +21,7 @@ final class NoReuseRule implements Rule
     private $hashFunction;
 
     /**
-     * @var PositionConstraint[] Rule constraints.
+     * @var array<PositionConstraint> Rule constraints.
      */
     private $constraints = [];
 
@@ -102,7 +102,7 @@ final class NoReuseRule implements Rule
     }
 
     /**
-     * @param int[] $positions Positions of former passwords matching the password.
+     * @param array<int> $positions Positions of former passwords matching the password.
      * @param int|null $weight Don't consider constraints with lower weights.
      * @return PositionConstraint|null Constraint violated by the position.
      */
@@ -124,7 +124,7 @@ final class NoReuseRule implements Rule
 
     /**
      * @param Password|string $password Password to compare with former passwords.
-     * @return int[] Positions of former passwords matching the password.
+     * @return array<int> Positions of former passwords matching the password.
      */
     private function getPositions($password): array
     {

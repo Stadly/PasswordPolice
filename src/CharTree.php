@@ -15,28 +15,28 @@ final class CharTree implements IteratorAggregate
     private $root;
 
     /**
-     * @var self[] Branches of the character tree.
+     * @var array<self> Branches of the character tree.
      */
     private $branches = [];
 
     /**
-     * @var bool[] Memoization of startsWith().
+     * @var array<bool> Memoization of startsWith().
      */
     private $startsWithMemoization = [];
 
     /**
-     * @var bool[] Memoization of contains().
+     * @var array<bool> Memoization of contains().
      */
     private $containsMemoization = [];
 
     /**
-     * @var CharTree[] Memoization of constructed character trees.
+     * @var array<CharTree> Memoization of constructed character trees.
      */
     private static $constructMemoization = [];
 
     /**
      * @param string|null $root Root of the character tree. No more than 1 character long.
-     * @param self[] $branches Branches of the character tree.
+     * @param array<self> $branches Branches of the character tree.
      */
     private function __construct(?string $root, array $branches)
     {
@@ -49,7 +49,7 @@ final class CharTree implements IteratorAggregate
 
     /**
      * @param string|null $root Root of the character tree. No more than 1 character long.
-     * @param self[] $branches Branches of the character tree.
+     * @param array<self> $branches Branches of the character tree.
      */
     private static function construct(?string $root, array $branches): self
     {
@@ -80,7 +80,7 @@ final class CharTree implements IteratorAggregate
 
     /**
      * @param string $string Root of the character tree.
-     * @param self[] $branches Branches of the character tree.
+     * @param array<self> $branches Branches of the character tree.
      */
     public static function fromString(string $string, array $branches = []): self
     {
@@ -108,7 +108,7 @@ final class CharTree implements IteratorAggregate
     }
 
     /**
-     * @param self[] $charTrees Character trees to combine.
+     * @param array<self> $charTrees Character trees to combine.
      */
     public static function fromArray(array $charTrees): self
     {
@@ -130,8 +130,8 @@ final class CharTree implements IteratorAggregate
     }
 
     /**
-     * @param self[] $charTrees Character trees to normalize.
-     * @return self[] Character trees where branches of trees with empty string roots have been promoted to trees.
+     * @param array<self> $charTrees Character trees to normalize.
+     * @return array<self> Character trees where branches of trees with empty string roots have been promoted to trees.
      */
     private static function promoteEmptyRoots(array $charTrees): array
     {
@@ -152,8 +152,8 @@ final class CharTree implements IteratorAggregate
     }
 
     /**
-     * @param self[] $charTrees Character trees to normalize.
-     * @return self[] Character trees where branches of trees with the same root have been combined.
+     * @param array<self> $charTrees Character trees to normalize.
+     * @return array<self> Character trees where branches of trees with the same root have been combined.
      */
     private static function combineDuplicateRoots(array $charTrees): array
     {
@@ -189,7 +189,7 @@ final class CharTree implements IteratorAggregate
     }
 
     /**
-     * @return self[] Branches of the character tree.
+     * @return array<self> Branches of the character tree.
      */
     public function getBranches(): array
     {

@@ -13,12 +13,12 @@ final class Combiner implements DateFormatter
     use Chaining;
 
     /**
-     * @var DateFormatter[] Date formatters.
+     * @var array<DateFormatter> Date formatters.
      */
     private $dateFormatters;
 
     /**
-     * @param DateFormatter[] $dateFormatters Date formatters.
+     * @param array<DateFormatter> $dateFormatters Date formatters.
      */
     public function __construct(array $dateFormatters)
     {

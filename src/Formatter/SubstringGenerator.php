@@ -23,12 +23,12 @@ final class SubstringGenerator implements Formatter
     private $maxLength;
 
     /**
-     * @var CharTree[] Memoization of formatted character trees.
+     * @var array<CharTree> Memoization of formatted character trees.
      */
     private static $memoization = [];
 
     /**
-     * @var CharTree[] Memoization of intermediate results of formatted character trees.
+     * @var array<CharTree> Memoization of intermediate results of formatted character trees.
      */
     private static $startsWithMemoization = [];
 

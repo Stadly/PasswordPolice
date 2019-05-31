@@ -20,7 +20,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class HaveIBeenPwnedRule implements Rule
 {
     /**
-     * @var CountConstraint[] Rule constraints.
+     * @var array<CountConstraint> Rule constraints.
      */
     private $constraints = [];
 

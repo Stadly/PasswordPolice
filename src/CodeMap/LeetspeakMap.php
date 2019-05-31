@@ -33,7 +33,7 @@ final class LeetspeakMap implements CodeMap
     ];
 
     /**
-     * @var array<int, array<string|int, string[]>> Leetspeak code map.
+     * @var array<int, array<string|int, array<string>>> Leetspeak code map.
      */
     private $codeMap = [];
 

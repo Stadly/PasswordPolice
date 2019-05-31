@@ -17,7 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class ChangeOnDateRule implements Rule
 {
     /**
-     * @var DateConstraint[] Rule constraints.
+     * @var array<DateConstraint> Rule constraints.
      */
     private $constraints = [];
 

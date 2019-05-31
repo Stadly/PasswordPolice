@@ -12,7 +12,7 @@ final class MixedCaseConverter extends Coder
     use Chaining;
 
     /**
-     * @var CharTree[] Memoization of formatted character trees.
+     * @var array<CharTree> Memoization of formatted character trees.
      */
     private static $memoization = [];
 

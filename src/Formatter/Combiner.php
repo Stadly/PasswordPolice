@@ -12,7 +12,7 @@ final class Combiner implements Formatter
     use Chaining;
 
     /**
-     * @var Formatter[] Character tree formatters.
+     * @var array<Formatter> Character tree formatters.
      */
     private $formatters;
 
@@ -22,7 +22,7 @@ final class Combiner implements Formatter
     private $includeUnformatted;
 
     /**
-     * @param Formatter[] $formatters Character tree formatters.
+     * @param array<Formatter> $formatters Character tree formatters.
      * @param bool $includeUnformatted Whether the result should also include the character tree unformatted.
      */
     public function __construct(array $formatters, bool $includeUnformatted = true)

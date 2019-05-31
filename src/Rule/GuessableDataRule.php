@@ -19,7 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class GuessableDataRule implements Rule
 {
     /**
-     * @var (string|DateTimeInterface)[] Guessable data.
+     * @var array<string|DateTimeInterface> Guessable data.
      */
     private $guessableData;
 
@@ -39,8 +39,8 @@ final class GuessableDataRule implements Rule
     private $weight;
 
     /**
-     * @param (string|DateTimeInterface)[] $guessableData Guessable data.
-     * @param Formatter[] $formatters Formatters.
+     * @param array<string|DateTimeInterface> $guessableData Guessable data.
+     * @param array<Formatter> $formatters Formatters.
      * @param DateFormatter|null $dateFormatter Date formatter.
      * @param int $weight Constraint weight.
      */

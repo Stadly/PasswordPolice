@@ -15,19 +15,19 @@ final class Password
     private $password;
 
     /**
-     * @var (string|DateTimeInterface)[] Guessable data.
+     * @var array<string|DateTimeInterface> Guessable data.
      */
     private $guessableData;
 
     /**
-     * @var FormerPassword[] Former passwords, ordered by recentness.
+     * @var array<FormerPassword> Former passwords, ordered by recentness.
      */
     private $formerPasswords = [];
 
     /**
      * @param string $password Password.
-     * @param (string|DateTimeInterface)[] $guessableData Guessable data.
-     * @param FormerPassword[] $formerPasswords Former passwords.
+     * @param array<string|DateTimeInterface> $guessableData Guessable data.
+     * @param array<FormerPassword> $formerPasswords Former passwords.
      */
     public function __construct(string $password, array $guessableData = [], array $formerPasswords = [])
     {
@@ -61,7 +61,7 @@ final class Password
     }
 
     /**
-     * @return (string|DateTimeInterface)[] Guessable data.
+     * @return array<string|DateTimeInterface> Guessable data.
      */
     public function getGuessableData(): array
     {
@@ -86,7 +86,7 @@ final class Password
     }
 
     /**
-     * @return FormerPassword[] Former passwords, ordered by recentness.
+     * @return array<FormerPassword> Former passwords, ordered by recentness.
      */
     public function getFormerPasswords(): array
     {

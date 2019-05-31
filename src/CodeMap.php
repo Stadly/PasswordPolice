@@ -10,13 +10,13 @@ namespace Stadly\PasswordPolice;
 interface CodeMap
 {
     /**
-     * @return int[] Distinct lengths of entries in the code map.
+     * @return array<int> Distinct lengths of entries in the code map.
      */
     public function getLengths(): array;
 
     /**
      * @param string $string String to code.
-     * @return string[] Coded variants of the string.
+     * @return array<string> Coded variants of the string.
      */
     public function code(string $string): array;
 }

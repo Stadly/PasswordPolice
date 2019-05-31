@@ -18,7 +18,7 @@ final class Truncator implements Formatter
     private $length;
 
     /**
-     * @var CharTree[] Memoization of formatted character trees.
+     * @var array<CharTree> Memoization of formatted character trees.
      */
     private static $memoization = [];
 

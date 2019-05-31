@@ -54,7 +54,7 @@ final class DefaultFormatter implements DateFormatter
     ];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $formats = [];
 

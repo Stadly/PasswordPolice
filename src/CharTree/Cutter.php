@@ -10,14 +10,14 @@ use Stadly\PasswordPolice\CharTree;
 final class Cutter
 {
     /**
-     * @var (string|CharTree)[][][] Memoization of cut character trees.
+     * @var array<array<array<string|CharTree>>> Memoization of cut character trees.
      */
     private static $memoization = [];
 
     /**
      * @param CharTree $charTree Character tree to cut.
      * @param int $position Number of characters before cut.
-     * @return (string|CharTree)[][] Cut variants of the character tree.
+     * @return array<array<string|CharTree>> Cut variants of the character tree.
      */
     public function cut(CharTree $charTree, int $position): array
     {
@@ -38,7 +38,7 @@ final class Cutter
     /**
      * @param CharTree $charTree Character tree to cut.
      * @param int $position Number of characters before cut.
-     * @return (string|CharTree)[][] Cut variants of the character tree. Memoization is not used.
+     * @return array<array<string|CharTree>> Cut variants of the character tree. Memoization is not used.
      */
     private function cutInternal(CharTree $charTree, int $position): array
     {

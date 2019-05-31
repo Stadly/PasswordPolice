@@ -15,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class LowerCaseRule implements Rule
 {
     /**
-     * @var CountConstraint[] Rule constraints.
+     * @var array<CountConstraint> Rule constraints.
      */
     private $constraints = [];
 
@@ -128,7 +128,7 @@ final class LowerCaseRule implements Rule
 
     /**
      * @param string $string String to split into individual characters.
-     * @return string[] Array of characters.
+     * @return array<string> Array of characters.
      */
     private function splitString(string $string): array
     {

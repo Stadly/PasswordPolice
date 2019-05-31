@@ -12,7 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class Policy
 {
     /**
-     * @var Rule[] Policy rules.
+     * @var array<Rule> Policy rules.
      */
     private $rules = [];
 
@@ -61,7 +61,7 @@ final class Policy
      * Validate that a password is in compliance with the policy.
      *
      * @param Password|string $password Password to validate.
-     * @return ValidationError[] Validation errors describing why the password is not in compliance with the policy.
+     * @return array<ValidationError> Validation errors describing why the password isn't in compliance with the policy.
      * @throws RuleException If an error occurred.
      */
     public function validate($password): array

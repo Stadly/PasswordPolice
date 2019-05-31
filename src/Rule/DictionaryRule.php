@@ -33,7 +33,7 @@ final class DictionaryRule implements Rule
 
     /**
      * @param WordList $wordList Word list for the dictionary.
-     * @param Formatter[] $formatters Formatters.
+     * @param array<Formatter> $formatters Formatters.
      * @param int $weight Constraint weight.
      */
     public function __construct(WordList $wordList, array $formatters = [], int $weight = 1)

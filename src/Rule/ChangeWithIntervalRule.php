@@ -19,7 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class ChangeWithIntervalRule implements Rule
 {
     /**
-     * @var DateIntervalConstraint[] Rule constraints.
+     * @var array<DateIntervalConstraint> Rule constraints.
      */
     private $constraints = [];
 
