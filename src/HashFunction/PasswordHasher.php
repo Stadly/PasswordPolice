@@ -16,7 +16,7 @@ final class PasswordHasher implements HashFunction
     private $algorithm;
 
     /**
-     * @var array Options.
+     * @var array<string, string|int> Options.
      */
     private $options;
 
@@ -24,7 +24,7 @@ final class PasswordHasher implements HashFunction
      * See http://php.net/manual/en/function.password-hash.php for details.
      *
      * @param int $algorithm Algorithm.
-     * @param array $options Options.
+     * @param array<string, string|int> $options Options.
      */
     public function __construct(int $algorithm = PASSWORD_DEFAULT, array $options = [])
     {
