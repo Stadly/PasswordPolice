@@ -40,7 +40,7 @@ final class LeetspeakMap implements CodeMap
     /**
      * @param bool $encode Whether the map should encode or decode Leetspeak.
      */
-    public function __construct($encode = false)
+    public function __construct(bool $encode = false)
     {
         if ($encode) {
             foreach (self::ENCODE_MAP as $char => $codedChars) {
