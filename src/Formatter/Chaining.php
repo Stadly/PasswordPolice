@@ -15,7 +15,7 @@ trait Chaining
     private $next = null;
 
     /**
-     * {@inheritDoc}
+     * @param Formatter|null $next Formatter to apply after this one.
      */
     public function setNext(?Formatter $next): void
     {
@@ -23,7 +23,7 @@ trait Chaining
     }
 
     /**
-     * {@inheritDoc}
+     * @return Formatter|null Next formatter in the chain.
      */
     public function getNext(): ?Formatter
     {
