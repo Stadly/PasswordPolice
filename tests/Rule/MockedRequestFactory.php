@@ -17,10 +17,12 @@ final class MockedRequestFactory implements RequestFactoryInterface
     {
         $generator = new Generator();
 
+        // phpcs:disable SlevomatCodingStandard.Variables.UselessVariable.UselessVariable -- Needed to specify type.
         /**
          * @var MockObject&RequestInterface
          */
         $request = $generator->getMock(RequestInterface::class);
+        // phpcs:enable
 
         return $request;
     }
