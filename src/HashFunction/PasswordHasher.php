@@ -63,6 +63,7 @@ final class PasswordHasher implements HashFunction
         return password_verify($password, $hash);
     }
 
+    // phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod
     /**
      * @throws ErrorException Error converted to an exception.
      */
@@ -70,4 +71,5 @@ final class PasswordHasher implements HashFunction
     {
         throw new ErrorException($message, /*code*/0, $severity, $filename, $line);
     }
+    // phpcs:enable
 }

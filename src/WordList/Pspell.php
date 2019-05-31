@@ -97,6 +97,7 @@ final class Pspell implements WordList
         return false;
     }
 
+    // phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod
     /**
      * @throws ErrorException Error converted to an exception.
      */
@@ -104,4 +105,5 @@ final class Pspell implements WordList
     {
         throw new ErrorException($message, /*code*/0, $severity, $filename, $line);
     }
+    // phpcs:enable
 }
