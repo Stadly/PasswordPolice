@@ -23,7 +23,7 @@ final class UpperCaseRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new UpperCaseRule(5, null);
+        new UpperCaseRule(5, null);
     }
 
     /**
@@ -32,7 +32,7 @@ final class UpperCaseRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = new UpperCaseRule(0, 10);
+        new UpperCaseRule(0, 10);
     }
 
     /**
@@ -41,7 +41,7 @@ final class UpperCaseRuleTest extends TestCase
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new UpperCaseRule(5, 10);
+        new UpperCaseRule(5, 10);
     }
 
     /**
@@ -51,7 +51,7 @@ final class UpperCaseRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new UpperCaseRule(-10, null);
+        new UpperCaseRule(-10, null);
     }
 
     /**
@@ -61,7 +61,7 @@ final class UpperCaseRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new UpperCaseRule(10, 5);
+        new UpperCaseRule(10, 5);
     }
 
     /**
@@ -70,7 +70,7 @@ final class UpperCaseRuleTest extends TestCase
      */
     public function testCanConstructUnconstrainedRule(): void
     {
-        $rule = new UpperCaseRule(0, null);
+        new UpperCaseRule(0, null);
     }
 
     /**
@@ -79,7 +79,7 @@ final class UpperCaseRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $rule = new UpperCaseRule(5, 5);
+        new UpperCaseRule(5, 5);
     }
 
     /**

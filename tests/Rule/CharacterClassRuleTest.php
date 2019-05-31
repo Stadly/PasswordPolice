@@ -23,7 +23,7 @@ final class CharacterClassRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new CharacterClassRuleClass('$%&@!', 5, null);
+        new CharacterClassRuleClass('$%&@!', 5, null);
     }
 
     /**
@@ -32,7 +32,7 @@ final class CharacterClassRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = new CharacterClassRuleClass('$%&@!', 0, 10);
+        new CharacterClassRuleClass('$%&@!', 0, 10);
     }
 
     /**
@@ -41,7 +41,7 @@ final class CharacterClassRuleTest extends TestCase
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new CharacterClassRuleClass('$%&@!', 5, 10);
+        new CharacterClassRuleClass('$%&@!', 5, 10);
     }
 
     /**
@@ -51,7 +51,7 @@ final class CharacterClassRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new CharacterClassRuleClass('$%&@!', -10, null);
+        new CharacterClassRuleClass('$%&@!', -10, null);
     }
 
     /**
@@ -61,7 +61,7 @@ final class CharacterClassRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new CharacterClassRuleClass('$%&@!', 10, 5);
+        new CharacterClassRuleClass('$%&@!', 10, 5);
     }
 
     /**
@@ -70,7 +70,7 @@ final class CharacterClassRuleTest extends TestCase
      */
     public function testCanConstructUnconstrainedRule(): void
     {
-        $rule = new CharacterClassRuleClass('$%&@!', 0, null);
+        new CharacterClassRuleClass('$%&@!', 0, null);
     }
 
     /**
@@ -79,7 +79,7 @@ final class CharacterClassRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $rule = new CharacterClassRuleClass('$%&@!', 5, 5);
+        new CharacterClassRuleClass('$%&@!', 5, 5);
     }
 
     /**
@@ -89,7 +89,7 @@ final class CharacterClassRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new CharacterClassRuleClass('');
+        new CharacterClassRuleClass('');
     }
 
     /**

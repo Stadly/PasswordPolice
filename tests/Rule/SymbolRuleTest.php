@@ -23,7 +23,7 @@ final class SymbolRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new SymbolRule('$%&@!', 5, null);
+        new SymbolRule('$%&@!', 5, null);
     }
 
     /**
@@ -32,7 +32,7 @@ final class SymbolRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = new SymbolRule('$%&@!', 0, 10);
+        new SymbolRule('$%&@!', 0, 10);
     }
 
     /**
@@ -41,7 +41,7 @@ final class SymbolRuleTest extends TestCase
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new SymbolRule('$%&@!', 5, 10);
+        new SymbolRule('$%&@!', 5, 10);
     }
 
     /**
@@ -51,7 +51,7 @@ final class SymbolRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new SymbolRule('$%&@!', -10, null);
+        new SymbolRule('$%&@!', -10, null);
     }
 
     /**
@@ -61,7 +61,7 @@ final class SymbolRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new SymbolRule('$%&@!', 10, 5);
+        new SymbolRule('$%&@!', 10, 5);
     }
 
     /**
@@ -70,7 +70,7 @@ final class SymbolRuleTest extends TestCase
      */
     public function testCanConstructUnconstrainedRule(): void
     {
-        $rule = new SymbolRule('$%&@!', 0, null);
+        new SymbolRule('$%&@!', 0, null);
     }
 
     /**
@@ -79,7 +79,7 @@ final class SymbolRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $rule = new SymbolRule('$%&@!', 5, 5);
+        new SymbolRule('$%&@!', 5, 5);
     }
 
     /**
@@ -89,7 +89,7 @@ final class SymbolRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new SymbolRule('');
+        new SymbolRule('');
     }
 
     /**

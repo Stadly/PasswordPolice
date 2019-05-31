@@ -23,7 +23,7 @@ final class TruncatorTest extends TestCase
      */
     public function testCanConstructFormatterWithLengthConstraintEqualToZero(): void
     {
-        $formatter = new Truncator(0);
+        new Truncator(0);
     }
 
     /**
@@ -33,7 +33,7 @@ final class TruncatorTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $formatter = new Truncator(-10);
+        new Truncator(-10);
     }
 
     /**

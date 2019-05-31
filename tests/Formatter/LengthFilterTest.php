@@ -23,7 +23,7 @@ final class LengthFilterTest extends TestCase
      */
     public function testCanConstructFormatterWithMinLengthConstraintEqualToZero(): void
     {
-        $formatter = new LengthFilter(0, null);
+        new LengthFilter(0, null);
     }
 
     /**
@@ -33,7 +33,7 @@ final class LengthFilterTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $formatter = new LengthFilter(-10, null);
+        new LengthFilter(-10, null);
     }
 
     /**
@@ -43,7 +43,7 @@ final class LengthFilterTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $formatter = new LengthFilter(10, 5);
+        new LengthFilter(10, 5);
     }
 
     /**
@@ -52,7 +52,7 @@ final class LengthFilterTest extends TestCase
      */
     public function testCanConstructFormatterWithMinLengthConstraintEqualToMaxLengthConstraint(): void
     {
-        $formatter = new LengthFilter(5, 5);
+        new LengthFilter(5, 5);
     }
 
     /**

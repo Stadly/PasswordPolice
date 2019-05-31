@@ -23,7 +23,7 @@ final class SubstringGeneratorTest extends TestCase
      */
     public function testCanConstructFormatterWithMinLengthConstraintEqualToZero(): void
     {
-        $formatter = new SubstringGenerator(0, null);
+        new SubstringGenerator(0, null);
     }
 
     /**
@@ -33,7 +33,7 @@ final class SubstringGeneratorTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $formatter = new SubstringGenerator(-10, null);
+        new SubstringGenerator(-10, null);
     }
 
     /**
@@ -43,7 +43,7 @@ final class SubstringGeneratorTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $formatter = new SubstringGenerator(10, 5);
+        new SubstringGenerator(10, 5);
     }
 
     /**
@@ -52,7 +52,7 @@ final class SubstringGeneratorTest extends TestCase
      */
     public function testCanConstructFormatterWithMinLengthConstraintEqualToMaxLengthConstraint(): void
     {
-        $formatter = new SubstringGenerator(5, 5);
+        new SubstringGenerator(5, 5);
     }
 
     /**

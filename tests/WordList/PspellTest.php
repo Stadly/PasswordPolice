@@ -29,7 +29,7 @@ final class PspellTest extends TestCase
         $dictionary = pspell_new('en');
         assert($dictionary !== false);
 
-        $pspell = new Pspell($dictionary);
+        new Pspell($dictionary);
     }
 
     /**
@@ -38,7 +38,7 @@ final class PspellTest extends TestCase
      */
     public function testCanConstructWordListFromInvalidPspellDirectoryLink(): void
     {
-        $pspell = new Pspell(-1);
+        new Pspell(-1);
     }
 
     /**
@@ -47,7 +47,7 @@ final class PspellTest extends TestCase
      */
     public function testCanConstructWordListFromValidLocale(): void
     {
-        $pspell = Pspell::fromLocale('en');
+        Pspell::fromLocale('en');
     }
 
     /**
@@ -57,7 +57,7 @@ final class PspellTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $pspell = Pspell::fromLocale('');
+        Pspell::fromLocale('');
     }
 
     /**
@@ -67,7 +67,7 @@ final class PspellTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $pspell = Pspell::fromLocale('foo');
+        Pspell::fromLocale('foo');
     }
 
     /**
@@ -77,7 +77,7 @@ final class PspellTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
 
-        $pspell = Pspell::fromLocale('zz-ZZ');
+        Pspell::fromLocale('zz-ZZ');
     }
 
     /**
@@ -85,7 +85,7 @@ final class PspellTest extends TestCase
      */
     public function testErrorHandlerIsRestoredWhenConstructFromLocaleSucceeds(): void
     {
-        $pspell = Pspell::fromLocale('en');
+        Pspell::fromLocale('en');
 
         $this->expectException(Notice::class);
 
@@ -98,7 +98,7 @@ final class PspellTest extends TestCase
     public function testErrorHandlerIsRestoredWhenConstructFromLocaleFails(): void
     {
         try {
-            $pspell = Pspell::fromLocale('zz-ZZ');
+            Pspell::fromLocale('zz-ZZ');
         } catch (RuntimeException $e) {
             $this->expectException(Notice::class);
 

@@ -23,7 +23,7 @@ final class DigitRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new DigitRule(5, null);
+        new DigitRule(5, null);
     }
 
     /**
@@ -32,7 +32,7 @@ final class DigitRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = new DigitRule(0, 10);
+        new DigitRule(0, 10);
     }
 
     /**
@@ -41,7 +41,7 @@ final class DigitRuleTest extends TestCase
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new DigitRule(5, 10);
+        new DigitRule(5, 10);
     }
 
     /**
@@ -51,7 +51,7 @@ final class DigitRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new DigitRule(-10, null);
+        new DigitRule(-10, null);
     }
 
     /**
@@ -61,7 +61,7 @@ final class DigitRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new DigitRule(10, 5);
+        new DigitRule(10, 5);
     }
 
     /**
@@ -70,7 +70,7 @@ final class DigitRuleTest extends TestCase
      */
     public function testCanConstructUnconstrainedRule(): void
     {
-        $rule = new DigitRule(0, null);
+        new DigitRule(0, null);
     }
 
     /**
@@ -79,7 +79,7 @@ final class DigitRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $rule = new DigitRule(5, 5);
+        new DigitRule(5, 5);
     }
 
     /**

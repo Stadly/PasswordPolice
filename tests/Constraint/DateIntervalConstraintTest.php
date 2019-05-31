@@ -23,7 +23,7 @@ final class DateIntervalConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithMinConstraint(): void
     {
-        $constraint = new DateIntervalConstraint(new DateInterval('P5D'), null);
+        new DateIntervalConstraint(new DateInterval('P5D'), null);
     }
 
     /**
@@ -32,7 +32,7 @@ final class DateIntervalConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithMaxConstraint(): void
     {
-        $constraint = new DateIntervalConstraint(new DateInterval('PT0S'), new DateInterval('P10D'));
+        new DateIntervalConstraint(new DateInterval('PT0S'), new DateInterval('P10D'));
     }
 
     /**
@@ -41,7 +41,7 @@ final class DateIntervalConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithBothMinAndMaxConstraint(): void
     {
-        $constraint = new DateIntervalConstraint(new DateInterval('P5D'), new DateInterval('P10D'));
+        new DateIntervalConstraint(new DateInterval('P5D'), new DateInterval('P10D'));
     }
 
     /**
@@ -51,7 +51,7 @@ final class DateIntervalConstraintTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $constraint = new DateIntervalConstraint(DateInterval::createFromDateString('-10 days'), null);
+        new DateIntervalConstraint(DateInterval::createFromDateString('-10 days'), null);
     }
 
     /**
@@ -61,7 +61,7 @@ final class DateIntervalConstraintTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $constraint = new DateIntervalConstraint(new DateInterval('P10D'), new DateInterval('P5D'));
+        new DateIntervalConstraint(new DateInterval('P10D'), new DateInterval('P5D'));
     }
 
     /**
@@ -70,7 +70,7 @@ final class DateIntervalConstraintTest extends TestCase
      */
     public function testCanConstructUnconstrainedConstraint(): void
     {
-        $constraint = new DateIntervalConstraint(new DateInterval('PT0S'), null);
+        new DateIntervalConstraint(new DateInterval('PT0S'), null);
     }
 
     /**
@@ -79,7 +79,7 @@ final class DateIntervalConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithMinConstraintEqualToMaxConstraint(): void
     {
-        $constraint = new DateIntervalConstraint(new DateInterval('P5D'), new DateInterval('P5D'));
+        new DateIntervalConstraint(new DateInterval('P5D'), new DateInterval('P5D'));
     }
 
     /**
@@ -88,7 +88,7 @@ final class DateIntervalConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithNegativeWeight(): void
     {
-        $constraint = new DateIntervalConstraint(new DateInterval('P5D'), new DateInterval('P5D'), -5);
+        new DateIntervalConstraint(new DateInterval('P5D'), new DateInterval('P5D'), -5);
     }
 
     /**

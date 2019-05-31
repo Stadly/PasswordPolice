@@ -21,7 +21,7 @@ final class CountConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithMinConstraint(): void
     {
-        $constraint = new CountConstraint(5, null);
+        new CountConstraint(5, null);
     }
 
     /**
@@ -30,7 +30,7 @@ final class CountConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithMaxConstraint(): void
     {
-        $constraint = new CountConstraint(0, 10);
+        new CountConstraint(0, 10);
     }
 
     /**
@@ -39,7 +39,7 @@ final class CountConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithBothMinAndMaxConstraint(): void
     {
-        $constraint = new CountConstraint(5, 10);
+        new CountConstraint(5, 10);
     }
 
     /**
@@ -49,7 +49,7 @@ final class CountConstraintTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $constraint = new CountConstraint(-10, null);
+        new CountConstraint(-10, null);
     }
 
     /**
@@ -59,7 +59,7 @@ final class CountConstraintTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $constraint = new CountConstraint(10, 5);
+        new CountConstraint(10, 5);
     }
 
     /**
@@ -68,7 +68,7 @@ final class CountConstraintTest extends TestCase
      */
     public function testCanConstructUnconstrainedConstraint(): void
     {
-        $constraint = new CountConstraint(0, null);
+        new CountConstraint(0, null);
     }
 
     /**
@@ -77,7 +77,7 @@ final class CountConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithMinConstraintEqualToMaxConstraint(): void
     {
-        $constraint = new CountConstraint(5, 5);
+        new CountConstraint(5, 5);
     }
 
     /**
@@ -86,7 +86,7 @@ final class CountConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithNegativeWeight(): void
     {
-        $constraint = new CountConstraint(5, 5, -5);
+        new CountConstraint(5, 5, -5);
     }
 
     /**

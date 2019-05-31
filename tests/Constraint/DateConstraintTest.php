@@ -22,7 +22,7 @@ final class DateConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithMinConstraint(): void
     {
-        $constraint = new DateConstraint(new DateTime('2001-02-03'), null);
+        new DateConstraint(new DateTime('2001-02-03'), null);
     }
 
     /**
@@ -31,7 +31,7 @@ final class DateConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithMaxConstraint(): void
     {
-        $constraint = new DateConstraint(null, new DateTime('2002-03-04'));
+        new DateConstraint(null, new DateTime('2002-03-04'));
     }
 
     /**
@@ -40,7 +40,7 @@ final class DateConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithBothMinAndMaxConstraint(): void
     {
-        $constraint = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
+        new DateConstraint(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
     }
 
     /**
@@ -50,7 +50,7 @@ final class DateConstraintTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $constraint = new DateConstraint(new DateTime('2002-03-04'), new DateTime('2001-02-03'));
+        new DateConstraint(new DateTime('2002-03-04'), new DateTime('2001-02-03'));
     }
 
     /**
@@ -59,7 +59,7 @@ final class DateConstraintTest extends TestCase
      */
     public function testCanConstructUnconstrainedConstraint(): void
     {
-        $constraint = new DateConstraint(null, null);
+        new DateConstraint(null, null);
     }
 
     /**
@@ -68,7 +68,7 @@ final class DateConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithMinConstraintEqualToMaxConstraint(): void
     {
-        $constraint = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
+        new DateConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
     }
 
     /**
@@ -77,7 +77,7 @@ final class DateConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithNegativeWeight(): void
     {
-        $constraint = new DateConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'), -5);
+        new DateConstraint(new DateTime('2001-02-03'), new DateTime('2001-02-03'), -5);
     }
 
     /**

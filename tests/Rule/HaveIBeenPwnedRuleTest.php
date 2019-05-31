@@ -42,7 +42,7 @@ final class HaveIBeenPwnedRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new HaveIBeenPwnedRule(null, 5);
+        new HaveIBeenPwnedRule(null, 5);
     }
 
     /**
@@ -51,7 +51,7 @@ final class HaveIBeenPwnedRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = new HaveIBeenPwnedRule(10, 0);
+        new HaveIBeenPwnedRule(10, 0);
     }
 
     /**
@@ -60,7 +60,7 @@ final class HaveIBeenPwnedRuleTest extends TestCase
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new HaveIBeenPwnedRule(10, 5);
+        new HaveIBeenPwnedRule(10, 5);
     }
 
     /**
@@ -70,7 +70,7 @@ final class HaveIBeenPwnedRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new HaveIBeenPwnedRule(null, -10);
+        new HaveIBeenPwnedRule(null, -10);
     }
 
     /**
@@ -80,7 +80,7 @@ final class HaveIBeenPwnedRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new HaveIBeenPwnedRule(5, 10);
+        new HaveIBeenPwnedRule(5, 10);
     }
 
     /**
@@ -89,7 +89,7 @@ final class HaveIBeenPwnedRuleTest extends TestCase
      */
     public function testCanConstructUnconstrainedRule(): void
     {
-        $rule = new HaveIBeenPwnedRule(null, 0);
+        new HaveIBeenPwnedRule(null, 0);
     }
 
     /**
@@ -98,7 +98,7 @@ final class HaveIBeenPwnedRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $rule = new HaveIBeenPwnedRule(5, 5);
+        new HaveIBeenPwnedRule(5, 5);
     }
 
     /**

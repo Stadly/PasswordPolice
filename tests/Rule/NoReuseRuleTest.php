@@ -57,7 +57,7 @@ final class NoReuseRuleTest extends TestCase
      */
     public function testCanConstructRuleWithCountConstraint(): void
     {
-        $rule = new NoReuseRule($this->hashFunction, 5, 0);
+        new NoReuseRule($this->hashFunction, 5, 0);
     }
 
     /**
@@ -66,7 +66,7 @@ final class NoReuseRuleTest extends TestCase
      */
     public function testCanConstructRuleWithFirstConstraint(): void
     {
-        $rule = new NoReuseRule($this->hashFunction, null, 10);
+        new NoReuseRule($this->hashFunction, null, 10);
     }
 
     /**
@@ -75,7 +75,7 @@ final class NoReuseRuleTest extends TestCase
      */
     public function testCanConstructRuleWithBothCountAndFirstConstraint(): void
     {
-        $rule = new NoReuseRule($this->hashFunction, 5, 10);
+        new NoReuseRule($this->hashFunction, 5, 10);
     }
 
     /**
@@ -85,7 +85,7 @@ final class NoReuseRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new NoReuseRule($this->hashFunction, 0, 0);
+        new NoReuseRule($this->hashFunction, 0, 0);
     }
 
     /**
@@ -95,7 +95,7 @@ final class NoReuseRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new NoReuseRule($this->hashFunction, -10, 0);
+        new NoReuseRule($this->hashFunction, -10, 0);
     }
 
     /**
@@ -104,7 +104,7 @@ final class NoReuseRuleTest extends TestCase
      */
     public function testCanConstructRuleWithFirstConstraintEqualToZero(): void
     {
-        $rule = new NoReuseRule($this->hashFunction, null, 0);
+        new NoReuseRule($this->hashFunction, null, 0);
     }
 
     /**
@@ -114,7 +114,7 @@ final class NoReuseRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new NoReuseRule($this->hashFunction, null, -5);
+        new NoReuseRule($this->hashFunction, null, -5);
     }
 
     /**

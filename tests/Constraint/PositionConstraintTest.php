@@ -21,7 +21,7 @@ final class PositionConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithFirstConstraint(): void
     {
-        $constraint = new PositionConstraint(5, null);
+        new PositionConstraint(5, null);
     }
 
     /**
@@ -30,7 +30,7 @@ final class PositionConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithCountConstraint(): void
     {
-        $constraint = new PositionConstraint(0, 10);
+        new PositionConstraint(0, 10);
     }
 
     /**
@@ -39,7 +39,7 @@ final class PositionConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithBothFirstAndCountConstraint(): void
     {
-        $constraint = new PositionConstraint(5, 10);
+        new PositionConstraint(5, 10);
     }
 
     /**
@@ -49,7 +49,7 @@ final class PositionConstraintTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $constraint = new PositionConstraint(-10, null);
+        new PositionConstraint(-10, null);
     }
 
     /**
@@ -59,7 +59,7 @@ final class PositionConstraintTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $constraint = new PositionConstraint(0, 0);
+        new PositionConstraint(0, 0);
     }
 
     /**
@@ -69,7 +69,7 @@ final class PositionConstraintTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $constraint = new PositionConstraint(0, -10);
+        new PositionConstraint(0, -10);
     }
 
     /**
@@ -78,7 +78,7 @@ final class PositionConstraintTest extends TestCase
      */
     public function testCanConstructUnconstrainedConstraint(): void
     {
-        $constraint = new PositionConstraint(0, null);
+        new PositionConstraint(0, null);
     }
 
     /**
@@ -87,7 +87,7 @@ final class PositionConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithFirstConstraintEqualToCountConstraint(): void
     {
-        $constraint = new PositionConstraint(5, 5);
+        new PositionConstraint(5, 5);
     }
 
     /**
@@ -96,7 +96,7 @@ final class PositionConstraintTest extends TestCase
      */
     public function testCanConstructConstraintWithNegativeWeight(): void
     {
-        $constraint = new PositionConstraint(5, 5, -5);
+        new PositionConstraint(5, 5, -5);
     }
 
     /**

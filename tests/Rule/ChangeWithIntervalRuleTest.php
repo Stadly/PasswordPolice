@@ -41,7 +41,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new ChangeWithIntervalRule(new DateInterval('P5D'), null);
+        new ChangeWithIntervalRule(new DateInterval('P5D'), null);
     }
 
     /**
@@ -50,7 +50,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = new ChangeWithIntervalRule(new DateInterval('PT0S'), new DateInterval('P10D'));
+        new ChangeWithIntervalRule(new DateInterval('PT0S'), new DateInterval('P10D'));
     }
 
     /**
@@ -59,7 +59,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new ChangeWithIntervalRule(new DateInterval('P5D'), new DateInterval('P10D'));
+        new ChangeWithIntervalRule(new DateInterval('P5D'), new DateInterval('P10D'));
     }
 
     /**
@@ -69,7 +69,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new ChangeWithIntervalRule(DateInterval::createFromDateString('-5 days'), null);
+        new ChangeWithIntervalRule(DateInterval::createFromDateString('-5 days'), null);
     }
 
     /**
@@ -79,7 +79,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new ChangeWithIntervalRule(new DateInterval('P10D'), new DateInterval('P5D'));
+        new ChangeWithIntervalRule(new DateInterval('P10D'), new DateInterval('P5D'));
     }
 
     /**
@@ -88,7 +88,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
      */
     public function testCanConstructUnconstrainedRule(): void
     {
-        $rule = new ChangeWithIntervalRule(new DateInterval('PT0S'), null);
+        new ChangeWithIntervalRule(new DateInterval('PT0S'), null);
     }
 
     /**
@@ -97,7 +97,7 @@ final class ChangeWithIntervalRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $rule = new ChangeWithIntervalRule(new DateInterval('P5D'), new DateInterval('P5D'));
+        new ChangeWithIntervalRule(new DateInterval('P5D'), new DateInterval('P5D'));
     }
 
     /**

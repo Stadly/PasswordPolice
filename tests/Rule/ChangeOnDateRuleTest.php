@@ -41,7 +41,7 @@ final class ChangeOnDateRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraint(): void
     {
-        $rule = new ChangeOnDateRule(new DateTime('2001-02-03'), null);
+        new ChangeOnDateRule(new DateTime('2001-02-03'), null);
     }
 
     /**
@@ -50,7 +50,7 @@ final class ChangeOnDateRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMaxConstraint(): void
     {
-        $rule = new ChangeOnDateRule(null, new DateTime('2002-03-04'));
+        new ChangeOnDateRule(null, new DateTime('2002-03-04'));
     }
 
     /**
@@ -59,7 +59,7 @@ final class ChangeOnDateRuleTest extends TestCase
      */
     public function testCanConstructRuleWithBothMinAndMaxConstraint(): void
     {
-        $rule = new ChangeOnDateRule(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
+        new ChangeOnDateRule(new DateTime('2001-02-03'), new DateTime('2002-03-04'));
     }
 
     /**
@@ -69,7 +69,7 @@ final class ChangeOnDateRuleTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rule = new ChangeOnDateRule(new DateTime('2002-03-04'), new DateTime('2001-02-03'));
+        new ChangeOnDateRule(new DateTime('2002-03-04'), new DateTime('2001-02-03'));
     }
 
     /**
@@ -78,7 +78,7 @@ final class ChangeOnDateRuleTest extends TestCase
      */
     public function testCanConstructUnconstrainedRule(): void
     {
-        $rule = new ChangeOnDateRule(null, null);
+        new ChangeOnDateRule(null, null);
     }
 
     /**
@@ -87,7 +87,7 @@ final class ChangeOnDateRuleTest extends TestCase
      */
     public function testCanConstructRuleWithMinConstraintEqualToMaxConstraint(): void
     {
-        $rule = new ChangeOnDateRule(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
+        new ChangeOnDateRule(new DateTime('2001-02-03'), new DateTime('2001-02-03'));
     }
 
     /**
