@@ -16,7 +16,7 @@ final class SymbolRule extends CharacterClassRule
     {
         if ($constraint->getMax() === null) {
             return $translator->trans(
-                'The password must contain at least one symbol (%characters%).|'.
+                'The password must contain at least one symbol (%characters%).|' .
                 'The password must contain at least %count% symbols (%characters%).',
                 [
                     '%count%' => $constraint->getMin(),
@@ -34,7 +34,7 @@ final class SymbolRule extends CharacterClassRule
 
         if ($constraint->getMin() === 0) {
             return $translator->trans(
-                'The password must contain at most one symbol (%characters%).|'.
+                'The password must contain at most one symbol (%characters%).|' .
                 'The password must contain at most %count% symbols (%characters%).',
                 [
                     '%count%' => $constraint->getMax(),
@@ -45,7 +45,7 @@ final class SymbolRule extends CharacterClassRule
 
         if ($constraint->getMin() === $constraint->getMax()) {
             return $translator->trans(
-                'The password must contain exactly one symbol (%characters%).|'.
+                'The password must contain exactly one symbol (%characters%).|' .
                 'The password must contain exactly %count% symbols (%characters%).',
                 [
                     '%count%' => $constraint->getMin(),

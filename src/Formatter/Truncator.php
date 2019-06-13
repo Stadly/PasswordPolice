@@ -51,7 +51,7 @@ final class Truncator implements Formatter
     private function applyInternal(CharTree $charTree, int $length): CharTree
     {
         // When PHP 7.1 is no longer supported, change to using spl_object_id.
-        $hash = spl_object_hash($charTree).';'.$length;
+        $hash = spl_object_hash($charTree) . ';' . $length;
 
         if (!isset(self::$memoization[$hash])) {
             self::$memoization[$hash] = $this->format($charTree, $length);
@@ -74,7 +74,7 @@ final class Truncator implements Formatter
         }
 
         $rootLength = mb_strlen($root);
-        $branchLength = $length-$rootLength;
+        $branchLength = $length - $rootLength;
 
         if ($branchLength < 0) {
             return CharTree::fromString('');

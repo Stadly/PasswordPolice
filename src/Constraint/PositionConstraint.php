@@ -78,7 +78,7 @@ final class PositionConstraint
             return false;
         }
 
-        if ($this->count !== null && $this->first+$this->count <= $pos) {
+        if ($this->count !== null && $this->first + $this->count <= $pos) {
             return false;
         }
 

@@ -67,7 +67,7 @@ final class SubstringGenerator implements Formatter
     private function applyInternal(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
     {
         // When PHP 7.1 is no longer supported, change to using spl_object_id.
-        $hash = spl_object_hash($charTree).';'.$minLength.';'.$maxLength;
+        $hash = spl_object_hash($charTree) . ';' . $minLength . ';' . $maxLength;
 
         if (!isset(self::$memoization[$hash])) {
             self::$memoization[$hash] = $this->format($charTree, $minLength, $maxLength);
@@ -143,7 +143,7 @@ final class SubstringGenerator implements Formatter
     private function applyInternalStartingWithRoot(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
     {
         // When PHP 7.1 is no longer supported, change to using spl_object_id.
-        $hash = spl_object_hash($charTree).';'.$minLength.';'.$maxLength;
+        $hash = spl_object_hash($charTree) . ';' . $minLength . ';' . $maxLength;
 
         if (!isset(self::$startsWithMemoization[$hash])) {
             self::$startsWithMemoization[$hash] = $this->generateStartingWithRoot($charTree, $minLength, $maxLength);
@@ -169,8 +169,8 @@ final class SubstringGenerator implements Formatter
         $rootLength = mb_strlen($root);
         if ($rootLength <= $maxLength || $maxLength === null) {
             $branches = $charTree->getBranches();
-            $branchMinLength = $minLength <= $rootLength ? 0 : $minLength-$rootLength;
-            $branchMaxLength = $maxLength === null ? null : $maxLength-$rootLength;
+            $branchMinLength = $minLength <= $rootLength ? 0 : $minLength - $rootLength;
+            $branchMaxLength = $maxLength === null ? null : $maxLength - $rootLength;
 
             $substringBranches = [];
             foreach ($branches as $branch) {

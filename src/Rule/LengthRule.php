@@ -123,7 +123,7 @@ final class LengthRule implements Rule
     {
         if ($constraint->getMax() === null) {
             return $translator->trans(
-                'The password must contain at least one character.|'.
+                'The password must contain at least one character.|' .
                 'The password must contain at least %count% characters.',
                 ['%count%' => $constraint->getMin()]
             );
@@ -137,7 +137,7 @@ final class LengthRule implements Rule
 
         if ($constraint->getMin() === 0) {
             return $translator->trans(
-                'The password must contain at most one character.|'.
+                'The password must contain at most one character.|' .
                 'The password must contain at most %count% characters.',
                 ['%count%' => $constraint->getMax()]
             );
@@ -145,7 +145,7 @@ final class LengthRule implements Rule
 
         if ($constraint->getMin() === $constraint->getMax()) {
             return $translator->trans(
-                'The password must contain exactly one character.|'.
+                'The password must contain exactly one character.|' .
                 'The password must contain exactly %count% characters.',
                 ['%count%' => $constraint->getMin()]
             );

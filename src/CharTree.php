@@ -68,7 +68,7 @@ final class CharTree implements IteratorAggregate
         foreach ($branches as $branch) {
             // When PHP 7.1 is no longer supported, change to using spl_object_id.
             $branchHash = spl_object_hash($branch);
-            $hash .= ';'.$branchHash;
+            $hash .= ';' . $branchHash;
         }
 
         if (!isset(self::$constructMemoization[$hash])) {
@@ -274,7 +274,7 @@ final class CharTree implements IteratorAggregate
                     yield $this->root;
                 } else {
                     foreach ($branch as $string) {
-                        yield $this->root.$string;
+                        yield $this->root . $string;
                     }
                 }
             }

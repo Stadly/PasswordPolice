@@ -117,7 +117,7 @@ final class LowerCaseRule implements Rule
         assert(count($passwordCharacters) === count($upperCaseCharacters));
 
         $count = 0;
-        for ($i = count($passwordCharacters)-1; $i >= 0; --$i) {
+        for ($i = count($passwordCharacters) - 1; $i >= 0; --$i) {
             if ($passwordCharacters[$i] !== $upperCaseCharacters[$i]) {
                 ++$count;
             }
@@ -148,7 +148,7 @@ final class LowerCaseRule implements Rule
     {
         if ($constraint->getMax() === null) {
             return $translator->trans(
-                'The password must contain at least one lower case letter.|'.
+                'The password must contain at least one lower case letter.|' .
                 'The password must contain at least %count% lower case letters.',
                 ['%count%' => $constraint->getMin()]
             );
@@ -162,7 +162,7 @@ final class LowerCaseRule implements Rule
 
         if ($constraint->getMin() === 0) {
             return $translator->trans(
-                'The password must contain at most one lower case letter.|'.
+                'The password must contain at most one lower case letter.|' .
                 'The password must contain at most %count% lower case letters.',
                 ['%count%' => $constraint->getMax()]
             );
@@ -170,7 +170,7 @@ final class LowerCaseRule implements Rule
 
         if ($constraint->getMin() === $constraint->getMax()) {
             return $translator->trans(
-                'The password must contain exactly one lower case letter.|'.
+                'The password must contain exactly one lower case letter.|' .
                 'The password must contain exactly %count% lower case letters.',
                 ['%count%' => $constraint->getMin()]
             );

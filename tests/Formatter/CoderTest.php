@@ -29,7 +29,7 @@ final class CoderTest extends TestCase
         $this->codeMap->method('code')->willReturnCallback(
             static function (string $string): array {
                 $char = mb_substr($string, 0, 1);
-                return [chr(ord($char)+1)];
+                return [chr(ord($char) + 1)];
             }
         );
     }

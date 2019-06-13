@@ -57,7 +57,7 @@ final class Pspell implements WordList
             $pspell = pspell_new($locale);
         } catch (ErrorException $exception) {
             throw new RuntimeException(
-                'An error occurred while loading the word list: '.$exception->getMessage(),
+                'An error occurred while loading the word list: ' . $exception->getMessage(),
                 /*code*/0,
                 $exception
             );
@@ -81,7 +81,7 @@ final class Pspell implements WordList
                 $check = pspell_check($this->pspell, $formattedWord);
             } catch (ErrorException $exception) {
                 throw new RuntimeException(
-                    'An error occurred while using the word list: '.$exception->getMessage(),
+                    'An error occurred while using the word list: ' . $exception->getMessage(),
                     /*code*/0,
                     $exception
                 );

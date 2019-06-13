@@ -62,7 +62,7 @@ final class LengthFilter implements Formatter
     private function applyInternal(CharTree $charTree, int $minLength, ?int $maxLength): CharTree
     {
         // When PHP 7.1 is no longer supported, change to using spl_object_id.
-        $hash = spl_object_hash($charTree).';'.$minLength.';'.$maxLength;
+        $hash = spl_object_hash($charTree) . ';' . $minLength . ';' . $maxLength;
 
         if (!isset(self::$memoization[$hash])) {
             self::$memoization[$hash] = $this->format($charTree, $minLength, $maxLength);
@@ -95,8 +95,8 @@ final class LengthFilter implements Formatter
         }
 
         $rootLength = mb_strlen($root);
-        $branchMinLength = $minLength <= $rootLength ? 0 : $minLength-$rootLength;
-        $branchMaxLength = $maxLength === null ? null : $maxLength-$rootLength;
+        $branchMinLength = $minLength <= $rootLength ? 0 : $minLength - $rootLength;
+        $branchMaxLength = $maxLength === null ? null : $maxLength - $rootLength;
 
         $filteredBranches = [];
         foreach ($branches as $branch) {

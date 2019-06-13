@@ -131,7 +131,7 @@ abstract class CharacterClassRule implements Rule
     private function getCount(string $password): int
     {
         $escapedCharacters = preg_quote($this->characters);
-        $count = preg_match_all('{['.$escapedCharacters.']}u', $password);
+        $count = preg_match_all('{[' . $escapedCharacters . ']}u', $password);
         assert($count !== false);
 
         return $count;

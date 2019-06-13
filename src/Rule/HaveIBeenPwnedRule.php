@@ -165,7 +165,7 @@ final class HaveIBeenPwnedRule implements Rule
 
         try {
             $requestFactory = $this->getRequestFactory();
-            $request = $requestFactory->createRequest('GET', 'https://api.pwnedpasswords.com/range/'.$prefix);
+            $request = $requestFactory->createRequest('GET', 'https://api.pwnedpasswords.com/range/' . $prefix);
 
             $client = $this->getClient();
 
@@ -182,7 +182,7 @@ final class HaveIBeenPwnedRule implements Rule
         } catch (ClientExceptionInterface | RuntimeException $exception) {
             throw new CouldNotUseRuleException(
                 $this,
-                'An error occurred while using the Have I Been Pwned? service: '.$exception->getMessage(),
+                'An error occurred while using the Have I Been Pwned? service: ' . $exception->getMessage(),
                 $exception
             );
         }
@@ -198,7 +198,7 @@ final class HaveIBeenPwnedRule implements Rule
     {
         if ($constraint->getMax() === null) {
             return $translator->trans(
-                'The password must appear at least once in data breaches.|'.
+                'The password must appear at least once in data breaches.|' .
                 'The password must appear at least %count% times in data breaches.',
                 ['%count%' => $constraint->getMin()]
             );
@@ -212,7 +212,7 @@ final class HaveIBeenPwnedRule implements Rule
 
         if ($constraint->getMin() === 0) {
             return $translator->trans(
-                'The password must appear at most once in data breaches.|'.
+                'The password must appear at most once in data breaches.|' .
                 'The password must appear at most %count% times in data breaches.',
                 ['%count%' => $constraint->getMax()]
             );
@@ -220,7 +220,7 @@ final class HaveIBeenPwnedRule implements Rule
 
         if ($constraint->getMin() === $constraint->getMax()) {
             return $translator->trans(
-                'The password must appear exactly once in data breaches.|'.
+                'The password must appear exactly once in data breaches.|' .
                 'The password must appear exactly %count% times in data breaches.',
                 ['%count%' => $constraint->getMin()]
             );

@@ -99,7 +99,7 @@ final class DictionaryRule implements Rule
             } catch (RuntimeException $exception) {
                 throw new CouldNotUseRuleException(
                     $this,
-                    'An error occurred while using the word list: '.$exception->getMessage(),
+                    'An error occurred while using the word list: ' . $exception->getMessage(),
                     $exception
                 );
             }

@@ -26,7 +26,7 @@ final class Cutter
         }
 
         // When PHP 7.1 is no longer supported, change to using spl_object_id.
-        $hash = spl_object_hash($charTree).';'.$position;
+        $hash = spl_object_hash($charTree) . ';' . $position;
 
         if (!isset(self::$memoization[$hash])) {
             self::$memoization[$hash] = $this->cutInternal($charTree, $position);
@@ -49,7 +49,7 @@ final class Cutter
         }
 
         $rootLength = mb_strlen($root);
-        $branchPosition = $position-$rootLength;
+        $branchPosition = $position - $rootLength;
 
         if ($branchPosition < 0) {
             return [['', $charTree]];
@@ -65,7 +65,7 @@ final class Cutter
                 assert(is_string($branchRoot));
                 assert(is_object($branchTree));
 
-                $cutCharTrees[] = [$root.$branchRoot, $branchTree];
+                $cutCharTrees[] = [$root . $branchRoot, $branchTree];
             }
         }
 
