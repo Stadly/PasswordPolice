@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace Stadly\PasswordPolice\WordList;
 
+// phpcs:disable Generic.NamingConventions.CamelCapsFunctionName.NotCamelCaps
+// phpcs:disable PEAR.NamingConventions.ValidFunctionName.FunctionNameInvalid
+// phpcs:disable PEAR.NamingConventions.ValidFunctionName.FunctionNoCapital
+// phpcs:disable Squiz.Functions.GlobalFunction.Found
+// phpcs:disable Squiz.NamingConventions.ValidFunctionName.NotCamelCaps
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+// phpcs:disable Zend.NamingConventions.ValidVariableName.NotCamelCaps
 /**
  * @return int|false
  */
@@ -25,7 +32,15 @@ function pspell_new(
 
     return false;
 }
+// phpcs:enable
 
+// phpcs:disable Generic.NamingConventions.CamelCapsFunctionName.NotCamelCaps
+// phpcs:disable PEAR.NamingConventions.ValidFunctionName.FunctionNameInvalid
+// phpcs:disable PEAR.NamingConventions.ValidFunctionName.FunctionNoCapital
+// phpcs:disable Squiz.Functions.GlobalFunction.Found
+// phpcs:disable Squiz.NamingConventions.ValidFunctionName.NotCamelCaps
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+// phpcs:disable Zend.NamingConventions.ValidVariableName.NotCamelCaps
 function pspell_check(int $dictionary_link, string $word): bool
 {
     if ($dictionary_link < 0) {
@@ -45,3 +60,4 @@ function pspell_check(int $dictionary_link, string $word): bool
 
     return false;
 }
+// phpcs:enable
