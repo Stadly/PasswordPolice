@@ -32,9 +32,6 @@ final class PasswordHasher implements HashFunction
         $this->options = $options;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function hash(string $password): string
     {
         set_error_handler([self::class, 'errorHandler']);
@@ -55,9 +52,6 @@ final class PasswordHasher implements HashFunction
         return $hash;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function compare(string $password, string $hash): bool
     {
         return password_verify($password, $hash);

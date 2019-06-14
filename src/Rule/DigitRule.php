@@ -19,9 +19,6 @@ final class DigitRule extends CharacterClassRule
         parent::__construct('0123456789', $min, $max, $weight);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getMessage(CountConstraint $constraint, int $count, TranslatorInterface $translator): string
     {
         if ($constraint->getMax() === null) {

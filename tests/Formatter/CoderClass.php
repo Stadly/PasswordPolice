@@ -10,9 +10,6 @@ final class CoderClass extends Coder
 {
     use Chaining;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function applyCurrent(CharTree $charTree): CharTree
     {
         return $this->format($charTree);

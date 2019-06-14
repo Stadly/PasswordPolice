@@ -13,9 +13,6 @@ use Psr\Http\Message\StreamInterface;
 
 final class HaveIBeenPwnedClient implements ClientInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         $generator = new Generator();

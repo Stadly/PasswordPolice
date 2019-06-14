@@ -9,9 +9,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class SymbolRule extends CharacterClassRule
 {
-    /**
-     * {@inheritDoc}
-     */
     protected function getMessage(CountConstraint $constraint, int $count, TranslatorInterface $translator): string
     {
         if ($constraint->getMax() === null) {

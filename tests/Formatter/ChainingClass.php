@@ -10,9 +10,6 @@ final class ChainingClass
 {
     use Chaining;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function applyCurrent(CharTree $charTree): CharTree
     {
         $charTrees = [];

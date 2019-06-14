@@ -70,9 +70,6 @@ final class Pspell implements WordList
         return new self($pspell, $formatters);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function contains(string $word): bool
     {
         foreach ($this->formatter->apply(CharTree::fromString($word)) as $formattedWord) {
