@@ -69,7 +69,7 @@
     },
     "require-dev": {
         "jakub-onderka/php-parallel-lint": "^1.0",
-        "pepakriz/phpstan-exception-rules": "^0.5.0",
+        "pepakriz/phpstan-exception-rules": "^0.8.0",
         "phpstan/phpstan": "^0.11.0",
         "phpstan/phpstan-deprecation-rules": "^0.11.0",
         "phpstan/phpstan-phpunit": "^0.11.0",
