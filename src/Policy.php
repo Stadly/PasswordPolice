@@ -30,7 +30,7 @@ final class Policy
     }
 
     /**
-     * @param Rule ...$rules Policy rules
+     * @param Rule ...$rules Policy rules.
      */
     public function addRules(Rule ...$rules): void
     {
