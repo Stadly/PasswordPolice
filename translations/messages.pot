@@ -4,7 +4,7 @@
 # Magnar Ovedal Myrtveit <magnar@myrtveit.com>, 2019.
 #
 msgid ""
-msgstr "
+msgstr ""
 "Project-Id-Version: PasswordPolice 1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/Stadly/PasswordPolice\n"
 "POT-Creation-Date: 2019-05-03 15:26:16+0200\n"
