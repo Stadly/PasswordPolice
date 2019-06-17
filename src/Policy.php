@@ -97,6 +97,7 @@ final class Policy
             $this->translator = new Translator('en_US');
             $this->translator->addLoader('mo', new MoFileLoader());
             $this->translator->addResource('mo', __DIR__ . '/../translations/messages.nn_NO.mo', 'nn_NO');
+            $this->translator->addResource('mo', __DIR__ . '/../translations/messages.nb_NO.mo', 'nb_NO');
         }
 
         return $this->translator;

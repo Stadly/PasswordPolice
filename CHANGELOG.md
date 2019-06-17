@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Norwegian Nynorsk translations.
+- Norwegian Bokmål translations.
 
 ### Changed
 - Require translator for translating messages when validating rules.
