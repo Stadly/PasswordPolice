@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.20.0...HEAD)
 
 ### Added
-- Nothing
+- Norwegian Nynorsk translations.
 
 ### Changed
 - Require translator for translating messages when validating rules.

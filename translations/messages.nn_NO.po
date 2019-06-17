@@ -1,0 +1,223 @@
+# Password policy enforcement made easy.
+# Copyright (C) 2019 Magnar Ovedal Myrtveit
+# This file is distributed under the same license as the PasswordPolice package.
+# Magnar Ovedal Myrtveit <magnar@myrtveit.com>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PasswordPolice 1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/Stadly/PasswordPolice\n"
+"POT-Creation-Date: 2019-05-03 15:26:16+0200\n"
+"PO-Revision-Date: 2019-06-17 14:41+0200\n"
+"Last-Translator: Magnar Ovedal Myrtveit <magnar@myrtveit.com>\n"
+"Language-Team: Norwegian Nynorsk https://github.com/Stadly/PasswordPolice\n"
+"Language: nn_NO\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../src/Rule/ChangeOnDateRule.php:148
+msgid "The password must last have been changed on or after %date%."
+msgstr "Passordet må sist vera endra på eller etter %date%."
+
+#: ../src/Rule/ChangeOnDateRule.php:155
+msgid "The password must last have been changed on or before %date%."
+msgstr "Passordet må sist vera endra på eller før %date%."
+
+#: ../src/Rule/ChangeOnDateRule.php:164
+msgid "The password must last have been changed at %date%."
+msgstr "Passordet må sist vera endra %date%."
+
+#: ../src/Rule/ChangeOnDateRule.php:170
+msgid "The password must last have been changed between %min% and %max%."
+msgstr "Passordet må sist vera endra mellom %min% og %max%."
+
+#: ../src/Rule/ChangeWithIntervalRule.php:156
+msgid "There must be at least %interval% between password changes."
+msgstr "Det må vera minst %interval% mellom passordendringar."
+
+#: ../src/Rule/ChangeWithIntervalRule.php:167
+msgid "There must be at most %interval% between password changes."
+msgstr "Det må vera høgst %interval% mellom passordendringar."
+
+#: ../src/Rule/ChangeWithIntervalRule.php:174
+msgid "There must be exactly %interval% between password changes."
+msgstr "Det må vera akkurat %interval% mellom passordendringar."
+
+#: ../src/Rule/ChangeWithIntervalRule.php:180
+msgid "There must be between %min% and %max% between password changes."
+msgstr "Det må vera mellom %min% og %max% mellom passordendringar."
+
+#: ../src/Rule/DictionaryRule.php:117
+msgid "The password cannot contain dictionary words."
+msgstr "Passordet kan ikkje innehalda ord frå ordboka."
+
+#: ../src/Rule/DigitRule.php:28
+msgid "The password must contain at least one digit."
+msgid_plural "The password must contain at least %count% digits."
+msgstr[0] "Passordet må innehalda minst eitt siffer."
+msgstr[1] "Passordet må innehalda minst %count% siffer."
+
+#: ../src/Rule/DigitRule.php:36
+msgid "The password cannot contain digits."
+msgstr "Passordet kan ikkje innehalda siffer."
+
+#: ../src/Rule/DigitRule.php:42
+msgid "The password must contain at most one digit."
+msgid_plural "The password must contain at most %count% digits."
+msgstr[0] "Passordet må innehalda høgst eitt siffer."
+msgstr[1] "Passordet må innehalda høgst %count% siffer."
+
+#: ../src/Rule/DigitRule.php:50
+msgid "The password must contain exactly one digit."
+msgid_plural "The password must contain exactly %count% digits."
+msgstr[0] "Passordet må innehalda akkurat eitt siffer."
+msgstr[1] "Passordet må innehalda akkurat %count% siffer."
+
+#: ../src/Rule/DigitRule.php:57
+msgid "The password must contain between %min% and %max% digits."
+msgstr "Passordet må innehalda mellom %min% og %max% siffer."
+
+#: ../src/Rule/GuessableDataRule.php:151
+msgid "The password cannot contain words that are easy to guess."
+msgstr "Passordet kan ikkje innehalda ord som er lette å gjetta."
+
+#: ../src/Rule/HaveIBeenPwnedRule.php:200
+msgid "The password must appear at least once in data breaches."
+msgid_plural "The password must appear at least %count% times in data breaches."
+msgstr[0] "Passordet må førekoma minst ein gong i databrot."
+msgstr[1] "Passordet må førekoma minst %count% gongar i databrot."
+
+#: ../src/Rule/HaveIBeenPwnedRule.php:208
+msgid "The password cannot appear in data breaches."
+msgstr "Passordet kan ikkje førekoma i databrot."
+
+#: ../src/Rule/HaveIBeenPwnedRule.php:214
+msgid "The password must appear at most once in data breaches."
+msgid_plural "The password must appear at most %count% times in data breaches."
+msgstr[0] "Passordet må førekoma høgst ein gong i databrot."
+msgstr[1] "Passordet må førekoma høgst %count% gongar i databrot."
+
+#: ../src/Rule/HaveIBeenPwnedRule.php:222
+msgid "The password must appear exactly once in data breaches."
+msgid_plural "The password must appear exactly %count% times in data breaches."
+msgstr[0] "Passordet må førekoma akkurat ein gong i databrot."
+msgstr[1] "Passordet må førekoma akkurat %count% gongar i databrot."
+
+#: ../src/Rule/HaveIBeenPwnedRule.php:229
+msgid "The password must appear between %min% and %max% times in data breaches."
+msgstr "Passordet må førekoma mellom %min% og %max% gongar i databrot."
+
+#: ../src/Rule/LengthRule.php:125
+msgid "The password must contain at least one character."
+msgid_plural "The password must contain at least %count% characters."
+msgstr[0] "Passordet må innehalda minst eitt teikn."
+msgstr[1] "Passordet må innehalda minst %count% teikn."
+
+#: ../src/Rule/LengthRule.php:133
+msgid "The password cannot contain characters."
+msgstr "Passordet kan ikkje innehalda teikn."
+
+#: ../src/Rule/LengthRule.php:139
+msgid "The password must contain at most one character."
+msgid_plural "The password must contain at most %count% characters."
+msgstr[0] "Passordet må innehalda høgst eitt teikn."
+msgstr[1] "Passordet må innehalda høgst %count% teikn."
+
+#: ../src/Rule/LengthRule.php:147
+msgid "The password must contain exactly one character."
+msgid_plural "The password must contain exactly %count% characters."
+msgstr[0] "Passordet må innehalda akkurat eitt teikn."
+msgstr[1] "Passordet må innehalda akkurat %count% teikn."
+
+#: ../src/Rule/LengthRule.php:154
+msgid "The password must contain between %min% and %max% characters."
+msgstr "Passordet må innehalda mellom %min% og %max% teikn."
+
+#: ../src/Rule/LowerCaseRule.php:150
+msgid "The password must contain at least one lower case letter."
+msgid_plural "The password must contain at least %count% lower case letters."
+msgstr[0] "Passordet må innehalda minst ein liten bokstav."
+msgstr[1] "Passordet må innehalda minst %count% små bokstavar."
+
+#: ../src/Rule/LowerCaseRule.php:158
+msgid "The password cannot contain lower case letters."
+msgstr "Passordet kan ikkje innehalda små bokstavar."
+
+#: ../src/Rule/LowerCaseRule.php:164
+msgid "The password must contain at most one lower case letter."
+msgid_plural "The password must contain at most %count% lower case letters."
+msgstr[0] "Passordet må innehalda høgst ein liten bokstav."
+msgstr[1] "Passordet må innehalda høgst %count% små bokstavar."
+
+#: ../src/Rule/LowerCaseRule.php:172
+msgid "The password must contain exactly one lower case letter."
+msgid_plural "The password must contain exactly %count% lower case letters."
+msgstr[0] "Passordet må innehalda akkurat ein liten bokstav."
+msgstr[1] "Passordet må innehalda akkurat %count% små bokstavar."
+
+#: ../src/Rule/LowerCaseRule.php:179
+msgid "The password must contain between %min% and %max% lower case letters."
+msgstr "Passordet må innehalda mellom %min% og %max% små bokstavar."
+
+#: ../src/Rule/NoReuseRule.php:153
+msgid "Formerly used passwords cannot be reused."
+msgstr "Tidlegare brukte passord kan ikkje brukast på nytt."
+
+#: ../src/Rule/NoReuseRule.php:158
+msgid "The most recently used password cannot be reused."
+msgid_plural "The %count% most recently used passwords cannot be reused."
+msgstr[0] "Det nylegast brukte passordet kan ikkje brukast på nytt."
+msgstr[1] "Dei %count% nylegast brukte passorda kan ikkje brukast på nytt."
+
+#: ../src/Rule/SymbolRule.php:18
+msgid "The password must contain at least one symbol (%characters%)."
+msgid_plural "The password must contain at least %count% symbols (%characters%)."
+msgstr[0] "Passordet må innehalda minst eitt symbol (%characters%)."
+msgstr[1] "Passordet må innehalda minst %count% symbol (%characters%)."
+
+#: ../src/Rule/SymbolRule.php:29
+msgid "The password cannot contain symbols (%characters%)."
+msgstr "Passordet kan ikkje innehalda symbol (%characters%)."
+
+#: ../src/Rule/SymbolRule.php:36
+msgid "The password must contain at most one symbol (%characters%)."
+msgid_plural "The password must contain at most %count% symbols (%characters%)."
+msgstr[0] "Passordet må innehalda høgst eitt symbol (%characters%)."
+msgstr[1] "Passordet må innehalda høgst %count% symbol (%characters%)."
+
+#: ../src/Rule/SymbolRule.php:47
+msgid "The password must contain exactly one symbol (%characters%)."
+msgid_plural "The password must contain exactly %count% symbols (%characters%)."
+msgstr[0] "Passordet må innehalda akkurat eitt symbol (%characters%)."
+msgstr[1] "Passordet må innehalda akkurat %count% symbol (%characters%)."
+
+#: ../src/Rule/SymbolRule.php:57
+msgid "The password must contain between %min% and %max% symbols (%characters%)."
+msgstr "Passordet må innehalda mellom %min% og %max% symbol (%characters%)."
+
+#: ../src/Rule/UpperCaseRule.php:150
+msgid "The password must contain at least one upper case letter."
+msgid_plural "The password must contain at least %count% upper case letters."
+msgstr[0] "Passordet må innehalda minst ein stor bokstav."
+msgstr[1] "Passordet må innehalda minst %count% store bokstavar."
+
+#: ../src/Rule/UpperCaseRule.php:158
+msgid "The password cannot contain upper case letters."
+msgstr "Passordet kan ikkje innehalda store bokstavar."
+
+#: ../src/Rule/UpperCaseRule.php:164
+msgid "The password must contain at most one upper case letter."
+msgid_plural "The password must contain at most %count% upper case letters."
+msgstr[0] "Passordet må innehalda høgst ein stor bokstav."
+msgstr[1] "Passordet må innehalda høgst %count% store bokstavar."
+
+#: ../src/Rule/UpperCaseRule.php:172
+msgid "The password must contain exactly one upper case letter."
+msgid_plural "The password must contain exactly %count% upper case letters."
+msgstr[0] "Passordet må innehalda akkurat ein stor bokstav."
+msgstr[1] "Passordet må innehalda akkurat %count% store bokstavar."
+
+#: ../src/Rule/UpperCaseRule.php:179
+msgid "The password must contain between %min% and %max% upper case letters."
+msgstr "Passordet må innehalda mellom %min% og %max% store bokstavar."
