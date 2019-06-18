@@ -104,7 +104,7 @@ final class NoReuseRule implements Rule
     /**
      * @param array<int> $positions Positions of former passwords matching the password.
      * @param int|null $weight Don't consider constraints with lower weights.
-     * @return PositionConstraint|null Constraint violated by the position.
+     * @return PositionConstraint|null Constraint violated by the positions.
      */
     private function getViolation(array $positions, ?int $weight = null): ?PositionConstraint
     {

@@ -91,7 +91,7 @@ final class ChangeOnDateRule implements Rule
     /**
      * @param DateTimeInterface|null $date When the password was last changed.
      * @param int|null $weight Don't consider constraints with lower weights.
-     * @return DateConstraint|null Constraint violated by the count.
+     * @return DateConstraint|null Constraint violated by the date.
      */
     private function getViolation(?DateTimeInterface $date, ?int $weight = null): ?DateConstraint
     {
