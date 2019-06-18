@@ -4,6 +4,26 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.21.0...HEAD)
+
+### Added
+- Nothing
+
+### Changed
+- Nothing
+
+### Fixed
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## [v0.21.0](https://github.com/Stadly/PasswordPolice/compare/v0.20.0...v0.21.0) - 2019-06-18
 
 ### Added
