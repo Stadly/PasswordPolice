@@ -27,7 +27,7 @@ final class Password
     /**
      * @param string $password Password.
      * @param array<string|DateTimeInterface> $guessableData Guessable data.
-     * @param array<FormerPassword> $formerPasswords Former passwords.
+     * @param array<FormerPassword> $formerPasswords Former passwords. Can be unordered.
      */
     public function __construct(string $password, array $guessableData = [], array $formerPasswords = [])
     {
@@ -74,7 +74,7 @@ final class Password
     }
 
     /**
-     * @param FormerPassword ...$formerPasswords Former passwords.
+     * @param FormerPassword ...$formerPasswords Former passwords. Can be unordered.
      */
     public function addFormerPasswords(FormerPassword ...$formerPasswords): void
     {
