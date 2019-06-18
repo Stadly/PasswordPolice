@@ -19,7 +19,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Removed
-- Nothing
+- The rule enforcing that passwords are changed after a specific date. Use the rule enforcing that passwords were not last changed during a specific period instead.
 
 ### Security
 - Nothing
