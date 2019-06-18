@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.21.0...HEAD)
 
 ### Added
-- Nothing
+- Rule enforcing that passwords were not last changed during a specific period.
 
 ### Changed
 - Nothing
