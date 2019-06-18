@@ -7,30 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PasswordPolice 1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/Stadly/PasswordPolice\n"
-"POT-Creation-Date: 2019-05-03 15:26:16+0200\n"
-"PO-Revision-Date: 2019-06-17 14:41+0200\n"
+"POT-Creation-Date: 2019-06-18 14:23+0200\n"
+"PO-Revision-Date: 2019-06-18 14:30+0200\n"
 "Last-Translator: Magnar Ovedal Myrtveit <magnar@myrtveit.com>\n"
 "Language-Team: Norwegian Nynorsk https://github.com/Stadly/PasswordPolice\n"
 "Language: nn_NO\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: ../src/Rule/ChangeOnDateRule.php:148
-msgid "The password must last have been changed on or after %date%."
-msgstr "Passordet må sist vera endra på eller etter %date%."
-
-#: ../src/Rule/ChangeOnDateRule.php:155
-msgid "The password must last have been changed on or before %date%."
-msgstr "Passordet må sist vera endra på eller før %date%."
-
-#: ../src/Rule/ChangeOnDateRule.php:164
-msgid "The password must last have been changed at %date%."
-msgstr "Passordet må sist vera endra %date%."
-
-#: ../src/Rule/ChangeOnDateRule.php:170
-msgid "The password must last have been changed between %min% and %max%."
-msgstr "Passordet må sist vera endra mellom %min% og %max%."
 
 #: ../src/Rule/ChangeWithIntervalRule.php:156
 msgid "There must be at least %interval% between password changes."
@@ -52,29 +36,29 @@ msgstr "Det må vera mellom %min% og %max% mellom passordendringar."
 msgid "The password cannot contain dictionary words."
 msgstr "Passordet kan ikkje innehalda ord frå ordboka."
 
-#: ../src/Rule/DigitRule.php:28
+#: ../src/Rule/DigitRule.php:25
 msgid "The password must contain at least one digit."
 msgid_plural "The password must contain at least %count% digits."
 msgstr[0] "Passordet må innehalda minst eitt siffer."
 msgstr[1] "Passordet må innehalda minst %count% siffer."
 
-#: ../src/Rule/DigitRule.php:36
+#: ../src/Rule/DigitRule.php:33
 msgid "The password cannot contain digits."
 msgstr "Passordet kan ikkje innehalda siffer."
 
-#: ../src/Rule/DigitRule.php:42
+#: ../src/Rule/DigitRule.php:39
 msgid "The password must contain at most one digit."
 msgid_plural "The password must contain at most %count% digits."
 msgstr[0] "Passordet må innehalda høgst eitt siffer."
 msgstr[1] "Passordet må innehalda høgst %count% siffer."
 
-#: ../src/Rule/DigitRule.php:50
+#: ../src/Rule/DigitRule.php:47
 msgid "The password must contain exactly one digit."
 msgid_plural "The password must contain exactly %count% digits."
 msgstr[0] "Passordet må innehalda akkurat eitt siffer."
 msgstr[1] "Passordet må innehalda akkurat %count% siffer."
 
-#: ../src/Rule/DigitRule.php:57
+#: ../src/Rule/DigitRule.php:54
 msgid "The password must contain between %min% and %max% digits."
 msgstr "Passordet må innehalda mellom %min% og %max% siffer."
 
@@ -160,6 +144,22 @@ msgstr[1] "Passordet må innehalda akkurat %count% små bokstavar."
 msgid "The password must contain between %min% and %max% lower case letters."
 msgstr "Passordet må innehalda mellom %min% og %max% små bokstavar."
 
+#: ../src/Rule/NoChangeInIntervalRule.php:153
+msgid "The password must last have been changed before %date%."
+msgstr "Passordet må sist vera endra før %date%."
+
+#: ../src/Rule/NoChangeInIntervalRule.php:160
+msgid "The password must last have been changed after %date%."
+msgstr "Passordet må sist vera endra etter %date%."
+
+#: ../src/Rule/NoChangeInIntervalRule.php:169
+msgid "The password must last have been changed before or after %date%."
+msgstr "Passordet må sist vera endra før eller etter %date%."
+
+#: ../src/Rule/NoChangeInIntervalRule.php:175
+msgid "The password must last have been changed before %min% or after %max%."
+msgstr "Passordet må sist vera endra før %min% eller etter %max%."
+
 #: ../src/Rule/NoReuseRule.php:153
 msgid "Formerly used passwords cannot be reused."
 msgstr "Tidlegare brukte passord kan ikkje brukast på nytt."
@@ -170,29 +170,29 @@ msgid_plural "The %count% most recently used passwords cannot be reused."
 msgstr[0] "Det nylegast brukte passordet kan ikkje brukast på nytt."
 msgstr[1] "Dei %count% nylegast brukte passorda kan ikkje brukast på nytt."
 
-#: ../src/Rule/SymbolRule.php:18
+#: ../src/Rule/SymbolRule.php:15
 msgid "The password must contain at least one symbol (%characters%)."
 msgid_plural "The password must contain at least %count% symbols (%characters%)."
 msgstr[0] "Passordet må innehalda minst eitt symbol (%characters%)."
 msgstr[1] "Passordet må innehalda minst %count% symbol (%characters%)."
 
-#: ../src/Rule/SymbolRule.php:29
+#: ../src/Rule/SymbolRule.php:26
 msgid "The password cannot contain symbols (%characters%)."
 msgstr "Passordet kan ikkje innehalda symbol (%characters%)."
 
-#: ../src/Rule/SymbolRule.php:36
+#: ../src/Rule/SymbolRule.php:33
 msgid "The password must contain at most one symbol (%characters%)."
 msgid_plural "The password must contain at most %count% symbols (%characters%)."
 msgstr[0] "Passordet må innehalda høgst eitt symbol (%characters%)."
 msgstr[1] "Passordet må innehalda høgst %count% symbol (%characters%)."
 
-#: ../src/Rule/SymbolRule.php:47
+#: ../src/Rule/SymbolRule.php:44
 msgid "The password must contain exactly one symbol (%characters%)."
 msgid_plural "The password must contain exactly %count% symbols (%characters%)."
 msgstr[0] "Passordet må innehalda akkurat eitt symbol (%characters%)."
 msgstr[1] "Passordet må innehalda akkurat %count% symbol (%characters%)."
 
-#: ../src/Rule/SymbolRule.php:57
+#: ../src/Rule/SymbolRule.php:54
 msgid "The password must contain between %min% and %max% symbols (%characters%)."
 msgstr "Passordet må innehalda mellom %min% og %max% symbol (%characters%)."
 
