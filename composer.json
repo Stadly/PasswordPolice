@@ -25,6 +25,7 @@
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",
         "stadly/php-date": "^1.0",
+        "stadly/php-translation": "^1.0",
         "symfony/translation": "^4.2.1",
         "vanderlee/php-stable-sort-functions": "^2.0.4"
     },
@@ -75,7 +76,6 @@
         "phpstan/phpstan-phpunit": "^0.11.0",
         "phpstan/phpstan-strict-rules": "^0.11.0",
         "phpunit/phpunit": "^7.1",
-        "stadly/php-style": "^1.0",
-        "stadly/php-translation": "^1.0"
+        "stadly/php-style": "^1.0"
     }
 }

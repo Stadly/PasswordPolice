@@ -13,7 +13,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Fixed
-- Nothing
+- `stadly/php-translation` is a requirement, not only for development.
 
 ### Deprecated
 - Nothing
