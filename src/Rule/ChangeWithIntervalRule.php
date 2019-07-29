@@ -94,7 +94,7 @@ final class ChangeWithIntervalRule implements Rule
     }
 
     /**
-     * @param DateTimeInterface|null $date When the password was last changed.
+     * @param DateTimeInterface|null $date When the password was set.
      * @param int|null $weight Don't consider constraints with lower weights.
      * @return DateIntervalConstraint|null Constraint violated by the date.
      */
@@ -117,8 +117,8 @@ final class ChangeWithIntervalRule implements Rule
     }
 
     /**
-     * @param Password|string $password Password to check when was last changed.
-     * @return DateTimeInterface|null When the password was last changed.
+     * @param Password|string $password Password to check when was set.
+     * @return DateTimeInterface|null When the password was set.
      */
     private function getDate($password): ?DateTimeInterface
     {

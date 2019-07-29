@@ -15,7 +15,7 @@ use Stadly\PasswordPolice\ValidationError;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class NoChangeInIntervalRule implements Rule
+final class NotSetInIntervalRule implements Rule
 {
     /**
      * @var array<DateConstraint> Rule constraints.
@@ -23,8 +23,8 @@ final class NoChangeInIntervalRule implements Rule
     private $constraints = [];
 
     /**
-     * @param DateTimeInterface|null $end End of interval in which the password should not last be changed.
-     * @param DateTimeInterface|null $start Start of interval in which the password should not last be changed.
+     * @param DateTimeInterface|null $end End of interval in which the password should not be set.
+     * @param DateTimeInterface|null $start Start of interval in which the password should not be set.
      * @param int $weight Constraint weight.
      */
     public function __construct(?DateTimeInterface $end, ?DateTimeInterface $start = null, int $weight = 1)
@@ -33,8 +33,8 @@ final class NoChangeInIntervalRule implements Rule
     }
 
     /**
-     * @param DateTimeInterface|null $end End of interval in which the password should not last be changed.
-     * @param DateTimeInterface|null $start Start of interval in which the password should not last be changed.
+     * @param DateTimeInterface|null $end End of interval in which the password should not be set.
+     * @param DateTimeInterface|null $start Start of interval in which the password should not be set.
      * @param int $weight Constraint weight.
      * @return $this
      */
@@ -94,7 +94,7 @@ final class NoChangeInIntervalRule implements Rule
     }
 
     /**
-     * @param DateTimeInterface|null $date When the password was last changed.
+     * @param DateTimeInterface|null $date When the password was set.
      * @param int|null $weight Don't consider constraints with lower weights.
      * @return DateConstraint|null Constraint violated by the date.
      */
@@ -117,8 +117,8 @@ final class NoChangeInIntervalRule implements Rule
     }
 
     /**
-     * @param Password|string $password Password to check when was last changed.
-     * @return DateTimeInterface|null When the password was last changed.
+     * @param Password|string $password Password to check when was set.
+     * @return DateTimeInterface|null When the password was set.
      */
     private function getDate($password): ?DateTimeInterface
     {
@@ -151,14 +151,14 @@ final class NoChangeInIntervalRule implements Rule
 
         if ($constraintMax === null) {
             return $translator->trans(
-                'The password must last have been changed before %date%.',
+                'The password must have been set before %date%.',
                 ['%date%' => $minString]
             );
         }
 
         if ($constraintMin === null) {
             return $translator->trans(
-                'The password must last have been changed after %date%.',
+                'The password must have been set after %date%.',
                 ['%date%' => $maxString]
             );
         }
@@ -167,13 +167,13 @@ final class NoChangeInIntervalRule implements Rule
         === $constraintMax->format(DateTime::RFC3339_EXTENDED)
         ) {
             return $translator->trans(
-                'The password must last have been changed before or after %date%.',
+                'The password must have been set before or after %date%.',
                 ['%date%' => $minString]
             );
         }
 
         return $translator->trans(
-            'The password must last have been changed before %min% or after %max%.',
+            'The password must have been set before %min% or after %max%.',
             ['%min%' => $minString, '%max%' => $maxString]
         );
     }

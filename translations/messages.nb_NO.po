@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PasswordPolice 1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/Stadly/PasswordPolice\n"
-"POT-Creation-Date: 2019-06-18 14:23+0200\n"
-"PO-Revision-Date: 2019-06-18 14:33+0200\n"
+"POT-Creation-Date: 2019-07-29 16:26+0200\n"
+"PO-Revision-Date: 2019-07-29 16:30+0200\n"
 "Last-Translator: Magnar Ovedal Myrtveit <magnar@myrtveit.com>\n"
 "Language-Team: Norwegian Bokmål https://github.com/Stadly/PasswordPolice\n"
 "Language: nb_NO\n"
@@ -144,22 +144,6 @@ msgstr[1] "Passordet må inneholde akkurat %count% små bokstaver."
 msgid "The password must contain between %min% and %max% lower case letters."
 msgstr "Passordet må inneholde mellom %min% og %max% små bokstaver."
 
-#: ../src/Rule/NoChangeInIntervalRule.php:153
-msgid "The password must last have been changed before %date%."
-msgstr "Passordet må sist ha blitt endret før %date%."
-
-#: ../src/Rule/NoChangeInIntervalRule.php:160
-msgid "The password must last have been changed after %date%."
-msgstr "Passordet må sist ha blitt endret etter %date%."
-
-#: ../src/Rule/NoChangeInIntervalRule.php:169
-msgid "The password must last have been changed before or after %date%."
-msgstr "Passordet må sist ha blitt endret før eller etter %date%."
-
-#: ../src/Rule/NoChangeInIntervalRule.php:175
-msgid "The password must last have been changed before %min% or after %max%."
-msgstr "Passordet må sist ha blitt endret før %min% eller etter %max%."
-
 #: ../src/Rule/NoReuseRule.php:153
 msgid "Formerly used passwords cannot be reused."
 msgstr "Tidligere brukte passord kan ikke brukes på nytt."
@@ -169,6 +153,22 @@ msgid "The most recently used password cannot be reused."
 msgid_plural "The %count% most recently used passwords cannot be reused."
 msgstr[0] "Det nyligst brukte passordet kan ikke brukes på nytt."
 msgstr[1] "Dei %count% nyligst brukte passorda kan ikke brukes på nytt."
+
+#: ../src/Rule/NotSetInIntervalRule.php:153
+msgid "The password must have been set before %date%."
+msgstr "Passordet må være satt før %date%."
+
+#: ../src/Rule/NotSetInIntervalRule.php:160
+msgid "The password must have been set after %date%."
+msgstr "Passordet må være satt etter %date%."
+
+#: ../src/Rule/NotSetInIntervalRule.php:169
+msgid "The password must have been set before or after %date%."
+msgstr "Passordet må være satt før eller etter %date%."
+
+#: ../src/Rule/NotSetInIntervalRule.php:175
+msgid "The password must have been set before %min% or after %max%."
+msgstr "Passordet må være satt før %min% eller etter %max%."
 
 #: ../src/Rule/SymbolRule.php:15
 msgid "The password must contain at least one symbol (%characters%)."

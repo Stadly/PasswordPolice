@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.21.0...HEAD)
 
 ### Added
-- Rule enforcing that passwords were not last changed during a specific period.
+- Rule enforcing that passwords were not set during a specific period.
 
 ### Changed
 - Nothing
@@ -19,7 +19,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Removed
-- The rule enforcing that passwords are changed after a specific date. Use the rule enforcing that passwords were not last changed during a specific period instead.
+- The rule enforcing that passwords are changed after a specific date. Use the rule enforcing that passwords were not set during a specific period instead.
 
 ### Security
 - Nothing
