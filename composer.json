@@ -25,8 +25,7 @@
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",
         "stadly/php-date": "^1.0",
-        "stadly/php-translation": "^1.0",
-        "symfony/translation": "^4.2.1",
+        "symfony/translation": "^4.3.3",
         "vanderlee/php-stable-sort-functions": "^2.0.4"
     },
     "autoload": {
