@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Rule enforcing that passwords were not set during a specific period.
+- German translations.
 
 ### Changed
 - Nothing
