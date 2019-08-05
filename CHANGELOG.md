@@ -11,7 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - German translations.
 
 ### Changed
-- Nothing
+- By default, test all rules regardless of weight.
 
 ### Fixed
 - `stadly/php-translation` is a requirement, not only for development.

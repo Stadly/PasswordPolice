@@ -60,7 +60,7 @@ final class ChangeWithIntervalRule implements Rule
      * @param int|null $weight Don't consider constraints with lower weights.
      * @return bool Whether the password is in compliance with the rule.
      */
-    public function test($password, ?int $weight = 1): bool
+    public function test($password, ?int $weight = null): bool
     {
         $date = $this->getDate($password);
         $constraint = $this->getViolation($date, $weight);

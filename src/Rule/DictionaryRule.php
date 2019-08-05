@@ -54,7 +54,7 @@ final class DictionaryRule implements Rule
     /**
      * {@inheritDoc}
      */
-    public function test($password, ?int $weight = 1): bool
+    public function test($password, ?int $weight = null): bool
     {
         if ($weight !== null && $this->weight < $weight) {
             return true;

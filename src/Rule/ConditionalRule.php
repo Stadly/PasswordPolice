@@ -34,7 +34,7 @@ final class ConditionalRule implements Rule
     /**
      * {@inheritDoc}
      */
-    public function test($password, ?int $weight = 1): bool
+    public function test($password, ?int $weight = null): bool
     {
         if (($this->condition)($password)) {
             return $this->rule->test($password, $weight);

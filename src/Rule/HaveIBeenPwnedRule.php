@@ -105,7 +105,7 @@ final class HaveIBeenPwnedRule implements Rule
     /**
      * {@inheritDoc}
      */
-    public function test($password, ?int $weight = 1): bool
+    public function test($password, ?int $weight = null): bool
     {
         $count = $this->getCount((string)$password);
         $constraint = $this->getViolation($count, $weight);

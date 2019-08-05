@@ -21,7 +21,7 @@ interface Rule
      * @return bool Whether the password is in compliance with the rule.
      * @throws CouldNotUseRuleException If an error occurred.
      */
-    public function test($password, ?int $weight = 1): bool;
+    public function test($password, ?int $weight = null): bool;
 
     /**
      * Validate that a password is in compliance with the rule.
