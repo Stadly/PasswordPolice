@@ -44,13 +44,14 @@ final class Policy
      * Check whether a password is in compliance with the policy.
      *
      * @param Password|string $password Password to check.
+     * @param int|null $weight Don't consider rule constraints with lower weights.
      * @return bool Whether the password is in compliance with the policy.
      * @throws CouldNotUseRuleException If an error occurred.
      */
-    public function test($password): bool
+    public function test($password, ?int $weight = null): bool
     {
         foreach ($this->rules as $rule) {
-            if (!$rule->test($password)) {
+            if (!$rule->test($password, $weight)) {
                 return false;
             }
         }

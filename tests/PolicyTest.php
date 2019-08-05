@@ -132,6 +132,16 @@ final class PolicyTest extends TestCase
     }
 
     /**
+     * @covers ::test
+     */
+    public function testPolicyIsSatisfiedWhenConstraintWeightIsLowerThanTestWeight(): void
+    {
+        $policy = new Policy($this->unsatisfiedRule);
+
+        self::assertFalse($policy->test('foo', 2));
+    }
+
+    /**
      * @covers ::validate
      */
     public function testPolicyCanBeValidated(): void
