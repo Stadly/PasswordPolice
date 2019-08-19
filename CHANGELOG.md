@@ -13,6 +13,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 - By default, test all rules regardless of weight.
+- The default date formatter generates more natural date formats.
 
 ### Fixed
 - `stadly/php-translation` is a requirement, not only for development.

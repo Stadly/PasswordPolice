@@ -12,45 +12,26 @@ final class DefaultFormatter implements DateFormatter
 {
     use Chaining;
 
-    private const DATE_FORMATS = [
-        // Year
-        ['Y'], // 2018
+    private const FORMATS = [
+        // Year month day
+        [['Y', 'y'], ['m'], ['d']], // 2018-08-04
+        [['Y', 'y'], ['n'], ['j']], // 2018-8-4
 
-        // Year month
-        ['y', 'n'], // 18 8
-        ['y', 'm'], // 18 08
-        ['y', 'M'], // 18 Aug
-        ['y', 'F'], // 18 August
+        // Month day year
+        [['m'], ['d'], ['Y', 'y']], // 08-04-2018
+        [['n'], ['j'], ['Y', 'y']], // 8-4-2018
 
-        // Month year
-        ['n', 'y'], // 8 18
-        ['M', 'y'], // Aug 18
-        ['F', 'y'], // August 18
-
-        // Day month
-        ['j', 'n'], // 4 8
-        ['j', 'm'], // 4 08
-        ['j', 'M'], // 4 Aug
-        ['j', 'F'], // 4 August
-
-        // Month day
-        ['n', 'j'], // 8 4
-        ['n', 'd'], // 8 04
-        ['M', 'j'], // Aug 4
-        ['M', 'd'], // Aug 04
-        ['F', 'j'], // August 4
-        ['F', 'd'], // August 04
+        // Day month year
+        [['d'], ['m'], ['Y', 'y']], // 04-08-2018
+        [['j'], ['n'], ['Y', 'y']], // 4-8-2018
     ];
 
-    private const DATE_SEPARATORS = [
+    private const SEPARATORS = [
         '',
-        '-',
         ' ',
+        '-',
         '/',
         '.',
-        ',',
-        '. ',
-        ', ',
     ];
 
     /**
@@ -60,12 +41,14 @@ final class DefaultFormatter implements DateFormatter
 
     public function __construct()
     {
-        foreach (self::DATE_FORMATS as $format) {
-            if (count($format) === 1) {
-                $this->formats[] = reset($format);
-            } else {
-                foreach (self::DATE_SEPARATORS as $separator) {
-                    $this->formats[] = implode($separator, $format);
+        foreach (self::FORMATS as [$parts1, $parts2, $parts3]) {
+            foreach ($parts1 as $part1) {
+                foreach ($parts2 as $part2) {
+                    foreach ($parts3 as $part3) {
+                        foreach (self::SEPARATORS as $separator) {
+                            $this->formats[] = $part1 . $separator . $part2 . $separator . $part3;
+                        }
+                    }
                 }
             }
         }
