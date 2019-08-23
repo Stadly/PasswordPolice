@@ -16,14 +16,14 @@ use PHPUnit\Framework\TestCase;
 final class FormerPasswordTest extends TestCase
 {
     /**
-     * @covers ::__toString
+     * @covers ::getHash
      */
-    public function testCanConvertToString(): void
+    public function testCanGetNullHash(): void
     {
         $date = new DateTimeImmutable('2018-11-28');
-        $password = new FormerPassword('foo', $date);
+        $password = new FormerPassword($date);
 
-        self::assertSame('foo', (string)$password);
+        self::assertNull($password->getHash());
     }
 
     /**
@@ -32,7 +32,7 @@ final class FormerPasswordTest extends TestCase
     public function testCanGetHash(): void
     {
         $date = new DateTimeImmutable('2018-11-28');
-        $password = new FormerPassword('foo', $date);
+        $password = new FormerPassword($date, 'foo');
 
         self::assertSame('foo', $password->getHash());
     }
@@ -43,7 +43,7 @@ final class FormerPasswordTest extends TestCase
     public function testGetDate(): void
     {
         $date = new DateTimeImmutable('2018-11-28');
-        $password = new FormerPassword('foo', $date);
+        $password = new FormerPassword($date, 'foo');
 
         self::assertSame($date, $password->getDate());
     }

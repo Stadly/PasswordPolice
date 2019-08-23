@@ -42,12 +42,12 @@ final class NoReuseRuleTest extends TestCase
         );
 
         $this->password = new Password('foobar', [], [
-            new FormerPassword('qwerty', new DateTimeImmutable('2006-06-06')),
-            new FormerPassword('baz', new DateTimeImmutable('2005-05-05')),
-            new FormerPassword('bar', new DateTimeImmutable('2004-04-04')),
-            new FormerPassword('foobar', new DateTimeImmutable('2003-03-03')),
-            new FormerPassword('foo', new DateTimeImmutable('2002-02-02')),
-            new FormerPassword('test', new DateTimeImmutable('2001-01-01')),
+            new FormerPassword(new DateTimeImmutable('2006-06-06')),
+            new FormerPassword(new DateTimeImmutable('2005-05-05'), 'baz'),
+            new FormerPassword(new DateTimeImmutable('2004-04-04'), 'bar'),
+            new FormerPassword(new DateTimeImmutable('2003-03-03'), 'foobar'),
+            new FormerPassword(new DateTimeImmutable('2002-02-02')),
+            new FormerPassword(new DateTimeImmutable('2001-01-01'), 'test'),
         ]);
     }
 

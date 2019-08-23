@@ -29,9 +29,9 @@ final class ChangeWithIntervalRuleTest extends TestCase
     protected function setUp(): void
     {
         $this->password = new Password('foobar', [], [
-            new FormerPassword('qwerty', new DateTimeImmutable('-6 days')),
-            new FormerPassword('baz', new DateTimeImmutable('-1 month')),
-            new FormerPassword('bar', new DateTimeImmutable('-1 year')),
+            new FormerPassword(new DateTimeImmutable('-6 days')),
+            new FormerPassword(new DateTimeImmutable('-1 month'), 'baz'),
+            new FormerPassword(new DateTimeImmutable('-1 year'), 'bar'),
         ]);
     }
 

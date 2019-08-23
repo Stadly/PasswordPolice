@@ -14,6 +14,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
 - By default, test all rules regardless of weight.
 - The default date formatter generates more natural date formats.
+- Changed order of parameters for `FormerPassword::__construct`, allowing hash to be omitted.
 
 ### Fixed
 - `stadly/php-translation` is a requirement, not only for development.
@@ -23,6 +24,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Removed
 - The rule enforcing that passwords are changed after a specific date. Use the rule enforcing that passwords were not set during a specific period instead.
+- `FormerPassword` can no longer be converted to string, as hash can be `null`.
 
 ### Security
 - Nothing

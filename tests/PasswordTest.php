@@ -77,8 +77,8 @@ final class PasswordTest extends TestCase
      */
     public function testCanAddFormerPasswords(): void
     {
-        $formerPassword1 = new FormerPassword('bar', new DateTimeImmutable('2018-11-29'));
-        $formerPassword2 = new FormerPassword('baz', new DateTimeImmutable('2017-01-13'));
+        $formerPassword1 = new FormerPassword(new DateTimeImmutable('2018-11-29'), 'bar');
+        $formerPassword2 = new FormerPassword(new DateTimeImmutable('2017-01-13'));
 
         $password = new Password('foo');
         $password->addFormerPasswords($formerPassword1, $formerPassword2);
@@ -91,8 +91,8 @@ final class PasswordTest extends TestCase
      */
     public function testCanGetFormerPasswords(): void
     {
-        $formerPassword1 = new FormerPassword('bar', new DateTimeImmutable('2018-11-29'));
-        $formerPassword2 = new FormerPassword('baz', new DateTimeImmutable('2017-01-13'));
+        $formerPassword1 = new FormerPassword(new DateTimeImmutable('2018-11-29'), 'bar');
+        $formerPassword2 = new FormerPassword(new DateTimeImmutable('2017-01-13'));
 
         $password = new Password('foo', [], [$formerPassword1, $formerPassword2]);
 
@@ -107,8 +107,8 @@ final class PasswordTest extends TestCase
      */
     public function testFormerPasswordsInConstructorAreOrdered(): void
     {
-        $formerPassword2 = new FormerPassword('baz', new DateTimeImmutable('2017-01-13'));
-        $formerPassword1 = new FormerPassword('bar', new DateTimeImmutable('2018-11-29'));
+        $formerPassword2 = new FormerPassword(new DateTimeImmutable('2017-01-13'));
+        $formerPassword1 = new FormerPassword(new DateTimeImmutable('2018-11-29'), 'bar');
 
         $password = new Password('foo', [], [$formerPassword2, $formerPassword1]);
 
@@ -123,8 +123,8 @@ final class PasswordTest extends TestCase
      */
     public function testFormerPasswordsAddedAreOrdered(): void
     {
-        $formerPassword2 = new FormerPassword('baz', new DateTimeImmutable('2017-01-13'));
-        $formerPassword1 = new FormerPassword('bar', new DateTimeImmutable('2018-11-29'));
+        $formerPassword2 = new FormerPassword(new DateTimeImmutable('2017-01-13'));
+        $formerPassword1 = new FormerPassword(new DateTimeImmutable('2018-11-29'), 'bar');
 
         $password = new Password('foo');
         $password->addFormerPasswords($formerPassword2, $formerPassword1);
@@ -140,8 +140,8 @@ final class PasswordTest extends TestCase
      */
     public function testCanClearFormerPasswords(): void
     {
-        $formerPassword1 = new FormerPassword('bar', new DateTimeImmutable('2018-11-29'));
-        $formerPassword2 = new FormerPassword('baz', new DateTimeImmutable('2017-01-13'));
+        $formerPassword1 = new FormerPassword(new DateTimeImmutable('2018-11-29'), 'bar');
+        $formerPassword2 = new FormerPassword(new DateTimeImmutable('2017-01-13'));
 
         $password = new Password('foo', [], [$formerPassword1, $formerPassword2]);
         $password->clearFormerPasswords();

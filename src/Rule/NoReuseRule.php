@@ -133,12 +133,14 @@ final class NoReuseRule implements Rule
         if ($password instanceof Password) {
             $position = 0;
             foreach ($password->getFormerPasswords() as $formerPassword) {
-                if ($this->hashFunction->compare((string)$password, (string)$formerPassword)) {
+                $passwordHash = $formerPassword->getHash();
+                if ($passwordHash !== null && $this->hashFunction->compare((string)$password, $passwordHash)) {
                     $positions[] = $position;
                 }
                 ++$position;
             }
         }
+
         return $positions;
     }
 

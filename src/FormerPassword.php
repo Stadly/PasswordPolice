@@ -9,39 +9,23 @@ use DateTimeImmutable;
 final class FormerPassword
 {
     /**
-     * @var string Password hash.
-     */
-    private $hash;
-
-    /**
      * @var DateTimeImmutable Creation date.
      */
     private $date;
 
     /**
-     * @param string $hash Password hash.
+     * @var string|null Password hash.
+     */
+    private $hash;
+
+    /**
      * @param DateTimeImmutable $date Creation date.
+     * @param string $hash Password hash.
      */
-    public function __construct(string $hash, DateTimeImmutable $date)
+    public function __construct(DateTimeImmutable $date, ?string $hash = null)
     {
-        $this->hash = $hash;
         $this->date = $date;
-    }
-
-    /**
-     * @return string Password hash.
-     */
-    public function __toString(): string
-    {
-        return $this->hash;
-    }
-
-    /**
-     * @return string Password hash.
-     */
-    public function getHash(): string
-    {
-        return $this->hash;
+        $this->hash = $hash;
     }
 
     /**
@@ -50,5 +34,13 @@ final class FormerPassword
     public function getDate(): DateTimeImmutable
     {
         return $this->date;
+    }
+
+    /**
+     * @return string|null Password hash.
+     */
+    public function getHash(): ?string
+    {
+        return $this->hash;
     }
 }

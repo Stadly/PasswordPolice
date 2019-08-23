@@ -29,9 +29,9 @@ final class NotSetInIntervalRuleTest extends TestCase
     protected function setUp(): void
     {
         $this->password = new Password('foobar', [], [
-            new FormerPassword('qwerty', new DateTimeImmutable('2003-04-05')),
-            new FormerPassword('baz', new DateTimeImmutable('2002-03-04')),
-            new FormerPassword('bar', new DateTimeImmutable('2001-02-03')),
+            new FormerPassword(new DateTimeImmutable('2003-04-05')),
+            new FormerPassword(new DateTimeImmutable('2002-03-04'), 'baz'),
+            new FormerPassword(new DateTimeImmutable('2001-02-03'), 'bar'),
         ]);
     }
 
