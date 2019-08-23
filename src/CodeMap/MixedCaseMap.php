@@ -9,7 +9,7 @@ use Stadly\PasswordPolice\CodeMap;
 final class MixedCaseMap implements CodeMap
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getLengths(): array
     {
@@ -17,7 +17,7 @@ final class MixedCaseMap implements CodeMap
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function code(string $string): array
     {

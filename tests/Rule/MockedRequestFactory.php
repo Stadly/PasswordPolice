@@ -11,7 +11,7 @@ use Psr\Http\Message\RequestInterface;
 final class MockedRequestFactory implements RequestFactoryInterface
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function createRequest(string $method, $uri): RequestInterface
     {

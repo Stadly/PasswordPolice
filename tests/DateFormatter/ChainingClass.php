@@ -11,7 +11,7 @@ final class ChainingClass
     use Chaining;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function applyCurrent(iterable $dates): CharTree
     {

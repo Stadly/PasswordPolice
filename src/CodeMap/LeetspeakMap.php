@@ -56,7 +56,7 @@ final class LeetspeakMap implements CodeMap
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getLengths(): array
     {
@@ -64,7 +64,7 @@ final class LeetspeakMap implements CodeMap
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function code(string $string): array
     {

@@ -103,7 +103,7 @@ final class HaveIBeenPwnedRule implements Rule
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function test($password, ?int $weight = null): bool
     {
@@ -114,7 +114,7 @@ final class HaveIBeenPwnedRule implements Rule
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function validate($password, TranslatorInterface $translator): ?ValidationError
     {
