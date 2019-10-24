@@ -34,10 +34,10 @@ final class DateIntervalConstraint
      */
     public function __construct(DateInterval $min, ?DateInterval $max = null, int $weight = 1)
     {
-        if (0 < Interval::compare(new DateInterval('PT0S'), $min)) {
+        if (Interval::compare(new DateInterval('PT0S'), $min) > 0) {
             throw new InvalidArgumentException('Min cannot be negative.');
         }
-        if ($max !== null && 0 < Interval::compare($min, $max)) {
+        if ($max !== null && Interval::compare($min, $max) > 0) {
             throw new InvalidArgumentException('Max cannot be smaller than min.');
         }
 

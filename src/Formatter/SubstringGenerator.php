@@ -115,7 +115,7 @@ final class SubstringGenerator implements Formatter
 
         $branches = $charTree->getBranches();
         $substringBranches = [];
-        if (0 < $maxLength || $maxLength === null) {
+        if ($maxLength > 0 || $maxLength === null) {
             foreach ($branches as $branch) {
                 $substringBranch = $this->applyInternal($branch, $minLength, $maxLength);
                 if ($substringBranch->getRoot() !== null) {

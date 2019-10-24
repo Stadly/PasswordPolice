@@ -84,7 +84,7 @@ final class CharTree implements IteratorAggregate
      */
     public static function fromString(string $string, array $branches = []): self
     {
-        if (1 < mb_strlen($string)) {
+        if (mb_strlen($string) > 1) {
             // Maximum one character in root.
             $branches = [self::fromString(mb_substr($string, 1), $branches)];
             $string = mb_substr($string, 0, 1);
