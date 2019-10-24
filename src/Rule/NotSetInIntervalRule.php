@@ -163,9 +163,7 @@ final class NotSetInIntervalRule implements Rule
             );
         }
 
-        if ($constraintMin->format(DateTime::RFC3339_EXTENDED)
-        === $constraintMax->format(DateTime::RFC3339_EXTENDED)
-        ) {
+        if ($constraintMin->format(DateTime::RFC3339_EXTENDED) === $constraintMax->format(DateTime::RFC3339_EXTENDED)) {
             return $translator->trans(
                 'The password must have been set before or after %date%.',
                 ['%date%' => $minString]
