@@ -4,7 +4,7 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.21.0...HEAD)
+## [v0.22.0](https://github.com/Stadly/PasswordPolice/compare/v0.21.0...v0.22.0) - 2019-10-24
 
 ### Added
 - Rule enforcing that passwords were not set during a specific period.
@@ -19,15 +19,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Fixed
 - `stadly/php-translation` is a requirement, not only for development.
 
-### Deprecated
-- Nothing
-
 ### Removed
 - The rule enforcing that passwords are changed after a specific date. Use the rule enforcing that passwords were not set during a specific period instead.
 - `FormerPassword` can no longer be converted to string, as hash can be `null`.
-
-### Security
-- Nothing
 
 ## [v0.21.0](https://github.com/Stadly/PasswordPolice/compare/v0.20.0...v0.21.0) - 2019-06-18
 
