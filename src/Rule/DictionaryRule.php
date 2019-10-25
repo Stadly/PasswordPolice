@@ -86,7 +86,7 @@ final class DictionaryRule implements Rule
 
     /**
      * @param string $password Password to find dictionary words in.
-     * @return string|null DictionaryRule word in the password.
+     * @return string|null Dictionary word in the password.
      * @throws CouldNotUseRuleException If an error occurred.
      */
     private function getDictionaryWord(string $password): ?string
