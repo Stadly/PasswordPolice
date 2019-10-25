@@ -81,7 +81,7 @@ final class PspellTest extends TestCase
     }
 
     /**
-     * @covers ::contains
+     * @covers ::fromLocale
      */
     public function testErrorHandlerIsRestoredWhenConstructFromLocaleSucceeds(): void
     {
@@ -93,7 +93,7 @@ final class PspellTest extends TestCase
     }
 
     /**
-     * @covers ::contains
+     * @covers ::fromLocale
      */
     public function testErrorHandlerIsRestoredWhenConstructFromLocaleFails(): void
     {
