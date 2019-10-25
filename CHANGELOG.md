@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.22.0...HEAD)
 
 ### Added
-- Nothing
+- Possible to ignore case when checking if character tree starts with string.
 
 ### Changed
 - Nothing

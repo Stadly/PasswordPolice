@@ -211,15 +211,17 @@ final class CharTree implements IteratorAggregate
 
     /**
      * @param string $string String to check.
+     * @param bool $ignoreCase Whether character case should be ignored.
      * @return bool Whether the character tree starts with the string.
      */
-    public function startsWith(string $string): bool
+    public function startsWith(string $string, bool $ignoreCase = false): bool
     {
-        if (!isset($this->startsWithMemoization[$string])) {
-            $this->startsWithMemoization[$string] = $this->calculateStartsWith($string);
+        $key = $string . ($ignoreCase ? 1 : 0);
+        if (!isset($this->startsWithMemoization[$key])) {
+            $this->startsWithMemoization[$key] = $this->calculateStartsWith($string, $ignoreCase);
         }
 
-        return $this->startsWithMemoization[$string];
+        return $this->startsWithMemoization[$key];
     }
 
     /**
@@ -243,17 +245,19 @@ final class CharTree implements IteratorAggregate
 
     /**
      * @param string $string String to check.
+     * @param bool $ignoreCase Whether character case should be ignored.
      * @return bool Whether the character tree starts with the string. Memoization is not used.
      */
-    private function calculateStartsWith(string $string): bool
+    private function calculateStartsWith(string $string, bool $ignoreCase): bool
     {
-        if ($this->root !== null && $this->root === mb_substr($string, 0, mb_strlen($this->root))) {
+        if ($this->rootEquals($string, $ignoreCase)) {
+            assert($this->root !== null);
             $stringTail = mb_substr($string, mb_strlen($this->root));
             if ($stringTail === '') {
                 return true;
             } else {
                 foreach ($this->branches as $branch) {
-                    if ($branch->startsWith($stringTail)) {
+                    if ($branch->startsWith($stringTail, $ignoreCase)) {
                         return true;
                     }
                 }
@@ -261,6 +265,25 @@ final class CharTree implements IteratorAggregate
         }
 
         return false;
+    }
+
+    /**
+     * @param string $string String to check.
+     * @param bool $ignoreCase Whether character case should be ignored.
+     * @return bool Whether the character tree's root equals the string.
+     */
+    private function rootEquals(string $string, bool $ignoreCase): bool
+    {
+        if ($this->root === null) {
+            return false;
+        }
+
+        $root = mb_substr($string, 0, mb_strlen($this->root));
+        if ($ignoreCase) {
+            return strcasecmp($this->root, $root) === 0;
+        }
+
+        return $this->root === $root;
     }
 
     /**

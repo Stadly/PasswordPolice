@@ -403,6 +403,26 @@ final class CharTreeTest extends TestCase
     }
 
     /**
+     * @covers ::startsWith
+     */
+    public function testStartsWithCanConsiderCase(): void
+    {
+        $charTree = CharTree::fromString('foobar');
+
+        self::assertFalse($charTree->startsWith('fOO', /*ignoreCase*/false));
+    }
+
+    /**
+     * @covers ::startsWith
+     */
+    public function testStartsWithCanIgnoreCase(): void
+    {
+        $charTree = CharTree::fromString('foobar');
+
+        self::assertTrue($charTree->startsWith('fOO', /*ignoreCase*/true));
+    }
+
+    /**
      * @covers ::getIterator
      */
     public function testCanIterateOverAllStrings(): void
