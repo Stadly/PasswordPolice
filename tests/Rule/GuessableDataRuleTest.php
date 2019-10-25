@@ -45,10 +45,32 @@ final class GuessableDataRuleTest extends TestCase
     /**
      * @covers ::test
      */
+    public function testPasswordCanContainGuessableStringInOtherCaseInRule(): void
+    {
+        $rule = new GuessableDataRule(['OBa']);
+        $password = new Password('fooBAr');
+
+        self::assertFalse($rule->test($password));
+    }
+
+    /**
+     * @covers ::test
+     */
     public function testPasswordCanContainGuessableStringInPassword(): void
     {
         $rule = new GuessableDataRule();
         $password = new Password('foobar', ['oba']);
+
+        self::assertFalse($rule->test($password));
+    }
+
+    /**
+     * @covers ::test
+     */
+    public function testPasswordCanContainGuessableStringInOtherCaseInPassword(): void
+    {
+        $rule = new GuessableDataRule();
+        $password = new Password('fooBAr', ['OBa']);
 
         self::assertFalse($rule->test($password));
     }
