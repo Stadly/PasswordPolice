@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Possible to ignore case when checking if character tree starts with string.
+- Possible to ignore case when checking if character tree contains string.
 
 ### Changed
 - Nothing

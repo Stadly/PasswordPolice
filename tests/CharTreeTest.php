@@ -318,6 +318,26 @@ final class CharTreeTest extends TestCase
     }
 
     /**
+     * @covers ::contains
+     */
+    public function testContainsCanConsiderCase(): void
+    {
+        $charTree = CharTree::fromString('foobar');
+
+        self::assertFalse($charTree->contains('OBa', /*ignoreCase*/false));
+    }
+
+    /**
+     * @covers ::contains
+     */
+    public function testContainsCanIgnoreCase(): void
+    {
+        $charTree = CharTree::fromString('foobar');
+
+        self::assertTrue($charTree->contains('OBa', /*ignoreCase*/true));
+    }
+
+    /**
      * @covers ::startsWith
      */
     public function testCharTreeStartsWithPrefix(): void

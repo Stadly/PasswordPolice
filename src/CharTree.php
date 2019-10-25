@@ -198,15 +198,17 @@ final class CharTree implements IteratorAggregate
 
     /**
      * @param string $string String to check.
+     * @param bool $ignoreCase Whether character case should be ignored.
      * @return bool Whether the character tree contains the string.
      */
-    public function contains(string $string): bool
+    public function contains(string $string, bool $ignoreCase = false): bool
     {
-        if (!isset($this->containsMemoization[$string])) {
-            $this->containsMemoization[$string] = $this->calculateContains($string);
+        $key = $string . ($ignoreCase ? 1 : 0);
+        if (!isset($this->containsMemoization[$key])) {
+            $this->containsMemoization[$key] = $this->calculateContains($string, $ignoreCase);
         }
 
-        return $this->containsMemoization[$string];
+        return $this->containsMemoization[$key];
     }
 
     /**
@@ -226,16 +228,17 @@ final class CharTree implements IteratorAggregate
 
     /**
      * @param string $string String to check.
+     * @param bool $ignoreCase Whether character case should be ignored.
      * @return bool Whether the character tree contains the string. Memoization is not used.
      */
-    private function calculateContains(string $string): bool
+    private function calculateContains(string $string, bool $ignoreCase): bool
     {
-        if ($this->startsWith($string)) {
+        if ($this->startsWith($string, $ignoreCase)) {
             return true;
         }
 
         foreach ($this->branches as $branch) {
-            if ($branch->contains($string)) {
+            if ($branch->contains($string, $ignoreCase)) {
                 return true;
             }
         }
