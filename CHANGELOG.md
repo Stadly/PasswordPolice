@@ -4,26 +4,14 @@ All notable changes to `PasswordPolice` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/PasswordPolice/compare/v0.22.0...HEAD)
+## [v0.23.0](https://github.com/Stadly/PasswordPolice/compare/v0.22.0...v0.23.0) - 2019-10-25
 
 ### Added
 - Possible to ignore case when checking if character tree starts with string.
 - Possible to ignore case when checking if character tree contains string.
 
-### Changed
-- Nothing
-
 ### Fixed
 - Time complexity of the guessable data rule has been improved. It is no longer iterating through all possible formatted passwords.
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ## [v0.22.0](https://github.com/Stadly/PasswordPolice/compare/v0.21.0...v0.22.0) - 2019-10-24
 
