@@ -14,7 +14,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Fixed
-- Nothing
+- Time complexity of the guessable data rule has been improved. It is no longer iterating through all possible formatted passwords.
 
 ### Deprecated
 - Nothing

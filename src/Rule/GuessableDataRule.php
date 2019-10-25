@@ -108,11 +108,10 @@ final class GuessableDataRule implements Rule
             $guessableData = array_merge($guessableData, $password->getGuessableData());
         }
 
-        foreach ($this->formatter->apply(CharTree::fromString((string)$password)) as $formattedPassword) {
-            foreach ($guessableData as $data) {
-                if ($this->contains($formattedPassword, $data)) {
-                    return $data;
-                }
+        $formattedPassword = $this->formatter->apply(CharTree::fromString((string)$password));
+        foreach ($guessableData as $data) {
+            if ($this->contains($formattedPassword, $data)) {
+                return $data;
             }
         }
 
@@ -120,11 +119,11 @@ final class GuessableDataRule implements Rule
     }
 
     /**
-     * @param string $password Password to check.
+     * @param CharTree $formattedPassword Formatted password to check.
      * @param string|DateTimeInterface $data Data to check.
      * @return bool Whether the password contains the data.
      */
-    private function contains(string $password, $data): bool
+    private function contains(CharTree $formattedPassword, $data): bool
     {
         if ($data instanceof DateTimeInterface) {
             $charTree = $this->dateFormatter->apply([$data]);
@@ -133,7 +132,7 @@ final class GuessableDataRule implements Rule
         }
 
         foreach ($charTree as $string) {
-            if ($string !== '' && mb_stripos($password, $string) !== false) {
+            if ($string !== '' && $formattedPassword->contains($string, /*ignoreCase*/true)) {
                 return true;
             }
         }
